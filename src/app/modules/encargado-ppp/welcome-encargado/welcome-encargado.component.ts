@@ -6,15 +6,11 @@ interface SideNavToggle {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-welcome-encargado',
+  templateUrl: './welcome-encargado.component.html',
+  styleUrls: ['./welcome-encargado.component.css']
 })
-export class AppComponent {
-
-  title = 'proyecto-preprofesionales';
-
-  isLogged: Boolean = false;
+export class WelcomeEncargadoComponent {
 
   isSideNavCollapsed = false;
   screenWidth = 0;
