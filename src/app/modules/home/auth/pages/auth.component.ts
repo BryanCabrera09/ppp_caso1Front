@@ -48,7 +48,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   private createMyForm(): FormGroup {
     return this.builder.group({
-      usuario: ['', [Validators.required]],
+      email: ['', [Validators.required]],
       password: ['', Validators.required]
     });
   }
@@ -64,7 +64,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
     if (!this.authService.ingresarAplicativo(this.myForm.value)) {
       alert("Usuario o contraseña invalido");
     } else {
-      this.router.navigateByUrl("/sesion/principal");
+      this.router.navigateByUrl("/encargado-practicas");
     }
   }
 

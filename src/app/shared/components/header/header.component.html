@@ -95,10 +95,6 @@
     <div class="overlay overlay-user overlay-fall" cdkMenu>
         <ul>
             <li *ngFor="let item of userItems" cdkMenuItem>
-                <!-- <a>
-                    <i class="icon" [ngClass]="item.icon"></i>
-                    <span>{{item.label}}</span>
-                </a> -->
                 <a *ngIf="item.label === 'Cerrar Sesión'" (click)="cerrarSesion()">
                     <i class="icon" [ngClass]="item.icon"></i>
                     <span>{{item.label}}</span>

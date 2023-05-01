@@ -11,7 +11,7 @@ export class AuthentificationService {
 
 
   public ingresarAplicativo(obj: any): boolean {
-    this.ingresar = obj.usuario == 'samv' && obj.password == '123';
+    this.ingresar = obj.email == 'bryan.cabrera.est@tecazuay.edu.ec' && obj.password == '0150269900sebas';
     return this.ingresar;
   }
 
