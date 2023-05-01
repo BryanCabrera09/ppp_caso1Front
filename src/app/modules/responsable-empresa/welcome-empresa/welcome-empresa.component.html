@@ -1,1 +1,8 @@
-<p>welcome-empresa works!</p>
+<app-sidebar (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
+<app-header [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-header>
+<app-body [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-body>
+<app-footer [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-footer>
+
+<div class="home-wrapper">
+    <router-outlet></router-outlet>
+</div>

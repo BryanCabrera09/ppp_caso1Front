@@ -19,37 +19,37 @@ const routes: Routes = [
   {
     path: 'director-carrera',
     component: WelcomeDirectorComponent,
-    /* loadChildren: () => import('./modules/director-carrera/director-carrera.module').then(m => m.HomeModule) // se importa un modulo que tiene routing es decir ruta  */
+    loadChildren: () => import('./modules/director-carrera/director-carrera.module').then(m => m.DirectorCarreraModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
     path: 'encargado-practicas',
     component: WelcomeEncargadoComponent,
-    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) // se importa un modulo que tiene routing es decir ruta 
+    loadChildren: () => import('./modules/encargado-ppp/encargado-ppp.module').then(m => m.EncargadoPppModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
     path: 'practicante',
     component: WelcomePracticanteComponent,
-    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) // se importa un modulo que tiene routing es decir ruta 
+    loadChildren: () => import('./modules/practicante/practicante.module').then(m => m.PracticanteModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
     path: 'respon-empresa',
     component: WelcomeEmpresaComponent,
-    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) // se importa un modulo que tiene routing es decir ruta 
+    loadChildren: () => import('./modules/responsable-empresa/responsable-empresa.module').then(m => m.ResponsableEmpresaModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
     path: 'tutor-academico',
     component: WelcomeAcademicoComponent,
-    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) // se importa un modulo que tiene routing es decir ruta 
+    loadChildren: () => import('./modules/tutor-academico/tutor-academico.module').then(m => m.TutorAcademicoModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
     path: 'tutor-especifico',
     component: WelcomeEspecificoComponent,
-    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) // se importa un modulo que tiene routing es decir ruta 
+    loadChildren: () => import('./modules/tutor-especifico/tutor-especifico.module').then(m => m.TutorEspecificoModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
 ];

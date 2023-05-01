@@ -1,0 +1,49 @@
+<section>
+
+    <form [formGroup]="myForm" (ngSubmit)="submitFormulario()">
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+            <div class="form-box ">
+                <div class="form-value">
+                    <form action="">
+
+                        <h2>Login</h2>
+                        <div class="inputbox">
+                            <!-- <ion-icon name="mail-outline"></ion-icon> -->
+                            <input type="email" required>
+                            <label for="">Email</label>
+                        </div>
+                        <div class="inputbox">
+                            <!--    <ion-icon name="lock-closed-outline"></ion-icon> -->
+                            <input type="password" required>
+                            <label for="">Password</label>
+                        </div>
+                        <div class="forget">
+                            <label for=""><input type="checkbox">Remember Me <a href="#">Forget Password</a></label>
+
+                        </div>
+                        <button (click)="goToLogin()">Log in</button>
+                        <div class="register">
+                            <p>Don't have a account <a href="/encargado-practicas">Register</a></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                ó
+                            </div>
+                            <div class="col-12 text-center">
+                                <div id="buttonDiv"></div>
+
+                            </div>
+                        </div>
+
+
+                        <a href="#" routerLink="/sinsesion/registro" onclick="return false">¿No tienes cuenta?</a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</section>

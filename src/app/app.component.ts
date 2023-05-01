@@ -15,6 +15,11 @@ export class AppComponent {
   title = 'proyecto-preprofesionales';
 
   isLogged: Boolean = false;
+  authEnabled = false;
+
+  mostrarVista() {
+    this.isLogged = true;
+  }
 
   isSideNavCollapsed = false;
   screenWidth = 0;

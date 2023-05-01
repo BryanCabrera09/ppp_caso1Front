@@ -19,4 +19,5 @@ export class WelcomeEncargadoComponent {
     this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
   }
+
 }

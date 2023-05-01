@@ -1,5 +1,8 @@
-<app-sidebar *ngIf="!isLogged" (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
-<app-header *ngIf="!isLogged" [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-header>
-<app-body *ngIf="!isLogged" [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-body>
-<app-footer *ngIf="!isLogged" [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-footer>
-<app-home-page *ngIf="isLogged"></app-home-page>
+<!-- <app-sidebar *ngIf="isLogged" (onToggleSideNav)="onToggleSideNav($event)"></app-sidebar>
+<app-header *ngIf="isLogged" [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-header>
+<app-body *ngIf="isLogged" [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-body>
+<app-home-page *ngIf="!isLogged"></app-home-page>
+<button (click)="mostrarVista()">Mostrar vista</button>
+<app-footer *ngIf="isLogged" [collapsed]="isSideNavCollapsed" [screenWidth]="screenWidth"></app-footer> -->
+
+<router-outlet></router-outlet>

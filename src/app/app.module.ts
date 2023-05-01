@@ -4,35 +4,45 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SublevelMenuComponent } from './shared/components/sidebar/sublevel-menu.component';
-import { BodyComponent } from './shared/components/body/body.component';
 
 //CDK IMPORTS
 import { OverlayModule } from '@angular/cdk/overlay'
 import { CdkMenuModule } from '@angular/cdk/menu'
-import { HeaderComponent } from './shared/components/header/header.component';
-import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
-import { FooterComponent } from './shared/components/footer/footer.component';
-import { HomePageComponent } from './modules/home/home-page/home-page.component';
+import { SharedModule } from './shared/shared.module';
+
+// Google Imports
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login/socialauth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SublevelMenuComponent,
-    BodyComponent,
-    HeaderComponent,
-    SidebarComponent,
-    FooterComponent,
-    HomePageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     OverlayModule,
-    CdkMenuModule
+    CdkMenuModule,
+    SharedModule,
   ],
-  providers: [],
+  providers: [/* {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            '600655883157-02q8r60v1sqvau7ho0r7baatppkingdv.apps.googleusercontent.com'
+          )
+        }
+      ],
+      onError: (err) => {
+        console.error(err);
+      }
+    } as SocialAuthServiceConfig,
+  } */],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,24 +4,35 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { SublevelMenuComponent } from './components/sidebar/sublevel-menu.component';
+import { HeaderHomeComponent } from './components/header-home/header-home.component';
+import { HeaderComponent } from './components/header/header.component';
+import { BodyComponent } from './components/body/body.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
-       /*  SidebarComponent, */
-        /* SublevelMenuComponent */
+        SidebarComponent,
+        SublevelMenuComponent,
+        HeaderHomeComponent,
+        FooterComponent,
+        HeaderComponent,
+        BodyComponent, 
+        HeaderHomeComponent
     ],
     imports: [
         RouterModule,
-        BrowserAnimationsModule,
         OverlayModule,
         CdkMenuModule,
-        BrowserModule
+        CommonModule
     ],
     exports: [
-        /* SidebarComponent,
-        SublevelMenuComponent, */
+        SidebarComponent,
+        SublevelMenuComponent,
+        FooterComponent,
+        HeaderComponent,
+        BodyComponent,
+        HeaderHomeComponent
     ]
 })
 export class SharedModule { }
