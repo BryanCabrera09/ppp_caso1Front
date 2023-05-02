@@ -1,7 +1,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { languages, notifications, userItems } from './header-dummy-data';
-import { AuthentificationService } from '../../services/authentification.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +24,12 @@ export class HeaderComponent implements OnInit {
 
   public objetounico: any = {};
 
-  constructor(private authService: AuthentificationService, private router: Router) { }
+  public logueado: boolean;
+  public usuario: any;
+
+  constructor(private router: Router, public authService: AuthService) {
+    this.logueado = false;
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -32,6 +37,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.usuarioLogueado();
 
     this.checkCanShowSearchAsOverlay(window.innerWidth);
 
@@ -50,11 +57,6 @@ export class HeaderComponent implements OnInit {
     }).join(''));
 
     return JSON.parse(jsonPayload);
-  }
-
-  public cerrarSesion() {
-    this.authService.limpiarToken();
-    this.router.navigateByUrl("/login");
   }
 
   getHeadClass(): string {
@@ -79,4 +81,33 @@ export class HeaderComponent implements OnInit {
       this.canShowSearchAsOverlay = false;
     }
   }
+
+  usuarioLogueado() {
+    this.authService.getInfoUsuarioLoggeado().subscribe(res => {
+      if (res != null) {
+        this.logueado = true;
+        this.usuario = res;
+
+      }
+      else {
+        this.logueado = false;
+      }
+
+    });
+  }
+
+  logOut(): void {
+    this.authService.logOut().then(res => {
+      this.logueado = false;
+      this.router.navigate(["/"]);
+    });
+  }
+
+  /* logOut() {
+    this.authService.logout()
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch(error => console.log(error));
+  } */
 }

@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthentificationService } from 'src/app/shared/services/authentification.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 //Google imports
 declare var google: any;
@@ -13,9 +13,17 @@ declare var google: any;
 })
 export class AuthComponent implements OnInit, AfterViewInit {
 
-  public myForm!: FormGroup;
+  public formLogin!: FormGroup;
 
-  constructor(private router: Router, private builder: FormBuilder, private authService: AuthentificationService) { }
+  @ViewChild("email") email!: ElementRef;
+  @ViewChild("password") password!: ElementRef;
+
+  constructor(private router: Router, private builder: FormBuilder, private authService: AuthService) {
+    this.formLogin = new FormGroup({
+      email: new FormControl(),
+      password: new FormControl()
+    })
+  }
 
   ngAfterViewInit(): void {
     google.accounts.id.initialize({
@@ -30,11 +38,7 @@ export class AuthComponent implements OnInit, AfterViewInit {
   }
 
 
-  ngOnInit() {
-
-    console.log("se encuentra2");
-    console.log(this.router);
-    this.myForm = this.createMyForm();
+  ngOnInit(): void {
   }
 
   handleCredentialResponse(response: any) {
@@ -53,23 +57,43 @@ export class AuthComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public submitFormulario() {
-    if (this.myForm.invalid) {
-      Object.values(this.myForm.controls).forEach(control => {
-        control.markAllAsTouched();
-      });
-      return;
-    }
+  /*  onSubmit() {
+     this.userService.login(this.formLogin.value)
+       .then(response => {
+         console.log(response);
+       })
+       .catch(error => console.log(error));
+   }
+ 
+   onClick() {
+     this.userService.loginWithGoogle()
+       .then(response => {
+         console.log(response);
+         this.router.navigate(['/encargado-practicas']);
+       })
+       .catch(error => console.log(error))
+   } */
 
-    if (!this.authService.ingresarAplicativo(this.myForm.value)) {
-      alert("Usuario o contraseña invalido");
-    } else {
-      this.router.navigateByUrl("/encargado-practicas");
-    }
+  logIn(): void {
+    var mail = this.email.nativeElement.value;
+    var contra = this.password.nativeElement.value;
+    this.authService.login(mail, contra).then(res => {
+      console.log(res);
+      this.router.navigate(['/encargado-practicas']);
+    });
+  }
+
+  logInGoogle(): void {
+    var mail = this.email.nativeElement.value;
+    var password = this.password.nativeElement.value;
+    this.authService.loginGoogle(mail, password).then(res => {
+      console.log(res);
+      this.router.navigate(['/encargado-practicas']);
+    });
   }
 
   public get f(): any {
-    return this.myForm.controls;
+    return this.formLogin.controls;
   }
 
   goToLogin(): void {

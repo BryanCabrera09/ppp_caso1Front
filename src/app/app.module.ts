@@ -11,12 +11,20 @@ import { CdkMenuModule } from '@angular/cdk/menu'
 import { SharedModule } from './shared/shared.module';
 
 // Google Imports
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
-import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login/socialauth.service';
+import { EmailComponent } from './modules/home/send-email/pages/email/email.component';
+
+//FirebaseImport
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+
+import { environment } from 'src/app/core/environment/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
+    EmailComponent
   ],
   imports: [
     BrowserModule,
@@ -25,24 +33,12 @@ import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login/sociala
     OverlayModule,
     CdkMenuModule,
     SharedModule,
+    /* provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()), */
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule
   ],
-  providers: [/* {
-    provide: 'SocialAuthServiceConfig',
-    useValue: {
-      autoLogin: false,
-      providers: [
-        {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider(
-            '600655883157-02q8r60v1sqvau7ho0r7baatppkingdv.apps.googleusercontent.com'
-          )
-        }
-      ],
-      onError: (err) => {
-        console.error(err);
-      }
-    } as SocialAuthServiceConfig,
-  } */],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
