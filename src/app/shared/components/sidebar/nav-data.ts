@@ -84,7 +84,7 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Empresa',
     },
     {
-        routeLink: 'pages',
+        routeLink: '/encargado-practicas/empresa/register',
         icon: 'fal fa-file',
         label: 'Postulacion PPP',
         role: 'Practicante'

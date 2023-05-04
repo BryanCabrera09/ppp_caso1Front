@@ -8,7 +8,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkMenuModule } from '@angular/cdk/menu';
 
-
 @NgModule({
   declarations: [
     WelcomeHomeComponent,

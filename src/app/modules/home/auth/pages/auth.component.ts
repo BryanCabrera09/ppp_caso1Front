@@ -78,8 +78,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
     var mail = this.email.nativeElement.value;
     var contra = this.password.nativeElement.value;
     this.authService.login(mail, contra).then(res => {
-      console.log(res);
-      this.router.navigate(['/encargado-practicas']);
+      if (res) {
+        console.log(res);
+        this.router.navigate(['/encargado-practicas']);
+      } else {
+        console.log("No se ha podido hacer el log-in correctamente.");
+      }
     });
   }
 
@@ -87,8 +91,12 @@ export class AuthComponent implements OnInit, AfterViewInit {
     var mail = this.email.nativeElement.value;
     var password = this.password.nativeElement.value;
     this.authService.loginGoogle(mail, password).then(res => {
-      console.log(res);
-      this.router.navigate(['/encargado-practicas']);
+      if (res) {
+        console.log(res);
+        this.router.navigate(['/encargado-practicas']);
+      } else {
+        console.log("No se ha podido hacer el log-in correctamente.");
+      }
     });
   }
 

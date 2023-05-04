@@ -47,7 +47,7 @@ export class AuthService {
       return await this._auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     }
     catch (error) {
-      alert("No se ha podido hacer el log-in correctamente. Error: " + error)
+      //alert("No se ha podido hacer el log-in correctamente. Error: " + error)
       console.log("No se ha podido hacer el log-in correctamente. Error: " + error);
       return null;
     }
@@ -58,7 +58,7 @@ export class AuthService {
       return await this._auth.createUserWithEmailAndPassword(email, password);
     }
     catch (error) {
-      alert("No se ha podido hacer el registro correctamente. Error: " + error)
+      //alert("No se ha podido hacer el registro correctamente. Error: " + error)
       console.log("No se ha podido hacer el registro correctamente. Error: " + error);
       return null;
     }

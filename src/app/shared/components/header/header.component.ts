@@ -87,12 +87,10 @@ export class HeaderComponent implements OnInit {
       if (res != null) {
         this.logueado = true;
         this.usuario = res;
-
       }
       else {
         this.logueado = false;
       }
-
     });
   }
 

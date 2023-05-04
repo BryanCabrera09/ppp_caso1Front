@@ -1,0 +1,80 @@
+<section>
+    <div id="formulario" class="col-md-10 col-lg-5 al">
+        <div class="container" style=" align-items: center;  ">
+            <header>Registro de usuario para acceso a la plataforma de Prácticas Preprofesionales</header>
+
+            <form action="#" #userForm="ngForm">
+                <div class="form first">
+                    <div class="details personal">
+
+                        <div class="fields">
+
+                            <div class="input-field p-col-12">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" [(ngModel)]="registro.username"
+                                        placeholder="Ingrese Número de Cédula" pInputText>
+                                    <label for="float-input">Número de Cédula</label>
+                                </span>
+                            </div>
+
+                            <div class="input-field p-col-12">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" [(ngModel)]="registro.nombre"
+                                        placeholder="Ingrese Nombres Completos" pInputText>
+                                    <label for="float-input">Nombres</label>
+                                </span>
+                            </div>
+
+                            <div class="input-field p-col-12">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" [(ngModel)]="registro.apellido"
+                                        placeholder="Ingrese Apellidos Completos" pInputText>
+                                    <label for=" float-input">Apellidos</label>
+                                </span>
+                            </div>
+
+                            <div class="input-field p-col-12">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" [(ngModel)]="registro.correo"
+                                        placeholder="Ingrese Dirección de Email" pInputText>
+                                    <label for=" float-input">Correo Electrónico</label>
+                                </span>
+                            </div>
+
+                            <div class="input-field p-col-12">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" [(ngModel)]="registro.titulo"
+                                        placeholder="Ingrese su Título" pInputText>
+                                    <label for=" float-input">Título</label>
+                                </span>
+                            </div>
+
+                            <div class="input-field p-col-12">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" [(ngModel)]="registro.numcelular"
+                                        placeholder=" Ingrese Número Telefónico" pInputText>
+                                    <label for=" float-input">Número de Teléfono</label>
+                                </span>
+                            </div>
+
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <p-password [toggleMask]="true" [(ngModel)]="registro.password"></p-password>
+                                    <label for="float-input">Password</label>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button class="nextBtn">
+                        <span class="btnText">Registrar</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
