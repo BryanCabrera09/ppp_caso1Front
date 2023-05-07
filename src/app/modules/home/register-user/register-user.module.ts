@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { PasswordModule } from 'primeng/password';
     RegisterUserRoutingModule,
     FormsModule,
     InputTextModule,
-    PasswordModule
+    PasswordModule,
+    ButtonModule,
+    ToastrModule.forRoot(),
   ]
 })
 export class RegisterUserModule { }

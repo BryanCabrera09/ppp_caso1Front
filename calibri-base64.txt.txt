@@ -1,0 +1,1 @@
+data:application/x-font-ttf;base64,[base64-encoded-data]
