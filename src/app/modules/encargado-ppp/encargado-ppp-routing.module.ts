@@ -6,6 +6,11 @@ const routes: Routes = [
     path: 'empresa',
     loadChildren: () => import("./register-empresa/register-empresa.module").then(m => m.RegisterEmpresaModule)
   },
+
+  {
+    path: 'convocatoria',
+    loadChildren: () => import("./generate-convocatoria/generate-convocatoria.module").then(m => m.GenerateConvocatoriaModule)
+  },
 ];
 
 @NgModule({

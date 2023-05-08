@@ -4,16 +4,23 @@ import { CommonModule } from '@angular/common';
 import { RegisterEmpresaRoutingModule } from './register-empresa-routing.module';
 import { RegEmpresaComponent } from './pages/reg-empresa/reg-empresa.component';
 import { FormsModule } from '@angular/forms';
+import { FormularioComponent } from './pages/reg-empresa/formulario/formulario.component';
+import { NgProgressModule } from 'ngx-progressbar';
+
 
 
 @NgModule({
   declarations: [
-    RegEmpresaComponent
+    RegEmpresaComponent,
+    FormularioComponent,
+    
+   
   ],
   imports: [
     CommonModule,
     RegisterEmpresaRoutingModule,
-    FormsModule
+    FormsModule,
+    NgProgressModule
   ]
 })
 export class RegisterEmpresaModule { }
