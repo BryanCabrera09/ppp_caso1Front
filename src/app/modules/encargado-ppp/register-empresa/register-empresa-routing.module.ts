@@ -7,7 +7,7 @@ import { FormularioComponent } from './pages/reg-empresa/formulario/formulario.c
 
 const routes: Routes = [
   {
-    path: 'register',
+    path: 'register-empresa',
     component: RegEmpresaComponent,
   },
   {

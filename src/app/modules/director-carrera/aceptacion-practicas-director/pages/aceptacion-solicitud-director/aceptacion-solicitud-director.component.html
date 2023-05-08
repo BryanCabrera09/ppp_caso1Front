@@ -1,0 +1,79 @@
+<div class="card">
+    <p-table #dt2 [value]="practicantes" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['cedula', 'nombre', 'apellido', 'ciclo']" [tableStyle]="{ 'min-width': '75rem' }">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Ingrese Numero de Cedula o Apellido" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:22%">N° de Cédula</th>
+                <th style="width:22%">Nombres</th>
+                <th style="width:22%">Apellidos</th>
+                <th style="width:12%">Ciclo</th>
+                <th style="width:12%">Aprobación/Desaprobación</th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="cedula"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="nombre"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="apellido"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="ciclo"></p-columnFilter>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-practicante>
+            <tr>
+                <td>
+                    {{ practicante.cedula }}
+                </td>
+                <td>
+                    {{ practicante.nombre }}
+                </td>
+                <td>
+                    {{ practicante.apellido }}
+                </td>
+                <td>
+                    {{ practicante.ciclo }}
+                </td>
+                <td>
+                    <div class="card flex justify-content-center">
+                        <div class="flex flex-wrap gap-3">
+                            <div class="flex align-items-center">
+                                <p-radioButton name="pizza" value="Cheese" [(ngModel)]="practestudiant.estado"
+                                    inputId="ingredient1"></p-radioButton>
+                                <label for="ingredient1" class="ml-2">Aprobado</label>
+                            </div>
+
+                            <div class="flex align-items-center">
+                                <p-radioButton name="pizza" value="Mushroom" [(ngModel)]="practestudiant.estado"
+                                    inputId="ingredient2"></p-radioButton>
+                                <label for="ingredient2" class="ml-2">Desaprobado</label>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">Sin Solicitudes de Practicantes.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <button pButton pRipple label="Submit" class="p-button-success" (click)="guardarPostulacion()"></button>
+</div>
