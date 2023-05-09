@@ -22,6 +22,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from 'src/app/core/environment/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { RegisterUserService } from './core/services/register-user.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [RegisterUserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
