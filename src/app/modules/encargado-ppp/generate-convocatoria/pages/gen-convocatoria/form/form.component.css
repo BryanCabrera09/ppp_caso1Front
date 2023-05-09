@@ -1,0 +1,69 @@
+.card {
+    width: 50%;
+    height: 50%;
+    background: #d8d5d5;
+    position: relative;
+    display: flex;
+    color: #070707;
+    place-content: center;
+    place-items: center;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    border-radius: 20px;
+    padding-right: 10%;
+     /* ajusta el ancho según sea necesario */
+    margin:  auto;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    text-align: center;
+    
+  }
+
+  .card h2 {
+    z-index: 1;
+    color: rgb(29, 28, 28);
+    font-size: 2em;
+    width: 120%;
+    margin-bottom: 10%;
+    margin-left: 60% ;
+  }
+
+  h2 {
+    z-index: 1;
+    color: rgb(35, 142, 213);
+    font-size: 2em;
+    width: 120%;
+    margin-bottom: 20%;
+   
+    margin-right: 40% ;
+  }
+  
+  .card-body {
+    /*display: flex;
+    justify-content: flex-end;*/
+  }
+
+  .button{
+    width: 80%;
+    max-width: 200px;
+    padding: 10% 20%;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #cdcecd;
+    color: #fff;
+    
+  }
+
+  .crear{
+    width: 100%;
+    max-width: 50%;
+    padding:10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #2cd83b;
+    color: #fff;
+    margin-bottom: 20px;
+    border-left: -40%;
+  }
