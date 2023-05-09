@@ -11,7 +11,7 @@ import { RegisterUserService } from 'src/app/core/services/register-user.service
 })
 export class RegUserComponent implements OnInit {
 
-  usuario = new Usuario();
+  usuario: Usuario = new Usuario;
 
   verfCedula: any;
   verfNombre: any;
@@ -105,10 +105,12 @@ export class RegUserComponent implements OnInit {
 
       this.toastr.warning("Verifique que esten correctos los campos")
     } else {
-
+      console.log('llego pero no entro');
       this.userService.signUp(this.usuario).subscribe(
-        result => {
+        (result) => {
+          console.log('llego y entro');
           console.log(result);
+          //this.usuario = result;
           this.toastr.success('Usuario registrado correctamente', 'Bienvenido!')
           this.router.navigate(['/login'])
         }

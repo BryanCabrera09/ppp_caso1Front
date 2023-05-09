@@ -8,9 +8,11 @@ import baserUrl from '../helpers/helperUrl';
 })
 export class RegisterUserService {
 
+  private AuthUrl = `${baserUrl}/usuario/`;
+
   constructor(private http: HttpClient) { }
 
-  signUp(usuario: Usuario) {
-    return this.http.post(`${baserUrl}/usuario/`, usuario);
+  signUp(usuario: any) {
+    return this.http.post/* <Usuario> */(this.AuthUrl + 'crear', usuario);
   }
 }
