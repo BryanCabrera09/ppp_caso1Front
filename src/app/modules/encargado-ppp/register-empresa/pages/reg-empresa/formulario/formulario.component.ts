@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { CommonModule, NgFor } from '@angular/common';
 import { empresa } from '../../../empresa';
 import { RegEmpresaServiceService } from '../../../reg-empresa-service.service';
 
@@ -17,8 +17,14 @@ export class FormularioComponent implements OnInit{
  }
   
  public Empresa: empresa =  new empresa();
- public crearempresa(): void{
+
+ public crearempresa(reg: NgForm): void{
+  console.log("Se ha realizado un click")
+
+  this.Empresa.activo = true;
+
     this.EmpresaService.create(this.Empresa).subscribe()  
+     window.location.reload();
 
  }
 }
