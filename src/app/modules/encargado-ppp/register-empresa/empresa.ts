@@ -2,7 +2,7 @@ export class empresa{
     id?: number;
     ruc?: String;
     nombre?: String;
-    matris?: String;
+    matriz?: String;
     mision?: string;
     vision?: string;
     objetivo?: string;

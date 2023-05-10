@@ -8,6 +8,7 @@ import { empresa } from './empresa';
 export class RegEmpresaServiceService {
 
   private urlendpoint:string='http://localhost:8080/empresa/crear';
+  private urlendpoint2:string='http://localhost:8080/empresa/listar';
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(private http:HttpClient) {}
@@ -15,6 +16,10 @@ export class RegEmpresaServiceService {
 
   create(empresa:empresa):Observable<empresa>{
     return this.http.post<empresa>(this.urlendpoint, empresa,{headers: this.httpHeaders})
+  }
+
+  obtenerempresas(): Observable<empresa[]>{
+    return this.http.get<empresa[]>(this.urlendpoint2)
   }
 
 }
