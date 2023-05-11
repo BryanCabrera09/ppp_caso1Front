@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import pdfMake from 'pdfmake/build/pdfMake';
+//import pdfMake from 'pdfmake/build/pdfMake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vsf;
+// pdfMake.vfs = pdfFonts.pdfMake.vsf;
 
 @Component({
   selector: 'app-seleccion',
@@ -21,8 +21,8 @@ export class SeleccionComponent implements OnInit {
       }
     ]
   }
-  const pdf= pdfMake.createPDF(pdfDefinition);
-  pdf.open();
+  // const pdf= pdfMake.createPDF(pdfDefinition);
+  // pdf.open();
   }
 }
 

@@ -2,50 +2,23 @@
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-        <div class="form-box ">
-            <div class="form-value">
-                <form [formGroup]="formLogin" #formLogIn="ngForm">
+        <!-- auth.component.html -->
+<div class="auth-container">
+  <h1>Welcome to Auth</h1>
+  <form #loginForm="ngForm" (ngSubmit)="validateUser(loginForm)">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" [(ngModel)]="model.correo" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" [(ngModel)]="model.password" required>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+  <p>{{ authStatus }}</p>
+</div>
 
-                    <h2>Login</h2>
-                    <div class="inputbox">
-                        <!-- <ion-icon name="mail-outline"></ion-icon> -->
-                        <input formControlName="email" #email type="email" required>
-                        <label for="">Email</label>
-                    </div>
-                    <div class="inputbox">
-                        <!--    <ion-icon name="lock-closed-outline"></ion-icon> -->
-                        <input formControlName="password" #password type="password" required>
-                        <label for="">Password</label>
-                    </div>
-                    <div class="forget">
-                        <label for=""><input type="checkbox">Remember Me <a href="#">Forget Password</a></label>
-
-                    </div>
-
-                    <div class="inputbox2 ">
-                        <button class="btn btn-success" (click)="logIn()">Iniciar Sesión</button>
-                    </div>
-
-                    <div class="inputbox2 col-12 text-center">
-                        ó
-                    </div>
-                    <div class="inputbox2  col-12 text-center">
-                        <div id="buttonDiv"></div>
-                    </div>
-
-                    <div class="inputbox2 col-12 text-center">
-                        <button style="color: aliceblue;" class="btn btn-info" (click)="logInGoogle()">Login With
-                            Google</button>
-                    </div>
-
-                    <div class="register">
-                        <p>Don't have a account <a href="#" routerLink="/sinsesion/registro" onclick="return false">¿No
-                                tienes cuenta?</a></p>
-                    </div>
-
-                </form>
-            </div>
-        </div>
 
     </div>
 

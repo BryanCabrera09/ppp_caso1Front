@@ -20,9 +20,11 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 
 import { environment } from 'src/app/core/environment/environment';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { RegisterUserService } from './core/services/register-user.service';
+import { BridgeInterceptor } from './core/providers/bridge.interceptor';
+import { AuthGuard } from './core/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -42,8 +44,19 @@ import { RegisterUserService } from './core/services/register-user.service';
     AngularFireAuthModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN',
+    }),
   ],
-  providers: [RegisterUserService],
+  providers: [RegisterUserService,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : BridgeInterceptor,
+      multi : true
+    },
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

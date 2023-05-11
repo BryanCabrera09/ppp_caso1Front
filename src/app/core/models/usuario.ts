@@ -8,4 +8,5 @@ export class Usuario {
     correo: string = ""
     password: string = ""
     estado?: boolean
+    authStatus: string = ""
 }
