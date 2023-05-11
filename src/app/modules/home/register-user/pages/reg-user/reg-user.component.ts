@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Carrera } from 'src/app/core/models/carrera';
+import { UserFenix } from 'src/app/core/models/user-fenix';
 import { Usuario } from 'src/app/core/models/usuario';
 import { RegisterUserService } from 'src/app/core/services/register-user.service';
+import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
 
 @Component({
   selector: 'app-reg-user',
@@ -12,6 +15,8 @@ import { RegisterUserService } from 'src/app/core/services/register-user.service
 export class RegUserComponent implements OnInit {
 
   usuario: Usuario = new Usuario;
+  estudiante: UserFenix = new UserFenix;
+  carrera: Carrera = new Carrera;
 
   verfCedula: any;
   verfNombre: any;
@@ -24,9 +29,10 @@ export class RegUserComponent implements OnInit {
   expCorreo: RegExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   valCorreo: boolean = true;
 
-  constructor(private toastr: ToastrService, private router: Router, private userService: RegisterUserService) { }
+  constructor(private toastr: ToastrService, private router: Router, private userService: RegisterUserService, private fenixService: UsersfenixService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+
     this.cleanCampos();
   }
 
@@ -105,17 +111,58 @@ export class RegUserComponent implements OnInit {
 
       this.toastr.warning("Verifique que esten correctos los campos")
     } else {
-      console.log('llego pero no entro');
-      this.userService.signUp(this.usuario).subscribe(
+      /*  console.log('llego pero no entro'); */
+      this.usuario.activo = true;
+      this.estudiante.periodo = this.usuario.periodo;
+      this.estudiante.ciclo = this.usuario.ciclo;
+      this.estudiante.idEstudiante = this.usuario.id_estudiante;
+      this.estudiante.horasCumplidas = this.usuario.horasCumplidas;
+      this.estudiante.prioridad = true;
+      this.estudiante.carrera = this.carrera;
+      this.estudiante.usuario = this.usuario;
+      console.log(this.estudiante);
+      this.userService.registerStudent(this.estudiante).subscribe(
         (result) => {
           console.log('llego y entro');
           console.log(result);
-          //this.usuario = result;
           this.toastr.success('Usuario registrado correctamente', 'Bienvenido!')
           this.router.navigate(['/login'])
         }
       )
+    };
+  }
+
+  buscarCedulaCompleta() {
+    if (this.usuario.cedula.length === 10) {
+      this.buscarEstudiantes();
+    } else {
+      this.usuario.nombre = '';
+      this.usuario.apellido = '';
+      this.usuario.correo = '';
+      this.usuario.titulo = '';
+      this.usuario.telefono = '';
+      this.usuario.password = '';
     }
   }
 
+  buscarEstudiantes() {
+    this.fenixService.searchStudent(this.usuario.cedula).subscribe(
+      (data: UserFenix) => {
+        this.usuario.nombre = data.nombres;
+        this.usuario.apellido = data.apellidos;
+        this.usuario.correo = data.correo;
+        this.usuario.titulo = data.titulo;
+        this.usuario.telefono = data.telefono;
+        this.usuario.id_estudiante = data.alumno_docenteId;
+        this.usuario.periodo = data.periodo;
+        this.usuario.ciclo = data.ciclo;
+        this.usuario.horasCumplidas = data.horasCumplidas;
+        //this.estudiante = data;
+        console.log(data);
+        console.log(this.usuario);
+      }, (error) => {
+        this.toastr.error(error.error.Mensaje, "Error!");
+      }
+    );
+  }
 }

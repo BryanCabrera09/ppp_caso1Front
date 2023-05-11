@@ -93,6 +93,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 @NgModule({
   declarations: [
@@ -190,6 +191,8 @@ import { ToastrModule } from 'ngx-toastr';
     TreeTableModule,
     AnimateModule,
     CardModule,
+    KeyFilterModule,
+    DialogModule
   ]
 })
 export class AceptacionPracticasDirectorModule { }

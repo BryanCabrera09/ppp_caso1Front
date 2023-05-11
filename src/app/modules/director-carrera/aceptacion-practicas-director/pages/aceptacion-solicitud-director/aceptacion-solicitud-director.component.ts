@@ -6,6 +6,9 @@ import { SolipracticantesService } from 'src/app/core/services/solipracticantes.
 //PrimeNg Imports
 import { Table } from 'primeng/table';
 import Swal from 'sweetalert2';
+import { Convocatoria } from 'src/app/core/models/convocatoria';
+import { Usuario } from 'src/app/core/models/usuario';
+import { UserFenix } from 'src/app/core/models/user-fenix';
 
 @Component({
   selector: 'app-aceptacion-solicitud-director',
@@ -16,7 +19,16 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
 
   practicantes: Practicante[] = [];
 
+  convocatoria = new Convocatoria;
   practestudiant = new Practicante;
+
+  usuario = new Usuario;
+  estudiante = new UserFenix;
+
+  estado: string;
+  estadoaprov: string;
+  id: number;
+  displayEU: boolean = false;
 
   loading: boolean = true;
   statuses: any[] = [];
@@ -32,16 +44,22 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   }
 
   obtenerSolicitudes() {
-    this.solicitudService.getPostulantes().subscribe(
+    const convocatoria: Convocatoria = { id: 1 };
+    this.solicitudService.getPostulantes(convocatoria).subscribe(
       data => {
         this.practicantes = data.map(
           result => {
             let practicante = new Practicante;
-            practicante.cedula = result.cedula;
-            practicante.nombre = result.nombre;
-            practicante.apellido = result.apellido;
-            practicante.ciclo = result.ciclo;
+            practicante.cedula = result.estudiante.usuario.cedula;
+            practicante.nombre = result.estudiante.usuario.nombre;
+            practicante.apellido = result.estudiante.usuario.apellido;
+            practicante.ciclo = result.estudiante.ciclo;
             practicante.id = result.id;
+            practicante.correo = result.estudiante.usuario.correo;
+            practicante.estado = result.estado;
+            this.usuario = result.estudiante.usuario;
+            this.estudiante = result.estudiante;
+            this.convocatoria = result.convocatoria;
             return practicante;
           }
         );
@@ -51,12 +69,54 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   }
 
   guardarPostulacion() {
-    this.solicitudService.create(this.practestudiant).subscribe(
+
+    if (this.estado === 'aprobado') {
+      this.practestudiant.estado = 4;
+    } else if (this.estado === 'desaprobado') {
+      this.practestudiant.estado = 3;
+    }
+
+    this.practestudiant.fechaEnvio = new Date();
+
+    console.log(this.practestudiant.estado);
+    this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(
       result => {
         console.log(result);
         Swal.fire('Aprobacion', 'Aprobacion Registrada', 'success');
+        this.limpiar();
         this.router.navigate(['/dashboard'])
       }
     )
+  }
+
+  editarPracticante(practicante: Practicante) {
+
+    this.displayEU = true;
+
+    this.practestudiant.cedula = practicante.cedula;
+    this.practestudiant.nombre = practicante.nombre;
+    this.practestudiant.apellido = practicante.apellido;
+    this.practestudiant.ciclo = practicante.ciclo;
+    this.practestudiant.correo = practicante.correo;
+    this.practestudiant.id = practicante.id;
+    this.practestudiant.estado = practicante.estado;
+    this.practestudiant.usuario = this.usuario;
+    this.practestudiant.estudiante = this.estudiante;
+    this.practestudiant.convocatoria = this.convocatoria;
+  }
+
+  cancelar() {
+    this.limpiar();
+  }
+
+  limpiar() {
+    this.displayEU = false;
+    this.convocatoria = new Convocatoria;
+    this.usuario = new Usuario;
+    this.estudiante = new UserFenix;
+
+    this.loading = true;
+    this.practicantes = [];
+    this.obtenerSolicitudes();
   }
 }
