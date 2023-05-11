@@ -82,6 +82,6 @@ export class RegTutorComponent implements OnInit {
 
     doc.save('Designacion_tutor_especifico.pdf');
 
-  }
+  } 
 
 }
