@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ejemplo de tabla con botones</title>
+    <title>Convocatorias</title>
 
   </head>
   <body>
@@ -12,29 +12,17 @@
     <table>
       <tr>
         <th>EMPRESAS</th>
-        <th>POSTULACION</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Postular</th>
       </tr>
-      <tr>
-   
-        <td>La favorita SA</td>
-        <td><button (click)="createPDF()">Visualisar</button></td>
+      <tr *ngFor="let convocatoriap of convocatoriap">
+        <td>{{convocatoriap.solicitudEmpresa.convenio.empresa.nombre}}</td>
+        <td>{{convocatoriap.fechaInicio}}</td>
+        <td>{{convocatoriap.fechaFin}}</td>
+        <td><button (click)="createPdf()">Visualisar</button></td>
       </tr>
-      <tr>
-        <td>TecEmpresa</td>
-        <td><button (click)="createPDF()">Visualisar</button></td>
-      </tr>
-      <tr>
-        <td>PochisCompany SA</td>
-        <td><button (click)="createPDF()">Visualisar</button></td>
-      </tr>
-      <tr>
-        <td>RodolfoCompany NA</td>
-        <td><button (click)="createPDF()">Visualisar</button></td>
-      </tr>
-      <tr>
-        <td>EmpresaEmpresarialdeEmpresas SA</td>
-        <td><button (click)="createPDF()">Visualisar</button></td>
-      </tr>
+    
     </table>
   </body>
 </html>

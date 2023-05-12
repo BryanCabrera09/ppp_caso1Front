@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Usuario } from '../models/usuario';
 import baserUrl from '../helpers/helperUrl';
+import { UserFenix } from '../models/user-fenix';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,11 @@ export class RegisterUserService {
 
   constructor(private http: HttpClient) { }
 
-  signUp(usuario: any) {
-    return this.http.post/* <Usuario> */(this.AuthUrl + 'crear', usuario);
+  registerStudent(student: UserFenix) {
+    return this.http.post(this.AuthUrl + 'register', student);
   }
+
+  /* signUp(usuario: Usuario) {
+    return this.http.post(this.AuthUrl + 'usuario/crear', usuario);
+  } */
 }

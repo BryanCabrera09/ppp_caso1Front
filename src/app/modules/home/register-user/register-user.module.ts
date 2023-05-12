@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { ToastrModule } from 'ngx-toastr';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
     PasswordModule,
     ButtonModule,
     ToastrModule.forRoot(),
+    KeyFilterModule
   ]
 })
 export class RegisterUserModule { }

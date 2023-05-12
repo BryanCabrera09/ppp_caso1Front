@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import pdfMake from 'pdfmake/build/pdfMake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vsf;
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import pdfMake from 'pdfmake';
+import { Router } from '@angular/router';
+import { Convocatoria } from 'src/app/core/models/convocatoria';
+import { ConvocatoriaService } from './convocatoria.service';
+import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
+
 
 @Component({
   selector: 'app-seleccion',
@@ -9,21 +13,34 @@ pdfMake.vfs = pdfFonts.pdfMake.vsf;
   styleUrls: ['./seleccion.component.css']
 })
 export class SeleccionComponent implements OnInit {
+
+  convocatoria:Convocatoria[];
+  convocatoriap:ConvocatoriaP[];
+
+  constructor(private convocatoriaService:ConvocatoriaService){}
   
+  private obtenerConvocatoria(){
+    this.convocatoriaService.obtenerConvocatoria().subscribe(dato =>{this.convocatoriap=dato;})
+  }
+ 
   ngOnInit() {
+    this.obtenerConvocatoria();
   }
 
-  createPDF(){
-    const pdfDefinition: any ={
+  createPdf(){
+  const pdfDefinition: any= {
     content:[
       {
         text:'hola mundo'
       }
     ]
   }
-  const pdf= pdfMake.createPDF(pdfDefinition);
+
+  const pdf= pdfMake.createPdf(pdfDefinition);
   pdf.open();
-  }
+}
+
+
 }
 
 

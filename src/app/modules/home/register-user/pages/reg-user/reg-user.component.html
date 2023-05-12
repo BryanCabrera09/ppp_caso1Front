@@ -19,15 +19,16 @@
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
                                         <input id="float-input" type="text" class={{verfCedula}}
-                                            [(ngModel)]="usuario.cedula" placeholder="Ingrese Número de Cédula"
-                                            pInputText>
+                                            [(ngModel)]="usuario.cedula" [pKeyFilter]="'int'" maxlength="13"
+                                            minlength="10" (ngModelChange)="buscarCedulaCompleta()"
+                                            placeholder="Ingrese Número de Cédula" pInputText>
                                         <label for="float-input">Número de Cédula</label>
                                     </span>
                                 </div>
 
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
-                                        <input id="float-input" type="text" class={{verfNombre}}
+                                        <input id="float-input" type="text" class={{verfNombre}} disabled="true"
                                             [(ngModel)]="usuario.nombre" placeholder="Ingrese Nombres Completos"
                                             pInputText>
                                         <label for="float-input">Nombres</label>
@@ -36,7 +37,7 @@
 
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
-                                        <input id="float-input" type="text" class={{verfTitulo}}
+                                        <input id="float-input" type="text" class={{verfTitulo}} disabled="true"
                                             [(ngModel)]="usuario.titulo" placeholder="Ingrese su Título" pInputText>
                                         <label for=" float-input">Título</label>
                                     </span>
@@ -54,7 +55,7 @@
                             <div class="col">
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
-                                        <input id="float-input" type="email" class={{verfCorreo}}
+                                        <input id="float-input" type="email" class={{verfCorreo}} disabled="true"
                                             [(ngModel)]="usuario.correo" (ngModelChange)="validarCorreo()"
                                             placeholder="Ingrese Dirección de Email" pInputText>
                                         <label for=" float-input">Correo Electrónico</label>
@@ -63,7 +64,7 @@
 
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
-                                        <input id="float-input" type="text" class={{verfApellido}}
+                                        <input id="float-input" type="text" class={{verfApellido}} disabled="true"
                                             [(ngModel)]="usuario.apellido" placeholder="Ingrese Apellidos Completos"
                                             pInputText>
                                         <label for=" float-input">Apellidos</label>
@@ -72,7 +73,7 @@
 
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
-                                        <input id="float-input" type="text" class={{verfTelefono}}  
+                                        <input id="float-input" type="text" class={{verfTelefono}} disabled="true"
                                             [(ngModel)]="usuario.telefono" placeholder=" Ingrese Número Telefónico"
                                             pInputText>
                                         <label for=" float-input">Número de Teléfono</label>
