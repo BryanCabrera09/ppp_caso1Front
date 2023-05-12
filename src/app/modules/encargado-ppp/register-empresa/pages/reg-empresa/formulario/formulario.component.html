@@ -4,6 +4,14 @@
 
     <form #reg="ngForm" (ngSubmit)="crearempresa(reg)">
         <div class="col- ig-12 col-md-11">
+
+            <div class="row mb-3">
+                
+                <div class="col-sm">
+                    <input type="hidden" #id class="form-control"  style="width: 200%;" name="RUC" [(ngModel)]="Empresa.id" required>
+        
+                </div>
+            </div>
            
             <div class="row mb-3">
                 <label for="Codigo DEWEY" class="col-sm col-form-label">
@@ -64,11 +72,29 @@
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <label for="Codigo DEWEY" class="col-sm col-form-label" *ngIf="boton">
+                    <h4>Estado</h4>
+                </label>
+                <div class="col-sm">
+                    <div class="form-group" *ngIf="boton">
+                        <select class="form-select" name="disponibilidad" [(ngModel)]="Empresa.activo" required>
+                          <option value="true">Activo</option>
+                          <option value="false">Inactivo</option>
+                        </select>
+                      </div>
+        
+                </div>
+            </div>
+
         </div>
 
-        <button type="submit" class="crear"> Guardar</button>
+        
 
+        <button type="submit"  *ngIf="!boton" class="crear"> Guardar</button>
+       
     </form>
+    <button (click)="guardarEdit(Empresa.id, Empresa)" *ngIf="boton" class="crear"> Editar</button>
 
 </div>
 
