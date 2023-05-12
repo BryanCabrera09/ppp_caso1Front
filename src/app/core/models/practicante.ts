@@ -1,5 +1,5 @@
 import { Convocatoria } from "./convocatoria";
-import { UserFenix } from "./user-fenix";
+import { Estudiante } from "./estudiante";
 import { Usuario } from "./usuario";
 
 export class Practicante {
@@ -14,6 +14,6 @@ export class Practicante {
     fechaEnvio: Date;
     idConvocatoria: number;
     usuario: Usuario;
-    estudiante: UserFenix;
+    estudiante: Estudiante;
     convocatoria: Convocatoria;
 }

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Convocatoria } from 'src/app/core/models/convocatoria';
 import { Usuario } from 'src/app/core/models/usuario';
-import { UserFenix } from 'src/app/core/models/user-fenix';
+import { Estudiante } from 'src/app/core/models/estudiante';
 
 import { PrimeIcons } from 'primeng/api';
 
@@ -26,7 +26,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
   practestudiant = new Practicante;
 
   usuario = new Usuario;
-  estudiante = new UserFenix;
+  estudiante = new Estudiante;
 
   estado: string;
   estadoaprov: string;
@@ -103,7 +103,6 @@ export class AceptacionSolicitudesComponent implements OnInit {
     this.practestudiant.ciclo = practicante.ciclo;
     this.practestudiant.correo = practicante.correo;
     this.practestudiant.id = practicante.id;
-    this.practestudiant.estado = practicante.estado;
     this.practestudiant.usuario = this.usuario;
     this.practestudiant.estudiante = this.estudiante;
     this.practestudiant.convocatoria = this.convocatoria;
@@ -117,7 +116,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
     this.displayEU = false;
     this.convocatoria = new Convocatoria;
     this.usuario = new Usuario;
-    this.estudiante = new UserFenix;
+    this.estudiante = new Estudiante;
 
     this.loading = true;
     this.practicantes = [];

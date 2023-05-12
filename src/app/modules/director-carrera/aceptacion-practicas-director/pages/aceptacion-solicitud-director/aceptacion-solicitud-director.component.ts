@@ -8,7 +8,7 @@ import { Table } from 'primeng/table';
 import Swal from 'sweetalert2';
 import { Convocatoria } from 'src/app/core/models/convocatoria';
 import { Usuario } from 'src/app/core/models/usuario';
-import { UserFenix } from 'src/app/core/models/user-fenix';
+import { Estudiante } from 'src/app/core/models/estudiante';
 
 @Component({
   selector: 'app-aceptacion-solicitud-director',
@@ -23,7 +23,7 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   practestudiant = new Practicante;
 
   usuario = new Usuario;
-  estudiante = new UserFenix;
+  estudiante = new Estudiante;
 
   estado: string;
   estadoaprov: string;
@@ -113,7 +113,7 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
     this.displayEU = false;
     this.convocatoria = new Convocatoria;
     this.usuario = new Usuario;
-    this.estudiante = new UserFenix;
+    this.estudiante = new Estudiante;
 
     this.loading = true;
     this.practicantes = [];

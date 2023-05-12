@@ -7,12 +7,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CarreraMateriaService {
 
-  private searchUrl = `${baserUrl}/fenix`;
+  private searchUrl = `${baserUrl}/carrera`;
 
   constructor(private http: HttpClient) { }
 
   searchCarrera(id: number) {
-    return this.http.get(`${this.searchUrl}/listarcarreras/${id}`);
+    return this.http.get(`${this.searchUrl}/buscar/${id}`);
   }
 
 }
