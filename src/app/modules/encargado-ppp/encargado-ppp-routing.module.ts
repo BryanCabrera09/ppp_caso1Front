@@ -19,6 +19,11 @@ const routes: Routes = [
     loadChildren: () => import("./register-tutor/register-tutor.module").then(m => m.RegisterTutorModule)
 
   },
+  {
+    path: 'objetivos',
+    loadChildren: () => import("./registrar-objetivos/registrar-objetivos.module").then(m => m.RegistrarObjetivosModule)
+
+  },
 
 ];
 
