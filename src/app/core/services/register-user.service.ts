@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import baserUrl from '../helpers/helperUrl';
-import { UserFenix } from '../models/user-fenix';
+import { Estudiante } from '../models/estudiante';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class RegisterUserService {
 
   private AuthUrl = `${baserUrl}/usuario/`;
 
+  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
+
   constructor(private http: HttpClient) { }
 
-  registerStudent(student: UserFenix) {
-    return this.http.post(this.AuthUrl + 'register', student);
+  registerStudent(estudiante: Estudiante) {
+    return this.http.post(this.AuthUrl + 'register', estudiante, { headers: this.httpHeaders });
   }
 
   /* signUp(usuario: Usuario) {

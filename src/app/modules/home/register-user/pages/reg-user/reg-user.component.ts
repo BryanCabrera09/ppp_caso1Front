@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Carrera } from 'src/app/core/models/carrera';
-import { UserFenix } from 'src/app/core/models/user-fenix';
+import { Estudiante } from 'src/app/core/models/estudiante';
 import { Usuario } from 'src/app/core/models/usuario';
+import { CarreraMateriaService } from 'src/app/core/services/carrera-materia.service';
 import { RegisterUserService } from 'src/app/core/services/register-user.service';
 import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reg-user',
@@ -15,7 +17,7 @@ import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
 export class RegUserComponent implements OnInit {
 
   usuario: Usuario = new Usuario;
-  estudiante: UserFenix = new UserFenix;
+  estudiante: Estudiante = new Estudiante;
   carrera: Carrera = new Carrera;
 
   verfCedula: any;
@@ -29,7 +31,7 @@ export class RegUserComponent implements OnInit {
   expCorreo: RegExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   valCorreo: boolean = true;
 
-  constructor(private toastr: ToastrService, private router: Router, private userService: RegisterUserService, private fenixService: UsersfenixService) { }
+  constructor(private toastr: ToastrService, private router: Router, private userService: RegisterUserService, private fenixService: UsersfenixService, private carreraService: CarreraMateriaService) { }
 
   ngOnInit() {
 
@@ -111,24 +113,23 @@ export class RegUserComponent implements OnInit {
 
       this.toastr.warning("Verifique que esten correctos los campos")
     } else {
-      /*  console.log('llego pero no entro'); */
-      this.usuario.activo = true;
       this.estudiante.periodo = this.usuario.periodo;
       this.estudiante.ciclo = this.usuario.ciclo;
-      this.estudiante.idEstudiante = this.usuario.id_estudiante;
-      this.estudiante.horasCumplidas = this.usuario.horasCumplidas;
-      this.estudiante.prioridad = true;
-      this.estudiante.carrera = this.carrera;
+      this.estudiante.idEstudiante = this.usuario.idEstudiante;
+      this.estudiante.horasCumplidas = 0;
+      this.estudiante.prioridad = false;
+      this.usuario.activo = true;
       this.estudiante.usuario = this.usuario;
+      this.estudiante.carrera = this.carrera;
       console.log(this.estudiante);
       this.userService.registerStudent(this.estudiante).subscribe(
         (result) => {
           console.log('llego y entro');
           console.log(result);
-          this.toastr.success('Usuario registrado correctamente', 'Bienvenido!')
+          Swal.fire('Registro', 'Usuario registrado correctamente', 'success');
           this.router.navigate(['/login'])
         }
-      )
+      );
     };
   }
 
@@ -147,19 +148,29 @@ export class RegUserComponent implements OnInit {
 
   buscarEstudiantes() {
     this.fenixService.searchStudent(this.usuario.cedula).subscribe(
-      (data: UserFenix) => {
+      (data: Estudiante) => {
         this.usuario.nombre = data.nombres;
         this.usuario.apellido = data.apellidos;
         this.usuario.correo = data.correo;
         this.usuario.titulo = data.titulo;
         this.usuario.telefono = data.telefono;
-        this.usuario.id_estudiante = data.alumno_docenteId;
+        this.usuario.idEstudiante = data.alumno_docenteId;
         this.usuario.periodo = data.periodo;
         this.usuario.ciclo = data.ciclo;
-        this.usuario.horasCumplidas = data.horasCumplidas;
-        //this.estudiante = data;
-        console.log(data);
-        console.log(this.usuario);
+        this.carrera.carreraId = data.carreraId;
+        /* console.log(data);
+        console.log(this.carrera.carreraId); */
+        this.carreraService.searchCarrera(this.carrera.carreraId).subscribe(
+          (data: Carrera) => {
+            this.carrera.nombre = data.nombre;
+            this.carrera.id = data.id;
+            this.carrera.activo = data.activo;
+            /* console.log(data);
+            console.log(this.carrera); */
+          }, (error) => {
+            this.toastr.error(error.error.Mensaje, "Error!");
+          }
+        );
       }, (error) => {
         this.toastr.error(error.error.Mensaje, "Error!");
       }

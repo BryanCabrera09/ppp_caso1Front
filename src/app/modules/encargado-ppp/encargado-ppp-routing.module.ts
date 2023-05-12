@@ -20,10 +20,17 @@ const routes: Routes = [
 
   },
   {
+
     path: 'actividades',
     loadChildren: () => import("./actividades-propuestas/actividades-propuestas.module").then(m => m.ActividadesPropuestasModule)
 
+  },
+   {
+    path: 'objetivos',
+    loadChildren: () => import("./registrar-objetivos/registrar-objetivos.module").then(m => m.RegistrarObjetivosModule)
+
   }
+
 
 ];
 

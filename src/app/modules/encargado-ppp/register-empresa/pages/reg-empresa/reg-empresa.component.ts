@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { empresa } from '../../empresa';
+import { Empresa } from 'src/app/core/models/empresa';
 import { RegEmpresaServiceService } from '../../reg-empresa-service.service';
 @Component({
   selector: 'app-reg-empresa',
@@ -10,7 +10,7 @@ export class RegEmpresaComponent implements OnInit{
 
   
 
-  Empresas: empresa[]= [];
+  Empresas: Empresa[]= [];
 
   constructor(private EmpresaService: RegEmpresaServiceService){}
 
@@ -19,6 +19,11 @@ export class RegEmpresaComponent implements OnInit{
       empresa => this.Empresas = empresa
     );
 
+  }
+
+  traerid(id:any){
+    const idemp = id 
+    localStorage.setItem('IdEmpresa', JSON.stringify(idemp))
   }
 
 }
