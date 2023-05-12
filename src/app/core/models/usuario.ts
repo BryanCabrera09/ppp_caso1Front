@@ -14,4 +14,15 @@ export class Usuario {
     alumno_docenteId: number;
     periodo: string;
     horasCumplidas: number;
+
+
+    /* nombre: string = ""
+    apellido: string = ""
+    cedula: string = ""
+    titulo: string = ""
+    telefono: string = ""
+    correo: string = ""
+    password: string = "" */
+    estado?: boolean
+    authStatus: string = ""
 }

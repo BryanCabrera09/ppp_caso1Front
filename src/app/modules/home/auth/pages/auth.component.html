@@ -2,10 +2,25 @@
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-        <div class="form-box ">
-            <div class="form-value">
-                <form [formGroup]="formLogin" #formLogIn="ngForm">
-
+        <!-- auth.component.html -->
+        <div class="auth-container">
+            <h1>Welcome to Auth</h1>
+            <form #loginForm="ngForm" (ngSubmit)="validateUser(loginForm)">
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" [(ngModel)]="model.correo" required>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" [(ngModel)]="model.password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>{{ authStatus }}</p>
+        </div>
+        <div>
+            <div>
+                <form>
                     <h2>Login</h2>
                     <div class="inputbox">
                         <!-- <ion-icon name="mail-outline"></ion-icon> -->
@@ -46,7 +61,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 
 </section>

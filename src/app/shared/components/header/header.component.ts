@@ -2,6 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { languages, notifications, userItems } from './header-dummy-data';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Usuario } from 'src/app/core/models/usuario';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,8 @@ export class HeaderComponent implements OnInit {
 
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+
+  user = new Usuario();
 
   isLogged: Boolean = false;
 
@@ -38,15 +41,19 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.usuarioLogueado();
+    if(sessionStorage.getItem('userdetails')){
+      this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
+    }
 
-    this.checkCanShowSearchAsOverlay(window.innerWidth);
+    // this.usuarioLogueado();
 
-    this.selectedLanguage = this.languages[0];
+    // this.checkCanShowSearchAsOverlay(window.innerWidth);
 
-    let token = sessionStorage.getItem("token") as string;
-    this.objetounico = this.decodificarJwt(token);
-    console.log("mi objecto", this.objetounico);
+    // this.selectedLanguage = this.languages[0];
+
+    // let token = sessionStorage.getItem("token") as string;
+    // this.objetounico = this.decodificarJwt(token);
+    // console.log("mi objecto", this.objetounico);
   }
 
   private decodificarJwt(token: string): any {
@@ -83,22 +90,21 @@ export class HeaderComponent implements OnInit {
   }
 
   usuarioLogueado() {
-    this.authService.getInfoUsuarioLoggeado().subscribe(res => {
-      if (res != null) {
-        this.logueado = true;
-        this.usuario = res;
-      }
-      else {
-        this.logueado = false;
-      }
-    });
+    // this.authService.getInfoUsuarioLoggeado().subscribe(res => {
+    //   if (res != null) {
+    //     this.logueado = true;
+    //     this.usuario = res;
+    //   }
+    //   else {
+    //     this.logueado = false;
+    //   }
+    // });
   }
 
   logOut(): void {
-    this.authService.logOut().then(res => {
-      this.logueado = false;
-      this.router.navigate(["/"]);
-    });
+    window.sessionStorage.setItem("userdetails","");
+    window.sessionStorage.setItem("XSRF-TOKEN","");
+    this.router.navigate(['/login']);
   }
 
   /* logOut() {

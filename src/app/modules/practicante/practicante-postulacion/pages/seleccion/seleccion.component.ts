@@ -6,6 +6,8 @@ import { Convocatoria } from 'src/app/core/models/convocatoria';
 import { ConvocatoriaService } from './convocatoria.service';
 import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
 
+//import pdfMake from 'pdfmake/build/pdfMake';
+// pdfMake.vfs = pdfFonts.pdfMake.vsf;
 
 @Component({
   selector: 'app-seleccion',
@@ -41,6 +43,9 @@ export class SeleccionComponent implements OnInit {
 }
 
 
+  // const pdf= pdfMake.createPDF(pdfDefinition);
+  // pdf.open();
+  }
 }
 
 

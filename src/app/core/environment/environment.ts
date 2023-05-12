@@ -9,4 +9,6 @@ export const environment = {
         messagingSenderId: "92223375367",
         appId: "1:92223375367:web:21e04744a90d039b4fc2a2"
     },
+    rooturl : 'http://localhost:8080'
+
 };
