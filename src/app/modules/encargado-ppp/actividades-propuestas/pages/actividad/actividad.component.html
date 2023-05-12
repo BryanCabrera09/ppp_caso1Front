@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>actividaades propuestas</title>
+
+  </head>
+  <body>
+    <div>
+        <h1>Actividades a propuestas</h1>
+        <p>Actividades a presentar:</p>
+    </div>
+    <table>
+      <tr>
+        <th>EMPRESA</th>
+        <th>Actividad propuesta</th>
+        <th>Visualizar
+        </th>
+    
+      </tr>
+      <tr *ngFor="let actividad of actividad">
+        <td>{{actividad.solicitudEmpresa.convenio.empresa.nombre}}</td>
+        <td>{{actividad.descripcion}}</td>
+        <td><button>Visualisar</button></td>
+        
+      </tr>
+    
+    </table>
+  </body>
+</html>

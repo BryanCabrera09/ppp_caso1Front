@@ -20,7 +20,7 @@
         <td>{{convocatoriap.solicitudEmpresa.convenio.empresa.nombre}}</td>
         <td>{{convocatoriap.fechaInicio}}</td>
         <td>{{convocatoriap.fechaFin}}</td>
-        <td><button (click)="createPdf()">Visualisar</button></td>
+        <td><button [routerLink]="['../vista/'+ convocatoriap.solicitudEmpresa.id]">Visualisar</button></td>
       </tr>
     
     </table>
