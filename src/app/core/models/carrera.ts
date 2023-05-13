@@ -1,9 +1,7 @@
 export class Carrera {
 
-
-    carreraId?: number;
-    nombre?: string;
-    tipo?: number;
-    ciclo?: number;
-
+    id: number;
+    carreraId: number;
+    nombre: string;
+    activo: boolean;
 }

@@ -27,28 +27,6 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  /* loginUser(loginForm: NgForm) {
-    if (this.usuario.correo !== '' || this.usuario.correo !== null && this.usuario.password !== '' || this.usuario.password !== null) {
-      this.loginService.validateLoginDetails(this.usuario).subscribe(
-        responseData => {
-          console.log('llego');
-          window.sessionStorage.setItem("Authorization", responseData.headers.get('Authorization')!);
-          console.log('llego hasta');
-          this.usuario = <any>responseData.body;
-          this.usuario.authStatus = 'AUTH';
-          console.log('llego hasta ac');
-          let xsrf = getCookie('XSRF-TOKEN');
-          if (xsrf !== undefined) {
-            window.sessionStorage.setItem("XSRF-TOKEN", xsrf);
-          }
-          console.log(xsrf);
-          window.sessionStorage.setItem("userdetails", JSON.stringify(this.usuario));
-          this.router.navigate(['director-carrera']);
-        }
-      );
-    }
-  } */
-
   loginUser(loginForm: NgForm) {
     this.loginService.validateLoginDetails(this.usuario).subscribe(
       responseData => {
