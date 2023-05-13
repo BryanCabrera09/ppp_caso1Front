@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Usuario } from 'src/app/core/models/usuario';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { getCookie } from 'typescript-cookie';
+import jwt_decode from 'jwt-decode';
 
 
 //Google imports
@@ -30,15 +31,21 @@ export class AuthComponent implements OnInit {
   validateUser(loginForm: NgForm) {
     this.loginService.validateLoginDetails(this.model).subscribe(
       responseData => {
-        window.sessionStorage.setItem("Authorization", responseData.headers.get('Authorization')!);
-        this.model = <any> responseData.body;
-        this.model.authStatus = 'AUTH';
-        window.sessionStorage.setItem("userdetails",JSON.stringify(this.model));
-        let xsrf = getCookie('XSRF-TOKEN')!;
-        window.sessionStorage.setItem("XSRF-TOKEN",xsrf);
-        this.router.navigate(['director-carrera']);
-      });
-
+        const authorizationHeader = responseData.headers.get('Authorization');
+        if (authorizationHeader) {
+          window.sessionStorage.setItem('Authorization', authorizationHeader);
+          const decodedToken: any = jwt_decode(authorizationHeader); // Decode the JWT
+          const role = decodedToken.authorities; // Assuming the role is stored in the 'role' field of the JWT payload
+          localStorage.setItem("roles", role)
+          this.model = <any>responseData.body;
+          this.model.authStatus = 'AUTH';
+          window.sessionStorage.setItem('userdetails', JSON.stringify(this.model));
+          const xsrf = getCookie('XSRF-TOKEN')!;
+          window.sessionStorage.setItem('XSRF-TOKEN', xsrf);
+          this.router.navigate(['director-carrera']);
+        }
+      }
+    );
   }
 
 
