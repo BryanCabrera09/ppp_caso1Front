@@ -16,4 +16,5 @@ export class Practicante {
     usuario: Usuario;
     estudiante: Estudiante;
     convocatoria: Convocatoria;
+
 }

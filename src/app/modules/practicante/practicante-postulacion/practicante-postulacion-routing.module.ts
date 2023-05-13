@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PostulacionComponent } from './pages/postulacion/postulacion.component';
 import { SeleccionComponent } from './pages/seleccion/seleccion.component';
+import { VistaComponent } from './pages/vista/vista.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'seleccion-empresa',
     component: SeleccionComponent,
+  },
+  {
+    path: 'vista/:id',
+    component: VistaComponent,
   }
 ];
 

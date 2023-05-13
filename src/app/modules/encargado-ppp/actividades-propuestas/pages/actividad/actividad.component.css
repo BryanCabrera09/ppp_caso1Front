@@ -19,6 +19,10 @@ table {
     width: 10%;
   }
   
+  th:first-child, td:first-child {
+    max-width: 100px;
+  }
+  
   th {
     background-color: #f2f2f2;
   }
@@ -41,5 +45,4 @@ table {
   button:hover {
     background-color: #83f8b6;
   }
-
   

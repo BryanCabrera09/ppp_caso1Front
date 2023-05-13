@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vista</title>
+
+</head>
+<body>
+	<div class="container">
+		<h1 class="centered">Convocatoria Prácticas Pre Profesionales</h1>
+
+		<h2 class="empresa" *ngFor="let actividad of actividad">{{actividad.solicitudEmpresa.convenio.empresa.nombre}}</h2>
+		<p *ngFor="let actividad of actividad">Se convoca a los estudiantes de la carrera <b>{{actividad.materia.carrera.nombre}}</b>  que deseen realizar sus prácticas pre profesionales en la empresa: {{actividad.solicitudEmpresa.convenio.empresa.nombre}} a presentar la solicitud correspondiente</p>
+
+		<h2>Actividades:</h2>
+		<table>
+			<tr *ngFor="let actividad of actividad">
+				<td>{{actividad.descripcion}}</td>
+			</tr>
+		</table>
+
+		<h2>Requisitos:</h2>
+		<table>
+			<tr *ngFor="let actividad of actividad">
+				<td>{{actividad.materia.nombre}}</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="button-container">
+		<button>Postular</button>
+	</div>
+</body>
+</html>
