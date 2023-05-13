@@ -164,7 +164,7 @@ export class RegUserComponent implements OnInit {
           (data: Carrera) => {
             this.carrera.nombre = data.nombre;
             this.carrera.id = data.id;
-            this.carrera.activo = data.activo;
+           this.carrera.activo = data.activo;
             /* console.log(data);
             console.log(this.carrera); */
           }, (error) => {

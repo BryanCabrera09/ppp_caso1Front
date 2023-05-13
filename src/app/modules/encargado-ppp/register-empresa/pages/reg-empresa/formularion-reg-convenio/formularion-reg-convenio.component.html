@@ -1,0 +1,80 @@
+
+<div class="card">
+    <h2>Registro de Convenio</h2>
+
+    <form #reg="ngForm" >
+        <div class="col- ig-12 col-md-11">
+
+            <div class="row mb-3">
+                
+                <div class="col-sm">
+                    <input type="hidden" #empresaid class="form-control"  style="width: 200%;" name="impresaid"  required>
+        
+                </div>
+            </div>
+           
+            <div class="row mb-3">
+                <label for="Codigo DEWEY" class="col-sm col-form-label">
+                    <h4>N° de Convenio:</h4>
+                </label>
+                <div class="col-sm">
+                    <input type="text"  class="form-control" style="width: 200%;" name="RUC"  required>
+        
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="Codigo DEWEY" class="col-sm col-form-label">
+                    <h4>Fecha Inicio</h4>
+                </label>
+                <div class="col-sm">
+                    <input type="date"  class="form-control" style="width: 200%;" name="Empresa"  required>
+        
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="Codigo DEWEY" class="col-sm col-form-label">
+                    <h4>Fecha Fin</h4>
+                </label>
+                <div class="col-sm">
+                    <input type="date"  class="form-control" style="width: 200%;" name="Matriz"  required>
+        
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <label for="Codigo DEWEY" class="col-sm col-form-label" >
+                    <h4>Empresa</h4>
+                </label>
+                <div class="col-sm">
+                    <div class="form-group" >
+                        <select class="form-select" name="disponibilidad"  required>
+                          <option value="true">Activo</option>
+                          <option value="false">Inactivo</option>
+                        </select>
+                      </div>
+        
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="Codigo DEWEY" class="col-sm col-form-label">
+                    <h4>PDF</h4>
+                </label>
+                <div class="col-sm">
+                    <input type="file"  class="form-control" style="width: 200%;" name="Matriz"  required>
+        
+                </div>
+            </div>
+
+        </div>
+
+        
+
+        <button type="submit"   class="crear"> Guardar</button>
+       
+    </form>
+
+</div>
+

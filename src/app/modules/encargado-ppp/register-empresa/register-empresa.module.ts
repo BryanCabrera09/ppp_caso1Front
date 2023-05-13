@@ -6,6 +6,7 @@ import { RegEmpresaComponent } from './pages/reg-empresa/reg-empresa.component';
 import { FormsModule } from '@angular/forms';
 import { FormularioComponent } from './pages/reg-empresa/formulario/formulario.component';
 import { NgProgressModule } from 'ngx-progressbar';
+import { FormularionRegConvenioComponent } from './pages/reg-empresa/formularion-reg-convenio/formularion-reg-convenio.component';
 
 
 
@@ -13,6 +14,7 @@ import { NgProgressModule } from 'ngx-progressbar';
   declarations: [
     RegEmpresaComponent,
     FormularioComponent,
+    FormularionRegConvenioComponent,
     
    
   ],
