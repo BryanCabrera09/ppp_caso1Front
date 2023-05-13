@@ -16,40 +16,39 @@ import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
 })
 export class SeleccionComponent implements OnInit {
 
-  convocatoria:Convocatoria[];
-  convocatoriap:ConvocatoriaP[];
+  convocatoria: Convocatoria[];
+  convocatoriap: ConvocatoriaP[];
 
-  constructor(private convocatoriaService:ConvocatoriaService){}
-  
-  private obtenerConvocatoria(){
-    this.convocatoriaService.obtenerConvocatoria().subscribe(dato =>{this.convocatoriap=dato;})
+  constructor(private convocatoriaService: ConvocatoriaService) { }
+
+  private obtenerConvocatoria() {
+    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
   }
- 
+
   ngOnInit() {
     this.obtenerConvocatoria();
   }
 
-  createPdf(){
-  const pdfDefinition: any= {
-    content:[
-      {
-        text:'hola mundo'
-      }
-    ]
-  }
+  createPdf() {
+    const pdfDefinition: any = {
+      content: [
+        {
+          text: 'hola mundo'
+        }
+      ]
+    }
 
-  const pdf= pdfMake.createPdf(pdfDefinition);
-  pdf.open();
-}
+    const pdf = pdfMake.createPdf(pdfDefinition);
+    pdf.open();
+  }
 
 
   // const pdf= pdfMake.createPDF(pdfDefinition);
   // pdf.open();
-  }
 }
 
 
- 
+
 
 
 

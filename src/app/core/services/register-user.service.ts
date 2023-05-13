@@ -9,7 +9,7 @@ import { Estudiante } from '../models/estudiante';
 
 export class RegisterUserService {
 
-  private AuthUrl = `${baserUrl}/usuario/`;
+  private AuthUrl = `${baserUrl}/`;
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 
