@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { CommonModule, NgFor } from '@angular/common';
 import { Empresa } from 'src/app/core/models/empresa';
-import { RegEmpresaServiceService } from '../../../reg-empresa-service.service';
+
 import Swal from 'sweetalert2';
+import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
 
 @Component({
   selector: 'app-formulario',

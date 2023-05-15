@@ -1,4 +1,5 @@
 export class TutorAcademico {
+    id?: number
     fecha?: Date | undefined
     empresa?: string = ''
     responsable_ppp?: string = ''

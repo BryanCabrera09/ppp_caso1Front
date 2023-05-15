@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 import baserUrl from '../helpers/helperUrl';
 import { HttpClient } from '@angular/common/http';
+import { TutorAcademico } from '../models/tutor-academico';
 import { Observable } from 'rxjs';
-import { Carrera } from '../models/carrera';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarreraMateriaService {
+export class TutorAcademicoService {
 
-  private searchUrl = `${baserUrl}/carrera`;
+  private searchUrl = `${baserUrl}/tutorInstituto`;
 
   constructor(private http: HttpClient) { }
 
-  searchCarrera(id: number) {
+  searchTutor(id: number) {
     return this.http.get(`${this.searchUrl}/buscar/${id}`);
   }
-
-  ListarCarrera(): Observable<Carrera[]> {
-    return this.http.get<Carrera[]>(`${this.searchUrl}/listar`);
+  ListarTutor(): Observable<TutorAcademico[]> {
+    return this.http.get<TutorAcademico[]>(`${this.searchUrl}/listar`);
   }
 
 }

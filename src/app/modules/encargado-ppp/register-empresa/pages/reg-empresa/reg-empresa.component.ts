@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Empresa } from 'src/app/core/models/empresa';
-import { RegEmpresaServiceService } from '../../reg-empresa-service.service';
+import { RegEmpresaServiceService } from '../../../../../core/services/reg-empresa-service.service';
 @Component({
   selector: 'app-reg-empresa',
   templateUrl: './reg-empresa.component.html',
@@ -24,6 +24,13 @@ export class RegEmpresaComponent implements OnInit{
   traerid(id:any){
     const idemp = id 
     localStorage.setItem('IdEmpresa', JSON.stringify(idemp))
+  }
+
+  traerempresa(empresa: any){
+    const emp = empresa
+    localStorage.setItem('empresa', emp);
+
+    
   }
 
 }
