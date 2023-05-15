@@ -1,6 +1,4 @@
 export class Convocatoria {
-    id: number = 1;
    
-  
-  
+    id: number = 1;
 }

@@ -1,3 +1,4 @@
+import { Actividad } from "./actividad"
 import { Convenio } from "./convenio"
 
 export class SolicitudEmpresa {
@@ -6,8 +7,9 @@ export class SolicitudEmpresa {
     numPracticante?: string
     numHoras?: string
     fechaInicioTen?: string
-    estado?:boolean
+    estado?: boolean
 
-    convenio:Convenio
+    convenio: Convenio
+    actividad: Actividad
 
 }

@@ -18,8 +18,4 @@ export class RegisterUserService {
   registerStudent(estudiante: Estudiante) {
     return this.http.post(this.AuthUrl + 'register', estudiante, { headers: this.httpHeaders });
   }
-
-  /* signUp(usuario: Usuario) {
-    return this.http.post(this.AuthUrl + 'usuario/crear', usuario);
-  } */
 }

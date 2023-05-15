@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { getCookie } from 'typescript-cookie';
 
 import jwt_decode from 'jwt-decode';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -28,7 +29,14 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void { }
 
   loginUser(loginForm: NgForm) {
-    this.loginService.validateLoginDetails(this.usuario).subscribe(
+    this.loginService.validateLoginDetails(this.usuario).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          this.toastr.error('Credenciales incorrectas', 'Error de autenticación');
+        }
+        return throwError(error);
+      })
+    ).subscribe(
       responseData => {
         const authorizationHeader = responseData.headers.get('Authorization');
         if (authorizationHeader) {
@@ -43,8 +51,15 @@ export class AuthComponent implements OnInit {
           if (xsrf !== undefined) {
             window.sessionStorage.setItem("XSRF-TOKEN", xsrf);
           } //Arreglar que cuando ingrese con un segundo intento se cree el xsrf
-          console.log(xsrf);
-          this.router.navigate(['director-carrera']);
+
+          if (sessionStorage.getItem('userdetails')) {
+            this.usuario = JSON.parse(sessionStorage.getItem('userdetails')!);
+            const role = localStorage.getItem('roles');
+            if (role == 'ROLE_ESTUD') {
+              this.router.navigate(['/encargado-practicas']);
+            }
+            console.log(role);
+          }
         }
       }
     );
@@ -68,6 +83,10 @@ export class AuthComponent implements OnInit {
         console.log("No se ha podido hacer el log-in correctamente.");
       }
     });
+  }
+
+  createAccout() {
+    this.router.navigate(['/register']);
   }
 
 }

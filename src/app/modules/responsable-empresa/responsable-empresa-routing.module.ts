@@ -6,7 +6,10 @@ const routes: Routes = [
     path: 'soli',
     loadChildren: () => import("./generar-soli/generar-soli.module").then(m => m.GenerarSoliModule)
   },
-
+  {
+    path: '',
+    loadChildren: () => import("./dashboard-empresa/dashboard-empresa.module").then(m => m.DashboardEmpresaModule)
+  },
 ];
 
 @NgModule({

@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { TutorAcademico } from 'src/app/core/models/tutor-academico';
 
 //PDF Import
-import jsPDF from 'jspdf';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+/* import pdfFonts from 'pdfmake/build/vfs_fonts'; */
+import pdfFonts from 'src/assets/fonts/custom-fonts';
+import { PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+
 
 @Component({
   selector: 'app-reg-tutor',
@@ -20,9 +24,46 @@ export class RegTutorComponent implements OnInit {
   ngOnInit() {
   }
 
-  generarPDF() {
+  /* getBase64ImageFromURL(url) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        resolve(dataURL);
+      };
+      img.onerror = error => {
+        reject(error);
+      };
+      img.src = url;
+    });
+  } */
 
-    const doc = new jsPDF();
+  getBase64ImageFromAssets(imagePath: string): Promise<string> {
+    return fetch(imagePath)
+      .then((response) => response.blob())
+      .then((blob) => {
+        return new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+          reader.onerror = () => {
+            reject(reader.error);
+          };
+          reader.readAsDataURL(blob);
+        });
+      });
+  }
+
+  async generarPDF() {
+
+    //Fecha Actual
     const fecha = new Date();
     const options: any = {
       year: 'numeric',
@@ -33,55 +74,183 @@ export class RegTutorComponent implements OnInit {
     const fechaFormateada = formatter.format(fecha);
     const fechaCompleta = `Cuenca, ${fechaFormateada}`;
 
-    // Configurar el estilo de fuente y tamaño para el título y la fecha
-    doc.setFont('Calibri', 'bold');
-    doc.setFontSize(12);
+    //Logo Ista 
+    const imageData = await this.getBase64ImageFromAssets("assets/images/Logo-ISTA.png");
 
-    // Agregar el título y la fecha al documento
-    doc.text('Documento: Designación tutor especifico', 20, 20);
-    doc.text(fechaCompleta, 100, 30);
+    //Tipo de letra 
+    PdfMakeWrapper.setFonts(pdfFonts, {
+      calibri: {
+        normal: 'Calibri-Regular.ttf',
+        bold: 'Calibri-Bold.TTF',
+        italics: 'Calibri-Italic.ttf',
+        bolditalics: 'Calibri-Bold-Italic.ttf'
+      },
+    });
 
-    // Configurar el estilo de fuente y tamaño para el nombre y la información del remitente
-    doc.setFont('Calibri', 'normal');
-    doc.setFontSize(12);
+    PdfMakeWrapper.useFont('calibri');
 
-    // Agregar el nombre y la información del remitente
-    doc.text('Magíster', 20, 50);
-    doc.text('JUAN ESPINOZA', 20, 57);
-    doc.text('RESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE', 20, 64);
-    doc.text('INSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY', 20, 71);
-    doc.text('Su Despacho. -', 20, 78);
+    // definir las márgenes del documento
+    var marginLeft = 74;
+    var marginRight = 74;
+    var marginTop = 70;
+    var marginBottom = 100;
 
-    // Configurar el estilo de fuente y tamaño para el cuerpo del texto
-    doc.setFont('Calibri', 'normal');
-    doc.setFontSize(12);
+    /* const documentDefinition = {
+      pageSize: 'A4',
+      pageMargins: [marginLeft, marginTop, marginRight, marginBottom],
+      content: [
+        {
+          image: imageData,
+          width: 170,
+          height: 50,
+          alignment: "left",
+          margin: [0, 20, 0, 20],
+        },
+        {
+          text: 'Documento: Designación tutor especifico',
+          style: 'header'
+        },
+        {
+          text: fechaCompleta,
+          style: 'subheader',
+          alignment: 'right'
+        },
+        {
+          text: '\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -',
+          style: 'body'
+        },
+        {
+          text: 'De mi consideración:',
+          style: 'subheader'
+        },
+        {
+          text: '\nLuego de expresarle un atento saludo me permito informar que el Ing. Patricio Leonardo Pacheco Quezada con cédula de identidad número: 0103629762 ha sido designado como TUTOR ESPECIFICO del estudiante Juan Carlos Matute Uzhca.',
+          style: 'body'
+        },
+        {
+          text: '\n\nEl Ing. Leonardo Patricio Pacheco Quezada se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.',
+          style: 'body'
+        },
+        {
+          text: '\n\nSin más que informar, me despido augurando éxito en las funciones que realiza.',
+          style: 'body'
+        },
+        {
+          text: '\n\nAtentamente,',
+          style: 'subheader'
+        },
+        {
+          text: '\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\nGesinsoft Cia. Ltda.',
+          style: 'body'
+        }
+      ],
+      styles: {
+        calibri: {
+          normal: 'Calibri-Regular.ttf',
+          bold: 'Calibri-Bold.ttf',
+          italics: 'Calibri-Italic.ttf',
+          bolditalics: 'Calibri-Bold-Italic.ttf'
+        },
+        header: {
+          fontSize: 11,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        subheader: {
+          fontSize: 11,
+          margin: [0, 10, 0, 5]
+        },
+        body: {
+          fontSize: 11,
+          margin: [0, 0, 0, 10],
+          alignment: 'justify'
+        }
+      }
+    };
 
-    // Agregar el cuerpo del texto
-    doc.text('De mi consideración:', 20, 98);
-    doc.text('Luego de expresarle un atento saludo me permito informar que el Ing. Patricio Leonardo Pacheco Quezada con cédula de identidad número: 0103629762 ha sido designado como TUTOR ESPECIFICO del estudiante Juan Carlos Matute Uzhca.', 20, 105);
-    doc.text('El Ing. Leonardo Patricio Pacheco Quezada se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.', 20, 122);
-    doc.text('Sin más que informar, me despido augurando éxito en las funciones que realiza.', 20, 139);
+    pdfMake.createPdf(documentDefinition).download('designacion-tutor-especifico.pdf'); */
 
-    // Configurar el estilo de fuente y tamaño para la despedida
-    doc.setFont('Calibri', 'normal');
-    doc.setFontSize(12);
+    const pdf = new PdfMakeWrapper();
 
-    // Agregar la despedida y el espacio en blanco
-    doc.text('Atentamente,', 20, 156);
-    doc.text('', 20, 171);
+    pdf.pageMargins([marginLeft, marginTop, marginRight, marginBottom]);
 
-    // Configurar el estilo de fuente y tamaño para la firma
-    doc.setFont('Calibri', 'bold');
-    doc.setFontSize(12);
+    pdf.images({
+      image: imageData,
+      width: "170",
+      height: "50",
+      alignment: 'left',
+      margin: "0 20"
+    });
 
-    // Agregar la firma
-    doc.text('_______________________', 20, 178);
-    doc.text('Ing. Patricio Pacheco', 20, 184);
-    doc.text('GERENTE GENERAL', 20, 191);
-    doc.text('Gesinsoft Cia. Ltda.', 50, 199);
+    pdf.add(
+      new Txt('Documento: Designación tutor especifico')
+        .bold()
+        .fontSize(11)
+        .margin([0, 0, 0, 10])
+        .end
+    );
 
-    doc.save('Designacion_tutor_especifico.pdf');
+    pdf.add(
+      new Txt(fechaCompleta)
+        .fontSize(11)
+        .alignment('right')
+        .margin([0, 10, 0, 5])
+        .end
+    );
 
-  } 
+    pdf.add(
+      new Txt('\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -')
+        .fontSize(11)
+        .margin([0, 0, 0, 10])
+        .end
+    );
+
+    pdf.add(
+      new Txt('De mi consideración:')
+        .fontSize(11)
+        .margin([0, 10, 0, 5])
+        .end
+    );
+
+    pdf.add(
+      new Txt('Luego de expresarle un atento saludo me permito informar que el Ing. Patricio Leonardo Pacheco Quezada con cédula de identidad número: 0103629762 ha sido designado como TUTOR ESPECIFICO del estudiante Juan Carlos Matute Uzhca.')
+        .fontSize(11)
+        .margin([0, 0, 0, 10])
+        .end
+    );
+
+    pdf.add(
+      new Txt('\n\nEl Ing. Leonardo Patricio Pacheco Quezada se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.')
+        .fontSize(11)
+        .margin([0, 0, 0, 10])
+        .end
+    );
+
+    pdf.add(
+      new Txt('\n\nSin más que informar, me despido augurando éxito en las funciones que realiza.')
+        .fontSize(11)
+        .margin([0, 0, 0, 10])
+        .end
+    );
+
+    pdf.add(
+      new Txt('\n\nAtentamente,')
+        .fontSize(11)
+        .style('subheader')
+        .end
+    );
+
+    pdf.add(
+      new Txt('\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\nGesinsoft Cia. Ltda.')
+        .fontSize(11)
+        .style('body')
+        .end
+    );
+
+    //pdf.create().open();
+    pdf.pageSize('A4');
+    // Opcional: Descargar el documento PDF
+    pdf.create().download('designacion-tutor-especifico.pdf');
+  }
 
 }

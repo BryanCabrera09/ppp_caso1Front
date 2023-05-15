@@ -41,18 +41,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if(sessionStorage.getItem('userdetails')){
+    if (sessionStorage.getItem('userdetails')) {
       this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
     }
 
-    // this.usuarioLogueado();
-
     this.checkCanShowSearchAsOverlay(window.innerWidth);
     this.selectedLanguage = this.languages[0];
-
-    // let token = sessionStorage.getItem("token") as string;
-    // this.objetounico = this.decodificarJwt(token);
-    // console.log("mi objecto", this.objetounico);
   }
 
   getHeadClass(): string {
@@ -91,17 +85,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut(): void {
-    /* window.sessionStorage.setItem("userdetails","");
-    window.sessionStorage.setItem("XSRF-TOKEN",""); */
     window.sessionStorage.clear();
+    window.localStorage.clear();
     this.router.navigate(['/login']);
   }
-
-  /* logOut() {
-    this.authService.logout()
-      .then(() => {
-        this.router.navigate(['/login']);
-      })
-      .catch(error => console.log(error));
-  } */
 }

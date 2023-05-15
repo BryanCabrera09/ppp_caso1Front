@@ -41,6 +41,8 @@ export class SidebarComponent implements OnInit {
 
   user = new Usuario();
 
+  estaLogueado?: boolean;
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
@@ -59,7 +61,9 @@ export class SidebarComponent implements OnInit {
       this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
       const role = localStorage.getItem('roles');
       if (role == 'ROLE_ESTUD') {
-        this.rolUsuario = 'Practicante';
+        //this.rolUsuario = 'Practicante';
+        this.rolUsuario = 'Responsable Practicas';
+        this.estaLogueado = true;
       }
       console.log(role);
     }

@@ -157,6 +157,12 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Practicas'
     },
     {
+        routeLink: 'convocatorias/lista-convocatorias',
+        icon: 'fal fa-camera',
+        label: 'Aprovación de Solicitudes Practicantes',
+        role: 'Responsable Practicas'
+    },
+    {
         routeLink: 'media',
         icon: 'fal fa-camera',
         label: 'Elección Estudiantes',

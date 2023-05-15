@@ -26,6 +26,22 @@ import { RegisterUserService } from './core/services/register-user.service';
 import { BridgeInterceptor } from './core/providers/bridge.interceptor';
 import { AuthGuard } from './core/guards/auth.guard';
 
+//Fonts Imports
+import pdfFonts from '../assets/fonts/custom-fonts';
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+
+// Configuring custom fonts
+PdfMakeWrapper.setFonts(pdfFonts, {
+  calibri: {
+    normal: 'Calibri-Regular.ttf',
+    bold: 'Calibri-Bold.TTF',
+    italics: 'Calibri-Italic.ttf',
+    bolditalics: 'Calibri-Bold-Italic.ttf'
+  },
+});
+
+PdfMakeWrapper.useFont('calibri');
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,9 +67,9 @@ import { AuthGuard } from './core/guards/auth.guard';
   ],
   providers: [RegisterUserService,
     {
-      provide : HTTP_INTERCEPTORS,
-      useClass : BridgeInterceptor,
-      multi : true
+      provide: HTTP_INTERCEPTORS,
+      useClass: BridgeInterceptor,
+      multi: true
     },
     AuthGuard
   ],

@@ -11,8 +11,6 @@ import { Convocatoria } from 'src/app/core/models/convocatoria';
 import { Usuario } from 'src/app/core/models/usuario';
 import { Estudiante } from 'src/app/core/models/estudiante';
 
-import { PrimeIcons } from 'primeng/api';
-
 @Component({
   selector: 'app-aceptacion-solicitudes',
   templateUrl: './aceptacion-solicitudes.component.html',
@@ -40,6 +38,9 @@ export class AceptacionSolicitudesComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerSolicitudes();
+    window.addEventListener('beforeunload', (event) => {
+      localStorage.removeItem('convocatoriaId');
+    });
   }
 
   clear(table: Table) {
@@ -47,7 +48,8 @@ export class AceptacionSolicitudesComponent implements OnInit {
   }
 
   obtenerSolicitudes() {
-    const convocatoria: Convocatoria = { id: 1 };
+    const convocatoriaId = Number(localStorage.getItem('convocatoriaId'));
+    const convocatoria: Convocatoria = { id: convocatoriaId };
     this.solicitudService.getPostulantes(convocatoria).subscribe(
       data => {
         console.log(this.practicantes);
