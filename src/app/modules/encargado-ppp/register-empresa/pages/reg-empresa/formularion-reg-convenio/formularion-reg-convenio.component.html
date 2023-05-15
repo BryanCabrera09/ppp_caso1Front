@@ -2,13 +2,13 @@
 <div class="card">
     <h2>Registro de Convenio</h2>
 
-    <form #reg="ngForm" >
+    <form #reg="ngForm" (ngSubmit)="GuardarConvenio(reg)">
         <div class="col- ig-12 col-md-11">
 
             <div class="row mb-3">
                 
                 <div class="col-sm">
-                    <input type="hidden" #empresaid class="form-control"  style="width: 200%;" name="impresaid"  required>
+                    <input type="hidden" #empresaid class="form-control" name="impresaid"  required>
         
                 </div>
             </div>
@@ -18,7 +18,7 @@
                     <h4>N° de Convenio:</h4>
                 </label>
                 <div class="col-sm">
-                    <input type="text"  class="form-control" style="width: 200%;" name="RUC"  required>
+                    <input type="text"  class="form-control"  name="n convenio" [(ngModel)]="Convenio.numero"  required>
         
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <h4>Fecha Inicio</h4>
                 </label>
                 <div class="col-sm">
-                    <input type="date"  class="form-control" style="width: 200%;" name="Empresa"  required>
+                    <input type="Date"  class="form-control"  name="fechaI" [(ngModel)]="fechaI" required>
         
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     <h4>Fecha Fin</h4>
                 </label>
                 <div class="col-sm">
-                    <input type="date"  class="form-control" style="width: 200%;" name="Matriz"  required>
+                    <input type="Date" #Fechaf  class="form-control"  name="fechaF" [(ngModel)]="fechaF" required>
         
                 </div>
             </div>
@@ -45,13 +45,28 @@
 
             <div class="row mb-3">
                 <label for="Codigo DEWEY" class="col-sm col-form-label" >
-                    <h4>Empresa</h4>
+                    <h4>Carrera</h4>
                 </label>
                 <div class="col-sm">
                     <div class="form-group" >
-                        <select class="form-select" name="disponibilidad"  required>
-                          <option value="true">Activo</option>
-                          <option value="false">Inactivo</option>
+                        <select  class="form-select"  name="disponibilidad"  (change)="CarreraHunter($event)" required>
+                            <option>Seleccione</option>
+                          <option *ngFor="let carreras of Carreras" value="{{carreras.id}}">{{carreras.nombre}}</option>
+                        </select>
+                      </div>
+        
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="Codigo DEWEY" class="col-sm col-form-label" >
+                    <h4>Tutor</h4>
+                </label>
+                <div class="col-sm">
+                    <div class="form-group" >
+                        <select  class="form-select"  name="disponibilidad" (change)="TutorHunter($event)" required>
+                            <option>Seleccione</option>
+                          <option *ngFor="let tutor of TutorA" value="{{tutor.id}}">{{tutor.usuario.nombre}}</option>
                         </select>
                       </div>
         
@@ -63,7 +78,7 @@
                     <h4>PDF</h4>
                 </label>
                 <div class="col-sm">
-                    <input type="file"  class="form-control" style="width: 200%;" name="Matriz"  required>
+                    <input type="file"  class="form-control" style="width: 150%;" name="Matriz"  required>
         
                 </div>
             </div>
@@ -72,7 +87,7 @@
 
         
 
-        <button type="submit"   class="crear"> Guardar</button>
+        <button type="submit"   class="crear" > Guardar</button>
        
     </form>
 
