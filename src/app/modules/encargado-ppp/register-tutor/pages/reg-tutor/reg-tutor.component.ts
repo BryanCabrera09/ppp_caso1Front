@@ -6,6 +6,8 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 /* import pdfFonts from 'pdfmake/build/vfs_fonts'; */
 import pdfFonts from 'src/assets/fonts/custom-fonts';
 import { PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { Empresa } from 'src/app/core/models/empresa';
+import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
 
 
 @Component({
@@ -17,32 +19,22 @@ export class RegTutorComponent implements OnInit {
 
   tutor_academico = new TutorAcademico;
 
+  empresas: Empresa[] = [];
+
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/;
   blockCorreo: RegExp = /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/;
   fechaActual: any;
 
-  ngOnInit() {
-  }
+  constructor(private empresaService: RegEmpresaServiceService) { }
 
-  /* getBase64ImageFromURL(url) {
-    return new Promise((resolve, reject) => {
-      var img = new Image();
-      img.setAttribute("crossOrigin", "anonymous");
-      img.onload = () => {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        resolve(dataURL);
-      };
-      img.onerror = error => {
-        reject(error);
-      };
-      img.src = url;
-    });
-  } */
+  ngOnInit() {
+
+    this.empresaService.obtenerempresas().subscribe(
+      empresa => {
+        this.empresas = empresa
+      }
+    );
+  }
 
   getBase64ImageFromAssets(imagePath: string): Promise<string> {
     return fetch(imagePath)

@@ -1,15 +1,8 @@
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-
-
 .sidenav {
-    background: #a9a5a5;
+    background: linear-gradient(to right, #ffd9007c, #87cfeb86);
     transition: all .5s ease;
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     top: 0;
     width: 5rem;
     height: 100vh;

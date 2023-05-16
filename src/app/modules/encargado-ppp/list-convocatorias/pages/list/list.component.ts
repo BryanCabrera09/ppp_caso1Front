@@ -15,6 +15,8 @@ export class ListComponent implements OnInit {
   id: number;
   loading: boolean = true;
 
+  empresa: string;
+
   constructor(private convocatoriaService: ConvocatoriaService, private router: Router) { }
 
   ngOnInit() {
@@ -31,7 +33,11 @@ export class ListComponent implements OnInit {
             convocatoria.fechaInicio = result.fechaInicio;
             convocatoria.fechaFin = result.fechaFin;
             convocatoria.numero = result.numero;
+            if (result.solicitudEmpresa !== null) {
+              this.empresa = result.solicitudEmpresa!.convenio!.empresa!.nombre;
+            }
             this.id = result.id;
+            console.log(result);
             return convocatoria;
           }
         );

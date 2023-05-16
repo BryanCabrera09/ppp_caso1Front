@@ -69,10 +69,6 @@
   --bs-btn-active-border-color: #5a23c8;
 }
 
-.bd-mode-toggle {
-  z-index: 1500;
-}
-
 a,
 p,
 h5 {
@@ -81,4 +77,8 @@ h5 {
 
 footer {
   background-color: #121215c2;
+}
+
+.head{
+  width: 100%;
 }

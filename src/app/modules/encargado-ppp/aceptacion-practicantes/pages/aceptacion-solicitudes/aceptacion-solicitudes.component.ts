@@ -34,6 +34,9 @@ export class AceptacionSolicitudesComponent implements OnInit {
   loading: boolean = true;
   statuses: any[] = [];
 
+  aprobISTA: boolean;
+  aprobEmpr: boolean;
+
   constructor(private solicitudService: SolipracticantesService, private router: Router) { }
 
   ngOnInit() {
@@ -76,11 +79,39 @@ export class AceptacionSolicitudesComponent implements OnInit {
 
   guardarPostulacion() {
 
-    if (this.estado === 'aprobado') {
-      this.practestudiant.estado = 2;
-    } else if (this.estado === 'desaprobado') {
-      this.practestudiant.estado = 1;
+    if (this.practestudiant.estado === 0) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 1;
+        this.aprobISTA = true;
+        this.aprobEmpr = false;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 3;
+        this.aprobISTA = false;
+        this.aprobEmpr = false;
+      }
+    } else if (this.practestudiant.estado === 3) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 2;
+        this.aprobISTA = true;
+        this.aprobEmpr = false;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 1;
+        this.aprobISTA = false;
+        this.aprobEmpr = false;
+      }
+    } else if (this.practestudiant.estado === 2) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 2;
+        this.aprobISTA = true;
+        this.aprobEmpr = true;
+        this.practestudiant.estado = 4;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 1;
+        this.aprobISTA = false;
+        this.aprobEmpr = true;
+      }
     }
+
 
     this.practestudiant.fechaEnvio = new Date();
 

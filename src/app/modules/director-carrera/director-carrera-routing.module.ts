@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import("./aceptacion-practicas-director/aceptacion-practicas-director.module").then(m => m.AceptacionPracticasDirectorModule)
   },
   {
-    path: 'director',
+    path: 'convocatorias',
     loadChildren: () => import("./list-convocatoria/list-convocatoria.module").then(m => m.ListConvocatoriaModule)
   },
   {

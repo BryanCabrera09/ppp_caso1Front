@@ -1,101 +1,80 @@
+<div class="container">
+    <div class="content">
+        <p-panel id="panelregempresa" header="Registro Empresa">
+            <div class="panel over overflow-auto p-grid p-fluid">
+                <h4 style="text-align: center">Datos Empresariales</h4>
+                <div class="p-grid p-fluid justify-content-center align-items-center">
+                    <div class="col-sm">
+                        <input type="hidden" #id class="form-control" style="width: 200%;" name="RUC"
+                            [(ngModel)]="Empresa.id" required>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" class="form-control" [(ngModel)]="Empresa.ruc"
+                                        [pKeyFilter]="'int'" maxlength="13" minlength="13" pInputText required />
+                                    <label for="float-input">Número de RUC</label>
+                                </span>
+                            </div>
 
-<div class="card">
-    <h2>Registro de Empresa</h2>
-
-    <form #reg="ngForm" (ngSubmit)="crearempresa(reg)">
-        <div class="col- ig-12 col-md-11">
-
-            <div class="row mb-3">
-                
-                <div class="col-sm">
-                    <input type="hidden" #id class="form-control"  style="width: 200%;" name="RUC" [(ngModel)]="Empresa.id" required>
-        
+                            <div class="p-col-3 p-md-4">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" class="form-control"
+                                        [(ngModel)]="Empresa.matriz" [pKeyFilter]="blockSpecial" maxlength="100"
+                                        minlength="10" pInputText required />
+                                    <label for="float-input">Matriz</label>
+                                </span>
+                            </div>
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <textarea id="float-input" class="form-control" rows="5" cols="30"
+                                        [(ngModel)]="Empresa.mision" pInputTextarea></textarea>
+                                    <label for="float-input">Misión Empresarial</label>
+                                </span>
+                            </div>
+                            <div class="p-col-3 p-md-4">
+                                <p-dropdown id="float-input" [options]="estado"
+                                    name="disponibilidad" [(ngModel)]="Empresa.activo">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" class="form-control"
+                                        [(ngModel)]="Empresa.nombre" [pKeyFilter]="blockSpecial" maxlength="100"
+                                        minlength="10" pInputText required />
+                                    <label for="float-input">Nombre de Empresa</label>
+                                </span>
+                            </div>
+                            <div class="p-col-3 p-md-4">
+                                <span class="p-float-label">
+                                    <textarea id="float-input" class="form-control" rows="5" cols="30" pInputTextarea
+                                        [(ngModel)]="Empresa.vision"></textarea>
+                                    <label for="float-input">Visión Empresarial</label>
+                                </span>
+                            </div>
+                            <div class="p-col-3 p-md-4">
+                                <span class="p-float-label">
+                                    <textarea id="float-input" class="form-control" rows="5" cols="30" pInputTextarea
+                                        [(ngModel)]="Empresa.objetivo"></textarea>
+                                    <label for="float-input">Objetivos Empresariales</label>
+                                </span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="p-col-12 p-md-4">
+                            <button pButton pRipple type="button" *ngIf="!boton" label="Registrar Empresa"
+                                icon="pi pi-check" iconPos="right" class="p-button-rounded p-button-primary"
+                                (click)="crearempresa()"></button>
+                            <button pButton pRipple type="button" label="Actualzar Empresa" icon="pi pi-refresh"
+                                iconPos="right" class="p-button-rounded p-button-primary"
+                                (click)="guardarEdit(Empresa.id, Empresa)" *ngIf="boton"></button>
+                        </div>
+                    </div>
                 </div>
             </div>
-           
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>RUC:</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="number"  class="form-control" style="width: 200%;" name="RUC" [(ngModel)]="Empresa.ruc" required>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Empresa</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="text"  class="form-control" style="width: 200%;" name="Empresa" [(ngModel)]="Empresa.nombre" required>
-        
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Matriz</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="text"  class="form-control" style="width: 200%;" name="Matriz" [(ngModel)]="Empresa.matriz" required>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Mision</h4>
-                </label>
-                <div class="col-sm">
-                    <textarea type="text"  class="form-control" style="width: 200%; " name="Mision" [(ngModel)]="Empresa.mision" required></textarea>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Vision</h4>
-                </label>
-                <div class="col-sm">
-                    <textarea type="text"  class="form-control" style="width: 200%; " name="Vision" [(ngModel)]="Empresa.vision" required></textarea>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Objetivos</h4>
-                </label>
-                <div class="col-sm">
-                    <textarea type="text"  class="form-control" style="width: 200%; " name="Objetivos" [(ngModel)]="Empresa.objetivo" required></textarea>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label" *ngIf="boton">
-                    <h4>Estado</h4>
-                </label>
-                <div class="col-sm">
-                    <div class="form-group" *ngIf="boton">
-                        <select class="form-select" name="disponibilidad" [(ngModel)]="Empresa.activo" required>
-                          <option value="true">Activo</option>
-                          <option value="false">Inactivo</option>
-                        </select>
-                      </div>
-        
-                </div>
-            </div>
-
-        </div>
-
-        
-
-        <button type="submit"  *ngIf="!boton" class="crear"> Guardar</button>
-       
-    </form>
-    <button (click)="guardarEdit(Empresa.id, Empresa)" *ngIf="boton" class="crear"> Editar</button>
-
+        </p-panel>
+    </div>
 </div>
-
-

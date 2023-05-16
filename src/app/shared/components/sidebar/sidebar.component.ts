@@ -1,5 +1,5 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, HostListener, Input } from '@angular/core';
 import { navbarData } from './nav-data';
 import { INavbarData, fadeInOut } from './helper';
 import { Router } from '@angular/router';

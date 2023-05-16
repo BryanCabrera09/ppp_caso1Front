@@ -37,7 +37,7 @@ const routes: Routes = [
 
   },
   {
-    path: 'respon-empresa',
+    path: 'responsable-empresa',
     component: WelcomeEmpresaComponent,
     loadChildren: () => import('./modules/responsable-empresa/responsable-empresa.module').then(m => m.ResponsableEmpresaModule) // se importa un modulo que tiene routing es decir ruta 
 
