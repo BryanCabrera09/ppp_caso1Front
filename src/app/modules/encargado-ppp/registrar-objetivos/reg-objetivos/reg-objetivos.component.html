@@ -24,10 +24,14 @@
             <th>Objetivos</th>
             <th></th>
           </tr>
-
-
         </thead>
-
+        <tbody>
+          <tr *ngFor="let obj of Objetivomateria">
+            <td>{{obj.materia.nombre}}</td>
+            <td>{{obj.descripcion}}</td>
+            
+          </tr>
+      </tbody>
 
       </table>
 
@@ -45,10 +49,8 @@
             <label>ASIGNATURA</label>
 
             <select>
-              <option>Director</option>
-              <option>Recursos</option>
-              <option>Fargo</option>
-              <option>True Detective</option>
+              <option>Seleccione</option>
+              <option *ngFor="let asignatura of MateriasO" value="{{asignatura.id}}">{{asignatura.nombre}}</option>
             </select>
 
             <br><br>
@@ -57,8 +59,8 @@
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" (click)="closePopup()">
-              Close
+            <button type="submit" class="crear" (click)="closePopup()">
+              Guardar
             </button>
           </div>
         </div>
@@ -71,6 +73,8 @@
   class="btn btn-primary"
   (click)="openPopups()">Añadir Asignatura
 </button>
+
+<form >
 <div
   class="modal"
   tabindex="-1"
@@ -84,25 +88,23 @@
       <div class="modal-body">
         <label>Carrera</label>
 
-            <select>
-              <option>Director</option>
-              <option>Recursos</option>
-              <option>Fargo</option>
-              <option>True Detective</option>
+            <select name="disponibilidad" (change)="Carreracon($event)"required>
+              <option>Seleccione</option>
+              <option *ngFor="let carreras of Carreras" value="{{carreras.id}}">{{carreras.nombre}}</option>
             </select>
             <br><br>
             <label>Asignatura</label><br>
             <input type="text"  class="form-control" name="Asignatura" required>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" (click)="closePopups()">
-              Close
+            <button type="submit" class="crear" (click)="closePopups()">
+              Guardar
             </button>
       </div>
     </div>
   </div>
 </div>
-
+</form>
 
 
   </div>
