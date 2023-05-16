@@ -27,7 +27,9 @@
 			<thead>
 				<tr>
 					<th>Empresa</th>
-					<th>Actividades a Relizar</th>
+					<th># de Practicantes</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
 					<th>Generar Convocatoria</th>
                     <th></th>
 				</tr>
@@ -36,12 +38,11 @@
 			</thead>
 			
 			<tbody>
-				<tr	>
-					<td> Compras S.A.</td>
-					<td >La misión de una empresa guía la toma de decisiones y la dirección estratégica de la empresa. <br>
-                        ​La visión de una empresa describe a dónde quiere llegar y cómo quiere ser percibida en el futuro. <br>
-                        Los objetivos de las empresas son los pasos definidos para alcanzar los resultados que un negocio espera.
-                    </td>
+				<tr *ngFor="let solicitud of soliE"	>
+					<td>{{solicitud.convenio.empresa.nombre}}</td>
+					<td >{{solicitud.numPracticantes}}</td>
+                    <td>{{solicitud.fechaInicioTen}}</td>
+                    <td>{{solicitud.fechaMaxTen}}</td>
 					
 					
 					
