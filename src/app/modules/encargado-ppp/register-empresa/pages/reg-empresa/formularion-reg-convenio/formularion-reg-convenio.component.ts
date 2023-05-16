@@ -53,13 +53,11 @@ export class FormularionRegConvenioComponent implements OnInit {
   }
 
 
-  CarreraHunter(e: any) {
-    alert(e.target.value)
-    this.carreraService.searchCarrera(e.target.value).subscribe(
+  CarreraHunter(value: any) {
+    alert(value)
+    this.carreraService.searchCarrera(value).subscribe(
       (data: Carrera) => {
         this.carrera = data
-
-
       }
     )
   }

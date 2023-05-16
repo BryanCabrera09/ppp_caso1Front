@@ -1,68 +1,61 @@
 <div class="container">
-    <div class="content">
-        <p-panel id="panelregempresa" header="Registro Tutor Académico">
-            <div class="panel over overflow-auto p-grid p-fluid">
-                <h4 style="text-align: center">Datos del Tutor Académico</h4>
-                <div class="p-grid p-fluid justify-content-center align-items-center">
-                    <div class="row">
-                        <div class="col">
-                            <div class="p-col-12 p-md-4">
-                                <p-dropdown [options]="empresas" optionLabel="nombre" optionValue="id" [filter]="true"
-                                    filterBy="nombre" [showClear]="true" placeholder="Seleccionar Empresa">
-                                </p-dropdown>
-                            </div>
-                            <div class="p-col-3 p-md-4">
-                                <span class="p-float-label">
-                                    <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="tutor_academico.cedula_tutor" [pKeyFilter]="'alpha'"
-                                        maxlength="100" minlength="3" pInputText required />
-                                    <label for="float-input">N° de Cédula Tutor Académico</label>
-                                </span>
-                            </div>
-                            <div class="p-col-3 p-md-4">
-                                <span class="p-float-label">
-                                    <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="tutor_academico.practicante" [pKeyFilter]="blockSpecial"
-                                        maxlength="100" minlength="10" pInputText required />
-                                    <label for="float-input">Nombre de Practicante</label>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="p-col-12 p-md-4">
-                                <span class="p-float-label">
-                                    <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="tutor_academico.responsable_ppp" [pKeyFilter]="blockSpecial"
-                                        maxlength="100" minlength="10" pInputText required />
-                                    <label for="float-input">Nombre Responsable PPP</label>
-                                </span>
-                            </div>
-                            <div class="p-col-12 p-md-4">
-                                <span class="p-float-label">
-                                    <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="tutor_academico.nombre_tutor" [pKeyFilter]="blockSpecial"
-                                        maxlength="100" minlength="10" pInputText required />
-                                    <label for="float-input">Nombre de Tutor Académico</label>
-                                </span>
-                            </div>
-                            <div class="p-col-3 p-md-4">
-                                <span class="p-float-label">
-                                    <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="tutor_academico.representante_legal" [pKeyFilter]="'int'"
-                                        maxlength="6" minlength="6" pInputText />
-                                    <label for="float-input">Nombre Representante Legal</label>
-                                </span>
-                            </div>
-                        </div>
-                        <br>
+    <p-panel id="panelregempresa" header="Registro Tutor Académico">
+        <div class="panel over overflow-auto p-grid p-fluid">
+            <h4 style="text-align: center">Datos del Tutor Académico</h4>
+            <div class="p-grid p-fluid justify-content-center align-items-center">
+                <div class="d-flex flex-row">
+                    <div class="col">
                         <div class="p-col-12 p-md-4">
-                            <button pButton pRipple type="button" label="Registrarse" icon="pi pi-check" iconPos="right"
-                                class="p-button-rounded p-button-primary"></button>
+                            <p-dropdown [options]="empresas" [(ngModel)]="empresa" optionLabel="nombre" optionValue="id"
+                                [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Seleccionar Empresa">
+                            </p-dropdown>
                         </div>
-                        <button (click)="generarPDF()">Generar PDF</button>
+                        <div class="p-col-12 p-md-4">
+                            <p-dropdown [options]="docentes" optionLabel="nombres" optionValue="cedula" [filter]="true"
+                                filterBy="nombres" [showClear]="true" placeholder="Seleccionar Docente"
+                                (onChange)="docenteCedula($event.value)">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <p-dropdown [options]="practicantes" optionLabel="estudiante.usuario.nombre"
+                                optionValue="id" [filter]="true" filterBy="estudiante.usuario.nombre" [showClear]="true"
+                                placeholder="Seleccionar Practicante" (onChange)="practicanteId($event.value)">
+                            </p-dropdown>
+                        </div>
                     </div>
+                    <div class="col">
+                        <div class="p-col-12 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" class="form-control" [pKeyFilter]="blockSpecial"
+                                    maxlength="100" minlength="10" pInputText required />
+                                <label for="float-input">Nombre Responsable PPP</label>
+                            </span>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" class="form-control" pInputText />
+                                <label for="float-input">Nombre Representante Legal</label>
+                            </span>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <p-password [toggleMask]="true" [(ngModel)]="usuario.password"></p-password>
+                                <label for="float-input">Password</label>
+                            </span>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="p-col-12 p-md-4">
+                    <button pButton pRipple type="button" label="Registrar Tutor" icon="pi pi-check" iconPos="right"
+                        class="p-button-rounded p-button-primary" (click)="registerTutor()"></button>
+                    <br><br>
+                    <button pButton pRipple type="button" label="Generar PDF" icon="fas fa-file-pdf" iconPos="right"
+                        *ngIf="enabledButton"
+                        class="p-button-rounded p-button-primary p-button-sm p-button-generate-pdf"
+                        (click)="generarPDF()"></button>
                 </div>
             </div>
-        </p-panel>
-    </div>
+        </div>
+    </p-panel>
 </div>

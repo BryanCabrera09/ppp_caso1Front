@@ -124,7 +124,7 @@ export const navbarData: INavbarData[] = [
         label: 'Designación Tutor Academico',
         items: [
             {
-                routeLink: 'encargado/register-tutor',
+                routeLink: 'practicas/lista-practicas',
                 label: 'Designación Tutor',
                 role: 'Responsable Practicas'
             },
@@ -164,6 +164,12 @@ export const navbarData: INavbarData[] = [
         routeLink: 'convocatorias/lista-convocatorias',
         icon: 'fa-solid fa-person-circle-check',
         label: 'Solicitudes Practicantes',
+        role: 'Responsable Practicas'
+    },
+    {
+        routeLink: 'empresa/solicitud-empresa',
+        icon: 'fas fa-check-circle',
+        label: 'Solicitudes Empresas',
         role: 'Responsable Practicas'
     },
     {

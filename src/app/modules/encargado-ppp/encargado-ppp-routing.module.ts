@@ -15,8 +15,8 @@ const routes: Routes = [
     loadChildren: () => import("./aceptacion-practicantes/aceptacion-practicantes.module").then(m => m.AceptacionPracticantesModule)
   },
   {
-    path: 'encargado',
-    loadChildren: () => import("./register-tutor/register-tutor.module").then(m => m.RegisterTutorModule)
+    path: 'practicas',
+    loadChildren: () => import("./list-practicas/list-practicas.module").then(m => m.ListPracticasModule)
   },
   {
     path: 'actividades',
@@ -29,6 +29,10 @@ const routes: Routes = [
   {
     path: 'convocatorias',
     loadChildren: () => import("./list-convocatorias/list-convocatorias.module").then(m => m.ListConvocatoriasModule)
+  },
+  {
+    path: 'empresa',
+    loadChildren: () => import("./aceptacion-empresa/aceptacion-empresa.module").then(m => m.AceptacionEmpresaModule)
   },
   {
     path: '',

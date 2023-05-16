@@ -26,4 +26,11 @@ export class SolipracticantesService {
     return this.http.post(`${this.convocatoriaUrl}/editar/${id}`, practicante);
   }
 
+  listPracticante(): Observable<Practicante[]> {
+    return this.http.get<Practicante[]>(`${this.convocatoriaUrl}/listar`);
+  }
+
+  searchDocenteById(id: number) {
+    return this.http.get(`${this.convocatoriaUrl}/buscar/${id}`);
+  }
 }
