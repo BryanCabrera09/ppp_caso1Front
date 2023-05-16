@@ -1,0 +1,40 @@
+<h1>PLAN DE APRENDIZAJE PRÁCTICO Y DE ROTACIÓN (PAPR)</h1>
+
+<table class="papr-table">
+    <tbody>
+        <tr>
+            <th>Nombre de la empresa formadora</th>
+            <td>{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Descripción de la empresa</th>
+            <td>{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.mision }}</td>
+        </tr>
+        <tr>
+            <th>Carrera</th>
+            <td>{{ practica.convocatoria.solicitudEmpresa.convenio.carrera.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Resolución de aprobación ITV</th>
+            <td>SIES-ISTA-0XX-XXXX</td>
+        </tr>
+        <tr>
+            <th>Número del convenio</th>
+            <td>PPP-ISTA-0XX-XXXX: {{ practica.convocatoria.solicitudEmpresa.convenio.numero }} </td>
+        </tr>
+        <tr>
+            <th>Nombre del estudiante</th>
+            <td>{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}</td>
+        </tr>
+        <tr>
+            <th>Cédula</th>
+            <td>{{ practica.estudiante.usuario.cedula }}</td>
+        </tr>
+        <tr>
+            <th>Correo</th>
+            <td>{{ practica.estudiante.usuario.correo }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<button (click)="generatePDF()">Generate PDF</button>

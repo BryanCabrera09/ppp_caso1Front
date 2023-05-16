@@ -1,0 +1,21 @@
+  .papr-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .papr-table th, .papr-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .papr-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .papr-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+

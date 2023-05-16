@@ -1,0 +1,12 @@
+<div class="col-sm-6 pr-sm-2 statistics-grid" *ngFor="let practica of practicas">
+    <div class="card card_border border-primary-top p-4">
+      <i style="font-size: 3em; color : #343a40;" class="fa fa-user-circle-o"> </i>
+      <h3 class="text-dark number">{{ practica.id }}</h3>
+      <p class="stat-text">{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}</p>
+      <p class="stat-text">{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}</p>
+      <button class="btn btn-primary" [routerLink]="['../generar-plan']" [queryParams]="{ practica: practica | json }">
+        Plan
+      </button>
+    </div>
+  </div>
+  
