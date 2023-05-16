@@ -6,7 +6,7 @@ export class Actividad {
     id?:number
     descripcion?:string
 
-    solicitudEmpresa:SolicitudEmpresa
-    materia:Materia
+    solicitudEmpresa?:SolicitudEmpresa
+    materia?:Materia
 
 }

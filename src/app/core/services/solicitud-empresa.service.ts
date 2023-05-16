@@ -2,18 +2,20 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import baserUrl from "../helpers/helperUrl";
 import { Observable } from 'rxjs';
-import { Objetivomateria } from "../models/objetivo-materia";
+import { SolicitudEmpresa } from "../models/solicitud-empresa";
+
+
 
 @Injectable({
     providedIn: 'root'
   })
 
-export class ObjetivoMateriaService{
-    private ObjUrl = `${baserUrl}/objetivoMateria`;
+export class SolicitudEmpresaService{
+    private ObjUrl = `${baserUrl}/ObjetivoMateria`;
 
     constructor(private http: HttpClient) { }
 
-    Listarob(): Observable<Objetivomateria[]> {
-        return this.http.get<Objetivomateria[]>(`${this.ObjUrl}/listar`);
+    Listarob(): Observable<SolicitudEmpresa[]> {
+        return this.http.get<SolicitudEmpresa[]>(`${this.ObjUrl}/listar`);
       }
 }

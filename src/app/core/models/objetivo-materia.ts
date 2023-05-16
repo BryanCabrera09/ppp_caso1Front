@@ -1,9 +1,9 @@
 import { Materia } from "./materia";
 export class Objetivomateria {
     id?:number;
-    description?:string;
+    descripcion?:string;
 
 
-    materria?:Materia
+    materia?:Materia
 
 }
