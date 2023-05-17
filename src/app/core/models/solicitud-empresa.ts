@@ -5,8 +5,8 @@ export class SolicitudEmpresa {
     id?: string
     numPracticantes?: string
     numHoras?: string
-    fechaInicioTen?: string
-    fechaMaxTen?: string
+    fechaInicioTen?: Date
+    fechaMaxTen?: Date
     estado?:number
 
     convenio:Convenio

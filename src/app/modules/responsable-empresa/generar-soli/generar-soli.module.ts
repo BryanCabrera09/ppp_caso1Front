@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { GenerarSoliRoutingModule } from './generar-soli-routing.module';
 import { SoliEstComponent } from './soli-est/soli-est.component';
+import { FormsModule } from '@angular/forms';
+import { NgProgressModule } from 'ngx-progressbar';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { SoliEstComponent } from './soli-est/soli-est.component';
   ],
   imports: [
     CommonModule,
-    GenerarSoliRoutingModule
+    GenerarSoliRoutingModule,
+    FormsModule,
+    NgProgressModule
   ]
 })
 export class GenerarSoliModule { }
