@@ -5,6 +5,9 @@ import { Objetivomateria } from 'src/app/core/models/objetivo-materia';
 import { CarreraMateriaService } from 'src/app/core/services/carrera-materia.service';
 import { ObjetivoMateriaService } from 'src/app/core/services/objetivos-materia.service';
 import {MateriaService} from 'src/app/core/services/materia.service';
+import { NgForm } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -14,13 +17,12 @@ import {MateriaService} from 'src/app/core/services/materia.service';
 })
 export class RegObjetivosComponent implements OnInit{
   
-  objetivo:Objetivomateria =new Objetivomateria;
-  materia:Materia= new Materia;
-  carrera:Carrera= new Carrera;
+  public objetivo:Objetivomateria =new Objetivomateria();
+  public materia:Materia= new Materia();
+  public carrera:Carrera= new Carrera();
   Objetivomateria: Objetivomateria[]
   Carreras: Carrera[] = []
   MateriasO : Materia[]
-  public Materia: Materia=new Materia
 
 
 
@@ -32,8 +34,8 @@ export class RegObjetivosComponent implements OnInit{
   
   ngOnInit() {
     this.objetivomateriaservice.Listarob().subscribe(
-      (obj)=> {this.Objetivomateria=obj
-      console.log(obj)}
+      obj=> this.Objetivomateria=obj
+      
     )
     
     this.materiaService.Listarmateria().subscribe(
@@ -78,10 +80,41 @@ export class RegObjetivosComponent implements OnInit{
     )
   }
 
- /* GuardarAsignatura(reg: NgForm){
-    this.Materia.nombre=this.nombres
+  GuardarAsignatura(asignatura: any) {
+    
+    this.materia.carrera = this.carrera
+    this.materiaService.guardarcar(this.materia).subscribe(
+      (data)=>{
+        console.log(data);
+        this.ngOnInit();
+        Swal.fire('Asignatura Guardado', 'Asignatura Guardado con exito en el sistema','success');
 
-  }*/
+      },(error)=>{
+        console.log(error);
+        Swal.fire('Error','Nose Guardo la Asignatura', 'error');
+      }
+    );
+    localStorage.removeItem('asignatura')
+    this.closePopups();
+
+  }
+
+  GuardarObjeto(objetivo: any, prueba:string) {
+    objetivo.descripcion = prueba;
+    this.objetivo.materia = this.materia
+    this.objetivomateriaservice.Guardarobj(this.objetivo).subscribe(
+      (data)=>{
+        console.log(data);
+        this.ngOnInit();
+        Swal.fire('Objetivo Guardado','Objetivo Guardado con Exito','success');
+
+      },(error)=>{
+        console.log(error);
+        Swal.fire('Error','Objetivo no se Pudo Guardar','error');
+      }
+    );
+      localStorage.removeItem('objetivo');
+      this.closePopup();
+  }
 
 }
-
