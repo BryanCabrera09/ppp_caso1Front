@@ -7,7 +7,6 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'src/assets/fonts/custom-fonts';
 import { PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
 import { Empresa } from 'src/app/core/models/empresa';
-import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
 import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
 import { Estudiante } from 'src/app/core/models/estudiante';
 import { DocenteFenix } from 'src/app/core/models/docente-fenix';

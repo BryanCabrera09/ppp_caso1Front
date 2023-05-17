@@ -5,6 +5,7 @@ import { Empresa } from 'src/app/core/models/empresa';
 
 import Swal from 'sweetalert2';
 import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -22,15 +23,11 @@ export class FormularioComponent implements OnInit {
   ];
   isMisionFilled: boolean = false;
 
-  constructor(private EmpresaService: RegEmpresaServiceService) { }
+  constructor(private EmpresaService: RegEmpresaServiceService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
 
     this.edit();
-
-    window.addEventListener('beforeunload', (event) => {
-      localStorage.removeItem('IdEmpresa');
-    });
   }
 
   public onMisionChange(value: string): void {
@@ -46,40 +43,42 @@ export class FormularioComponent implements OnInit {
     window.location.reload();
   }
 
-  boton: boolean = false
-  id: number = 0
+  boton: boolean = false;
   public edit() {
-    const traerid = JSON.parse(localStorage.getItem('IdEmpresa') + '')
-    console.log(traerid)
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      if (id) {
+        this.EmpresaService.buscarporxID(id).subscribe((data: any) => {
+          this.Empresa = data
+        });
 
-    this.id = parseInt(traerid);
-    this.EmpresaService.buscarporxID(this.id).subscribe((data: any) => {
-      this.Empresa = data
+        if (isNaN(id)) {
+          this.boton = false
+        } else {
+          this.boton = true
+        }
+      }
     });
-
-    if (isNaN(this.id)) {
-      this.boton = false
-    } else {
-      this.boton = true
-    }
   }
 
 
   public guardarEdit(id: number, empresa: any) {
 
-    this.EmpresaService.actualizar(this.id, this.Empresa).subscribe(
-      (data) => {
-        console.log(data);
-        this.ngOnInit();
-        Swal.fire('Libro actualizado', 'Libro actualizado con éxito en el sistema', 'success');
-        window.location.reload();
-      }, (error) => {
-        console.log(error);
-        Swal.fire('Error', 'Libro no actualizado', 'error');
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      if (id) {
+        this.EmpresaService.actualizar(id, this.Empresa).subscribe(
+          (data) => {
+            console.log(data);
+            this.ngOnInit();
+            Swal.fire('Libro actualizado', 'Libro actualizado con éxito en el sistema', 'success');
+            window.location.reload();
+          }, (error) => {
+            console.log(error);
+            Swal.fire('Error', 'Libro no actualizado', 'error');
+          }
+        );
       }
-    );
-
-    localStorage.removeItem('IdEmpresa')
+    });
   }
-
 }
