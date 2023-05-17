@@ -10,22 +10,21 @@
 </head>
 
 <body>
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-    Launch demo modal
-  </button>
+    
+
   
   
 
     <div class="card" >
         
-        <h2>Crear Convocatoria</h2>
+        <h2>Solucitudes Aprobadas</h2>
 
     
         <div class="col- ig-12 col-md-11">
 		<table>
 			<thead>
 				<tr>
+                    <th>#</th>
 					<th>Empresa</th>
 					<th># de Practicantes</th>
                     <th>Fecha Inicio</th>
@@ -39,12 +38,14 @@
 			
 			<tbody>
 				<tr *ngFor="let solicitud of soliE"	>
+                    <ng-container *ngIf="solicitud.estado=== 2">
+                    <td>{{solicitud.id}}</td>
 					<td>{{solicitud.convenio.empresa.nombre}}</td>
 					<td >{{solicitud.numPracticantes}}</td>
                     <td>{{solicitud.fechaInicioTen}}</td>
                     <td>{{solicitud.fechaMaxTen}}</td>
 					
-					
+                
 					
 					
                 <td style="text-align:initial;">
@@ -53,6 +54,7 @@
                         <!-- Enlace para actualizar el cliente -->
                     </button>
                 </td>
+            </ng-container>
 				</tr>
               
 					

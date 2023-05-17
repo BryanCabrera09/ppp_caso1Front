@@ -23,7 +23,7 @@ export class FormularionRegConvenioComponent implements OnInit {
   TutorA: TutorAcademico[];
   ConvenioA: Convenio[];
   carrera: Carrera = new Carrera
-  empresa1: Empresa= new Empresa()
+  public empresa1: Empresa= new Empresa()
   tutor: TutorAcademico = new TutorAcademico
   public Convenio: Convenio = new Convenio
   selectedDate: Date;

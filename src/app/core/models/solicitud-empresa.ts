@@ -7,7 +7,7 @@ export class SolicitudEmpresa {
     numHoras?: string
     fechaInicioTen?: string
     fechaMaxTen?: string
-    estado?:boolean
+    estado?:number
 
     convenio:Convenio
 
