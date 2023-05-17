@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { FileUpload } from 'src/app/core/interfaces/file';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -10,7 +11,10 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   templateUrl: './generar-plan.component.html',
   styleUrls: ['./generar-plan.component.css']
 })
+
 export class GenerarPlanComponent implements OnInit {
+
+  selectedFile: FileUpload
 
   practica: any;
 
@@ -22,6 +26,25 @@ export class GenerarPlanComponent implements OnInit {
       console.log(this.practica);
       // Use the practica object as needed
     });
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = {
+        file,
+        name: file.name,
+        size: file.size,
+        type: file.type
+      };
+    }
+  }
+
+  onUpload(): void {
+    if (this.selectedFile) {
+      // Perform the upload logic here
+      console.log('Uploading file:', this.selectedFile);
+    }
   }
 
   generatePDF() {
@@ -51,7 +74,7 @@ export class GenerarPlanComponent implements OnInit {
       }
     };
   
-    pdfMake.createPdf(docDefinition).download('practica.pdf');
+    pdfMake.createPdf(docDefinition).download('plan-aprendizaje.pdf');
   }
   
 
