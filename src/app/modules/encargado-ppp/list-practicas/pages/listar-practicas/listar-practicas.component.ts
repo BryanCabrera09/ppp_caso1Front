@@ -46,6 +46,6 @@ export class ListarPracticasComponent {
 
   asignarTutor(id: any) {
     this.id = id;
-    this.router.navigate(['encargado-practicas/tutorinst/register-tutor/' + this.id]);
+    this.router.navigate(['encargado-practicas/tutoresp/register-tutor/' + this.id]);
   }
 }

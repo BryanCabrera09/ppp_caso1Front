@@ -19,8 +19,12 @@ const routes: Routes = [
     loadChildren: () => import("./list-practicas/list-practicas.module").then(m => m.ListPracticasModule)
   },
   {
-    path: 'tutorinst',
+    path: 'tutoresp',
     loadChildren: () => import("./register-tutor/register-tutor.module").then(m => m.RegisterTutorModule)
+  },
+  {
+    path: 'tutoracad',
+    loadChildren: () => import("./register-tutor-academico/register-tutor-academico.module").then(m => m.RegisterTutorAcademicoModule)
   },
   {
     path: 'actividades',

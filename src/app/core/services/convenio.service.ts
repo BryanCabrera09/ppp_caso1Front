@@ -13,8 +13,12 @@ export class ConvenioService {
 
   constructor(private http: HttpClient) { }
 
-  guardarConvenio(convenio: Convenio): Observable<Convenio>{
+  guardarConvenio(convenio: Convenio): Observable<Convenio> {
     return this.http.post<Convenio>(`${this.searchUrl}/crear`, convenio);
+  }
+
+  actualizarConvenio(id: number, convenio: Convenio): Observable<Convenio> {
+    return this.http.put<Convenio>(`${this.searchUrl}/editar/${id}`, convenio);
   }
 
 }

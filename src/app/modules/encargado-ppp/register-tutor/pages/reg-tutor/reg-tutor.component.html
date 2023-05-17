@@ -1,7 +1,7 @@
 <div class="container">
-    <p-panel id="panelregempresa" header="Registro Tutor Académico">
+    <p-panel id="panelregempresa" header="Registro Tutor Específico">
         <div class="panel over overflow-auto p-grid p-fluid">
-            <h4 style="text-align: center">Datos del Tutor Académico</h4>
+            <h4 style="text-align: center">Datos del Tutor Específico</h4>
             <div class="p-grid p-fluid justify-content-center align-items-center">
                 <div class="d-flex flex-row">
                     <div class="col">
@@ -28,15 +28,15 @@
                     </div>
                     <div class="col">
                         <div class="p-col-12 p-md-4">
-                            <p-dropdown [options]="responsableppp" optionLabel="usuario.nombre" optionValue="id" [filter]="true"
-                                filterBy="usuario.nombre" [showClear]="true" placeholder="Nombre Responsable PPP"
-                                (onChange)="docenteCedula($event.value)">
+                            <p-dropdown [options]="responsableppp" optionLabel="usuario.nombre" optionValue="id"
+                                [filter]="true" filterBy="usuario.nombre" [showClear]="true"
+                                placeholder="Nombre Responsable PPP" (onChange)="docenteCedula($event.value)">
                             </p-dropdown>
                         </div>
                         <div class="p-col-3 p-md-4">
-                            <p-dropdown [options]="responsableEmpresa" optionLabel="usuario.nombre" optionValue="id" [filter]="true"
-                                filterBy="usuario.nombre" [showClear]="true" placeholder="Nombre Representante Legal"
-                                (onChange)="docenteCedula($event.value)">
+                            <p-dropdown [options]="responsableEmpresa" optionLabel="usuario.nombre" optionValue="id"
+                                [filter]="true" filterBy="usuario.nombre" [showClear]="true"
+                                placeholder="Nombre Representante Legal" (onChange)="gerenteEmpresa($event.value)">
                             </p-dropdown>
                         </div>
                         <div class="p-col-3 p-md-4">
@@ -53,7 +53,7 @@
                         class="p-button-rounded p-button-primary" (click)="registerTutor()"></button>
                     <br><br>
                     <button pButton pRipple type="button" label="Generar PDF" icon="fas fa-file-pdf" iconPos="right"
-                        *ngIf="enabledButton"
+                        *ngIf="!enabledButton"
                         class="p-button-rounded p-button-primary p-button-sm p-button-generate-pdf"
                         (click)="generarPDF()"></button>
                 </div>

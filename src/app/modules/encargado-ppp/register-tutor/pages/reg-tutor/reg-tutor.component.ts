@@ -5,7 +5,7 @@ import { TutorAcademico } from 'src/app/core/models/tutor-academico';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 /* import pdfFonts from 'pdfmake/build/vfs_fonts'; */
 import pdfFonts from 'src/assets/fonts/custom-fonts';
-import { PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
 import { Empresa } from 'src/app/core/models/empresa';
 import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
 import { Estudiante } from 'src/app/core/models/estudiante';
@@ -45,6 +45,7 @@ export class RegTutorComponent implements OnInit {
   empresa: string;
   acronimo: string;
   enabledButton: boolean = false;
+  gerenteGeneral: string;
 
   docente: DocenteFenix = new DocenteFenix;
 
@@ -119,15 +120,16 @@ export class RegTutorComponent implements OnInit {
           .join(' ');
         this.practicanteName = this.usuario.nombre + ' ' + this.usuario.apellido;
         console.log(this.practicanteName)
-        /* this.estudiante.usuario.cedula = data.estudiante.usuario.cedula;
-        this.estudiante.usuario.nombre = data.estudiante.usuario.nombre;
-        this.estudiante.usuario.apellido = data.estudiante.usuario.apellido; */
         this.estudiante.usuario = this.usuario;
         this.practicante.estudiante = this.estudiante;
 
         console.log(this.practicante);
       }
     )
+  }
+
+  gerenteEmpresa(value) {
+    this.gerenteGeneral = value;
   }
 
   docenteCedula(value) {
@@ -199,10 +201,6 @@ export class RegTutorComponent implements OnInit {
 
   registerTutor() {
 
-    if (this.empresa === '' || this.empresa === null) {
-      this.toastr.error("Campo Apellidos vacio!", "Error!");
-    }
-
     if (this.tutor_academico.idDocente === undefined || this.tutor_academico.idDocente === null) {
       this.toastr.error("Campo Correo Electrónico vacio!", "Error!");
     }
@@ -236,21 +234,20 @@ export class RegTutorComponent implements OnInit {
     };
   }
 
-  getBase64ImageFromAssets(imagePath: string): Promise<string> {
-    return fetch(imagePath)
-      .then((response) => response.blob())
-      .then((blob) => {
-        return new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            resolve(reader.result as string);
-          };
-          reader.onerror = () => {
-            reject(reader.error);
-          };
-          reader.readAsDataURL(blob);
-        });
-      });
+  async getBase64ImageFromAssets(imagePath: string): Promise<string> {
+    const response = await fetch(imagePath);
+    const blob = await response.blob();
+
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+      reader.readAsDataURL(blob);
+    });
   }
 
   async generarPDF() {
@@ -287,92 +284,18 @@ export class RegTutorComponent implements OnInit {
     var marginTop = 70;
     var marginBottom = 100;
 
-    /* const documentDefinition = {
-      pageSize: 'A4',
-      pageMargins: [marginLeft, marginTop, marginRight, marginBottom],
-      content: [
-        {
-          image: imageData,
-          width: 170,
-          height: 50,
-          alignment: "left",
-          margin: [0, 20, 0, 20],
-        },
-        {
-          text: 'Documento: Designación tutor especifico',
-          style: 'header'
-        },
-        {
-          text: fechaCompleta,
-          style: 'subheader',
-          alignment: 'right'
-        },
-        {
-          text: '\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -',
-          style: 'body'
-        },
-        {
-          text: 'De mi consideración:',
-          style: 'subheader'
-        },
-        {
-          text: '\nLuego de expresarle un atento saludo me permito informar que el Ing. Patricio Leonardo Pacheco Quezada con cédula de identidad número: 0103629762 ha sido designado como TUTOR ESPECIFICO del estudiante Juan Carlos Matute Uzhca.',
-          style: 'body'
-        },
-        {
-          text: '\n\nEl Ing. Leonardo Patricio Pacheco Quezada se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.',
-          style: 'body'
-        },
-        {
-          text: '\n\nSin más que informar, me despido augurando éxito en las funciones que realiza.',
-          style: 'body'
-        },
-        {
-          text: '\n\nAtentamente,',
-          style: 'subheader'
-        },
-        {
-          text: '\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\nGesinsoft Cia. Ltda.',
-          style: 'body'
-        }
-      ],
-      styles: {
-        calibri: {
-          normal: 'Calibri-Regular.ttf',
-          bold: 'Calibri-Bold.ttf',
-          italics: 'Calibri-Italic.ttf',
-          bolditalics: 'Calibri-Bold-Italic.ttf'
-        },
-        header: {
-          fontSize: 11,
-          bold: true,
-          margin: [0, 0, 0, 10]
-        },
-        subheader: {
-          fontSize: 11,
-          margin: [0, 10, 0, 5]
-        },
-        body: {
-          fontSize: 11,
-          margin: [0, 0, 0, 10],
-          alignment: 'justify'
-        }
-      }
-    };
-
-    pdfMake.createPdf(documentDefinition).download('designacion-tutor-especifico.pdf'); */
-
     const pdf = new PdfMakeWrapper();
 
     pdf.pageMargins([marginLeft, marginTop, marginRight, marginBottom]);
 
-    pdf.images({
-      image: imageData,
-      width: "170",
-      height: "50",
-      alignment: 'left',
-      margin: "0 20"
-    });
+    /* pdf.add(
+      new Img(imageData)
+        .width(170)
+        .height(50)
+        .alignment('left')
+        .margin([0, 20])
+        .build()
+    ); */
 
     pdf.add(
       new Txt('Documento: Designación tutor especifico')
@@ -405,7 +328,7 @@ export class RegTutorComponent implements OnInit {
     );
 
     pdf.add(
-      new Txt('Luego de expresarle un atento saludo me permito informar que ' + this.acronimo + ' ' + this.tutorName + ' con cédula de identidad número: ' + this.usuario.cedula + ' ha sido designado como TUTOR ESPECIFICO del estudiante ' + this.practicanteName + '.')
+      new Txt('Luego de expresarle un atento saludo me permito informar que ' + this.acronimo.toLowerCase() + ' ' + this.tutorName + ' con cédula de identidad número: ' + this.usuario.cedula + ' ha sido designado como TUTOR ESPECIFICO del estudiante ' + this.practicanteName + '.')
         .fontSize(11)
         .margin([0, 0, 0, 10])
         .end
@@ -433,7 +356,7 @@ export class RegTutorComponent implements OnInit {
     );
 
     pdf.add(
-      new Txt('\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\nGesinsoft Cia. Ltda.')
+      new Txt('\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\n' + this.empresa)
         .fontSize(11)
         .style('body')
         .end
