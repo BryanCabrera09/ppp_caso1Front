@@ -3,9 +3,8 @@
         <div class="head-content-left">
             <div class="search-container">
                 <div *ngIf="!canShowSearchAsOverlay" class="normal-search">
-                    <input type="text" class="search" placeholder="Search...">
-                    <a class="navbar-brand">Bienvenido {{(usuario.displayName) ? usuario.displayName : 'User'}}</a>
-                    <i class="far fa-search search-icon"></i>
+                    <h1 class="navbar-brand">Bienvenido {{ (user && user.nombre) ? user.nombre : 'User' }}</h1>
+                   <!--  <i class="far fa-search search-icon"></i> -->
                 </div>
                 <div *ngIf="canShowSearchAsOverlay">
                     <button [cdkMenuTriggerFor]="searchOverlay" class="search-menu-btn ripple">
@@ -39,11 +38,11 @@
             </div>
             <div class="head-user-avatar-container">
                 <div class="head-user-avatar" [cdkMenuTriggerFor]="userOverlay">
-                    <!-- <img src="https://cdn-icons-png.flaticon.com/512/16/16363.png" alt="" alt="user"
-                        class="user-avatar"> -->
-                    <img *ngIf="usuario.photoURL"
+                    <img src="https://cdn-icons-png.flaticon.com/512/16/16363.png" alt="" alt="user"
+                        class="user-avatar">
+                    <!-- <img *ngIf="usuario.photoURL"
                         src="{{(usuario.photoURL) ? usuario.photoURL : 'https://cdn-icons-png.flaticon.com/512/16/16363.png'}}"
-                        alt="user" class="user-avatar" srcset="">
+                        alt="user" class="user-avatar" srcset=""> -->
                     <div class="circle-indicator pulse">
                     </div>
                 </div>

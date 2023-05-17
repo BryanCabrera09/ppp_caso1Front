@@ -14,4 +14,6 @@ export class Usuario {
     alumno_docenteId: number;
     periodo: string;
     horasCumplidas: number;
+    estado: boolean
+    authStatus: string;
 }

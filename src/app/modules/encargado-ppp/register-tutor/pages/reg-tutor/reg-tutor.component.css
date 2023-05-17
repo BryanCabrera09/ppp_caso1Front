@@ -6,8 +6,12 @@
   align-content: center;
 }
 
+.p-button-generate-pdf {
+  background-color: #ff0000;
+}
+
 .panel {
-  height: 350px;
+  height: 450px;
 
   display: flex;
   justify-content: center;

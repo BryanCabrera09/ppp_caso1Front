@@ -1,8 +1,9 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, HostListener, Input } from '@angular/core';
 import { navbarData } from './nav-data';
 import { INavbarData, fadeInOut } from './helper';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/core/models/usuario';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -36,6 +37,12 @@ export class SidebarComponent implements OnInit {
   navData = navbarData;
   multiple: boolean = false;
 
+  rolUsuario: string;
+
+  user = new Usuario();
+
+  estaLogueado?: boolean;
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
@@ -49,6 +56,17 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
+
+    if (sessionStorage.getItem('userdetails')) {
+      this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
+      const role = localStorage.getItem('roles');
+      if (role == 'ROLE_ESTUD') {
+        //this.rolUsuario = 'Practicante';
+        this.rolUsuario = 'Responsable Practicas';
+        this.estaLogueado = true;
+      }
+      console.log(role);
+    }
   }
 
   toggleCollapse(): void {

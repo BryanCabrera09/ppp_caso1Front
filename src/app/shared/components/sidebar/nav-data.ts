@@ -2,28 +2,34 @@ import { INavbarData } from "./helper";
 
 export const navbarData: INavbarData[] = [
     {
-        routeLink: '/home',
-        icon: 'fal fa-home',
+        routeLink: '/tutor-academico',
+        icon: 'fa-solid fa-house',
         label: 'Dashboard',
-        role: 'admin'
+        role: 'Tutor Academico'
     },
     {
         routeLink: '/d',
-        icon: 'fal fa-home',
+        icon: 'fa-solid fa-house',
         label: 'Seguimiento (Anexo 5)',
         role: 'Tutor Academico'
     },
     {
         routeLink: '/da',
-        icon: 'fal fa-home',
+        icon: 'fa-solid fa-house',
         label: 'Evaluación de Prácticas',
         role: 'Tutor Academico'
     },
     {
         routeLink: '/sds',
-        icon: 'fal fa-home',
+        icon: 'fa-solid fa-house',
         label: 'Reporte Final',
         role: 'Tutor Academico'
+    },
+    {
+        routeLink: '/responsable-empresa',
+        icon: 'fa-solid fa-house',
+        label: 'Dashboard',
+        role: 'Responsable Empresa'
     },
     {
         routeLink: 'products',
@@ -34,26 +40,6 @@ export const navbarData: INavbarData[] = [
             {
                 routeLink: 'products/level1.1',
                 label: 'Registro Solicitud',
-                /* items: [
-                    {
-                        routeLink: 'products/level2.1',
-                        label: 'Level 2.1',
-                    },
-                    {
-                        routeLink: 'products/level2.2',
-                        label: 'Level 2.2',
-                        items: [
-                            {
-                                routeLink: 'products/level3.1',
-                                label: 'Level 3.1'
-                            },
-                            {
-                                routeLink: 'products/level3.2',
-                                label: 'Level 3.2'
-                            }
-                        ]
-                    }
-                ] */
             },
             {
                 routeLink: 'products/level1.2',
@@ -82,6 +68,12 @@ export const navbarData: INavbarData[] = [
         icon: 'fal fa-tags',
         label: 'Asignación Tutores Especificos y Generales',
         role: 'Responsable Empresa',
+    },
+    {
+        routeLink: '/practicante',
+        icon: 'fa-solid fa-house',
+        label: 'Dashboard',
+        role: 'Practicante'
     },
     {
         routeLink: '/encargado-practicas/empresa/register',
@@ -121,12 +113,18 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
+        routeLink: '/encargado-practicas',
+        icon: 'fa-solid fa-house',
+        label: 'Dashboard',
+        role: 'Responsable Practicas'
+    },
+    {
         routeLink: 'media',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-chalkboard-teacher',
         label: 'Designación Tutor Academico',
         items: [
             {
-                routeLink: 'coupens/list',
+                routeLink: 'practicas/lista-practicas',
                 label: 'Designación Tutor',
                 role: 'Responsable Practicas'
             },
@@ -139,33 +137,63 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Practicas',
     },
     {
+        routeLink: 'empresa/register-empresa',
+        icon: 'fas fa-building',
+        label: 'Ver Empresas',
+        role: 'Responsable Practicas'
+    },
+    {
         routeLink: 'media',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-bullseye',
         label: 'Objetivos Segun Materia',
         role: 'Responsable Practicas'
     },
     {
         routeLink: 'media',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-tasks',
         label: 'Actividades Propuestas',
         role: 'Responsable Practicas'
     },
     {
         routeLink: 'media',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-file-signature',
         label: 'Generar Convocatoria',
         role: 'Responsable Practicas'
     },
     {
-        routeLink: 'media',
-        icon: 'fal fa-camera',
-        label: 'Elección Estudiantes',
+        routeLink: 'convocatorias/lista-convocatorias',
+        icon: 'fa-solid fa-person-circle-check',
+        label: 'Solicitudes Practicantes',
+        role: 'Responsable Practicas'
+    },
+    {
+        routeLink: 'empresa/solicitud-empresa',
+        icon: 'fas fa-check-circle',
+        label: 'Solicitudes Empresas',
+        role: 'Responsable Practicas'
+    },
+    {
+        routeLink: '/director-carrera',
+        icon: 'fa-solid fa-house',
+        label: 'Dashboard',
         role: 'Director Carrera'
+    },
+    {
+        routeLink: 'convocatorias/lista-convocatoria',
+        icon: 'fal fa-camera',
+        label: 'Solicitudes Practicantes',
+        role: 'Director Carrera'
+    },
+    {
+        routeLink: '/responsable-empresa',
+        icon: 'fa-solid fa-house',
+        label: 'Dashboard',
+        role: 'Tutor Especifico'
     },
     {
         routeLink: 'media',
         icon: 'fal fa-camera',
         label: 'Evaluación del Estudiante',
-        role: 'Tutor Empresarial'
+        role: 'Tutor Especifico'
     },
 ];

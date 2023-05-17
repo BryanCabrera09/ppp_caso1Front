@@ -1,44 +1,68 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Usuario } from 'src/app/core/models/usuario';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { getCookie } from 'typescript-cookie';
 
-//Google imports
-declare var google: any;
+import jwt_decode from 'jwt-decode';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit, AfterViewInit {
+export class AuthComponent implements OnInit {
 
   public formLogin!: FormGroup;
 
   @ViewChild("email") email!: ElementRef;
   @ViewChild("password") password!: ElementRef;
 
-  constructor(private router: Router, private builder: FormBuilder, private authService: AuthService) {
-    this.formLogin = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl()
-    })
-  }
+  authStatus: string;
+  usuario = new Usuario();
 
-  ngAfterViewInit(): void {
-    google.accounts.id.initialize({
-      client_id: "611447714728-bv75hffa9b3m0sqdls40fl9qpbc6nenc.apps.googleusercontent.com",
-      callback: this.handleCredentialResponse
-    });
-    google.accounts.id.renderButton(
-      document.getElementById("buttonDiv"),
-      { theme: "outline", size: "large" }  // customization attributes
+  constructor(private loginService: AuthService, private router: Router, private toastr: ToastrService) { }
+
+  ngOnInit(): void { }
+
+  loginUser(loginForm: NgForm) {
+    this.loginService.validateLoginDetails(this.usuario).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          this.toastr.error('Credenciales incorrectas', 'Error de autenticación');
+        }
+        return throwError(error);
+      })
+    ).subscribe(
+      responseData => {
+        const authorizationHeader = responseData.headers.get('Authorization');
+        if (authorizationHeader) {
+          window.sessionStorage.setItem('Authorization', authorizationHeader);
+          const decodedToken: any = jwt_decode(authorizationHeader); // Decode the JWT
+          const role = decodedToken.authorities; // Assuming the role is stored in the 'role' field of the JWT payload
+          localStorage.setItem("roles", role)
+          this.usuario = <any>responseData.body;
+          this.usuario.authStatus = 'AUTH';
+          window.sessionStorage.setItem('userdetails', JSON.stringify(this.usuario));
+          const xsrf = getCookie('XSRF-TOKEN')!;
+          if (xsrf !== undefined) {
+            window.sessionStorage.setItem("XSRF-TOKEN", xsrf);
+          } //Arreglar que cuando ingrese con un segundo intento se cree el xsrf
+
+          if (sessionStorage.getItem('userdetails')) {
+            this.usuario = JSON.parse(sessionStorage.getItem('userdetails')!);
+            const role = localStorage.getItem('roles');
+            if (role == 'ROLE_ESTUD') {
+              this.router.navigate(['/encargado-practicas']);
+            }
+            console.log(role);
+          }
+        }
+      }
     );
-    google.accounts.id.prompt(); // also display the One Tap dialog
-  }
-
-
-  ngOnInit(): void {
   }
 
   handleCredentialResponse(response: any) {
@@ -50,47 +74,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private createMyForm(): FormGroup {
-    return this.builder.group({
-      email: ['', [Validators.required]],
-      password: ['', Validators.required]
-    });
-  }
-
-  /*  onSubmit() {
-     this.userService.login(this.formLogin.value)
-       .then(response => {
-         console.log(response);
-       })
-       .catch(error => console.log(error));
-   }
- 
-   onClick() {
-     this.userService.loginWithGoogle()
-       .then(response => {
-         console.log(response);
-         this.router.navigate(['/encargado-practicas']);
-       })
-       .catch(error => console.log(error))
-   } */
-
-  logIn(): void {
-    var mail = this.email.nativeElement.value;
-    var contra = this.password.nativeElement.value;
-    this.authService.login(mail, contra).then(res => {
-      if (res) {
-        console.log(res);
-        this.router.navigate(['/encargado-practicas']);
-      } else {
-        console.log("No se ha podido hacer el log-in correctamente.");
-      }
-    });
-  }
-
   logInGoogle(): void {
-    var mail = this.email.nativeElement.value;
-    var password = this.password.nativeElement.value;
-    this.authService.loginGoogle(mail, password).then(res => {
+    this.loginService.loginGoogle(this.usuario.correo, this.usuario.password).then(res => {
       if (res) {
         console.log(res);
         this.router.navigate(['/encargado-practicas']);
@@ -100,12 +85,8 @@ export class AuthComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public get f(): any {
-    return this.formLogin.controls;
+  createAccout() {
+    this.router.navigate(['/register']);
   }
 
-  goToLogin(): void {
-
-    this.router.navigate(['/encargado-practicas'])
-  }
 }

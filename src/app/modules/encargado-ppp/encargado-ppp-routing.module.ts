@@ -15,23 +15,33 @@ const routes: Routes = [
     loadChildren: () => import("./aceptacion-practicantes/aceptacion-practicantes.module").then(m => m.AceptacionPracticantesModule)
   },
   {
-    path: 'encargado',
-    loadChildren: () => import("./register-tutor/register-tutor.module").then(m => m.RegisterTutorModule)
-
+    path: 'practicas',
+    loadChildren: () => import("./list-practicas/list-practicas.module").then(m => m.ListPracticasModule)
   },
   {
-
+    path: 'tutorinst',
+    loadChildren: () => import("./register-tutor/register-tutor.module").then(m => m.RegisterTutorModule)
+  },
+  {
     path: 'actividades',
     loadChildren: () => import("./actividades-propuestas/actividades-propuestas.module").then(m => m.ActividadesPropuestasModule)
-
   },
-   {
+  {
     path: 'objetivos',
     loadChildren: () => import("./registrar-objetivos/registrar-objetivos.module").then(m => m.RegistrarObjetivosModule)
-
-  }
-
-
+  },
+  {
+    path: 'convocatorias',
+    loadChildren: () => import("./list-convocatorias/list-convocatorias.module").then(m => m.ListConvocatoriasModule)
+  },
+  {
+    path: 'empresa',
+    loadChildren: () => import("./aceptacion-empresa/aceptacion-empresa.module").then(m => m.AceptacionEmpresaModule)
+  },
+  {
+    path: '',
+    loadChildren: () => import("./dashboard-encargado/dashboard-encargado.module").then(m => m.DashboardEncargadoModule)
+  },
 ];
 
 @NgModule({

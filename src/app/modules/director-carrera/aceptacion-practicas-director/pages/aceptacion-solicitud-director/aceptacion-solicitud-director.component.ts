@@ -37,6 +37,9 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerSolicitudes();
+    window.addEventListener('beforeunload', (event) => {
+      localStorage.removeItem('convocatoriaId');
+    });
   }
 
   clear(table: Table) {
@@ -44,7 +47,9 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   }
 
   obtenerSolicitudes() {
-    const convocatoria: Convocatoria = { id: 1 };
+    const convocatoriaId = Number(localStorage.getItem('convocatoriaId'));
+    //localStorage.removeItem('convocatoriaId');
+    const convocatoria: Convocatoria = { id: convocatoriaId };
     this.solicitudService.getPostulantes(convocatoria).subscribe(
       data => {
         this.practicantes = data.map(

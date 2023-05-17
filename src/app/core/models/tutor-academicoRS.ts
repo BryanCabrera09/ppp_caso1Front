@@ -2,6 +2,6 @@ import { Usuario } from "./usuario";
 
 export class TutorAcademico {
     id?: number;
-    idDocente?: string;
+    idDocente?: number;
     usuario?: Usuario;
 }

@@ -19,7 +19,7 @@
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
                                         <input id="float-input" type="text" class={{verfCedula}}
-                                            [(ngModel)]="usuario.cedula" [pKeyFilter]="'int'" maxlength="13"
+                                            [(ngModel)]="usuario.cedula" [pKeyFilter]="'int'" maxlength="10"
                                             minlength="10" (ngModelChange)="buscarCedulaCompleta()"
                                             placeholder="Ingrese Número de Cédula" pInputText>
                                         <label for="float-input">Número de Cédula</label>

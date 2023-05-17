@@ -7,6 +7,8 @@ import { WelcomePracticanteComponent } from './modules/practicante/welcome-pract
 import { WelcomeEmpresaComponent } from './modules/responsable-empresa/welcome-empresa/welcome-empresa.component';
 import { WelcomeAcademicoComponent } from './modules/tutor-academico/welcome-academico/welcome-academico.component';
 import { WelcomeEspecificoComponent } from './modules/tutor-especifico/welcome-especifico/welcome-especifico.component';
+import { AuthComponent } from './modules/home/auth/pages/auth.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
 
@@ -29,13 +31,13 @@ const routes: Routes = [
 
   },
   {
-    path: 'practicante',
+    path: 'practicante', canActivate: [AuthGuard],
     component: WelcomePracticanteComponent,
     loadChildren: () => import('./modules/practicante/practicante.module').then(m => m.PracticanteModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
-    path: 'respon-empresa',
+    path: 'responsable-empresa',
     component: WelcomeEmpresaComponent,
     loadChildren: () => import('./modules/responsable-empresa/responsable-empresa.module').then(m => m.ResponsableEmpresaModule) // se importa un modulo que tiene routing es decir ruta 
 

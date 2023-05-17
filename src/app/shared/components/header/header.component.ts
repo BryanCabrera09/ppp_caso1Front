@@ -2,6 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { languages, notifications, userItems } from './header-dummy-data';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Usuario } from 'src/app/core/models/usuario';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,8 @@ export class HeaderComponent implements OnInit {
 
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+
+  user = new Usuario();
 
   isLogged: Boolean = false;
 
@@ -38,25 +41,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.usuarioLogueado();
+    if (sessionStorage.getItem('userdetails')) {
+      this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
+    }
 
     this.checkCanShowSearchAsOverlay(window.innerWidth);
-
     this.selectedLanguage = this.languages[0];
-
-    let token = sessionStorage.getItem("token") as string;
-    this.objetounico = this.decodificarJwt(token);
-    console.log("mi objecto", this.objetounico);
-  }
-
-  private decodificarJwt(token: string): any {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
   }
 
   getHeadClass(): string {
@@ -83,29 +73,20 @@ export class HeaderComponent implements OnInit {
   }
 
   usuarioLogueado() {
-    this.authService.getInfoUsuarioLoggeado().subscribe(res => {
-      if (res != null) {
-        this.logueado = true;
-        this.usuario = res;
-      }
-      else {
-        this.logueado = false;
-      }
-    });
+    // this.authService.getInfoUsuarioLoggeado().subscribe(res => {
+    //   if (res != null) {
+    //     this.logueado = true;
+    //     this.usuario = res;
+    //   }
+    //   else {
+    //     this.logueado = false;
+    //   }
+    // });
   }
 
   logOut(): void {
-    this.authService.logOut().then(res => {
-      this.logueado = false;
-      this.router.navigate(["/"]);
-    });
+    window.sessionStorage.clear();
+    window.localStorage.clear();
+    this.router.navigate(['/login']);
   }
-
-  /* logOut() {
-    this.authService.logout()
-      .then(() => {
-        this.router.navigate(['/login']);
-      })
-      .catch(error => console.log(error));
-  } */
 }

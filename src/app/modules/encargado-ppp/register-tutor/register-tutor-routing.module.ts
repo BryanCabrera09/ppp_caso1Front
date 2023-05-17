@@ -4,7 +4,7 @@ import { RegTutorComponent } from './pages/reg-tutor/reg-tutor.component';
 
 const routes: Routes = [
   {
-    path: 'register-tutor',
+    path: 'register-tutor/:id',
     component: RegTutorComponent,
   }
 ];

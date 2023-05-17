@@ -23,12 +23,18 @@ export class FormularionRegConvenioComponent implements OnInit {
   TutorA: TutorAcademico[];
   ConvenioA: Convenio[];
   carrera: Carrera = new Carrera
-  public empresa1: Empresa= new Empresa()
+
+ empresa1: Empresa= new Empresa()
+
+
+
   tutor: TutorAcademico = new TutorAcademico
   public Convenio: Convenio = new Convenio
   selectedDate: Date;
-  fechaI:Date;
-  fechaF: Date=  new Date;
+  fechaI: Date;
+  fechaF: Date = new Date;
+
+  fechaActual: Date = new Date();
 
   id: number = 0
 
@@ -38,7 +44,7 @@ export class FormularionRegConvenioComponent implements OnInit {
 
 
   constructor(private carreraService: CarreraMateriaService, private TutorAService: TutorAcademicoService,
-              private convenioService:ConvenioService, private empresaService: RegEmpresaServiceService) {
+    private convenioService: ConvenioService, private empresaService: RegEmpresaServiceService) {
     this.carreraService.ListarCarrera().subscribe(
       Carr => this.Carreras = Carr
     )
@@ -47,17 +53,15 @@ export class FormularionRegConvenioComponent implements OnInit {
       dato => { this.TutorA = dato; }
     )
 
-    
+
   }
 
 
-  CarreraHunter(e: any) {
-    alert(e.target.value)
-    this.carreraService.searchCarrera(e.target.value).subscribe(
+  CarreraHunter(value: any) {
+    alert(value)
+    this.carreraService.searchCarrera(value).subscribe(
       (data: Carrera) => {
-        this.carrera= data
-        
-        
+        this.carrera = data
       }
     )
   }
@@ -71,10 +75,10 @@ export class FormularionRegConvenioComponent implements OnInit {
     )
   }
 
-  guardarEmpresa(){
-    const empresa =  JSON.parse(localStorage.getItem('empresa')+'');
+  guardarEmpresa() {
+    const empresa = JSON.parse(localStorage.getItem('empresa') + '');
     this.id = parseInt(empresa)
-    
+
 
     this.empresaService.buscarporxID1(this.id).subscribe(
       (data: Empresa) => {
@@ -85,18 +89,18 @@ export class FormularionRegConvenioComponent implements OnInit {
   }
 
 
-  GuardarConvenio(reg: NgForm) {
-     this.Convenio.carrera = this.carrera
-     this.Convenio.firmaInst = this.tutor
-     this.Convenio.fechaInicio = this.fechaI
-     this.Convenio.fechaFin = this.fechaF
-     
+  GuardarConvenio() {
+    this.Convenio.carrera = this.carrera
+    this.Convenio.firmaInst = this.tutor
+    this.Convenio.fechaInicio = this.fechaI
+    this.Convenio.fechaFin = this.fechaF
+
     this.convenioService.guardarConvenio(this.Convenio).subscribe(
       (data) => {
         console.log(data);
         this.ngOnInit();
         Swal.fire('Convenio Guardado', 'Convenio Guardado con éxito en el sistema', 'success');
-        
+
       }, (error) => {
         console.log(error);
         Swal.fire('Error', 'Nose Pudo Guardar el Convenio', 'error');
@@ -104,22 +108,47 @@ export class FormularionRegConvenioComponent implements OnInit {
     );
 
     localStorage.removeItem('empresa')
-    
+
   }
 
-  
-  
-  sumarUnDia(){
-    
-    
+  sumarUnDia() {
+
     if (this.fechaI instanceof Date) {
-      this.fechaI.setDate(this.fechaI.getDate()+1);
+      this.fechaI.setDate(this.fechaI.getDate() + 1);
       alert(this.fechaI)
     }
-    
-   
-    
   }
 
+  // IMAGEN
+  image!: any;
+  file: any = '';
+
+  // CAPTURO EL ARCHIVO
+  nombre_orignal: string = "";
+
+  cap_nombre_archivo: any;
+  selectedFile!: File;
+
+  public imageSelected(event: any) {
+
+    this.selectedFile = event.target.files[0];
+
+    // mostrar imagen seleccionada
+    this.image = this.selectedFile;
+    const reader = new FileReader();
+    reader.readAsDataURL(this.selectedFile);
+    reader.onload = () => {
+      this.file = reader.result;
+    };
+
+    // CAPTURAR EL NAME DE LA IMAGEN
+    console.log("Seleciono una imagen: " + event.target.value);
+    this.cap_nombre_archivo = event.target.value;
+    console.log("Numero de datos del nombre del archivo => " + this.cap_nombre_archivo.length)
+    this.nombre_orignal = this.cap_nombre_archivo.slice(12);
+    console.log("Nombre imagen original => " + this.nombre_orignal);
+    console.log(this.nombre_orignal);
+
+  }
 
 }

@@ -1,95 +1,71 @@
-
-<div class="card">
-    <h2>Registro de Convenio</h2>
-
-    <form #reg="ngForm" (ngSubmit)="GuardarConvenio(reg)">
-        <div class="col- ig-12 col-md-11">
-
-            <div class="row mb-3">
-                
-                <div class="col-sm">
-                    <input type="hidden" #empresaid class="form-control" name="impresaid"  required>
-        
+<div class="container">
+    <div class="content">
+        <p-panel id="panelregConvenio" header="Registro Convenio">
+            <div class="panel over overflow-auto p-grid p-fluid">
+                <h4 style="text-align: center">Datos Convenio</h4>
+                <div class="cont p-grid p-fluid justify-content-center align-items-center">
+                    <div class="col-sm">
+                        <input type="hidden" #Convenioid class="form-control" style="width: 200%;" name="RUC"
+                            [(ngModel)]="Convenio.id" required>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div class="col">
+                            <div class="p-col-3 p-md-4">
+                                <span class="p-float-label">
+                                    <p-calendar [(ngModel)]="fechaI" [minDate]="fechaActual" [showIcon]="true"
+                                        [readonlyInput]="true"></p-calendar>
+                                    <label for="float-input">Fecha Inicio</label>
+                                </span>
+                            </div>
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" class="form-control"
+                                        [(ngModel)]="Convenio.numero" [pKeyFilter]="'int'" maxlength="13" minlength="13"
+                                        pInputText required />
+                                    <label for="float-input">Número de Convenio</label>
+                                </span>
+                            </div>
+                            <div class="p-col-3 p-md-4">
+                                <p-dropdown name="disponibilidad" [options]="TutorA" optionLabel="usuario.nombre"
+                                    optionValue="id" placeholder="Seleccione" [required]="true"
+                                    (onChange)="CarreraHunter($event.value)">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <p-calendar [(ngModel)]="fechaF" [minDate]="fechaActual" [showIcon]="true"
+                                        [readonlyInput]="true"></p-calendar>
+                                    <label for="float-input">Fecha Fin</label>
+                                </span>
+                            </div>
+                            <div class="p-col-3 p-md-4">
+                                <p-dropdown name="disponibilidad" [options]="Carreras" optionLabel="nombre"
+                                    optionValue="id" optionLabel="nombre" placeholder="Seleccione" [required]="true"
+                                    (onChange)="CarreraHunter($event.value)">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-3 p-md-4">
+                                <span class="p-float-label">
+                                    <input (change)="imageSelected($event)" formControlName="foto" accept="pdf/*"
+                                        name="foto" type="file" class="form-control" id="float-input" required />
+                                    <label for="float-input"></label>
+                                </span>
+                                <div *ngIf="file" class="mt-3 text-center">
+                                    <img [src]="file" class="rounded" alt="..." style="max-width: 50%;" />
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <button pButton pRipple type="button" label="Registrar Convenio" icon="pi pi-check"
+                            iconPos="right" class="p-button-rounded p-button-primary"
+                            (click)="GuardarConvenio()"></button>
+                    </div>
                 </div>
             </div>
-           
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>N° de Convenio:</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="text"  class="form-control"  name="n convenio" [(ngModel)]="Convenio.numero"  required>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Fecha Inicio</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="Date"  class="form-control"  name="fechaI" [(ngModel)]="fechaI" required>
-        
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Fecha Fin</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="Date" #Fechaf  class="form-control"  name="fechaF" [(ngModel)]="fechaF" required>
-        
-                </div>
-            </div>
-
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label" >
-                    <h4>Carrera</h4>
-                </label>
-                <div class="col-sm">
-                    <div class="form-group" >
-                        <select  class="form-select"  name="disponibilidad"  (change)="CarreraHunter($event)" required>
-                            <option>Seleccione</option>
-                          <option *ngFor="let carreras of Carreras" value="{{carreras.id}}">{{carreras.nombre}}</option>
-                        </select>
-                      </div>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label" >
-                    <h4>Tutor</h4>
-                </label>
-                <div class="col-sm">
-                    <div class="form-group" >
-                        <select  class="form-select"  name="disponibilidad" (change)="TutorHunter($event)" required>
-                            <option>Seleccione</option>
-                          <option *ngFor="let tutor of TutorA" value="{{tutor.id}}">{{tutor.usuario.nombre}}</option>
-                        </select>
-                      </div>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>PDF</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="file"  class="form-control" style="width: 150%;" name="Matriz"  required>
-        
-                </div>
-            </div>
-
-        </div>
-
-        
-
-        <button type="submit"   class="crear" > Guardar</button>
-       
-    </form>
-
+        </p-panel>
+    </div>
 </div>
-

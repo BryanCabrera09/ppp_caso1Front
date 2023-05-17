@@ -4,14 +4,12 @@ import { Practicante } from 'src/app/core/models/practicante';
 //PrimeNg Imports
 import { Table } from 'primeng/table';
 import { SolipracticantesService } from 'src/app/core/services/solipracticantes.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 import { Convocatoria } from 'src/app/core/models/convocatoria';
 import { Usuario } from 'src/app/core/models/usuario';
 import { Estudiante } from 'src/app/core/models/estudiante';
-
-import { PrimeIcons } from 'primeng/api';
 
 @Component({
   selector: 'app-aceptacion-solicitudes',
@@ -36,7 +34,10 @@ export class AceptacionSolicitudesComponent implements OnInit {
   loading: boolean = true;
   statuses: any[] = [];
 
-  constructor(private solicitudService: SolipracticantesService, private router: Router) { }
+  aprobISTA: boolean;
+  aprobEmpr: boolean;
+
+  constructor(private solicitudService: SolipracticantesService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.obtenerSolicitudes();
@@ -47,38 +48,70 @@ export class AceptacionSolicitudesComponent implements OnInit {
   }
 
   obtenerSolicitudes() {
-    const convocatoria: Convocatoria = { id: 1 };
-    this.solicitudService.getPostulantes(convocatoria).subscribe(
-      data => {
-        console.log(this.practicantes);
-        this.practicantes = data.map(
-          result => {
-            let practicante = new Practicante;
-            practicante.cedula = result.estudiante.usuario.cedula;
-            practicante.nombre = result.estudiante.usuario.nombre;
-            practicante.apellido = result.estudiante.usuario.apellido;
-            practicante.ciclo = result.estudiante.ciclo;
-            practicante.id = result.id;
-            practicante.correo = result.estudiante.usuario.correo;
-            practicante.estado = result.estado;
-            this.usuario = result.estudiante.usuario;
-            this.estudiante = result.estudiante;
-            this.convocatoria = result.convocatoria;
-            return practicante;
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      if (id) {
+        this.solicitudService.getPostulantes(id).subscribe(
+          data => {
+            console.log(this.practicantes);
+            this.practicantes = data.map(
+              result => {
+                let practicante = new Practicante;
+                practicante.cedula = result.estudiante.usuario.cedula;
+                practicante.nombre = result.estudiante.usuario.nombre;
+                practicante.apellido = result.estudiante.usuario.apellido;
+                practicante.ciclo = result.estudiante.ciclo;
+                practicante.id = result.id;
+                practicante.correo = result.estudiante.usuario.correo;
+                practicante.estado = result.estado;
+                this.usuario = result.estudiante.usuario;
+                this.estudiante = result.estudiante;
+                this.convocatoria = result.convocatoria;
+                return practicante;
+              }
+            );
+            this.loading = false;
           }
         );
-        this.loading = false;
       }
-    );
+    })
   }
 
   guardarPostulacion() {
 
-    if (this.estado === 'aprobado') {
-      this.practestudiant.estado = 2;
-    } else if (this.estado === 'desaprobado') {
-      this.practestudiant.estado = 1;
+    if (this.practestudiant.estado === 0) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 1;
+        this.aprobISTA = true;
+        this.aprobEmpr = false;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 3;
+        this.aprobISTA = false;
+        this.aprobEmpr = false;
+      }
+    } else if (this.practestudiant.estado === 3) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 2;
+        this.aprobISTA = true;
+        this.aprobEmpr = false;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 1;
+        this.aprobISTA = false;
+        this.aprobEmpr = false;
+      }
+    } else if (this.practestudiant.estado === 2) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 2;
+        this.aprobISTA = true;
+        this.aprobEmpr = true;
+        this.practestudiant.estado = 4;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 1;
+        this.aprobISTA = false;
+        this.aprobEmpr = true;
+      }
     }
+
 
     this.practestudiant.fechaEnvio = new Date();
 
