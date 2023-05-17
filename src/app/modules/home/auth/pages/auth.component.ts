@@ -5,8 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Usuario } from 'src/app/core/models/usuario';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { getCookie } from 'typescript-cookie';
-
 import jwt_decode from 'jwt-decode';
+
 import { catchError, throwError } from 'rxjs';
 
 @Component({
@@ -44,6 +44,7 @@ export class AuthComponent implements OnInit {
           const decodedToken: any = jwt_decode(authorizationHeader); // Decode the JWT
           const role = decodedToken.authorities; // Assuming the role is stored in the 'role' field of the JWT payload
           localStorage.setItem("roles", role)
+
           this.usuario = <any>responseData.body;
           this.usuario.authStatus = 'AUTH';
           window.sessionStorage.setItem('userdetails', JSON.stringify(this.usuario));
@@ -60,6 +61,14 @@ export class AuthComponent implements OnInit {
             }
             console.log(role);
           }
+
+          this.usuario = <any>responseData.body;
+          this.usuario.authStatus = 'AUTH';
+          window.sessionStorage.setItem('userdetails', JSON.stringify(this.model));
+          const xsrf = getCookie('XSRF-TOKEN')!;
+          window.sessionStorage.setItem('XSRF-TOKEN', xsrf);
+          this.router.navigate(['director-carrera']);
+
         }
       }
     );
