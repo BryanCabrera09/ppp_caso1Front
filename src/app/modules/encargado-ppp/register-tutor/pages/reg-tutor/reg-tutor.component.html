@@ -6,9 +6,12 @@
                 <div class="d-flex flex-row">
                     <div class="col">
                         <div class="p-col-12 p-md-4">
-                            <p-dropdown [options]="empresas" [(ngModel)]="empresa" optionLabel="nombre" optionValue="id"
-                                [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Seleccionar Empresa">
-                            </p-dropdown>
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="empresa" disabled="true"
+                                    class="form-control" [pKeyFilter]="blockSpecial" maxlength="100" minlength="10"
+                                    pInputText required />
+                                <label for="float-input">Nombre Empresa</label>
+                            </span>
                         </div>
                         <div class="p-col-12 p-md-4">
                             <p-dropdown [options]="docentes" optionLabel="nombres" optionValue="cedula" [filter]="true"
@@ -25,17 +28,16 @@
                     </div>
                     <div class="col">
                         <div class="p-col-12 p-md-4">
-                            <span class="p-float-label">
-                                <input id="float-input" type="text" class="form-control" [pKeyFilter]="blockSpecial"
-                                    maxlength="100" minlength="10" pInputText required />
-                                <label for="float-input">Nombre Responsable PPP</label>
-                            </span>
+                            <p-dropdown [options]="responsableppp" optionLabel="usuario.nombre" optionValue="id" [filter]="true"
+                                filterBy="usuario.nombre" [showClear]="true" placeholder="Nombre Responsable PPP"
+                                (onChange)="docenteCedula($event.value)">
+                            </p-dropdown>
                         </div>
                         <div class="p-col-3 p-md-4">
-                            <span class="p-float-label">
-                                <input id="float-input" type="text" class="form-control" pInputText />
-                                <label for="float-input">Nombre Representante Legal</label>
-                            </span>
+                            <p-dropdown [options]="responsableEmpresa" optionLabel="usuario.nombre" optionValue="id" [filter]="true"
+                                filterBy="usuario.nombre" [showClear]="true" placeholder="Nombre Representante Legal"
+                                (onChange)="docenteCedula($event.value)">
+                            </p-dropdown>
                         </div>
                         <div class="p-col-3 p-md-4">
                             <span class="p-float-label">

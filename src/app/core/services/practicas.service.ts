@@ -1,16 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Practica } from '../models/practica';
+import { Observable } from 'rxjs';
+import baserUrl from '../helpers/helperUrl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PracticasService {
 
-  private baseURL = "http://localhost:8080/convocatoria/listar";
+  private baseURL = `${baserUrl}/practica`;
 
   constructor(private httpClient: HttpClient) { }
 
-  /* obtenerConvocatoria(): Observable<Practicas[]> {
-    return this.httpClient.get<ConvocatoriaP[]>(`${this.baseURL}`)
-  } */
+  obtenerPractica(): Observable<Practica[]> {
+    return this.httpClient.get<Practica[]>(`${this.baseURL}/listar`)
+  }
+
+  searchPracticaById(id: number) {
+    return this.httpClient.get(`${this.baseURL}/buscar/${id}`);
+  }
 }

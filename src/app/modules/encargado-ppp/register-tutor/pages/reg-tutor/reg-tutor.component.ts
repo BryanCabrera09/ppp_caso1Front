@@ -17,7 +17,10 @@ import { TutorAcademicoService } from 'src/app/core/services/tutor-academico.ser
 import Swal from 'sweetalert2';
 import { SolipracticantesService } from 'src/app/core/services/solipracticantes.service';
 import { Practicante } from 'src/app/core/models/practicante';
-
+import { ActivatedRoute } from '@angular/router';
+import { PracticasService } from 'src/app/core/services/practicas.service';
+import { Practica } from 'src/app/core/models/practica';
+import { UsuarioService } from 'src/app/core/services/usuario.service';
 
 @Component({
   selector: 'app-reg-tutor',
@@ -32,8 +35,11 @@ export class RegTutorComponent implements OnInit {
   empresas: Empresa[] = [];
   docentes: DocenteFenix[] = [];
   practicantes: Practicante[] = [];
+  responsableppp: Usuario[] = [];
+  responsableEmpresa: Usuario[] = [];
   practicante = new Practicante;
   estudiante = new Estudiante;
+  practica = new Practica;
 
   practicanteName: string;
   tutorName: string;
@@ -49,16 +55,15 @@ export class RegTutorComponent implements OnInit {
   blockCorreo: RegExp = /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/;
   fechaActual: any;
 
-  constructor(private empresaService: RegEmpresaServiceService, private userService: UsersfenixService, private toastr: ToastrService,
-    private tutorService: TutorAcademicoService, private practicanteService: SolipracticantesService) { }
+  constructor(private userService: UsersfenixService, private toastr: ToastrService,
+    private tutorService: TutorAcademicoService, private practicanteService: SolipracticantesService, private activatedRoute: ActivatedRoute,
+    private practicaService: PracticasService, private usuarioService: UsuarioService) { }
 
   ngOnInit() {
 
-    this.empresaService.obtenerempresas().subscribe(
-      (empresa) => {
-        this.empresas = empresa
-      }
-    );
+    this.obtenerPractica();
+    this.obtenerResponsableEmpresa();
+    this.obtenerResponsablePPP();
 
     this.userService.listDocente().subscribe(
       docente => {
@@ -69,6 +74,35 @@ export class RegTutorComponent implements OnInit {
     this.practicanteService.listPracticante().subscribe(
       practicante => {
         this.practicantes = practicante;
+      }
+    );
+  }
+
+  obtenerPractica() {
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      if (id) {
+        this.practicaService.searchPracticaById(id).subscribe(
+          (data: Practica) => {
+            this.empresa = data.convocatoria.solicitudEmpresa.convenio.empresa.nombre;
+          }
+        );
+      }
+    })
+  }
+
+  obtenerResponsablePPP() {
+    this.usuarioService.getRoles('ROLE_RESPP').subscribe(
+      data => {
+        this.responsableppp = data;
+      }
+    );
+  }
+
+  obtenerResponsableEmpresa() {
+    this.usuarioService.getRoles('ROLE_TEMP').subscribe(
+      data => {
+        this.responsableEmpresa = data;
       }
     );
   }
@@ -411,5 +445,4 @@ export class RegTutorComponent implements OnInit {
     // Opcional: Descargar el documento PDF
     pdf.create().download('designacion-tutor-especifico.pdf');
   }
-
 }

@@ -4,7 +4,7 @@ import { Practicante } from 'src/app/core/models/practicante';
 //PrimeNg Imports
 import { Table } from 'primeng/table';
 import { SolipracticantesService } from 'src/app/core/services/solipracticantes.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 import { Convocatoria } from 'src/app/core/models/convocatoria';
@@ -37,13 +37,10 @@ export class AceptacionSolicitudesComponent implements OnInit {
   aprobISTA: boolean;
   aprobEmpr: boolean;
 
-  constructor(private solicitudService: SolipracticantesService, private router: Router) { }
+  constructor(private solicitudService: SolipracticantesService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.obtenerSolicitudes();
-    window.addEventListener('beforeunload', (event) => {
-      localStorage.removeItem('convocatoriaId');
-    });
   }
 
   clear(table: Table) {
@@ -51,30 +48,33 @@ export class AceptacionSolicitudesComponent implements OnInit {
   }
 
   obtenerSolicitudes() {
-    const convocatoriaId = Number(localStorage.getItem('convocatoriaId'));
-    const convocatoria: Convocatoria = { id: convocatoriaId };
-    this.solicitudService.getPostulantes(convocatoria).subscribe(
-      data => {
-        console.log(this.practicantes);
-        this.practicantes = data.map(
-          result => {
-            let practicante = new Practicante;
-            practicante.cedula = result.estudiante.usuario.cedula;
-            practicante.nombre = result.estudiante.usuario.nombre;
-            practicante.apellido = result.estudiante.usuario.apellido;
-            practicante.ciclo = result.estudiante.ciclo;
-            practicante.id = result.id;
-            practicante.correo = result.estudiante.usuario.correo;
-            practicante.estado = result.estado;
-            this.usuario = result.estudiante.usuario;
-            this.estudiante = result.estudiante;
-            this.convocatoria = result.convocatoria;
-            return practicante;
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      if (id) {
+        this.solicitudService.getPostulantes(id).subscribe(
+          data => {
+            console.log(this.practicantes);
+            this.practicantes = data.map(
+              result => {
+                let practicante = new Practicante;
+                practicante.cedula = result.estudiante.usuario.cedula;
+                practicante.nombre = result.estudiante.usuario.nombre;
+                practicante.apellido = result.estudiante.usuario.apellido;
+                practicante.ciclo = result.estudiante.ciclo;
+                practicante.id = result.id;
+                practicante.correo = result.estudiante.usuario.correo;
+                practicante.estado = result.estado;
+                this.usuario = result.estudiante.usuario;
+                this.estudiante = result.estudiante;
+                this.convocatoria = result.convocatoria;
+                return practicante;
+              }
+            );
+            this.loading = false;
           }
         );
-        this.loading = false;
       }
-    );
+    })
   }
 
   guardarPostulacion() {

@@ -46,8 +46,8 @@ export class ListComponent implements OnInit {
     this.loading = false;
   }
 
-  listarPostulantes() {
-    localStorage.setItem('convocatoriaId', this.id.toString());
-    this.router.navigate(['encargado-practicas/encargado//lista-practicantes']);
+  listarPostulantes(id: any) {
+    this.id = id;
+    this.router.navigate(['encargado-practicas/encargado//lista-practicantes/' + this.id]);
   }
 }
