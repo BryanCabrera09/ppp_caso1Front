@@ -16,4 +16,8 @@ export class SoliEmpresaService {
     return this.http.get<SolicitudEmpresa[]>(`${this.searchUrl}/listar`)
   }
 
+  guardarsolicitud(solicitud:SolicitudEmpresa): Observable<SolicitudEmpresa>{
+    return this.http.post<SolicitudEmpresa>(`${this.searchUrl}/crear`,solicitud);
+  }
+
 }

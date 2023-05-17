@@ -20,4 +20,7 @@ export class MateriaService {
     Listarmateria(): Observable<Materia[]> {
         return this.http.get<Materia[]>(`${this.ObjUrl}/listar`);
       }
+    guardarcar(materia:Materia):Observable<Materia>{
+      return this.http.post<Materia>(`${this.ObjUrl}/crear`,materia);
+    }
 }
