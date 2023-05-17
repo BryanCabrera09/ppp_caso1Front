@@ -1,7 +1,7 @@
 export class Carrera {
 
     id: number;
-    idCarrera: number;
+    carreraId: number;
     nombre: string;
     activo: boolean;
 }

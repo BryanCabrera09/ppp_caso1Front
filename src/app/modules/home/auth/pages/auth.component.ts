@@ -61,14 +61,6 @@ export class AuthComponent implements OnInit {
             }
             console.log(role);
           }
-
-          this.usuario = <any>responseData.body;
-          this.usuario.authStatus = 'AUTH';
-          window.sessionStorage.setItem('userdetails', JSON.stringify(this.model));
-          const xsrf = getCookie('XSRF-TOKEN')!;
-          window.sessionStorage.setItem('XSRF-TOKEN', xsrf);
-          this.router.navigate(['director-carrera']);
-
         }
       }
     );

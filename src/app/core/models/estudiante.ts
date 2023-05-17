@@ -16,9 +16,7 @@ export class Estudiante {
     horasCumplidas: number;
     prioridad: boolean;
     idEstudiante: number;
+    carreraId: number;
     carrera: Carrera;
-    usuario: Usuario;
-    
-    
+    usuario: Usuario;       
 }
-
