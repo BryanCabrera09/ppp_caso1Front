@@ -58,6 +58,37 @@ export class AuthComponent implements OnInit {
             const role = localStorage.getItem('roles');
             if (role == 'ROLE_ESTUD') {
               this.router.navigate(['/encargado-practicas']);
+            } 
+
+            switch (role) {
+              case 'ROLE_DIREC':
+                this.router.navigate(['/director-carrera']);
+                console.log('Selected fruit is apple.');
+                break;
+              case 'ROLE_RESPP':
+                this.router.navigate(['/encargado-practicas']);
+                console.log('Selected fruit is banana.');
+                break;
+              case 'ROLE_ESTUD"':
+                this.router.navigate(['/practicante']);
+                console.log('Selected fruit is orange.');
+                break;
+              case 'ROLE_GEREN"':
+                this.router.navigate(['/responsable-empresa']);
+                console.log('Selected fruit is orange.');
+                break;
+              case 'ROLE_TISTA':
+                this.router.navigate(['/tutor-academico']);
+                console.log('Selected fruit is orange.');
+                break;
+              case 'ROLE_TEMP':
+                this.router.navigate(['/tutor-especifico']);
+                console.log('Selected fruit is orange.');
+                break;
+              default:
+                this.router.navigate(['../login']);
+                console.log('Selected fruit is unknown.');
+                break;
             }
             console.log(role);
           }
