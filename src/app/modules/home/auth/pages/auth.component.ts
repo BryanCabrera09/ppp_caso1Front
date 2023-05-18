@@ -56,10 +56,6 @@ export class AuthComponent implements OnInit {
           if (sessionStorage.getItem('userdetails')) {
             this.usuario = JSON.parse(sessionStorage.getItem('userdetails')!);
             const role = localStorage.getItem('roles');
-            if (role == 'ROLE_ESTUD') {
-              this.router.navigate(['/encargado-practicas']);
-            } 
-
             switch (role) {
               case 'ROLE_DIREC':
                 this.router.navigate(['/director-carrera']);
