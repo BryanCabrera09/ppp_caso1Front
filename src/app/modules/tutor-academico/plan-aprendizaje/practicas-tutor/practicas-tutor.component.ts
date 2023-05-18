@@ -24,7 +24,7 @@ export class PracticasTutorComponent {
   listPracticas() {
     this.practicaService.listarByUsuario(this.user.id).subscribe(
       (response) => {
-        this.practicas = response;
+        this.practicas = response.body;
         console.log("Lista de practicas: " + this.practicas);
       }
     );
