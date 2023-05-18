@@ -14,13 +14,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FormularioComponent implements OnInit {
 
-  Empresa: Empresa = new Empresa();
+  empresa: Empresa = new Empresa();
 
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/;
 
-  estado: string[] = [
-    'Activo', 'Inactivo'
-  ];
+  estado: string[] = [];
+
+
+
+  estadoSelect: string
   isMisionFilled: boolean = false;
 
   constructor(private EmpresaService: RegEmpresaServiceService, private activatedRoute: ActivatedRoute) { }
@@ -37,9 +39,9 @@ export class FormularioComponent implements OnInit {
   public crearempresa() {
     console.log("Se ha realizado un click")
 
-    this.Empresa.activo = true;
+    this.empresa.activo = true;
 
-    this.EmpresaService.create(this.Empresa).subscribe()
+    this.EmpresaService.create(this.empresa).subscribe()
     window.location.reload();
   }
 
@@ -48,26 +50,43 @@ export class FormularioComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
       if (id) {
-        this.EmpresaService.buscarporxID(id).subscribe((data: any) => {
-          this.Empresa = data
+        this.EmpresaService.buscarporxID1(id).subscribe((data: Empresa) => {
+          this.empresa = data
+          this.empresa.activo = data.activo
+          //validacion de COmbo
+
+          if (this.empresa.activo === true) {
+            this.estado = ['Activo', 'Inactivo'];
+          } else if (this.empresa.activo === false) {
+            this.estado = ['Inactivo', 'Activo'];
+          }
         });
 
+        //Validacion de boton
         if (isNaN(id)) {
           this.boton = false
         } else {
           this.boton = true
         }
+
       }
     });
+
+
   }
 
 
   public guardarEdit(id: number, empresa: any) {
+    if (this.estadoSelect === 'Activo') {
+      this.empresa.activo = true;
+    } else {
+      this.empresa.activo = false;
+    }
 
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
       if (id) {
-        this.EmpresaService.actualizar(id, this.Empresa).subscribe(
+        this.EmpresaService.actualizar(id, this.empresa).subscribe(
           (data) => {
             console.log(data);
             this.ngOnInit();
