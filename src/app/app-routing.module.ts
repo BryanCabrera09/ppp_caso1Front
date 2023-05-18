@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'director-carrera',
-    component: WelcomeDirectorComponent,
+    component: WelcomeDirectorComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_DIREC']},
     loadChildren: () => import('./modules/director-carrera/director-carrera.module').then(m => m.DirectorCarreraModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
@@ -31,10 +31,9 @@ const routes: Routes = [
 
   },
   {
-    path: 'practicante', canActivate: [AuthGuard],
+    path: 'practicante',
     component: WelcomePracticanteComponent,
     loadChildren: () => import('./modules/practicante/practicante.module').then(m => m.PracticanteModule) // se importa un modulo que tiene routing es decir ruta 
-
   },
   {
     path: 'responsable-empresa',
@@ -44,12 +43,12 @@ const routes: Routes = [
   },
   {
     path: 'tutor-academico',
-    component: WelcomeAcademicoComponent,
+    component: WelcomeAcademicoComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_TISTA']},
     loadChildren: () => import('./modules/tutor-academico/tutor-academico.module').then(m => m.TutorAcademicoModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
-    path: 'tutor-especifico',
+    path: 'tutor-especifico', 
     component: WelcomeEspecificoComponent,
     loadChildren: () => import('./modules/tutor-especifico/tutor-especifico.module').then(m => m.TutorEspecificoModule) // se importa un modulo que tiene routing es decir ruta 
 
