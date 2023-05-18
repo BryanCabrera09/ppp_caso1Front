@@ -65,11 +65,11 @@ export class AuthComponent implements OnInit {
                 this.router.navigate(['/encargado-practicas']);
                 console.log('Selected fruit is banana.');
                 break;
-              case 'ROLE_ESTUD"':
+              case 'ROLE_ESTUD':
                 this.router.navigate(['/practicante']);
                 console.log('Selected fruit is orange.');
                 break;
-              case 'ROLE_GEREN"':
+              case 'ROLE_GEREN':
                 this.router.navigate(['/responsable-empresa']);
                 console.log('Selected fruit is orange.');
                 break;
