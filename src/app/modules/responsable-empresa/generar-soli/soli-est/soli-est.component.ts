@@ -25,13 +25,14 @@ export class SoliEstComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  ngOnInit() {
+   
   }
 
   Guardarsoli(reg:NgForm){
     this.soliempresa.fechaInicioTen = this.fechaI
     this.soliempresa.fechaMaxTen = this.fechaF
+    this.soliempresa.estado = 1
     
     this.solicitudEmService.guardarsolicitud(this.soliempresa).subscribe(
       (data) => {
@@ -44,4 +45,5 @@ export class SoliEstComponent implements OnInit {
       }
     )
   };
+  
 }

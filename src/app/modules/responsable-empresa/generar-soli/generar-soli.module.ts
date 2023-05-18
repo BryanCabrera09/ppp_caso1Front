@@ -5,11 +5,13 @@ import { GenerarSoliRoutingModule } from './generar-soli-routing.module';
 import { SoliEstComponent } from './soli-est/soli-est.component';
 import { FormsModule } from '@angular/forms';
 import { NgProgressModule } from 'ngx-progressbar';
+import { ListaEmpresaComponent } from './lista-empresa/lista-empresa.component';
 
 
 @NgModule({
   declarations: [
-    SoliEstComponent
+    SoliEstComponent,
+    ListaEmpresaComponent
   ],
   imports: [
     CommonModule,
