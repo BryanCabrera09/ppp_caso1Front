@@ -67,10 +67,11 @@ export class FormularionRegConvenioComponent implements OnInit {
   }
 
   TutorHunter(e: any) {
-    alert(e.target.value)
-    this.TutorAService.searchTutor(e.target.value).subscribe(
+    alert(e)
+    this.TutorAService.searchTutor(e).subscribe(
       (data: TutorAcademico) => {
         this.tutor = data
+        console.log(this.tutor)
       }
     )
   }
@@ -94,8 +95,9 @@ export class FormularionRegConvenioComponent implements OnInit {
     this.Convenio.firmaInst = this.tutor
     this.Convenio.fechaInicio = this.fechaI
     this.Convenio.fechaFin = this.fechaF
-
+    console.log(this.Convenio);
     this.convenioService.guardarConvenio(this.Convenio).subscribe(
+      
       (data) => {
         console.log(data);
         this.ngOnInit();
