@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
+import baserUrl from '../helpers/helperUrl';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class ConvocatoriaService {
 
   obtenerConvocatoria():Observable<ConvocatoriaP[]>{
     return this.httpClient.get<ConvocatoriaP[]>(`${this.baseURL}`)
+  }
+
+  listarConvocatorias(): Observable<any> {
+    return this.httpClient.get(baserUrl + '/noticias', { observe: 'response' })
   }
 
  
