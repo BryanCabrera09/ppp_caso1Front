@@ -13,8 +13,14 @@ export class ConvenioService {
 
   constructor(private http: HttpClient) { }
 
+  listarcon(): Observable<Convenio[]>{
+    return this.http.get<Convenio[]>(`${this.searchUrl}/listar`)
+  }
+
   guardarConvenio(convenio: Convenio): Observable<Convenio>{
     return this.http.post<Convenio>(`${this.searchUrl}/crear`, convenio);
   }
-
+  Buscarcon(id:Number){
+    return this.http.get(`${this.searchUrl}/buscar/${id}`);
+  }
 }
