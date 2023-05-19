@@ -45,24 +45,26 @@
           <div class="modal-header">
             <h4 class="modal-title">GeeksForGeeks</h4>
           </div>
+          <form >
           <div class="modal-body">
             <label>ASIGNATURA</label>
 
-            <select>
+            <select name="disponibilidad" (change)="Materiacon($event)"required>
               <option>Seleccione</option>
               <option *ngFor="let asignatura of MateriasO" value="{{asignatura.id}}">{{asignatura.nombre}}</option>
             </select>
 
             <br><br>
             <label>OBJETIVO</label><br>
-            <textarea rows="5" cols="60"></textarea>
+            <textarea #name rows="5" cols="60" [(ngModel)]="objetivo.descripcion" required></textarea>
 
           </div>
           <div class="modal-footer">
-            <button type="submit" class="crear" (click)="closePopup()">
+            <button type="submit" class="crear" (click)="GuardarObjeto(objetivo, name.value)">
               Guardar
             </button>
           </div>
+        </form>
         </div>
       </div>
     </div>
@@ -74,7 +76,7 @@
   (click)="openPopups()">Añadir Asignatura
 </button>
 
-<form >
+
 <div
   class="modal"
   tabindex="-1"
@@ -85,26 +87,30 @@
       <div class="modal-header">
         <h4 class="modal-title">GeeksForGeeks</h4>
       </div>
+      <form >
       <div class="modal-body">
         <label>Carrera</label>
-
+        
             <select name="disponibilidad" (change)="Carreracon($event)"required>
               <option>Seleccione</option>
               <option *ngFor="let carreras of Carreras" value="{{carreras.id}}">{{carreras.nombre}}</option>
             </select>
             <br><br>
             <label>Asignatura</label><br>
-            <input type="text"  class="form-control" name="Asignatura" required>
+            <input type="text"  class="form-control" name="Asignatura" [(ngModel)]="materia.nombre" required>
+          
           </div>
+        
           <div class="modal-footer">
-            <button type="submit" class="crear" (click)="closePopups()">
+            <button type="submit" class="crear" (click)="GuardarAsignatura(materia)">
               Guardar
             </button>
       </div>
+    </form>
     </div>
   </div>
 </div>
-</form>
+
 
 
   </div>
