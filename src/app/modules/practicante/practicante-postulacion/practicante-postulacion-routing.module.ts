@@ -14,7 +14,7 @@ const routes: Routes = [
     component: SeleccionComponent,
   },
   {
-    path: 'vista/:id',
+    path: 'vista',
     component: VistaComponent,
   }
 ];
