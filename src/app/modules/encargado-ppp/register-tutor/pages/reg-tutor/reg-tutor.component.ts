@@ -3,9 +3,7 @@ import { TutorInstituto } from 'src/app/core/models/tutor-academico';
 
 //PDF Import
 import * as pdfMake from 'pdfmake/build/pdfmake';
-/* import pdfFonts from 'pdfmake/build/vfs_fonts'; */
-import pdfFonts from 'src/assets/fonts/custom-fonts';
-import { Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Empresa } from 'src/app/core/models/empresa';
 import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
 import { Estudiante } from 'src/app/core/models/estudiante';
@@ -83,6 +81,7 @@ export class RegTutorComponent implements OnInit {
   obtenerPractica() {
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
+      console.log(id)
       if (id) {
         this.practicaService.searchPracticaById(id).subscribe(
           (data: Practica) => {
@@ -267,11 +266,7 @@ export class RegTutorComponent implements OnInit {
       this.usuario.activo = true;
       this.tutorEmpresarial.usuario = this.usuario;
       this.tutorEmpresarial.empresa = this.empresa;
-      if (this.selectedRol === 'Tutor Especifico') {
-        this.role = 'ROLE_TEMP';
-      } else if (this.selectedRol === 'Gerente Empresa') {
-        this.role = 'ROLE_GEREN';
-      }
+      this.role = 'ROLE_GEREN';
       this.tutorService.registerTutor(this.tutorEmpresarial, this.role).subscribe(
         (result: TutorInstituto) => {
           this.activatedRoute.params.subscribe(params => {
@@ -299,11 +294,7 @@ export class RegTutorComponent implements OnInit {
                       resultprac => {
                         console.log(resultprac);
                         this.enabledButton = true;
-                        if (this.selectedRol === 'Tutor Especifico') {
-                          Swal.fire('Registro', 'Tutor Especfico Creado', 'success');
-                        } else if (this.selectedRol === 'Gerente Empresa') {
-                          Swal.fire('Registro', 'Gerente Empresa Creado', 'success');
-                        }
+                        Swal.fire('Registro', 'Gerente Empresa Creado', 'success');
                         /* this.router.navigate(['/login']) */
                       }
                     );
@@ -348,17 +339,7 @@ export class RegTutorComponent implements OnInit {
     //Logo Ista 
     const imageData = await this.getBase64ImageFromAssets("assets/images/Logo-ISTA.png");
 
-    //Tipo de letra 
-    PdfMakeWrapper.setFonts(pdfFonts, {
-      calibri: {
-        normal: 'Calibri-Regular.ttf',
-        bold: 'Calibri-Bold.TTF',
-        italics: 'Calibri-Italic.ttf',
-        bolditalics: 'Calibri-Bold-Italic.ttf'
-      },
-    });
-
-    PdfMakeWrapper.useFont('calibri');
+    pdfMake.vfs = pdfFonts.pdfMake.vfs
 
     // definir las márgenes del documento
     var marginLeft = 74;
@@ -366,18 +347,9 @@ export class RegTutorComponent implements OnInit {
     var marginTop = 70;
     var marginBottom = 100;
 
-    const pdf = new PdfMakeWrapper();
+    /* const pdf = new PdfMakeWrapper();
 
     pdf.pageMargins([marginLeft, marginTop, marginRight, marginBottom]);
-
-    /* pdf.add(
-      new Img(imageData)
-        .width(170)
-        .height(50)
-        .alignment('left')
-        .margin([0, 20])
-        .build()
-    ); */
 
     pdf.add(
       new Txt('Documento: Designación tutor especifico')
@@ -447,6 +419,76 @@ export class RegTutorComponent implements OnInit {
     //pdf.create().open();
     pdf.pageSize('A4');
     // Opcional: Descargar el documento PDF
-    pdf.create().download('designacion-tutor-especifico.pdf');
+    pdf.create().download('designacion-tutor-especifico.pdf'); */
+
+    const documentDefinition = {
+      pageSize: 'A4',
+      pageMargins: [marginLeft, marginTop, marginRight, marginBottom],
+      content: [
+        {
+          image: imageData,
+          width: 170,
+          height: 50,
+          alignment: "left",
+          margin: [0, 20, 0, 20],
+        },
+        {
+          text: 'Documento: Designación tutor especifico',
+          style: 'header'
+        },
+        {
+          text: fechaCompleta,
+          style: 'subheader',
+          alignment: 'right'
+        },
+        {
+          text: '\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -',
+          style: 'body'
+        },
+        {
+          text: 'De mi consideración:',
+          style: 'subheader'
+        },
+        {
+          text: '\nLuego de expresarle un atento saludo me permito informar que el Ing. Patricio Leonardo Pacheco Quezada con cédula de identidad número: 0103629762 ha sido designado como TUTOR ESPECIFICO del estudiante Juan Carlos Matute Uzhca.',
+          style: 'body'
+        },
+        {
+          text: '\n\nEl Ing. Leonardo Patricio Pacheco Quezada se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.',
+          style: 'body'
+        },
+        {
+          text: '\n\nSin más que informar, me despido augurando éxito en las funciones que realiza.',
+          style: 'body'
+        },
+        {
+          text: '\n\nAtentamente,',
+          style: 'subheader'
+        },
+        {
+          text: '\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\nGesinsoft Cia. Ltda.',
+          style: 'body'
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 11,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        subheader: {
+          fontSize: 11,
+          margin: [0, 10, 0, 5]
+        },
+        body: {
+          fontSize: 11,
+          margin: [0, 0, 0, 10],
+          alignment: 'justify'
+        }
+      }
+    };
+
+    pdfMake.createPdf(documentDefinition).download('designacion-tutor-especifico.pdf');
+
   }
 }

@@ -28,11 +28,6 @@
                             </p-dropdown>
                         </div>
                         <div class="p-col-3 p-md-4">
-                            <p-dropdown [options]="rol" [(ngModel)]="selectedRol" [showClear]="true"
-                                placeholder="Asignar Rol">
-                            </p-dropdown>
-                        </div>
-                        <div class="p-col-3 p-md-4">
                             <span class="p-float-label">
                                 <input id="float-input" type="text" [(ngModel)]="usuario.titulo"
                                     placeholder="Ingrese su Título" pInputText>
@@ -63,18 +58,6 @@
                                 <label for="float-input">Nombres</label>
                             </span>
                         </div>
-                        <!-- <div class="p-col-12 p-md-4">
-                            <p-dropdown [options]="responsableppp" optionLabel="usuario.nombre" optionValue="id"
-                                [filter]="true" filterBy="usuario.nombre" [showClear]="true"
-                                placeholder="Nombre Responsable PPP" (onChange)="docenteCedula($event.value)">
-                            </p-dropdown>
-                        </div> -->
-                        <!-- <div class="p-col-3 p-md-4">
-                            <p-dropdown [options]="responsableEmpresa" optionLabel="usuario.nombre" optionValue="id"
-                                [filter]="true" filterBy="usuario.nombre" [showClear]="true"
-                                placeholder="Nombre Representante Legal" (onChange)="gerenteEmpresa($event.value)">
-                            </p-dropdown>
-                        </div> -->
                         <div class="p-col-3 p-md-4">
                             <span class="p-float-label">
                                 <input id="float-input" type="text" [(ngModel)]="usuario.apellido"

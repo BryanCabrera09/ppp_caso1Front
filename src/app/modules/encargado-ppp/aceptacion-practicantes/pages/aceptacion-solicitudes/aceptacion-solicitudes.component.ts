@@ -50,6 +50,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
   obtenerSolicitudes() {
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
+      console.log(id)
       if (id) {
         this.solicitudService.getPostulantes(id).subscribe(
           data => {

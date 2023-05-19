@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Practicante } from 'src/app/core/models/practicante';
 import { SolipracticantesService } from 'src/app/core/services/solipracticantes.service';
 
@@ -33,7 +33,7 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   loading: boolean = true;
   statuses: any[] = [];
 
-  constructor(private solicitudService: SolipracticantesService, private router: Router) { }
+  constructor(private solicitudService: SolipracticantesService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.obtenerSolicitudes();
@@ -47,30 +47,33 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   }
 
   obtenerSolicitudes() {
-    const convocatoriaId = Number(localStorage.getItem('convocatoriaId'));
-    //localStorage.removeItem('convocatoriaId');
-    const convocatoria: Convocatoria = { id: convocatoriaId };
-    this.solicitudService.getPostulantes(convocatoria).subscribe(
-      data => {
-        this.practicantes = data.map(
-          result => {
-            let practicante = new Practicante;
-            practicante.cedula = result.estudiante.usuario.cedula;
-            practicante.nombre = result.estudiante.usuario.nombre;
-            practicante.apellido = result.estudiante.usuario.apellido;
-            practicante.ciclo = result.estudiante.ciclo;
-            practicante.id = result.id;
-            practicante.correo = result.estudiante.usuario.correo;
-            practicante.estado = result.estado;
-            this.usuario = result.estudiante.usuario;
-            this.estudiante = result.estudiante;
-            this.convocatoria = result.convocatoria;
-            return practicante;
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      console.log(id)
+      if (id) {
+        this.solicitudService.getPostulantes(id).subscribe(
+          data => {
+            this.practicantes = data.map(
+              result => {
+                let practicante = new Practicante;
+                practicante.cedula = result.estudiante.usuario.cedula;
+                practicante.nombre = result.estudiante.usuario.nombre;
+                practicante.apellido = result.estudiante.usuario.apellido;
+                practicante.ciclo = result.estudiante.ciclo;
+                practicante.id = result.id;
+                practicante.correo = result.estudiante.usuario.correo;
+                practicante.estado = result.estado;
+                this.usuario = result.estudiante.usuario;
+                this.estudiante = result.estudiante;
+                this.convocatoria = result.convocatoria;
+                return practicante;
+              }
+            );
+            this.loading = false;
           }
         );
-        this.loading = false;
       }
-    );
+    })
   }
 
   guardarPostulacion() {
