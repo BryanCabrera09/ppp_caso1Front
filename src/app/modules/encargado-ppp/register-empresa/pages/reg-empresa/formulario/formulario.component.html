@@ -6,13 +6,13 @@
                 <div class="p-grid p-fluid justify-content-center align-items-center">
                     <div class="col-sm">
                         <input type="hidden" #id class="form-control" style="width: 200%;" name="RUC"
-                            [(ngModel)]="Empresa.id" required>
+                            [(ngModel)]="empresa.id" required>
                     </div>
                     <div class="d-flex flex-row">
                         <div class="col">
                             <div class="p-col-12 p-md-4">
                                 <span class="p-float-label">
-                                    <input id="float-input" type="text" class="form-control" [(ngModel)]="Empresa.ruc"
+                                    <input id="float-input" type="text" class="form-control" [(ngModel)]="empresa.ruc"
                                         [pKeyFilter]="'int'" maxlength="13" minlength="13" pInputText required />
                                     <label for="float-input">Número de RUC</label>
                                 </span>
@@ -21,7 +21,7 @@
                             <div class="p-col-3 p-md-4">
                                 <span class="p-float-label">
                                     <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="Empresa.matriz" [pKeyFilter]="blockSpecial" maxlength="100"
+                                        [(ngModel)]="empresa.matriz" [pKeyFilter]="blockSpecial" maxlength="100"
                                         minlength="10" pInputText required />
                                     <label for="float-input">Matriz</label>
                                 </span>
@@ -29,13 +29,13 @@
                             <div class="p-col-12 p-md-4">
                                 <span class="p-float-label">
                                     <textarea id="float-input" class="form-control" rows="5" cols="30"
-                                        [(ngModel)]="Empresa.mision" pInputTextarea></textarea>
+                                        [(ngModel)]="empresa.mision" pInputTextarea></textarea>
                                     <label for="float-input">Misión Empresarial</label>
                                 </span>
                             </div>
                             <div class="p-col-3 p-md-4">
                                 <p-dropdown id="float-input" [options]="estado" name="disponibilidad"
-                                    [(ngModel)]="Empresa.activo">
+                                    [(ngModel)]="estadoSelect">
                                 </p-dropdown>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                             <div class="p-col-12 p-md-4">
                                 <span class="p-float-label">
                                     <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="Empresa.nombre" [pKeyFilter]="blockSpecial" maxlength="100"
+                                        [(ngModel)]="empresa.nombre" [pKeyFilter]="blockSpecial" maxlength="100"
                                         minlength="10" pInputText required />
                                     <label for="float-input">Nombre de Empresa</label>
                                 </span>
@@ -51,14 +51,14 @@
                             <div class="p-col-3 p-md-4">
                                 <span class="p-float-label">
                                     <textarea id="float-input" class="form-control" rows="5" cols="30" pInputTextarea
-                                        [(ngModel)]="Empresa.vision"></textarea>
+                                        [(ngModel)]="empresa.vision"></textarea>
                                     <label for="float-input">Visión Empresarial</label>
                                 </span>
                             </div>
                             <div class="p-col-3 p-md-4">
                                 <span class="p-float-label">
                                     <textarea id="float-input" class="form-control" rows="5" cols="30" pInputTextarea
-                                        [(ngModel)]="Empresa.objetivo"></textarea>
+                                        [(ngModel)]="empresa.objetivo"></textarea>
                                     <label for="float-input">Objetivos Empresariales</label>
                                 </span>
                             </div>
@@ -71,7 +71,7 @@
                             (click)="crearempresa()"></button>
                         <button pButton pRipple type="button" label="Actualzar Empresa" icon="pi pi-refresh"
                             iconPos="right" class="p-button-rounded p-button-primary"
-                            (click)="guardarEdit(Empresa.id, Empresa)" *ngIf="boton"></button>
+                            (click)="guardarEdit(empresa.id, empresa)" *ngIf="boton"></button>
                     </div>
                 </div>
             </div>

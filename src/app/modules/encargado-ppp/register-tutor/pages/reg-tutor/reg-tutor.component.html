@@ -1,43 +1,84 @@
 <div class="container">
-    <p-panel id="panelregempresa" header="Registro Tutor Específico">
+    <p-panel id="panelregempresa" header="Registro Gerente Empresa">
         <div class="panel over overflow-auto p-grid p-fluid">
-            <h4 style="text-align: center">Datos del Tutor Específico</h4>
+            <h4 style="text-align: center">Datos del Gerente Empresa</h4>
             <div class="p-grid p-fluid justify-content-center align-items-center">
                 <div class="d-flex flex-row">
                     <div class="col">
                         <div class="p-col-12 p-md-4">
                             <span class="p-float-label">
-                                <input id="float-input" type="text" [(ngModel)]="empresa" disabled="true"
+                                <input id="float-input" type="text" [(ngModel)]="empresa.nombre" disabled="true"
                                     class="form-control" [pKeyFilter]="blockSpecial" maxlength="100" minlength="10"
                                     pInputText required />
                                 <label for="float-input">Nombre Empresa</label>
                             </span>
                         </div>
                         <div class="p-col-12 p-md-4">
-                            <p-dropdown [options]="docentes" optionLabel="nombres" optionValue="cedula" [filter]="true"
-                                filterBy="nombres" [showClear]="true" placeholder="Seleccionar Docente"
-                                (onChange)="docenteCedula($event.value)">
+                            <p-dropdown [options]="responsableppp" [(ngModel)]="selectedResponsable"
+                                optionLabel="usuario.nombre" optionValue="id" [filter]="true" filterBy="usuario.nombre"
+                                [showClear]="true" placeholder="Responsable PPP"
+                                (onChange)="responsableCedula($event.value)">
                             </p-dropdown>
                         </div>
                         <div class="p-col-3 p-md-4">
-                            <p-dropdown [options]="practicantes" optionLabel="estudiante.usuario.nombre"
-                                optionValue="id" [filter]="true" filterBy="estudiante.usuario.nombre" [showClear]="true"
+                            <p-dropdown [options]="practicantes" [(ngModel)]="selectedPracticante"
+                                optionLabel="estudiante.usuario.nombre" optionValue="id" [filter]="true"
+                                filterBy="estudiante.usuario.nombre" [showClear]="true"
                                 placeholder="Seleccionar Practicante" (onChange)="practicanteId($event.value)">
                             </p-dropdown>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="p-col-12 p-md-4">
-                            <p-dropdown [options]="responsableppp" optionLabel="usuario.nombre" optionValue="id"
-                                [filter]="true" filterBy="usuario.nombre" [showClear]="true"
-                                placeholder="Nombre Responsable PPP" (onChange)="docenteCedula($event.value)">
-                            </p-dropdown>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.titulo"
+                                    placeholder="Ingrese su Título" pInputText>
+                                <label for=" float-input">Título</label>
+                            </span>
                         </div>
                         <div class="p-col-3 p-md-4">
-                            <p-dropdown [options]="responsableEmpresa" optionLabel="usuario.nombre" optionValue="id"
-                                [filter]="true" filterBy="usuario.nombre" [showClear]="true"
-                                placeholder="Nombre Representante Legal" (onChange)="gerenteEmpresa($event.value)">
-                            </p-dropdown>
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="tutorEmpresarial.cargo"
+                                    placeholder="Ingrese su Título" pInputText>
+                                <label for=" float-input">Cargo</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.cedula" [pKeyFilter]="'int'"
+                                    maxlength="10" minlength="10" placeholder="Ingrese Número de Cédula" pInputText>
+                                <label for="float-input">Número de Cédula</label>
+                            </span>
+                        </div>
+
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.nombre"
+                                    placeholder="Ingrese Nombres Completos" pInputText>
+                                <label for="float-input">Nombres</label>
+                            </span>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.apellido"
+                                    placeholder="Ingrese Apellidos Completos" pInputText>
+                                <label for=" float-input">Apellidos</label>
+                            </span>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="email" [(ngModel)]="usuario.correo"
+                                    (ngModelChange)="validarCorreo()" placeholder="Ingrese Dirección de Email"
+                                    pInputText>
+                                <label for=" float-input">Correo Electrónico</label>
+                            </span>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.telefono"
+                                    placeholder=" Ingrese Número Telefónico" pInputText>
+                                <label for=" float-input">Número de Teléfono</label>
+                            </span>
                         </div>
                         <div class="p-col-3 p-md-4">
                             <span class="p-float-label">

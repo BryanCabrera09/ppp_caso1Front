@@ -21,4 +21,11 @@ export class ConvenioService {
     return this.http.put<Convenio>(`${this.searchUrl}/editar/${id}`, convenio);
   }
 
+  listarcon(): Observable<Convenio[]>{
+    return this.http.get<Convenio[]>(`${this.searchUrl}/listar`)
+  }
+
+  Buscarcon(id:Number){
+    return this.http.get(`${this.searchUrl}/buscar/${id}`);
+  }
 }

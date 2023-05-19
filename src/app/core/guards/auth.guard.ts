@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
 
     user = new Usuario();
 
-    constructor(private storageService: StorageService, private router: Router) {}
+    constructor(private storageService: StorageService, private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         const isLoggedIn = this.storageService.isLoggedIn();
@@ -18,9 +18,16 @@ export class AuthGuard implements CanActivate {
         const role = this.storageService.getRole();
         if (isLoggedIn && expectedRoles.includes(role)) {
             return true;
-          }
-        this.router.navigate(['../login']);
+        }
+        //this.router.navigate(['../login']);
+        this.logOut();
+
         return false;
     }
 
+    logOut(): void {
+        window.sessionStorage.clear();
+        window.localStorage.clear();
+        this.router.navigate(['/login']);
+    }
 }

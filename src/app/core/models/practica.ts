@@ -11,9 +11,10 @@ export class Practica {
     fin?: Date;
     concluciones?: string;
     departamento?: string;
+    estado: number;
 
     convocatoria?: ConvocatoriaP;
     estudiante?: Estudiante;
-    tutorAcademico?: TutorAcademico;
+    tutorInstituto?: TutorAcademico;
     tutorEmpresarial?: TutorEmpresarial
 }

@@ -67,3 +67,16 @@
     margin-bottom: 20px;
     border-left: -40%;
   }
+  .container{
+    margin-bottom: 10%;
+  }
+
+  .container button{
+    margin-bottom: 20%;
+    margin-top: 5%;
+  }
+
+  .container h4{
+    margin-top: 10%;
+    margin-top: 5%; 
+  }

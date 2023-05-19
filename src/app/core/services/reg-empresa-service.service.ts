@@ -41,7 +41,7 @@ export class RegEmpresaServiceService {
 
   actualizar(id: number, empresas: Empresa): Observable<Empresa>{
     let res = this.urlEditar+id
-    return this.http.put<Empresa>(res, empresas);
+    return this.http.post<Empresa>(res, empresas);
   }
 
 }

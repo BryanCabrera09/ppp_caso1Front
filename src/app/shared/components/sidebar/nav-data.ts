@@ -121,25 +121,7 @@ export const navbarData: INavbarData[] = [
     {
         routeLink: 'media',
         icon: 'fas fa-chalkboard-teacher',
-        label: 'Designación Tutor Específico',
-        items: [
-            {
-                routeLink: 'practicas/lista-practicas',
-                label: 'Designación Tutor',
-                role: 'Responsable Practicas'
-            },
-            {
-                routeLink: 'coupens/create',
-                label: 'Listado Tutores',
-                role: 'Responsable Practicas'
-            }
-        ],
-        role: 'Responsable Practicas',
-    },
-    {
-        routeLink: 'media',
-        icon: 'fas fa-chalkboard-teacher',
-        label: 'Designación Tutor Académico',
+        label: 'Designación Tutores',
         items: [
             {
                 routeLink: 'practicas/lista-practicas',
@@ -173,7 +155,7 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Practicas'
     },
     {
-        routeLink: 'media',
+        routeLink: 'convocatoria/lista',
         icon: 'fas fa-file-signature',
         label: 'Generar Convocatoria',
         role: 'Responsable Practicas'
