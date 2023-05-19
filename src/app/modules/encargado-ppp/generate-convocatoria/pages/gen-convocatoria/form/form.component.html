@@ -1,61 +1,71 @@
-
-<div class="card">
-    <h2>Asignaturas Aprobadas</h2>
-
-    <form>
-        <div class="col- ig-12 col-md-11">
-           
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label" >
-                   
-                </label>
-                <div class="col-sm">
-                    <div class="form-group" >
-                        <select  class="form-select" name="disponibilidad" (change)="  guardarOpcion($event)">
-                            " required>
-                          <option value="true">SELECCIONE</option>
-                          <option *ngFor="let mat of Materias" value="{{mat.nombre}}">{{mat.nombre}}</option>
-                        </select>
-                      </div>
-                    <ul>
-                        <li *ngFor="let opcion of opcionesGuardadas">{{opcion}}</li>
-                    </ul>
+<div class="container">
+    <div class="content">
+        <p-panel id="panelregempresa" header="Asignaturas">
+            <div class="panel over overflow-auto p-grid p-fluid">
+                <h4 style="text-align: center">Asignaturas Aprobadas</h4>
+                <div class="p-grid p-fluid justify-content-center align-items-center">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <select class="form-select" name="disponibilidad" (change)="  guardarOpcion($event)">
+                                " required>
+                                <option value="true">SELECCIONE</option>
+                                <option *ngFor="let mat of Materias" value="{{mat.nombre}}">{{mat.nombre}}</option>
+                            </select>
+                        </div>
+                        <ul>
+                            <li *ngFor="let opcion of opcionesGuardadas">{{opcion}}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <button class="crear" style="margin-left: 40%;">Guardar</button>
-
-    </form>
-    
-
-   
-
+        </p-panel>
+    </div>
 </div>
 
-<div class="card">
-     
-    <h4>Feacha Maxima de Postulacion</h4> 
-    <form>
-        <div class="col- ig-12 col-md-11">
-            <label for="Codigo DEWEY" class="col-sm col-form-label" >
-                <h4>Feacha Max</h4>
-            </label>
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label" >
-                   
-                </label>
-                <div class="col-sm">
-                    <div class="form-group" >
-                        
-                      </div>
-                   
+
+
+
+
+
+<div class="container">
+    <div class="content">
+        <p-panel id="panelregempresa" header="">
+            <div class="panel over overflow-auto p-grid p-fluid">
+                <h4 style="text-align: center">Fecha de Postulacion</h4>
+                <div class="p-grid p-fluid justify-content-center align-items-center">
+                    <div class="d-flex flex-row">
+                        <div class="col">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <p-calendar [minDate]="" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+                                    <label for="float-input">Fecha Inicio</label>
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <p-calendar [(ngModel)]="convoca.fechaFin" [minDate]="fechaActual" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+                                    <label for="float-input">Fecha max</label>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="p-col-12 p-md-4">
+                        <button pButton pRipple type="button" label="Crear Convocatoria" icon="pi pi-check"
+                          (click)="guardarConvoca()"  iconPos="right" class="p-button-rounded p-button-primary"></button>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <button pButton pRipple type="button" label="Crear Convocatoria" icon="pi pi-check"
+                          (click)="generarPDF()"  iconPos="right" class="p-button-rounded p-button-primary"></button>
+                    </div>
+
                 </div>
             </div>
-
-        </div>
-
-        <button class="crear" style="margin-left: 40%;" >Guardar</button>
-
-    </form>
+        </p-panel>
+    </div>
 </div>

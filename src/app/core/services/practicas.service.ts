@@ -20,4 +20,6 @@ export class PracticasService {
   searchPracticaById(id: number) {
     return this.httpClient.get(`${this.baseURL}/buscar/${id}`);
   }
+
+  
 }

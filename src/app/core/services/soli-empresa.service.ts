@@ -20,4 +20,8 @@ export class SoliEmpresaService {
     return this.http.post<SolicitudEmpresa>(`${this.searchUrl}/crear`,solicitud);
   }
 
+  buscarxID(id: number){
+    return this.http.get(`${this.searchUrl}/buscar/${id}`);
+  }
+
 }

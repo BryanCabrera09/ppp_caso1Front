@@ -90,11 +90,11 @@ export class FormularioComponent implements OnInit {
           (data) => {
             console.log(data);
             this.ngOnInit();
-            Swal.fire('Libro actualizado', 'Libro actualizado con éxito en el sistema', 'success');
+            Swal.fire('Empresa Guardada', 'Empresa Guardada con éxito en el sistema', 'success');
             window.location.reload();
           }, (error) => {
             console.log(error);
-            Swal.fire('Error', 'Libro no actualizado', 'error');
+            Swal.fire('Error', 'Empresa no Guardada', 'error');
           }
         );
       }

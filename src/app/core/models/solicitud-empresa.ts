@@ -3,8 +3,8 @@ import { Convenio } from "./convenio"
 
 export class SolicitudEmpresa {
 
-    id?: string
-    numPracticantes?: string
+    id?: number
+    numPracticantes?: number
     numHoras?: string
     fechaInicioTen?: string
   
