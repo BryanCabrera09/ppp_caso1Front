@@ -85,6 +85,7 @@ export class FormComponent implements OnInit{
 
 
   generarPDF() {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
     const documentoPDF = {
       content: [
         { text: 'CONVOCATORIA – TSDS -PPP-2022-013', style: 'titulo' },
