@@ -1,6 +1,6 @@
 import { Usuario } from "./usuario";
 
-export class TutorAcademico {
+export class TutorInstituto {
 
     id?: number
     idDocente?: number;

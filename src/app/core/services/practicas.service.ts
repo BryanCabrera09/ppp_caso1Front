@@ -11,7 +11,6 @@ import baserUrl from '../helpers/helperUrl';
 })
 export class PracticasService {
 
-
   private baseURL = `${baserUrl}/practica`;
 
   constructor(private httpClient: HttpClient) { }
@@ -22,5 +21,9 @@ export class PracticasService {
 
   searchPracticaById(id: number) {
     return this.httpClient.get(`${this.baseURL}/buscar/${id}`);
+  }
+
+  editarPractica(id: number, practica: Practica): Observable<any> {
+    return this.httpClient.post(`${this.baseURL}/editar/${id}`, practica);
   }
 }

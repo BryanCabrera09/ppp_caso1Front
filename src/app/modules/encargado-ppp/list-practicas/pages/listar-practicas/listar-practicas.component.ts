@@ -44,8 +44,13 @@ export class ListarPracticasComponent {
     this.loading = false;
   }
 
-  asignarTutor(id: any) {
+  asignarTutorEspecifico(id: any) {
     this.id = id;
     this.router.navigate(['encargado-practicas/tutoresp/register-tutor/' + this.id]);
+  }
+
+  asignarTutorAcademico(id: any) {
+    this.id = id;
+    this.router.navigate(['encargado-practicas/tutoracad/register-tutor/' + this.id]);
   }
 }

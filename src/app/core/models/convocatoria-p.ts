@@ -6,5 +6,5 @@ export class ConvocatoriaP {
     fechaFin?: Date;
     numero?: number;
 
-    solicitudEmpresa:SolicitudEmpresa
+    solicitudEmpresa: SolicitudEmpresa
 }

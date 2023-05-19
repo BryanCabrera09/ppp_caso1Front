@@ -66,7 +66,8 @@ export class AuthComponent implements OnInit {
                 console.log('Selected fruit is banana.');
                 break;
               case 'ROLE_ESTUD':
-                this.router.navigate(['/practicante']);
+                //this.router.navigate(['/practicante']);
+                this.router.navigate(['/encargado-practicas']);
                 console.log('Selected fruit is orange.');
                 break;
               case 'ROLE_GEREN':

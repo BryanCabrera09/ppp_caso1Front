@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
 import { Convenio } from 'src/app/core/models/convenio';
 import { DocenteFenix } from 'src/app/core/models/docente-fenix';
 import { Empresa } from 'src/app/core/models/empresa';
 import { Estudiante } from 'src/app/core/models/estudiante';
 import { Practica } from 'src/app/core/models/practica';
 import { Practicante } from 'src/app/core/models/practicante';
-import { TutorAcademico } from 'src/app/core/models/tutor-academicoRS';
+import { TutorInstituto } from 'src/app/core/models/tutor-academico';
 import { Usuario } from 'src/app/core/models/usuario';
 import { PracticasService } from 'src/app/core/services/practicas.service';
 import { SolipracticantesService } from 'src/app/core/services/solipracticantes.service';
@@ -25,7 +25,7 @@ import Swal from 'sweetalert2';
 })
 export class TutorAcademicoComponent implements OnInit {
 
-  tutor_academico = new TutorAcademico;
+  tutorInstituto = new TutorInstituto;
   usuario = new Usuario;
   convenio = new Convenio;
 
@@ -42,11 +42,17 @@ export class TutorAcademicoComponent implements OnInit {
   tutorName: string;
   empresa: string;
   acronimo: string;
-  enabledButton: boolean = false;
+  enabledButton: boolean;
+  displayEU: boolean = false;
 
   docente: DocenteFenix = new DocenteFenix;
 
-  selectedCedula: string;
+  selectedDocente: string;
+  selectedPracticante: string;
+  idConvo: number;
+  role: string;
+  nombre: string;
+  apellido: string;
 
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/;
   blockCorreo: RegExp = /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/;
@@ -67,12 +73,6 @@ export class TutorAcademicoComponent implements OnInit {
         this.docentes = docente;
       }
     );
-
-    this.practicanteService.listPracticante().subscribe(
-      practicante => {
-        this.practicantes = practicante;
-      }
-    );
   }
 
   obtenerPractica() {
@@ -82,6 +82,12 @@ export class TutorAcademicoComponent implements OnInit {
         this.practicaService.searchPracticaById(id).subscribe(
           (data: Practica) => {
             this.empresa = data.convocatoria.solicitudEmpresa.convenio.empresa.nombre;
+            this.idConvo = data.convocatoria.id;
+            this.practicanteService.practicanteByConvoId(this.idConvo).subscribe(
+              practicante => {
+                this.practicantes = practicante;
+              }
+            )
           }
         );
       }
@@ -105,21 +111,18 @@ export class TutorAcademicoComponent implements OnInit {
   }
 
   practicanteId(value) {
-    this.practicanteService.searchDocenteById(value).subscribe(
+    this.practicanteService.searchPracticanteById(value).subscribe(
       (data: Practicante) => {
         console.log(data)
         this.usuario.cedula = data.estudiante.usuario.cedula;
-        this.usuario.nombre = data.estudiante.usuario.nombre.split(' ')
+        this.nombre = data.estudiante.usuario.nombre;
+        this.apellido = data.estudiante.usuario.apellido;
+        this.practicanteName = data.estudiante.usuario.nombre.split(' ')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ');
-        this.usuario.apellido = data.estudiante.usuario.apellido.split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ');
-        this.practicanteName = this.usuario.nombre + ' ' + this.usuario.apellido;
+          .join(' ') + ' ' + data.estudiante.usuario.apellido.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
         console.log(this.practicanteName)
-        /* this.estudiante.usuario.cedula = data.estudiante.usuario.cedula;
-        this.estudiante.usuario.nombre = data.estudiante.usuario.nombre;
-        this.estudiante.usuario.apellido = data.estudiante.usuario.apellido; */
         this.estudiante.usuario = this.usuario;
         this.practicante.estudiante = this.estudiante;
 
@@ -131,34 +134,17 @@ export class TutorAcademicoComponent implements OnInit {
   docenteCedula(value) {
     this.userService.searchDocenteByCedula(value).subscribe(
       (data: DocenteFenix) => {
-        this.tutor_academico.idDocente = data.alumno_docenteId;
-        this.usuario.nombre = data.nombres.split(' ')
+        this.tutorInstituto.idDocente = data.alumno_docenteId;
+        this.usuario.nombre = data.nombres;
+        this.usuario.apellido = data.apellidos;
+        this.tutorName = data.nombres.split(' ')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ');
-        this.usuario.apellido = data.apellidos.split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ');
-        this.tutorName = this.usuario.nombre + ' ' + this.usuario.apellido;
+          .join(' '); + ' ' + data.apellidos.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');;
         this.usuario.cedula = data.cedula;
         this.usuario.correo = data.correo;
         this.usuario.titulo = data.titulo;
-        /* if (this.usuario.titulo.match(/ingenier[ao]/i)) {
-          acronimo = 'Ing.';
-        } else if (this.usuario.titulo.match(/magister/i)) {
-          acronimo = 'Mag.';
-        } else if (this.usuario.titulo.match(/abogad[ao]/i)) {
-          acronimo = 'Abog.';
-        } else if (this.usuario.titulo.match(/lcd[ao]/i)) {
-          acronimo = 'Lcd.';
-        } else if (this.usuario.titulo.match(/licenciad[ao]/i)) {
-          acronimo = 'Lic.';
-        } else if (this.usuario.titulo.match(/doctor/i)) {
-          acronimo = 'Dr.';
-        } else if (this.usuario.titulo.match(/magíster/i)) {
-          acronimo = 'Mag.';
-        } else if (this.usuario.titulo.match(/tecnolog[ao]/i)) {
-          acronimo = 'Tec.';
-        } */
         if (this.usuario.titulo.match(/ingeniero/i)) {
           this.acronimo = 'El Ing.';
         } else if (this.usuario.titulo.match(/ingeniera/i)) {
@@ -189,46 +175,69 @@ export class TutorAcademicoComponent implements OnInit {
         this.usuario.telefono = data.telefono;
         this.usuario.activo = true;
         this.usuario.correo = data.correo;
-        this.tutor_academico.usuario = this.usuario;
-        console.log(this.tutor_academico)
+        this.tutorInstituto.usuario = this.usuario;
+        console.log(this.tutorInstituto);
       }
     )
   }
 
   registerTutor() {
 
-    if (this.empresa === '' || this.empresa === null) {
-      this.toastr.error("Campo Apellidos vacio!", "Error!");
+    if (this.selectedDocente === undefined || this.selectedDocente === null) {
+      this.toastr.error("Seleccione un Docente!", "Error!");
     }
 
-    if (this.tutor_academico.idDocente === undefined || this.tutor_academico.idDocente === null) {
-      this.toastr.error("Campo Correo Electrónico vacio!", "Error!");
+    if (this.selectedPracticante === undefined || this.selectedPracticante === null) {
+      this.toastr.error("Seleccione un Practicante!", "Error!");
     }
 
-    /* if (this.usuario.titulo === '' || this.usuario.titulo === null) {
-      this.toastr.error("Campo Título vacio!", "Error!");
+    if (this.usuario.password === undefined || this.usuario.password === null) {
+      this.toastr.error("Establesca Una Contraseña!", "Error!");
     }
 
-    if (this.usuario.telefono === '' || this.usuario.telefono === null) {
-      this.toastr.error("Campo Número de Teléfono vacio!", "Error!");
-    }
 
-    if (this.usuario.password === '' || this.usuario.password === null) {
-      this.toastr.error("Campo Contraseña vacio!", "Error!");
-    } */
-
-    if (this.empresa === '' || this.empresa === null || this.tutor_academico.idDocente === undefined || this.tutor_academico.idDocente === null) {
+    if (this.usuario.password === undefined || this.usuario.password === null || this.empresa === '' || this.empresa === null || this.tutorInstituto.idDocente === undefined || this.tutorInstituto.idDocente === null || this.selectedDocente === '' || this.selectedDocente === null
+      || this.selectedPracticante === '' || this.selectedPracticante === null) {
 
       this.toastr.warning("Verifique que esten correctos los campos")
     } else {
-      this.tutor_academico.usuario = this.usuario;
-      this.tutorService.registerTutor(this.tutor_academico).subscribe(
-        (result) => {
-          console.log('llego y entro');
-          console.log(result);
-          Swal.fire('Registro', 'Usuario registrado correctamente', 'success');
-          this.enabledButton = true;
-          /* this.router.navigate(['/login']) */
+      this.tutorInstituto.usuario = this.usuario;
+      this.role = 'ROLE_TISTA';
+      this.tutorService.registerTutor(this.tutorInstituto, this.role).subscribe(
+        (result: TutorInstituto) => {
+          this.activatedRoute.params.subscribe(params => {
+            let id = params['id']
+            if (id) {
+              this.practicaService.searchPracticaById(id).subscribe(
+                (data: Practica) => {
+                  this.practica.id = data.id;
+                  this.practica.concluciones = data.concluciones;
+                  this.practica.convocatoria = data.convocatoria;
+                  this.practica.departamento = data.departamento;
+                  this.practica.estudiante = data.estudiante;
+                  this.practica.fin = data.fin;
+                  this.practica.inicio = data.inicio;
+                  this.practica.nsemanas = data.nsemanas;
+                  this.practica.periodo = data.periodo;
+                  this.practica.estado = data.estado;
+                  this.practica.tutorInstituto = data.tutorInstituto;
+
+                  this.tutorInstituto.id = result.id;
+                  this.practica.tutorInstituto = this.tutorInstituto;
+                  console.log(this.practica);
+                  this.practicaService.editarPractica(id, this.practica)
+                    .subscribe(
+                      resultprac => {
+                        console.log(resultprac);
+                        this.enabledButton = true;
+                        Swal.fire('Registro', 'Tutor Academico Creado', 'success');
+                        /* this.router.navigate(['/login']) */
+                      }
+                    );
+                }
+              );
+            }
+          })
         }
       );
     };
@@ -285,87 +294,12 @@ export class TutorAcademicoComponent implements OnInit {
     var marginTop = 70;
     var marginBottom = 100;
 
-    /* const documentDefinition = {
-      pageSize: 'A4',
-      pageMargins: [marginLeft, marginTop, marginRight, marginBottom],
-      content: [
-        {
-          image: imageData,
-          width: 170,
-          height: 50,
-          alignment: "left",
-          margin: [0, 20, 0, 20],
-        },
-        {
-          text: 'Documento: Designación tutor especifico',
-          style: 'header'
-        },
-        {
-          text: fechaCompleta,
-          style: 'subheader',
-          alignment: 'right'
-        },
-        {
-          text: '\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -',
-          style: 'body'
-        },
-        {
-          text: 'De mi consideración:',
-          style: 'subheader'
-        },
-        {
-          text: '\nLuego de expresarle un atento saludo me permito informar que el Ing. Patricio Leonardo Pacheco Quezada con cédula de identidad número: 0103629762 ha sido designado como TUTOR ESPECIFICO del estudiante Juan Carlos Matute Uzhca.',
-          style: 'body'
-        },
-        {
-          text: '\n\nEl Ing. Leonardo Patricio Pacheco Quezada se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.',
-          style: 'body'
-        },
-        {
-          text: '\n\nSin más que informar, me despido augurando éxito en las funciones que realiza.',
-          style: 'body'
-        },
-        {
-          text: '\n\nAtentamente,',
-          style: 'subheader'
-        },
-        {
-          text: '\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\nGesinsoft Cia. Ltda.',
-          style: 'body'
-        }
-      ],
-      styles: {
-        calibri: {
-          normal: 'Calibri-Regular.ttf',
-          bold: 'Calibri-Bold.ttf',
-          italics: 'Calibri-Italic.ttf',
-          bolditalics: 'Calibri-Bold-Italic.ttf'
-        },
-        header: {
-          fontSize: 11,
-          bold: true,
-          margin: [0, 0, 0, 10]
-        },
-        subheader: {
-          fontSize: 11,
-          margin: [0, 10, 0, 5]
-        },
-        body: {
-          fontSize: 11,
-          margin: [0, 0, 0, 10],
-          alignment: 'justify'
-        }
-      }
-    };
-
-    pdfMake.createPdf(documentDefinition).download('designacion-tutor-especifico.pdf'); */
-
     const pdf = new PdfMakeWrapper();
 
     pdf.pageMargins([marginLeft, marginTop, marginRight, marginBottom]);
 
     pdf.images({
-      image: imageData,
+      image: 'assets/images/Logo-ISTA.png',
       width: "170",
       height: "50",
       alignment: 'left',
@@ -373,73 +307,98 @@ export class TutorAcademicoComponent implements OnInit {
     });
 
     pdf.add(
-      new Txt('Documento: Designación tutor especifico')
-        .bold()
+      new Txt('ANEXO 4: Designación y obligaciones del tutor académico').bold().fontSize(14).margin([0, 0, 0, 10]).end
+    );
+    pdf.add(
+      new Txt('Debe contener firma del responsable de prácticas pre profesionales de la carrera y sello de la carrera')
+        .italics()
         .fontSize(11)
         .margin([0, 0, 0, 10])
+        .decoration('underline')
+        .lineHeight(1.5)
         .end
     );
-
     pdf.add(
       new Txt(fechaCompleta)
         .fontSize(11)
         .alignment('right')
         .margin([0, 10, 0, 5])
+        .lineHeight(1.5)
         .end
     );
-
     pdf.add(
-      new Txt('\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -')
+      new Txt('Magíster\n' + this.tutorName + '\nDOCENTE\nINSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY\nSu Despacho. -\n\nDe mi consideración:')
         .fontSize(11)
+        .margin([0, 10, 0, 10])
+        .lineHeight(1.5)
+        .end
+    );
+    pdf.add(
+      new Txt('Luego de expresarle un atento saludo y desearle éxito en las funciones que acertadamente realiza, me permito informarle que ha sido designada como TUTORA ACADÉMICA del estudiante ' + this.practicanteName + ' para la ejecución de las prácticas pre profesionales en la empresa ' + this.empresa + '.\n\nAgradezco de antemano su valiosa colaboración con esta importante actividad.')
+        .fontSize(11)
+        .margin([0, 0, 0, 10])
+        .alignment('justify')
+        .lineHeight(1.08)
+        .end
+    );
+    pdf.add(
+      new Txt('\n\nAtentamente,\n')
+        .bold()
+        .fontSize(11)
+        .end
+    );
+    pdf.add(
+      new Txt('\n\n\n\n______________________\nIng. Juan Espinoza. Mgtr.\nResponsable de Prácticas Pre Profesionales\nCARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY')
+        .fontSize(11)
+        .lineHeight(1.08)
         .margin([0, 0, 0, 10])
         .end
     );
-
     pdf.add(
-      new Txt('De mi consideración:')
-        .fontSize(11)
-        .margin([0, 10, 0, 5])
-        .end
+      new Txt('NOTA:').bold().fontSize(11).margin([0, 10, 0, 10]).end
+    );
+    pdf.add(
+      new Txt('Recordarle al tutor que está sujeto a las siguientes obligaciones:').fontSize(11).margin([0, 5, 0, 10]).end
     );
 
-    pdf.add(
-      new Txt('Luego de expresarle un atento saludo me permito informar que ' + this.acronimo + ' ' + this.tutorName + ' con cédula de identidad número: ' + this.usuario.cedula + ' ha sido designado como TUTOR ESPECIFICO del estudiante ' + this.practicanteName + '.')
-        .fontSize(11)
-        .margin([0, 0, 0, 10])
-        .end
-    );
+    const listItems = [
+      'Acompañar al estudiante en su formación práctica en el entorno laboral real, según la planificación establecida por la IES, en coordinación con el tutor general. El acompañamiento incluye la orientación pedagógica al estudiante y el monitoreo de su desempeño, como también del proceso de formación en sentido general, sobre la base de lo establecido en los instrumentos de implementación de la modalidad de formación dual, indicados en el presente Reglamento;',
+      'Reportar de manera oportuna al coordinador de la carrera o programa las faltas disciplinarias en que incurrieren los estudiantes en el entorno laboral real, así como otras incidencias ocurridas durante el proceso de formación en la entidad receptora formadora;',
+      'Contribuir a la cooperación y el diálogo entre la IES y la respectiva entidad receptora formadora;',
+      'Desarrollar su labor como tutor de manera conjunta y coordinada con el tutor específico, incluido el apoyo a los estudiantes en el diseño y desarrollo del proyecto empresarial de cada periodo académico;',
+      'Entregar a la IES y a la entidad receptora formadora la documentación que se le indique sobre el proceso de formación en el entorno laboral real; y',
+      'Mantener actualizado el expediente del estudiante que recoge las evidencias sobre su proceso de formación en el entorno laboral real, con los documentos que le indique la IES. El tutor académico es responsable de facilitar los documentos (en versión digital y/o impresa) correspondientes a los Anexos para el seguimiento del proceso de formación dual que constan en el INSTRUCTIVO PARA EL DESARROLLO DE PRÁCTICAS PREPROFESIONALES, tanto al estudiante como al tutor empresarial; y será custodio de los mismos hasta que estos sean entregados oportunamente a la Coordinación de la Carrera.'
+    ];
 
-    pdf.add(
-      new Txt('\n\n' + this.acronimo + ' ' + this.tutorName + ' se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.')
-        .fontSize(11)
-        .margin([0, 0, 0, 10])
-        .end
-    );
+    for (let i = 0; i < listItems.length; i++) {
+      const listItem = listItems[i];
+      pdf.add(
+        new Txt(String.fromCharCode(97 + i) + '. ' + listItem)
+          .fontSize(11)
+          .margin([0, 0, 0, 10])
+          .alignment('justify')
+          .lineHeight(1.08)
+          .end
+      );
+    }
 
-    pdf.add(
-      new Txt('\n\nSin más que informar, me despido augurando éxito en las funciones que realiza.')
-        .fontSize(11)
-        .margin([0, 0, 0, 10])
-        .end
-    );
-
-    pdf.add(
-      new Txt('\n\nAtentamente,')
-        .fontSize(11)
-        .style('subheader')
-        .end
-    );
-
-    pdf.add(
-      new Txt('\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\nGesinsoft Cia. Ltda.')
-        .fontSize(11)
-        .style('body')
-        .end
-    );
-
-    //pdf.create().open();
     pdf.pageSize('A4');
-    // Opcional: Descargar el documento PDF
-    pdf.create().download('designacion-tutor-especifico.pdf');
+    pdf.create().download('anexo4.pdf');
+
+    this.displayEU = true;
   }
+
+  fileSelected(event: any) {
+    const file: File = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      // Aquí puedes almacenar o procesar la cadena Base64 como necesites
+      console.log(base64String);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
 }

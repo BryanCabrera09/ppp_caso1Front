@@ -63,7 +63,21 @@ export class SidebarComponent implements OnInit {
       if (role == 'ROLE_ESTUD') {
         //this.rolUsuario = 'Practicante';
         this.rolUsuario = 'Responsable Practicas';
-        this.estaLogueado = true;
+      }
+      if (role == 'ROLE_TISTA') {
+        this.rolUsuario = 'Tutor Academico';
+      }
+      if (role == 'ROLE_DIREC') {
+        this.rolUsuario = 'Director Carrera';
+      }
+      if (role == 'ROLE_RESPP') {
+        this.rolUsuario = 'Responsable Practicas';
+      }
+      if (role == 'ROLE_TEMP') {
+        this.rolUsuario = 'Tutor Especifico';
+      }
+      if (role == 'ROLE_GEREN') {
+        this.rolUsuario = 'Responsable Empresa';
       }
       console.log(role);
     }

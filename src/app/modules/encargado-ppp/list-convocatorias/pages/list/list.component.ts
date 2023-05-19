@@ -33,9 +33,8 @@ export class ListComponent implements OnInit {
             convocatoria.fechaInicio = result.fechaInicio;
             convocatoria.fechaFin = result.fechaFin;
             convocatoria.numero = result.numero;
-            if (result.solicitudEmpresa !== null) {
-              this.empresa = result.solicitudEmpresa!.convenio!.empresa!.nombre;
-            }
+            this.empresa = result.solicitudEmpresa!.convenio!.empresa!.nombre;
+            console.log(this.empresa)
             this.id = result.id;
             console.log(result);
             return convocatoria;

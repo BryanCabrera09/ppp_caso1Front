@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'encargado-practicas',
-    component: WelcomeEncargadoComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_RESPP']},
+    component: WelcomeEncargadoComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_ESTUD']},
     loadChildren: () => import('./modules/encargado-ppp/encargado-ppp.module').then(m => m.EncargadoPppModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
