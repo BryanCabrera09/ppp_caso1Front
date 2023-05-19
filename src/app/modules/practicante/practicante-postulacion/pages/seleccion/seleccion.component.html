@@ -16,11 +16,13 @@
         <th>Fecha Fin</th>
         <th>Postular</th>
       </tr>
-      <tr *ngFor="let convocatoriap of convocatoriap">
-        <td>{{convocatoriap.solicitudEmpresa.convenio.empresa.nombre}}</td>
-        <td>{{convocatoriap.fechaInicio}}</td>
-        <td>{{convocatoriap.fechaFin}}</td>
-        <td><button [routerLink]="['../vista/'+ convocatoriap.solicitudEmpresa.id]">Visualisar</button></td>
+      <tr *ngFor="let convocatoria of convocatoriap">
+        <td>{{convocatoria.solicitudEmpresa.convenio.empresa.nombre}}</td>
+        <td>{{convocatoria.fechaInicio}}</td>
+        <td>{{convocatoria.fechaFin}}</td>
+        <td><button class="btn btn-primary" [routerLink]="['../vista']" [queryParams]="{ solicitudempresa: convocatoria.solicitudEmpresa| json }">
+          Visualizar
+        </button></td>
       </tr>
     
     </table>
