@@ -61,8 +61,7 @@ export class SidebarComponent implements OnInit {
       this.user = JSON.parse(sessionStorage.getItem('userdetails')!);
       const role = localStorage.getItem('roles');
       if (role == 'ROLE_ESTUD') {
-        //this.rolUsuario = 'Practicante';
-        this.rolUsuario = 'Responsable Practicas';
+        this.rolUsuario = 'Practicante';
       }
       if (role == 'ROLE_TISTA') {
         this.rolUsuario = 'Tutor Academico';
