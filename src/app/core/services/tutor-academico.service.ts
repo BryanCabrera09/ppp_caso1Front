@@ -28,4 +28,12 @@ export class TutorAcademicoService {
   updateTutor(tutor: TutorInstituto, url: string, id: number) {
     return this.http.post(`${this.tutorUrl}/editar/${id}`, tutor, { params: { url } });
   }
+
+  guardarPDF(archivo: File, id: number) {
+    const formData = new FormData();
+    formData.append('archivo', archivo, archivo.name);
+    formData.append('id', id.toString());
+
+    return this.http.post(`${this.tutorUrl}/guardarpdf`, formData, { responseType: 'text' });
+  }
 }

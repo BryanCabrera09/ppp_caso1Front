@@ -52,6 +52,8 @@ export class RegTutorComponent implements OnInit {
   role: string;
   nombre: string;
   apellido: string;
+  cedula: string;
+  displayEU: boolean;
 
   selectedCedula: string;
   idConvo: number;
@@ -134,7 +136,7 @@ export class RegTutorComponent implements OnInit {
     this.practicanteService.searchPracticanteById(value).subscribe(
       (data: Practicante) => {
         console.log(data)
-        this.usuario.cedula = data.estudiante.usuario.cedula;
+        this.cedula = data.estudiante.usuario.cedula;
         this.nombre = data.estudiante.usuario.nombre;
         this.apellido = data.estudiante.usuario.apellido;
         this.practicanteName = data.estudiante.usuario.nombre.split(' ')
@@ -161,53 +163,34 @@ export class RegTutorComponent implements OnInit {
     }
   }
 
-  responsableCedula(value) {
-    this.userService.searchDocenteByCedula(value).subscribe(
-      (data: DocenteFenix) => {
-        this.usuario.nombre = data.nombres;
-        this.usuario.apellido = data.apellidos;
-        this.tutorName = data.nombres.split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' '); + ' ' + data.apellidos.split(' ')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(' ');;
-        this.usuario.cedula = data.cedula;
-        this.usuario.correo = data.correo;
-        this.usuario.titulo = data.titulo;
-        if (this.usuario.titulo.match(/ingeniero/i)) {
-          this.acronimo = 'El Ing.';
-        } else if (this.usuario.titulo.match(/ingeniera/i)) {
-          this.acronimo = 'La Ing.';
-        } else if (this.usuario.titulo.match(/magister/i)) {
-          this.acronimo = 'El Mgtr.';
-        } else if (this.usuario.titulo.match(/abogado/i)) {
-          this.acronimo = 'El Abog.';
-        } else if (this.usuario.titulo.match(/abogada/i)) {
-          this.acronimo = 'La Abog.';
-        } else if (this.usuario.titulo.match(/lcdo/i)) {
-          this.acronimo = 'El Lcd.';
-        } else if (this.usuario.titulo.match(/lcda/i)) {
-          this.acronimo = 'La Lcd.';
-        } else if (this.usuario.titulo.match(/licenciado/i)) {
-          this.acronimo = 'El Lic.';
-        } else if (this.usuario.titulo.match(/licenciada/i)) {
-          this.acronimo = 'La Lic.';
-        } else if (this.usuario.titulo.match(/doctor/i)) {
-          this.acronimo = 'El Dr.';
-        } else if (this.usuario.titulo.match(/magíster/i)) {
-          this.acronimo = 'EL Mag.';
-        } else if (this.usuario.titulo.match(/tecnologo/i)) {
-          this.acronimo = 'El Tec.';
-        } else if (this.usuario.titulo.match(/tecnologa/i)) {
-          this.acronimo = 'La Tec.';
-        }
-        this.usuario.telefono = data.telefono;
-        this.usuario.activo = true;
-        this.usuario.correo = data.correo;
-        this.tutorEmpresarial.usuario = this.usuario;
-        console.log(this.tutorEmpresarial)
-      }
-    )
+  cambiarAcronico() {
+    if (this.usuario.titulo.match(/ingeniero/i)) {
+      this.acronimo = 'El Ing.';
+    } else if (this.usuario.titulo.match(/ingeniera/i)) {
+      this.acronimo = 'La Ing.';
+    } else if (this.usuario.titulo.match(/magister/i)) {
+      this.acronimo = 'El Mgtr.';
+    } else if (this.usuario.titulo.match(/abogado/i)) {
+      this.acronimo = 'El Abog.';
+    } else if (this.usuario.titulo.match(/abogada/i)) {
+      this.acronimo = 'La Abog.';
+    } else if (this.usuario.titulo.match(/lcdo/i)) {
+      this.acronimo = 'El Lcd.';
+    } else if (this.usuario.titulo.match(/lcda/i)) {
+      this.acronimo = 'La Lcd.';
+    } else if (this.usuario.titulo.match(/licenciado/i)) {
+      this.acronimo = 'El Lic.';
+    } else if (this.usuario.titulo.match(/licenciada/i)) {
+      this.acronimo = 'La Lic.';
+    } else if (this.usuario.titulo.match(/doctor/i)) {
+      this.acronimo = 'El Dr.';
+    } else if (this.usuario.titulo.match(/magíster/i)) {
+      this.acronimo = 'EL Mag.';
+    } else if (this.usuario.titulo.match(/tecnologo/i)) {
+      this.acronimo = 'El Tec.';
+    } else if (this.usuario.titulo.match(/tecnologa/i)) {
+      this.acronimo = 'La Tec.';
+    }
   }
 
   registerTutor() {
@@ -344,82 +327,8 @@ export class RegTutorComponent implements OnInit {
     // definir las márgenes del documento
     var marginLeft = 74;
     var marginRight = 74;
-    var marginTop = 70;
+    var marginTop = 25;
     var marginBottom = 100;
-
-    /* const pdf = new PdfMakeWrapper();
-
-    pdf.pageMargins([marginLeft, marginTop, marginRight, marginBottom]);
-
-    pdf.add(
-      new Txt('Documento: Designación tutor especifico')
-        .bold()
-        .fontSize(11)
-        .margin([0, 0, 0, 10])
-        .end
-    );
-
-    pdf.add(
-      new Txt(fechaCompleta)
-        .fontSize(11)
-        .alignment('right')
-        .margin([0, 10, 0, 5])
-        .end
-    );
-
-    pdf.add(
-      new Txt('\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -')
-        .fontSize(11)
-        .margin([0, 0, 0, 10])
-        .end
-    );
-
-    pdf.add(
-      new Txt('De mi consideración:')
-        .fontSize(11)
-        .margin([0, 10, 0, 5])
-        .end
-    );
-
-    pdf.add(
-      new Txt('Luego de expresarle un atento saludo me permito informar que ' + this.acronimo + ' ' + this.tutorName + ' con cédula de identidad número: ' + this.usuario.cedula + ' ha sido designado como TUTOR ESPECIFICO del estudiante ' + this.practicanteName + '.')
-        .fontSize(11)
-        .margin([0, 0, 0, 10])
-        .end
-    );
-
-    pdf.add(
-      new Txt('\n\n' + this.acronimo + ' ' + this.tutorName + ' se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.')
-        .fontSize(11)
-        .margin([0, 0, 0, 10])
-        .end
-    );
-
-    pdf.add(
-      new Txt('\n\nSin más que informar, me despido augurando éxito en las funciones que realiza.')
-        .fontSize(11)
-        .margin([0, 0, 0, 10])
-        .end
-    );
-
-    pdf.add(
-      new Txt('\n\nAtentamente,')
-        .fontSize(11)
-        .style('subheader')
-        .end
-    );
-
-    pdf.add(
-      new Txt('\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\n' + this.empresa)
-        .fontSize(11)
-        .style('body')
-        .end
-    );
-
-    //pdf.create().open();
-    pdf.pageSize('A4');
-    // Opcional: Descargar el documento PDF
-    pdf.create().download('designacion-tutor-especifico.pdf'); */
 
     const documentDefinition = {
       pageSize: 'A4',
@@ -427,22 +336,24 @@ export class RegTutorComponent implements OnInit {
       content: [
         {
           image: imageData,
-          width: 170,
-          height: 50,
+          width: 145,
+          height: 45,
           alignment: "left",
-          margin: [0, 20, 0, 20],
+          margin: [0, 0, 0, 10],
         },
         {
           text: 'Documento: Designación tutor especifico',
-          style: 'header'
+          style: 'header',
+          lineHeight: 1.5
         },
         {
           text: fechaCompleta,
           style: 'subheader',
-          alignment: 'right'
+          alignment: 'right',
+          margin: [0, -10, 0, 0]
         },
         {
-          text: '\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -',
+          text: '\n\nMagíster\nJUAN ESPINOZA\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE\nINSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY\n\nSu Despacho. -',
           style: 'body'
         },
         {
@@ -450,11 +361,12 @@ export class RegTutorComponent implements OnInit {
           style: 'subheader'
         },
         {
-          text: '\nLuego de expresarle un atento saludo me permito informar que el Ing. Patricio Leonardo Pacheco Quezada con cédula de identidad número: 0103629762 ha sido designado como TUTOR ESPECIFICO del estudiante Juan Carlos Matute Uzhca.',
-          style: 'body'
+          text: ['\nLuego de expresarle un atento saludo me permito informar que ' + this.acronimo + ' ' + this.usuario.nombre + ' ' + this.usuario.apellido + ' con cédula de identidad número: ' + this.usuario.cedula + ' ha sido designado como ',
+          { text: 'TUTOR ESPECIFICO', style: "bold" }, ' del estudiante ' + this.practicanteName + '.'],
+          style: 'body',
         },
         {
-          text: '\n\nEl Ing. Leonardo Patricio Pacheco Quezada se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.',
+          text: '\n\n' + this.acronimo + ' ' + this.usuario.nombre + ' ' + this.usuario.apellido + ' se compromete a colaborar y guiar en las actividades que se encomienden al estudiante procurando siempre un ambiente laboral óptimo para la ejecución de las prácticas pre profesionales.',
           style: 'body'
         },
         {
@@ -466,7 +378,7 @@ export class RegTutorComponent implements OnInit {
           style: 'subheader'
         },
         {
-          text: '\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\nGesinsoft Cia. Ltda.',
+          text: '\n\n\n\n_______________________\nIng. Patricio Pacheco\nGERENTE GENERAL\n' + this.empresa.nombre,
           style: 'body'
         }
       ],
@@ -483,12 +395,28 @@ export class RegTutorComponent implements OnInit {
         body: {
           fontSize: 11,
           margin: [0, 0, 0, 10],
-          alignment: 'justify'
-        }
+          alignment: 'justify',
+          lineHeight: 1.15
+        },
+        bold: {
+          bold: true,
+        },
       }
     };
 
     pdfMake.createPdf(documentDefinition).download('designacion-tutor-especifico.pdf');
+  }
 
+  fileSelected(event: any) {
+    const file: File = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      // Aquí puedes almacenar o procesar la cadena Base64 como necesites
+      console.log(base64String);
+    };
+
+    reader.readAsDataURL(file);
   }
 }

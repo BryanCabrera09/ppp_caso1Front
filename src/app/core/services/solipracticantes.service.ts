@@ -18,7 +18,7 @@ export class SolipracticantesService {
   }
 
   getPostulantes(id: number): Observable<Practicante[]> {
-    return this.http.get<Practicante[]>(`${this.convocatoriaUrl}/listarxconvocatoria`, { params: { id } });
+    return this.http.get<Practicante[]>(`${this.convocatoriaUrl}/listarxconvocatoria2`, { params: { id } });
   }
 
   updatePostulacion(practicante: Practicante, id: number): Observable<any> {

@@ -78,7 +78,7 @@ export class SidebarComponent implements OnInit {
       if (role == 'ROLE_GEREN') {
         this.rolUsuario = 'Responsable Empresa';
       }
-      console.log(role);
+      console.log(role + ' del sidebar');
     }
   }
 

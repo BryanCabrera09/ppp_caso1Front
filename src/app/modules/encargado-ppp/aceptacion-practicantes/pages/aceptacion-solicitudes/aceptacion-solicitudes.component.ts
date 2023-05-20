@@ -90,13 +90,13 @@ export class AceptacionSolicitudesComponent implements OnInit {
         this.aprobISTA = false;
         this.aprobEmpr = false;
       }
-    } else if (this.practestudiant.estado === 3) {
+    } else if (this.practestudiant.estado === 1) {
       if (this.estado === 'aprobado') {
         this.practestudiant.estado = 2;
         this.aprobISTA = true;
         this.aprobEmpr = false;
       } else if (this.estado === 'desaprobado') {
-        this.practestudiant.estado = 1;
+        this.practestudiant.estado = 3;
         this.aprobISTA = false;
         this.aprobEmpr = false;
       }
@@ -105,7 +105,6 @@ export class AceptacionSolicitudesComponent implements OnInit {
         this.practestudiant.estado = 2;
         this.aprobISTA = true;
         this.aprobEmpr = true;
-        this.practestudiant.estado = 4;
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 1;
         this.aprobISTA = false;

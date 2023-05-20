@@ -16,8 +16,7 @@
                         <div class="p-col-12 p-md-4">
                             <p-dropdown [options]="responsableppp" [(ngModel)]="selectedResponsable"
                                 optionLabel="usuario.nombre" optionValue="id" [filter]="true" filterBy="usuario.nombre"
-                                [showClear]="true" placeholder="Responsable PPP"
-                                (onChange)="responsableCedula($event.value)">
+                                [showClear]="true" placeholder="Responsable PPP">
                             </p-dropdown>
                         </div>
                         <div class="p-col-3 p-md-4">
@@ -30,7 +29,7 @@
                         <div class="p-col-3 p-md-4">
                             <span class="p-float-label">
                                 <input id="float-input" type="text" [(ngModel)]="usuario.titulo"
-                                    placeholder="Ingrese su Título" pInputText>
+                                    (ngModelChange)="cambiarAcronico()" placeholder="Ingrese su Título" pInputText>
                                 <label for=" float-input">Título</label>
                             </span>
                         </div>
@@ -39,6 +38,12 @@
                                 <input id="float-input" type="text" [(ngModel)]="tutorEmpresarial.cargo"
                                     placeholder="Ingrese su Título" pInputText>
                                 <label for=" float-input">Cargo</label>
+                            </span>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <p-password [toggleMask]="true" [(ngModel)]="usuario.password"></p-password>
+                                <label for="float-input">Password</label>
                             </span>
                         </div>
                     </div>
@@ -80,12 +85,6 @@
                                 <label for=" float-input">Número de Teléfono</label>
                             </span>
                         </div>
-                        <div class="p-col-3 p-md-4">
-                            <span class="p-float-label">
-                                <p-password [toggleMask]="true" [(ngModel)]="usuario.password"></p-password>
-                                <label for="float-input">Password</label>
-                            </span>
-                        </div>
                     </div>
                     <br>
                 </div>
@@ -102,3 +101,21 @@
         </div>
     </p-panel>
 </div>
+
+<p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="body">
+        <div class="p-grid p-fluid">
+            <div class="p-col-3 p-md-4">
+                <span class="p-float-label">
+                    <input name="foto" id="float-input" (change)="fileSelected($event)" accept=".pdf" type="file"
+                        class="form-control" required />
+                    <label for="float-input"></label>
+                </span>
+                <!--  <div *ngIf="file" class="mt-3 text-center">
+                    <img [src]="file" class="rounded" alt="..." style="max-width: 50%;" />
+                </div> -->
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

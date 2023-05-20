@@ -78,10 +78,24 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
 
   guardarPostulacion() {
 
-    if (this.estado === 'aprobado') {
-      this.practestudiant.estado = 4;
-    } else if (this.estado === 'desaprobado') {
-      this.practestudiant.estado = 3;
+    if (this.practestudiant.estado === 0) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 1;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 3;
+      }
+    } else if (this.practestudiant.estado === 1) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 2;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 3;
+      }
+    } else if (this.practestudiant.estado === 2) {
+      if (this.estado === 'aprobado') {
+        this.practestudiant.estado = 2;
+      } else if (this.estado === 'desaprobado') {
+        this.practestudiant.estado = 1;
+      }
     }
 
     this.practestudiant.fechaEnvio = new Date();
