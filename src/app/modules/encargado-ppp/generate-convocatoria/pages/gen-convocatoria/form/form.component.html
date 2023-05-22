@@ -9,7 +9,7 @@
                             <select class="form-select" name="disponibilidad" (change)="  guardarOpcion($event)">
                                 " required>
                                 <option value="true">SELECCIONE</option>
-                                <option *ngFor="let mat of Materias" value="{{mat.nombre}}">{{mat.nombre}}</option>
+                                <option *ngFor="let mat of materias" value="{{mat.nombre}}">{{mat.nombre}}</option>
                             </select>
                         </div>
                         <ul>
