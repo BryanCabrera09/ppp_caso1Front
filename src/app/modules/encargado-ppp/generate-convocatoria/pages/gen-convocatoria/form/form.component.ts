@@ -21,7 +21,7 @@ import Swal from 'sweetalert2';
 export class FormComponent implements OnInit{
   opcionSeleccionada: string;
   opcionesGuardadas: string[] = [];
-  Materias: Materia[] = []
+  materias: Materia[] = []
   soli: SolicitudEmpresa= new SolicitudEmpresa
   convoca: ConvocatoriaP= new ConvocatoriaP
   fechaActual: Date = new Date();
@@ -29,7 +29,7 @@ export class FormComponent implements OnInit{
 
   ngOnInit(): void {
     this.materiaService.Listarmateria().subscribe(
-      carr=> this.Materias = carr
+      carr=> this.materias = carr
     );
 
     this.rellenaSoli();
@@ -90,10 +90,10 @@ export class FormComponent implements OnInit{
       content: [
         { text: 'CONVOCATORIA – TSDS -PPP-2022-013', style: 'titulo' },
         '\n',
-        { text: 'Cuenca, 07 de octubre del 2022', style: 'fecha' },
+        { text: ''+this.fechaActual+ '', style: 'fecha' },
         '\n\n',
         { text: 'A los estudiantes Interesados:', style: 'subtitulo' },
-        'Se convoca a los estudiantes de quinto ciclo en adelante de la carrera de TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE que deseen realizar sus prácticas pre profesionales en la empresa FUTURA CIA. LTDA., a presentar la solicitud correspondiente.',
+        'Se convoca a los estudiantes de quinto ciclo en adelante de la carrera de '+this.soli.convenio.carrera.nombre+' que deseen realizar sus prácticas pre profesionales en la empresa FUTURA CIA. LTDA., a presentar la solicitud correspondiente.',
         { text: 'Las actividades a desarrollar son:', style: 'subtitulo' },
         { ul: [
           'Modelar diagramas de Bases de Datos SQL (PostgreSQL)',
@@ -109,15 +109,12 @@ export class FormComponent implements OnInit{
         '\n',
         { text: 'Por lo que los postulantes deberán haber aprobado las siguientes asignaturas:', style: 'subtitulo' },
         { ul: [
-          'Base de datos avanzada',
-          'Programación de Aplicaciones Web',
-          'Desarrollo de Aplicaciones Móviles',
-          'Tendencias actuales de programación'
+          this.opcionesGuardadas
         ] },
         '\n',
-        { text: 'La fecha máxima en la que se receptarán las solicitudes es el día martes 11 de octubre del 2022.', style: 'subtitulo' },
+        { text: 'La fecha máxima en la que se receptarán las solicitudes es '+this.convoca.fechaFin+'.', style: 'subtitulo' },
         '\n',
-        { text: 'Para mayor información contactarse con el Ing. Juan Gabriel Espinoza, docente responsable de prácticas pre profesionales de la carrera.', style: 'subtitulo' },
+        { text: 'Para mayor información contactarse con el'+this.soli.convenio.firmaInst.usuario.nombre+' '+this.soli.convenio.firmaInst.usuario.apellido+', docente responsable de prácticas pre profesionales de la carrera.', style: 'subtitulo' },
         '\n',
         { text: 'Nota: Adjunto a la solicitud se debe remitir la hoja de vida, para lo cual deberá registrarse en el portal web encuentraempleo, e imprimir el currículo en formato moderno a través del siguiente enlace:', style: 'nota' },
         { text: 'https://encuentraempleo.trabajo.gob.ec', link: 'https://encuentraempleo.trabajo.gob.ec', color: 'blue' },
@@ -133,11 +130,11 @@ export class FormComponent implements OnInit{
         { text: 'Atentamente,', style: 'firmado' },
         '\n\n',
         { text: '_______________________', style: 'firma' },
-        'Ing. Juan Gabriel Espinoza',
+        this.soli.convenio.firmaInst.usuario.nombre+' '+this.soli.convenio.firmaInst.usuario.apellido,
         'Responsable de Prácticas pre profesionales',
-        'CARRERA DE TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE',
+        this.soli.convenio.carrera.nombre,
         'INSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY',
-        'Email: juan.espinoza@tecazuay.edu.ec'
+        this.soli.convenio.firmaInst.usuario.correo
       ],
       styles: {
         titulo: {
