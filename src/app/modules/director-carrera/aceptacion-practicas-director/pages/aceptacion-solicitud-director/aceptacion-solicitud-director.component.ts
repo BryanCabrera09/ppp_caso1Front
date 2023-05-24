@@ -90,13 +90,13 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 3;
       }
-    } else if (this.practestudiant.estado === 2) {
+    }/*  else if (this.practestudiant.estado === 2) {
       if (this.estado === 'aprobado') {
         this.practestudiant.estado = 2;
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 1;
       }
-    }
+    } */
 
     this.practestudiant.fechaEnvio = new Date();
 

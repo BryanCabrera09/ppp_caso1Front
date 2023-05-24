@@ -10,18 +10,22 @@ import { SolicitudEmpresa } from '../models/solicitud-empresa';
 export class SoliEmpresaService {
   private searchUrl = `${baserUrl}/solicitudEmpresa`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  ListarSoli(): Observable<SolicitudEmpresa[]>{
+  ListarSoli(): Observable<SolicitudEmpresa[]> {
     return this.http.get<SolicitudEmpresa[]>(`${this.searchUrl}/listar`)
   }
 
-  guardarsolicitud(solicitud:SolicitudEmpresa): Observable<SolicitudEmpresa>{
-    return this.http.post<SolicitudEmpresa>(`${this.searchUrl}/crear`,solicitud);
+  guardarsolicitud(solicitud: SolicitudEmpresa): Observable<SolicitudEmpresa> {
+    return this.http.post<SolicitudEmpresa>(`${this.searchUrl}/crear`, solicitud);
   }
 
-  buscarxID(id: number){
+  buscarxID(id: number) {
     return this.http.get(`${this.searchUrl}/buscar/${id}`);
+  }
+
+  updatePostulacion(empresa: SolicitudEmpresa, id: number): Observable<any> {
+    return this.http.post(`${this.searchUrl}/editar/${id}`, empresa);
   }
 
 }

@@ -24,15 +24,15 @@ export class FormularionRegConvenioComponent implements OnInit {
   ConvenioA: Convenio[];
   carrera: Carrera = new Carrera
 
- empresa1: Empresa= new Empresa()
-
-
+  empresa1: Empresa = new Empresa()
 
   tutor: TutorAcademico = new TutorAcademico
   public Convenio: Convenio = new Convenio
   selectedDate: Date;
   fechaI: Date;
-  fechaF: Date = new Date;
+  fechaF: Date;
+
+  fechaSumada: Date;
 
   fechaActual: Date = new Date();
 
@@ -41,7 +41,6 @@ export class FormularionRegConvenioComponent implements OnInit {
   ngOnInit(): void {
     this.guardarEmpresa()
   }
-
 
   constructor(private carreraService: CarreraMateriaService, private TutorAService: TutorAcademicoService,
     private convenioService: ConvenioService, private empresaService: RegEmpresaServiceService) {
@@ -52,10 +51,7 @@ export class FormularionRegConvenioComponent implements OnInit {
     this.TutorAService.ListarTutor().subscribe(
       dato => { this.TutorA = dato; }
     )
-
-
   }
-
 
   CarreraHunter(value: any) {
     alert(value)
@@ -97,7 +93,7 @@ export class FormularionRegConvenioComponent implements OnInit {
     this.Convenio.fechaFin = this.fechaF
     console.log(this.Convenio);
     this.convenioService.guardarConvenio(this.Convenio).subscribe(
-      
+
       (data) => {
         console.log(data);
         this.ngOnInit();
@@ -113,13 +109,13 @@ export class FormularionRegConvenioComponent implements OnInit {
 
   }
 
-  sumarUnDia() {
+  /* sumarUnDia() {
 
     if (this.fechaI instanceof Date) {
       this.fechaI.setDate(this.fechaI.getDate() + 1);
       alert(this.fechaI)
     }
-  }
+  } */
 
   // IMAGEN
   image!: any;

@@ -196,4 +196,22 @@ export const navbarData: INavbarData[] = [
         label: 'Evaluación del Estudiante',
         role: 'Tutor Especifico'
     },
+    {
+        routeLink: '/sup-admin',
+        icon: 'fa-solid fa-house',
+        label: 'Dashboard',
+        role: 'Administrador'
+    },
+    {
+        routeLink: '/sup-admin/register',
+        icon: 'fas fa-users',
+        label: 'Asignar Usuarios',
+        role: 'Administrador'
+    },
+    {
+        routeLink: 'media',
+        icon: 'fas fa-address-book',
+        label: 'Listado Usuarios',
+        role: 'Administrador'
+    },
 ];

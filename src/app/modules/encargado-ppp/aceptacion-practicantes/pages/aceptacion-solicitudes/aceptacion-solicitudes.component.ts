@@ -100,7 +100,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
         this.aprobISTA = false;
         this.aprobEmpr = false;
       }
-    } else if (this.practestudiant.estado === 2) {
+    } /* else if (this.practestudiant.estado === 2) {
       if (this.estado === 'aprobado') {
         this.practestudiant.estado = 2;
         this.aprobISTA = true;
@@ -110,10 +110,10 @@ export class AceptacionSolicitudesComponent implements OnInit {
         this.aprobISTA = false;
         this.aprobEmpr = true;
       }
-    }
+    } */
 
 
-    this.practestudiant.fechaEnvio = new Date();
+    //this.practestudiant.fechaEnvio = new Date();
 
     console.log(this.practestudiant.estado);
     this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(

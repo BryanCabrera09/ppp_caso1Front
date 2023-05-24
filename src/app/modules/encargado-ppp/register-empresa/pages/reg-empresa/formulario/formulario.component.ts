@@ -20,8 +20,6 @@ export class FormularioComponent implements OnInit {
 
   estado: string[] = [];
 
-
-
   estadoSelect: string
   isMisionFilled: boolean = false;
 
