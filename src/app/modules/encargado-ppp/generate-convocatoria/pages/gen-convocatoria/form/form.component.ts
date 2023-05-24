@@ -38,11 +38,11 @@ export class FormComponent implements OnInit{
     );
 
     this.rellenaSoli();
-    
+    this.llamaActividades();
   }
   
   constructor(private materiaService: MateriaService, private convocaService: ConvocatoriaService,  private activatedRoute: ActivatedRoute,
-    private soliService: SoliEmpresaService, private actividadService: ActividadpService ){}
+    private soliService: SoliEmpresaService, private actividadService: ActividadpService, ){}
 
   guardarOpcion(e:any) {
     
@@ -54,37 +54,41 @@ export class FormComponent implements OnInit{
   }
 
   llamaActividades(){
-    const soli = JSON.parse(localStorage.getItem('IdSoli') + '');
-    this.idA = parseInt(soli);
 
-    this.actividadService.obtenerActividadid(this.idA).subscribe(
-      (data)=>{
-        this.act = data;
-        this.actividades = this.act[0];
-       // console.log(this.actividades)
-      console.log(this.act)
-      }
-    )
-  }
-
-  rellenaSoli(){
-    /*this.activatedRoute.params.subscribe(params=>{
+    this.activatedRoute.params.subscribe(params=>{
       let id = params['id']
 
       if(id){
-        
+        this.actividadService.obtenerActividadid(id).subscribe(
+          (data)=>{
+            this.act = data;
+            this.actividades = this.act[0];
+            console.log(this.actividades)
+          console.log(this.act)
+          }
+        )
       }
-    })*/
-
-    const soli = JSON.parse(localStorage.getItem('IdSoli') + '');
-    this.id = parseInt(soli);
-
-    this.soliService.buscarxID(this.id).subscribe(
-      (data: SolicitudEmpresa)=>{
-        this.soli=data
-        this.convoca.solicitudEmpresa=this.soli
-      }
+    }
     )
+
+    
+  }
+
+  rellenaSoli(){
+    this.convoca.numero = 2
+    this.activatedRoute.params.subscribe(params=>{
+      let id = params['id']
+
+      if(id){
+        this.soliService.buscarxID(id).subscribe(
+          (data: SolicitudEmpresa)=>{
+            this.soli=data
+            this.convoca.solicitudEmpresa=this.soli
+            
+          }
+        )
+      }
+    })
   }
 
   guardarConvoca(){

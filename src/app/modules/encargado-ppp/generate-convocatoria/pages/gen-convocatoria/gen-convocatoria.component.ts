@@ -12,6 +12,7 @@ export class GenConvocatoriaComponent implements OnInit{
   soliE: SolicitudEmpresa[]=[]
   loading: boolean = true;
   id: number = 0
+  idform:number
 
   ngOnInit(): void {
     this.soliEmpresaService.ListarSoli().subscribe(
@@ -41,8 +42,9 @@ export class GenConvocatoriaComponent implements OnInit{
   constructor(private soliEmpresaService: SoliEmpresaService, private router: Router){}
 
   capturarid(id: any){
-    this.id = id
-    localStorage.setItem('IdSoli', JSON.stringify(id));
-    this.router.navigate(['/encargado-practicas/convocatoria/form/']);
+    
+    this.idform = id
+    //localStorage.setItem('IdSoli', JSON.stringify(id));
+    this.router.navigate(['/encargado-practicas/convocatoria/form/'+this.idform]);
   }
 }
