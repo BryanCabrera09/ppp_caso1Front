@@ -209,7 +209,7 @@ export const navbarData: INavbarData[] = [
         role: 'Administrador'
     },
     {
-        routeLink: 'media',
+        routeLink: '/sup-admin/list-users',
         icon: 'fas fa-address-book',
         label: 'Listado Usuarios',
         role: 'Administrador'

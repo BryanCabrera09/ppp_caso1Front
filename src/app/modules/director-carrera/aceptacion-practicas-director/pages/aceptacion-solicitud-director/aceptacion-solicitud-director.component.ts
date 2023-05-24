@@ -63,9 +63,6 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
                 practicante.id = result.id;
                 practicante.correo = result.estudiante.usuario.correo;
                 practicante.estado = result.estado;
-                this.usuario = result.estudiante.usuario;
-                this.estudiante = result.estudiante;
-                this.convocatoria = result.convocatoria;
                 return practicante;
               }
             );
@@ -90,15 +87,15 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 3;
       }
-    }/*  else if (this.practestudiant.estado === 2) {
+    } else if (this.practestudiant.estado === 2) {
       if (this.estado === 'aprobado') {
         this.practestudiant.estado = 2;
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 1;
       }
-    } */
+    }
 
-    this.practestudiant.fechaEnvio = new Date();
+    //this.practestudiant.fechaEnvio = new Date();
 
     console.log(this.practestudiant.estado);
     this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(
@@ -115,16 +112,25 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
 
     this.displayEU = true;
 
+    this.practestudiant.id = practicante.id;
+
+    this.solicitudService.searchPracticanteById(this.practestudiant.id).subscribe(
+      (result: Practicante) => {
+        console.log(result);
+        this.practestudiant.estudiante = result.estudiante;
+        this.practestudiant.convocatoria = result.convocatoria;
+      }
+    )
+
     this.practestudiant.cedula = practicante.cedula;
     this.practestudiant.nombre = practicante.nombre;
     this.practestudiant.apellido = practicante.apellido;
     this.practestudiant.ciclo = practicante.ciclo;
     this.practestudiant.correo = practicante.correo;
-    this.practestudiant.id = practicante.id;
     this.practestudiant.estado = practicante.estado;
-    this.practestudiant.usuario = this.usuario;
-    this.practestudiant.estudiante = this.estudiante;
-    this.practestudiant.convocatoria = this.convocatoria;
+    this.practestudiant.fechaEnvio = practicante.fechaEnvio;
+
+    console.log(practicante)
   }
 
   cancelar() {
@@ -133,6 +139,8 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
 
   limpiar() {
     this.displayEU = false;
+
+    this.practestudiant = new Practicante;
     this.convocatoria = new Convocatoria;
     this.usuario = new Usuario;
     this.estudiante = new Estudiante;

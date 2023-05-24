@@ -5,6 +5,7 @@ import { Convenio } from 'src/app/core/models/convenio';
 import { Empresa } from 'src/app/core/models/empresa';
 import { SolicitudEmpresa } from 'src/app/core/models/solicitud-empresa';
 import { TutorAcademico } from 'src/app/core/models/tutor-academicoRS';
+import { ActividadpService } from 'src/app/core/services/actividadp.service';
 import { SoliEmpresaService } from 'src/app/core/services/soli-empresa.service';
 import Swal from 'sweetalert2';
 
@@ -22,6 +23,7 @@ export class AceptacionSolicitudComponent implements OnInit {
   empresa = new Empresa;
   convenio = new Convenio;
   tutorInstituto = new TutorAcademico;
+  actividad = new Actividad;
 
   loading: boolean = true;
   displayEU: boolean = false;
@@ -31,9 +33,9 @@ export class AceptacionSolicitudComponent implements OnInit {
   id: number;
   nombreEmp: string;
   rucEmp: string;
-  actividad: string;
+  actividadDescript: string;
 
-  constructor(private router: Router, private solicitudService: SoliEmpresaService) { }
+  constructor(private router: Router, private solicitudService: SoliEmpresaService, private actividadService: ActividadpService) { }
 
   ngOnInit() {
     this.obtenerSolicitudes();
@@ -43,24 +45,7 @@ export class AceptacionSolicitudComponent implements OnInit {
 
     this.solicitudService.ListarSoli().subscribe(
       data => {
-        this.empresas = data.map(
-          result => {
-            let solicitud = new SolicitudEmpresa;
-            solicitud.id = result.id;
-            solicitud.fechaInicioTen = result.fechaInicioTen;
-            solicitud.fechaMaxTen = result.fechaMaxTen;
-            solicitud.numHoras = result.numHoras;
-            solicitud.numPracticantes = result.numPracticantes;
-            //this.actividad = result.actividad.descripcion;
-            this.convenio = result.convenio;
-            this.empresa = result.convenio.empresa;
-            this.tutorInstituto = result.convenio.firmaInst;
-            this.nombreEmp = result.convenio.empresa.nombre;
-            this.rucEmp = result.convenio.empresa.ruc;
-            console.log(solicitud)
-            return solicitud;
-          }
-        );
+        this.empresas = data;
         this.loading = false;
       }
     );
@@ -85,31 +70,35 @@ export class AceptacionSolicitudComponent implements OnInit {
     )
   }
 
-  /* sumarUnDia() {
-
-    if (this.solicitudEmpre.fechaMaxTen instanceof Date) {
-      this.solicitudEmpre.fechaMaxTen.setDate(this.solicitudEmpre.fechaMaxTen.getDate() + 1);
-      alert(this.solicitudEmpre.fechaMaxTen)
-    }
-    
-    if (this.solicitudEmpre.fechaInicioTen instanceof Date) {
-      this.solicitudEmpre.fechaInicioTen.setDate(this.solicitudEmpre.fechaInicioTen.getDate() + 1);
-      alert(this.solicitudEmpre.fechaInicioTen)
-    }
-  } */
-
   editarEmpresa(solicitudEmp: SolicitudEmpresa) {
 
     this.displayEU = true;
 
     this.solicitudEmpre.id = solicitudEmp.id;
     this.solicitudEmpre.actividad = solicitudEmp.actividad;
-    this.solicitudEmpre.convenio = this.convenio;
+    this.solicitudEmpre.convenio = solicitudEmp.convenio;
+    this.solicitudEmpre.convenio.empresa = solicitudEmp.convenio.empresa;
     this.solicitudEmpre.estado = solicitudEmp.estado;
     this.solicitudEmpre.fechaInicioTen = solicitudEmp.fechaInicioTen;
     this.solicitudEmpre.fechaMaxTen = solicitudEmp.fechaMaxTen;
     this.solicitudEmpre.numHoras = solicitudEmp.numHoras;
     this.solicitudEmpre.numPracticantes = solicitudEmp.numPracticantes;
+    console.log(solicitudEmp);
+
+    this.actividadService.obtenerActividadid(this.solicitudEmpre.id).subscribe(
+      (data) => {
+        this.actividades = data;
+        this.actividad = this.actividades.length > 0 ? this.actividades[0] : null;
+        this.actividadDescript = this.actividades.reduce((descriptions, actividad) => {
+          if (actividad.descripcion) {
+            descriptions.push(' - ' + actividad.descripcion);
+          }
+          return descriptions;
+        }, []).join("\n");
+        console.log(this.actividades)
+        console.log(this.actividadDescript)
+      }
+    )
   }
 
   cancelar() {

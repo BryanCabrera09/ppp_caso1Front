@@ -71,14 +71,14 @@
 
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
-                                        <input id="float-input" type="text" disabled="true"
-                                            [(ngModel)]="usuario.telefono" placeholder=" Ingrese Número Telefónico"
-                                            pInputText>
+                                        <input id="float-input" type="text" [(ngModel)]="usuario.telefono"
+                                            [pKeyFilter]="'int'" maxlength="10" minlength="10"
+                                            placeholder="Ingrese Número Telefónico" pInputText>
                                         <label for=" float-input">Número de Teléfono</label>
                                     </span>
                                 </div>
                                 <div class="input-field p-col-12">
-                                    <p-dropdown [options]="roles" [(ngModel)]="selectedRol" name="practicantes"
+                                    <p-dropdown [options]="roles" [(ngModel)]="selectedRol" name="rol"
                                         [showClear]="true" placeholder="Seleccionar Rol Usuario">
                                     </p-dropdown>
                                 </div>

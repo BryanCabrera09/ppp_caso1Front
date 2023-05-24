@@ -5,7 +5,8 @@ const routes: Routes = [
   {
     path: 'postulacion',
     loadChildren: () => import("./practicante-postulacion/practicante-postulacion.module").then(m => m.PracticantePostulacionModule)
-  }, {
+  }, 
+  {
     path: '',
     loadChildren: () => import("./dashboard-practicante/dashboard-practicante.module").then(m => m.DashboardPracticanteModule)
   },

@@ -65,9 +65,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
                 practicante.id = result.id;
                 practicante.correo = result.estudiante.usuario.correo;
                 practicante.estado = result.estado;
-                this.usuario = result.estudiante.usuario;
-                this.estudiante = result.estudiante;
-                this.convocatoria = result.convocatoria;
+                practicante.fechaEnvio = result.fechaEnvio;
                 return practicante;
               }
             );
@@ -83,34 +81,22 @@ export class AceptacionSolicitudesComponent implements OnInit {
     if (this.practestudiant.estado === 0) {
       if (this.estado === 'aprobado') {
         this.practestudiant.estado = 1;
-        this.aprobISTA = true;
-        this.aprobEmpr = false;
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 3;
-        this.aprobISTA = false;
-        this.aprobEmpr = false;
       }
     } else if (this.practestudiant.estado === 1) {
       if (this.estado === 'aprobado') {
         this.practestudiant.estado = 2;
-        this.aprobISTA = true;
-        this.aprobEmpr = false;
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 3;
-        this.aprobISTA = false;
-        this.aprobEmpr = false;
       }
-    } /* else if (this.practestudiant.estado === 2) {
+    } else if (this.practestudiant.estado === 2) {
       if (this.estado === 'aprobado') {
         this.practestudiant.estado = 2;
-        this.aprobISTA = true;
-        this.aprobEmpr = true;
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 1;
-        this.aprobISTA = false;
-        this.aprobEmpr = true;
       }
-    } */
+    }
 
 
     //this.practestudiant.fechaEnvio = new Date();
@@ -119,8 +105,8 @@ export class AceptacionSolicitudesComponent implements OnInit {
     this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(
       result => {
         console.log(result);
-        Swal.fire('Aprobacion', 'Aprobacion Registrada', 'success');
         this.limpiar();
+        Swal.fire('Aprobacion', 'Aprobacion Registrada', 'success');
         this.router.navigate(['/dashboard'])
       }
     )
@@ -130,15 +116,25 @@ export class AceptacionSolicitudesComponent implements OnInit {
 
     this.displayEU = true;
 
+    this.practestudiant.id = practicante.id;
+
+    this.solicitudService.searchPracticanteById(this.practestudiant.id).subscribe(
+      (result: Practicante) => {
+        console.log(result);
+        this.practestudiant.estudiante = result.estudiante;
+        this.practestudiant.convocatoria = result.convocatoria;
+      }
+    )
+
     this.practestudiant.cedula = practicante.cedula;
     this.practestudiant.nombre = practicante.nombre;
     this.practestudiant.apellido = practicante.apellido;
     this.practestudiant.ciclo = practicante.ciclo;
     this.practestudiant.correo = practicante.correo;
-    this.practestudiant.id = practicante.id;
-    this.practestudiant.usuario = this.usuario;
-    this.practestudiant.estudiante = this.estudiante;
-    this.practestudiant.convocatoria = this.convocatoria;
+    this.practestudiant.estado = practicante.estado;
+    this.practestudiant.fechaEnvio = practicante.fechaEnvio;
+
+    console.log(practicante)
   }
 
   cancelar() {
@@ -147,6 +143,8 @@ export class AceptacionSolicitudesComponent implements OnInit {
 
   limpiar() {
     this.displayEU = false;
+
+    this.practestudiant = new Practicante;
     this.convocatoria = new Convocatoria;
     this.usuario = new Usuario;
     this.estudiante = new Estudiante;

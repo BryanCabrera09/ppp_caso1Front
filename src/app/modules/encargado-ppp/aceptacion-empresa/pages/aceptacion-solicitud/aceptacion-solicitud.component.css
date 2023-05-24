@@ -24,6 +24,7 @@ body {
 
 #text {
   text-align: center;
+  white-space: pre-wrap;
 }
 
 table td:hover {
