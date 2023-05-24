@@ -12,6 +12,8 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
 import { SoliEmpresaService } from 'src/app/core/services/soli-empresa.service';
 import Swal from 'sweetalert2';
+import { Actividad } from 'src/app/core/models/actividad';
+import { ActividadpService } from 'src/app/core/services/actividadp.service';
 
 @Component({
   selector: 'app-form',
@@ -22,10 +24,13 @@ export class FormComponent implements OnInit{
   opcionSeleccionada: string;
   opcionesGuardadas: string[] = [];
   materias: Materia[] = []
+  act: Actividad[]=[]
   soli: SolicitudEmpresa= new SolicitudEmpresa
   convoca: ConvocatoriaP= new ConvocatoriaP
+  actividades: Actividad = new Actividad
   fechaActual: Date = new Date();
   id: number=0
+  idA: number=0
 
   ngOnInit(): void {
     this.materiaService.Listarmateria().subscribe(
@@ -33,10 +38,11 @@ export class FormComponent implements OnInit{
     );
 
     this.rellenaSoli();
+    this.llamaActividades();
   }
   
   constructor(private materiaService: MateriaService, private convocaService: ConvocatoriaService,  private activatedRoute: ActivatedRoute,
-    private soliService: SoliEmpresaService ){}
+    private soliService: SoliEmpresaService, private actividadService: ActividadpService, ){}
 
   guardarOpcion(e:any) {
     
@@ -47,24 +53,42 @@ export class FormComponent implements OnInit{
     }
   }
 
-  rellenaSoli(){
-    /*this.activatedRoute.params.subscribe(params=>{
+  llamaActividades(){
+
+    this.activatedRoute.params.subscribe(params=>{
       let id = params['id']
 
       if(id){
-        
+        this.actividadService.obtenerActividadid(id).subscribe(
+          (data)=>{
+            this.act = data;
+            this.actividades = this.act[0];
+            console.log(this.actividades)
+          console.log(this.act)
+          }
+        )
       }
-    })*/
-
-    const soli = JSON.parse(localStorage.getItem('IdSoli') + '');
-    this.id = parseInt(soli);
-
-    this.soliService.buscarxID(this.id).subscribe(
-      (data: SolicitudEmpresa)=>{
-        this.soli=data
-        this.convoca.solicitudEmpresa=this.soli
-      }
+    }
     )
+
+    
+  }
+
+  rellenaSoli(){
+    this.convoca.numero = 2
+    this.activatedRoute.params.subscribe(params=>{
+      let id = params['id']
+
+      if(id){
+        this.soliService.buscarxID(id).subscribe(
+          (data: SolicitudEmpresa)=>{
+            this.soli=data
+            this.convoca.solicitudEmpresa=this.soli
+            
+          }
+        )
+      }
+    })
   }
 
   guardarConvoca(){
@@ -96,15 +120,7 @@ export class FormComponent implements OnInit{
         'Se convoca a los estudiantes de quinto ciclo en adelante de la carrera de '+this.soli.convenio.carrera.nombre+' que deseen realizar sus prácticas pre profesionales en la empresa FUTURA CIA. LTDA., a presentar la solicitud correspondiente.',
         { text: 'Las actividades a desarrollar son:', style: 'subtitulo' },
         { ul: [
-          'Modelar diagramas de Bases de Datos SQL (PostgreSQL)',
-          'Creación de scripts SQL DDL y DML',
-          'Realizar manuales de usuario del sistema.',
-          'Generar la documentación técnica de los módulos del producto.',
-          'Realizar tareas de testing y pruebas unitarias.',
-          'Desarrollo frontend del sistema (React, NextJS, Typescrit, Redux Toolkit)',
-          'Manejar el versionamiento en Github y metodología SCRUM.',
-          'Desarrollo de microservicios en Spring Boot.',
-          'Analizar y resolver problemas e investigar soluciones técnicas y tecnológicas'
+          this.act.map(dato=>({text:dato.descripcion}))
         ] },
         '\n',
         { text: 'Por lo que los postulantes deberán haber aprobado las siguientes asignaturas:', style: 'subtitulo' },
