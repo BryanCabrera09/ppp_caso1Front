@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Img, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
 import { Convenio } from 'src/app/core/models/convenio';
 import { DocenteFenix } from 'src/app/core/models/docente-fenix';
 import { Empresa } from 'src/app/core/models/empresa';

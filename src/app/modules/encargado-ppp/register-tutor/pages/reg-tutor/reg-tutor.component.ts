@@ -109,7 +109,7 @@ export class RegTutorComponent implements OnInit {
   }
 
   obtenerResponsablePPP() {
-    this.usuarioService.getRoles('ROLE_TISTA').subscribe(
+    this.usuarioService.getRoles('ROLE_RESPP').subscribe(
       data => {
         this.responsableppp = data;
       }

@@ -77,11 +77,9 @@
                                         <label for=" float-input">Número de Teléfono</label>
                                     </span>
                                 </div>
-                                <div class="p-col-3 p-md-4">
+                                <div class="input-field p-col-12">
                                     <p-dropdown [options]="roles" [(ngModel)]="selectedRol" name="practicantes"
-                                        optionLabel="estudiante.usuario.apellido" optionValue="id" [filter]="true"
-                                        filterBy="estudiante.usuario.apellido" [showClear]="true"
-                                        placeholder="Seleccionar Rol Usuario">
+                                        [showClear]="true" placeholder="Seleccionar Rol Usuario">
                                     </p-dropdown>
                                 </div>
                             </div>

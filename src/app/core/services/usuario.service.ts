@@ -16,4 +16,8 @@ export class UsuarioService {
   getRoles(rol: string): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.searchUrl}/listar/rol`, { params: { rol } });
   }
+
+  ListarUsers(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.searchUrl}/listar`)
+  }
 }

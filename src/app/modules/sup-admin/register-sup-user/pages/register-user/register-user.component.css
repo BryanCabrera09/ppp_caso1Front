@@ -120,6 +120,10 @@ input {
   border-radius: 1rem;
 }
 
+:host ::ng-deep .p-dropdown {
+  border-radius: 1rem;
+}
+
 .items {
   display: grid;
   padding: 10px;

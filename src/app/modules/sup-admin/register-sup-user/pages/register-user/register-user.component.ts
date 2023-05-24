@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DocenteFenix } from 'src/app/core/models/docente-fenix';
+import { TutorInstituto } from 'src/app/core/models/tutor-academico';
 import { Usuario } from 'src/app/core/models/usuario';
 import { RegisterUserService } from 'src/app/core/services/register-user.service';
+import { TutorAcademicoService } from 'src/app/core/services/tutor-academico.service';
 import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-user',
@@ -13,9 +16,11 @@ import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
 })
 export class RegisterUserComponent implements OnInit {
 
+  tutorInstituto = new TutorInstituto;
   usuario: Usuario = new Usuario;
 
   selectedRol: string;
+  role: string;
 
   roles: string[] = [
     'Director de Carrera',
@@ -23,7 +28,7 @@ export class RegisterUserComponent implements OnInit {
   ]
 
   constructor(private toastr: ToastrService, private router: Router, private userService: RegisterUserService,
-    private fenixService: UsersfenixService) { }
+    private fenixService: UsersfenixService, private tutorService: TutorAcademicoService,) { }
 
   ngOnInit() {
 
@@ -38,6 +43,7 @@ export class RegisterUserComponent implements OnInit {
     this.usuario.titulo = '';
     this.usuario.telefono = '';
     this.usuario.password = '';
+    this.selectedRol = null;
   }
 
   signUpUser() {
@@ -70,28 +76,38 @@ export class RegisterUserComponent implements OnInit {
       this.toastr.error("Campo Contraseña vacio!", "Error!");
     }
 
+    if (this.selectedRol === '' || this.selectedRol === null) {
+      this.toastr.error("Campo Contraseña vacio!", "Error!");
+    }
+
     if (this.usuario.nombre === '' || this.usuario.apellido === '' || this.usuario.correo === '' || this.usuario.cedula === '' || this.usuario.password === '' || this.usuario.titulo === '' || this.usuario.telefono === ''
-      || this.usuario.nombre === null || this.usuario.apellido === null || this.usuario.correo === null || this.usuario.cedula === null || this.usuario.password === null || this.usuario.titulo === null || this.usuario.telefono === null) {
+      || this.usuario.nombre === null || this.usuario.apellido === null || this.usuario.correo === null || this.usuario.cedula === null || this.usuario.password === null || this.usuario.titulo === null || this.usuario.telefono === null
+      || this.selectedRol === '' || this.selectedRol === null) {
 
       this.toastr.warning("Verifique que esten correctos los campos")
     } else {
-      /* this.estudiante.periodo = this.usuario.periodo;
-      this.estudiante.ciclo = this.usuario.ciclo;
-      this.estudiante.idEstudiante = this.usuario.idEstudiante;
-      this.estudiante.horasCumplidas = 0;
-      this.estudiante.prioridad = false;
-      this.usuario.activo = true;
-      this.estudiante.usuario = this.usuario;
-      this.estudiante.carrera = this.carrera;
-      console.log(this.estudiante);
-      this.userService.registerStudent(this.estudiante).subscribe(
+      this.tutorInstituto.usuario = this.usuario;
+
+      if (this.selectedRol === 'Director de Carrera') {
+        this.role = 'ROLE_DIREC';
+      } else if (this.selectedRol === 'Responsable de Practicas') {
+        this.role = 'ROLE_RESPP';
+      }
+
+      this.tutorService.registerTutor(this.tutorInstituto, this.role).subscribe(
         (result) => {
-          console.log('llego y entro');
           console.log(result);
-          Swal.fire('Registro', 'Usuario registrado correctamente', 'success');
-          this.router.navigate(['/login'])
+          if (this.selectedRol === 'Director de Carrera') {
+            Swal.fire('Registro', 'Director de Carrera Creado', 'success');
+            this.cleanCampos();
+            /* this.router.navigate(['/login']) */
+          } else if (this.selectedRol === 'Responsable de Practicas') {
+            Swal.fire('Registro', 'Responsable de Practicas Creado', 'success');
+            this.cleanCampos();
+            /* this.router.navigate(['/login']) */
+          }
         }
-      ); */
+      );
     };
   }
 
@@ -109,14 +125,17 @@ export class RegisterUserComponent implements OnInit {
   }
 
   buscarDocente() {
-    this.fenixService.searchStudent(this.usuario.cedula).subscribe(
+    this.fenixService.searchDocenteByCedula(this.usuario.cedula).subscribe(
       (data: DocenteFenix) => {
         this.usuario.nombre = data.nombres;
         this.usuario.apellido = data.apellidos;
         this.usuario.correo = data.correo;
         this.usuario.titulo = data.titulo;
         this.usuario.telefono = data.telefono;
-        this.usuario.alumno_docenteId = data.alumno_docenteId;
+        this.usuario.correo = data.correo;
+        this.usuario.activo = true;
+        this.tutorInstituto.idDocente = data.alumno_docenteId;
+        this.tutorInstituto.usuario = this.usuario;
         console.log(data);
       }
     );
