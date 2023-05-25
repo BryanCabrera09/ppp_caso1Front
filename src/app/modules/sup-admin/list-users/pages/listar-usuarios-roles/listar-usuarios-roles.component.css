@@ -17,6 +17,10 @@ table {
     text-align: center;
     font-weight: bold;
   }
+
+  .custom-dropdown .p-dropdown-panel {
+    top: calc(100% + 10px); /* Ajusta el valor de 10px según tus necesidades */
+  }
   
   body {
     font-family: "Times New Roman", Times, serif;

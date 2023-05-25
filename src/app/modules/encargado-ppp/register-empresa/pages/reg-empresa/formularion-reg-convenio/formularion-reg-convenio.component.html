@@ -13,7 +13,7 @@
                             <div class="p-col-3 p-md-4">
                                 <span class="p-float-label">
                                     <p-calendar [(ngModel)]="fechaI" [minDate]="fechaActual" [showIcon]="true"
-                                        [readonlyInput]="true"></p-calendar>
+                                        appendTo="body" [readonlyInput]="true"></p-calendar>
                                     <label for="float-input">Fecha Inicio</label>
                                 </span>
                             </div>
@@ -36,7 +36,7 @@
                             <div class="p-col-12 p-md-4">
                                 <span class="p-float-label">
                                     <p-calendar [(ngModel)]="fechaF" [minDate]="fechaI" [disabled]="!fechaI"
-                                        [showIcon]="true" [readonlyInput]="true"></p-calendar>
+                                        appendTo="body" [showIcon]="true" [readonlyInput]="true"></p-calendar>
                                     <label for="float-input">Fecha Fin</label>
                                 </span>
                             </div>
