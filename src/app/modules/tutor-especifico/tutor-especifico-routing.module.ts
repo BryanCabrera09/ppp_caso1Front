@@ -4,7 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import("./dashboard-tutespecifico/dashboard-tutespecifico.module").then(m => m.DashboardTutespecificoModule)
+    loadChildren: () => import("./dashboard-tutespecifico/dashboard-tutespecifico.module").then(m => m.DashboardTutespecificoModule),
+  },
+  {
+    path: 'calificacion',
+    loadChildren: () => import("./calificacion/calificacion.module").then(m => m.CalificacionModule)
   }
 ];
 
