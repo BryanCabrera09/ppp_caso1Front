@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'generate',
     loadChildren: () => import("./generate-obligaciones/generate-obligaciones.module").then(m => m.GenerateObligacionesModule)
   },
+  {
+    path: 'salud',
+    loadChildren: () => import("./salud-ocupacional/salud-ocupacional.module").then(m => m.SaludOcupacionalModule)
+  },
 ];
 
 @NgModule({

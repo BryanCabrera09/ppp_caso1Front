@@ -46,6 +46,7 @@ export class ReportComponent implements OnInit{
     // Obtener las prácticas del estudiante por su ID
     this.practicaService.buscarxEstudainte(this.estudianteId).subscribe(
       data => {
+        console.log(data)
         this.practicas = data.map(
           result=>{
             let practica = new Practica

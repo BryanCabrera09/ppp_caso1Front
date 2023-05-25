@@ -94,7 +94,7 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: 'settings',
+        routeLink: 'salud/report',
         icon: 'fal fa-cog',
         label: 'Induccion Salud Ocupacional',
         expanded: true,
