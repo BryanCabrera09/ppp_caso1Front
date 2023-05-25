@@ -14,6 +14,14 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import("./dashboard-practicante/dashboard-practicante.module").then(m => m.DashboardPracticanteModule)
   },
+  {
+    path: 'generate',
+    loadChildren: () => import("./generate-obligaciones/generate-obligaciones.module").then(m => m.GenerateObligacionesModule)
+  },
+  {
+    path: 'salud',
+    loadChildren: () => import("./salud-ocupacional/salud-ocupacional.module").then(m => m.SaludOcupacionalModule)
+  },
 ];
 
 @NgModule({

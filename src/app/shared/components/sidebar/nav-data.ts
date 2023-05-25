@@ -88,13 +88,13 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: 'media',
+        routeLink: 'generate/report',
         icon: 'fal fa-camera',
         label: 'Obligaciones del Estudiante',
         role: 'Practicante'
     },
     {
-        routeLink: 'settings',
+        routeLink: 'salud/report',
         icon: 'fal fa-cog',
         label: 'Induccion Salud Ocupacional',
         expanded: true,

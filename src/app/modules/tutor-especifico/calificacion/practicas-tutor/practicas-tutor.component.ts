@@ -17,12 +17,11 @@ export class PracticasTutorComponent {
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('userdetails') || "");
-    console.log(this.user)
     this.listPracticas()
   }
 
   listPracticas() {
-    this.practicaService.listarByTistaUsuario(this.user.id).subscribe(
+    this.practicaService.listarByTempUsuario(this.user.id).subscribe(
       (response) => {
         this.practicas = response.body;
         console.log("Lista de practicas: " + this.practicas);

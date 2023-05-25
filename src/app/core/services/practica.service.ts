@@ -12,8 +12,12 @@ export class PracticaService {
 
   constructor(private http: HttpClient) { }
 
-  listarByUsuario(id: number): Observable<any> {
+  listarByTistaUsuario(id: number): Observable<any> {
     return this.http.get<any>(`${baserUrl+this.url}/listar/usuario/${id}`, { observe: 'response', withCredentials: true });
+  }
+
+  listarByTempUsuario(id: number): Observable<any> {
+    return this.http.get<any>(`${baserUrl+this.url}/listar/temp/${id}`, { observe: 'response', withCredentials: true });
   }
 
 }
