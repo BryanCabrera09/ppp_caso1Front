@@ -55,25 +55,49 @@ export class ReporteSaludComponent {
     observaciones: { [key: string]: string } = {};
     tabla: any[] = [];
     
-  
-    submitForm() {
-      for (let pregunta of this.preguntas) {
-        const nuevaFila = {
-          pregunta: pregunta,
-          respuestaSi: this.respuestas[pregunta] === 'si' ? 'X' : '',
-          respuestaNo: this.respuestas[pregunta] === 'no' ? 'X' : '',
-          observaciones: this.observaciones[pregunta]
-          
-        };
-        this.tabla.push(nuevaFila);
-        console.log(this.observaciones);
-      }
-    
-      this.respuestas = {};
-      this.observaciones = {};
+    mostrarMensaje: boolean = false;
 
-      console.log('Tabla:', this.tabla);
+    guardado: boolean = false;
+
+    submitForm() {
+      if (this.validateForm()) {
+        this.mostrarMensaje = false;
+    
+        for (let pregunta of this.preguntas) {
+          const nuevaFila = {
+            pregunta: pregunta,
+            respuestaSi: this.respuestas[pregunta] === 'si' ? 'X' : '',
+            respuestaNo: this.respuestas[pregunta] === 'no' ? 'X' : '',
+            observaciones: this.observaciones[pregunta]
+          };
+          this.tabla.push(nuevaFila);
+        }
+    
+        this.respuestas = {};
+        this.observaciones = {};
+    
+        this.guardado = true;
+        console.log('Tabla:', this.tabla);
+      } else {
+        this.mostrarMensaje = true;
+        console.log('Debe responder todas las preguntas antes de guardar.');
+      }
     }
+    
+    
+  
+    
+    
+    validateForm(): boolean {
+      for (let pregunta of this.preguntas) {
+        if (!this.respuestas[pregunta] || !this.respuestas[pregunta].trim()) {
+          return false;
+        }
+      }
+      return true;
+    }
+    
+    
     
     
 }

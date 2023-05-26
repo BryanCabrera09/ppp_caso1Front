@@ -41,6 +41,7 @@ export class FormComponent implements OnInit{
 
     this.rellenaSoli();
     this.llamaActividades();
+    this.llamarNConvocatoria()
   }
   
   constructor(private materiaService: MateriaService, private convocaService: ConvocatoriaService,  private activatedRoute: ActivatedRoute,
@@ -75,6 +76,24 @@ export class FormComponent implements OnInit{
 
     
   }
+
+    llamarNConvocatoria(){
+      this.activatedRoute.params.subscribe(params=>{
+        let id = params['id']
+
+        if(id){
+          this.convocaService.buscarxSolicitud(id).subscribe(
+            (data)=>{
+              console.log(data)
+            this.convoca.numero = data.numero+1
+
+              alert(this.convoca.numero)
+            }
+          )
+        }
+      }
+      )
+    }
 
   rellenaSoli(){
     

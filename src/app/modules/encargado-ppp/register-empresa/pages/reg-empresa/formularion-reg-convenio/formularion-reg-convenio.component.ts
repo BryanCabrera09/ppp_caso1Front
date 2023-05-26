@@ -21,6 +21,7 @@ export class FormularionRegConvenioComponent implements OnInit {
 
   Carreras: Carrera[] = []
   TutorA: TutorAcademico[];
+  Tutor: TutorAcademico[];
   ConvenioA: Convenio[];
   carrera: Carrera = new Carrera
 
@@ -33,17 +34,21 @@ export class FormularionRegConvenioComponent implements OnInit {
   fechaF: Date;
 
   fechaSumada: Date;
-
+  nombreTuttor: string;
+  idtutor:number
   fechaActual: Date = new Date();
 
   id: number = 0
+  usuario: any;
+  idUs: number
 
   ngOnInit(): void {
     this.guardarEmpresa()
+    this.guardarTutor()
   }
 
   constructor(private carreraService: CarreraMateriaService, private TutorAService: TutorAcademicoService,
-    private convenioService: ConvenioService, private empresaService: RegEmpresaServiceService) {
+    private convenioService: ConvenioService, private empresaService: RegEmpresaServiceService, private tutorService: TutorAcademicoService) {
     this.carreraService.ListarCarrera().subscribe(
       Carr => this.Carreras = Carr
     )
@@ -51,6 +56,9 @@ export class FormularionRegConvenioComponent implements OnInit {
     this.TutorAService.ListarTutor().subscribe(
       dato => { this.TutorA = dato; }
     )
+
+    this.nombreTuttor=''
+      this.idtutor=0
   }
 
   CarreraHunter(value: any) {
@@ -70,6 +78,20 @@ export class FormularionRegConvenioComponent implements OnInit {
         console.log(this.tutor)
       }
     )
+  }
+
+  guardarTutor(){
+    this.usuario = JSON.parse(sessionStorage.getItem('userdetails')!);
+    this.idUs = this.usuario.id
+    this.nombreTuttor = this.usuario.nombre +' '+ this.usuario.apellido
+    console.log(this.nombreTuttor)
+    this.tutorService.buscarxusuario(this.idUs).subscribe(
+    (data:TutorAcademico)=>{
+      this.tutor = data
+    } 
+
+    )
+      
   }
 
   guardarEmpresa() {

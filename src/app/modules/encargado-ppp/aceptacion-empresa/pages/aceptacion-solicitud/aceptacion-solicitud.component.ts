@@ -46,9 +46,9 @@ export class AceptacionSolicitudComponent implements OnInit {
     this.solicitudService.ListarSoli().subscribe(
       data => {
         this.empresas = data;
-        this.loading = false;
       }
     );
+    this.loading = false;
   }
 
   guardarPostulacion() {

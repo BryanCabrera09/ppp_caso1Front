@@ -36,4 +36,8 @@ export class TutorAcademicoService {
 
     return this.http.post(`${this.tutorUrl}/guardarpdf`, formData, { responseType: 'text' });
   }
+
+  buscarxusuario(id:number){
+    return this.http.get(`${this.tutorUrl}/buscarxusuario/${id}`);
+  }
 }
