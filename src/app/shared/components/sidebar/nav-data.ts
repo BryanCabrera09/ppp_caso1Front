@@ -107,8 +107,8 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: 'media',
-        icon: 'fal fa-camera',
+        routeLink: 'practica/calificacion-practicante',
+        icon: 'fas fa-star',
         label: 'Ver Calificación Final',
         role: 'Practicante'
     },
@@ -118,7 +118,7 @@ export const navbarData: INavbarData[] = [
         label: 'Dashboard',
         role: 'Responsable Practicas'
     },
-    {
+    /* {
         routeLink: 'media',
         icon: 'fas fa-chalkboard-teacher',
         label: 'Designación Tutores',
@@ -135,7 +135,7 @@ export const navbarData: INavbarData[] = [
             }
         ],
         role: 'Responsable Practicas',
-    },
+    }, */
     {
         routeLink: 'empresa/register-empresa',
         icon: 'fas fa-building',
@@ -163,7 +163,7 @@ export const navbarData: INavbarData[] = [
     {
         routeLink: 'convocatorias/lista-convocatorias',
         icon: 'fa-solid fa-person-circle-check',
-        label: 'Solicitudes Practicantes',
+        label: 'Convocatorias',
         role: 'Responsable Practicas'
     },
     {

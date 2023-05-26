@@ -4,7 +4,7 @@ import { ListarPracticasComponent } from './pages/listar-practicas/listar-practi
 
 const routes: Routes = [
   {
-    path: 'lista-practicas',
+    path: 'lista-practicas/:id',
     component: ListarPracticasComponent
   }
 ];

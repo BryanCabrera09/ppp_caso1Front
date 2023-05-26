@@ -158,10 +158,10 @@ export class RegUserComponent implements OnInit {
         this.usuario.idEstudiante = data.alumno_docenteId;
         this.usuario.periodo = data.periodo;
         this.usuario.ciclo = data.ciclo;
-        this.carrera.carreraId = data.carreraId;
+        this.carrera.idCarrera = data.carreraId;
         console.log(data);
-        /* console.log(this.carrera.idCarrera); */
-        this.carreraService.searchCarrera(this.carrera.carreraId).subscribe(
+        console.log(this.carrera.idCarrera);
+        this.carreraService.searchCarrera(this.carrera.idCarrera).subscribe(
           (data: Carrera) => {
             this.carrera.nombre = data.nombre;
             this.carrera.id = data.id;

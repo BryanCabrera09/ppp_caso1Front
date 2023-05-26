@@ -37,9 +37,6 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerSolicitudes();
-    window.addEventListener('beforeunload', (event) => {
-      localStorage.removeItem('convocatoriaId');
-    });
   }
 
   clear(table: Table) {
@@ -129,8 +126,6 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
     this.practestudiant.correo = practicante.correo;
     this.practestudiant.estado = practicante.estado;
     this.practestudiant.fechaEnvio = practicante.fechaEnvio;
-
-    console.log(practicante)
   }
 
   cancelar() {

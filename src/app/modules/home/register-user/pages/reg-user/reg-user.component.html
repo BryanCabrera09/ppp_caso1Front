@@ -73,9 +73,9 @@
 
                                 <div class="input-field p-col-12">
                                     <span class="p-float-label">
-                                        <input id="float-input" type="text" class={{verfTelefono}} disabled="true"
+                                        <input id="float-input" type="text" class={{verfTelefono}}
                                             [(ngModel)]="usuario.telefono" placeholder=" Ingrese Número Telefónico"
-                                            pInputText>
+                                            [pKeyFilter]="'int'" maxlength="10" minlength="10" pInputText>
                                         <label for=" float-input">Número de Teléfono</label>
                                     </span>
                                 </div>

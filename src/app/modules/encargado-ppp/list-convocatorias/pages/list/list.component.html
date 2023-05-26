@@ -19,6 +19,7 @@
                 <th id="text" style="width:22%">Fecha de Inicio</th>
                 <th id="text" style="width:22%">Fecha de Fin</th>
                 <th id="text" style="width:12%"></th>
+                <th id="text" style="width:12%"></th>
             </tr>
             <tr>
                 <th id="text">
@@ -28,6 +29,7 @@
                 </th>
                 <th id="text">
                 </th>
+                <th></th>
                 <th></th>
             </tr>
         </ng-template>
@@ -44,8 +46,12 @@
                     {{ convocatoria.fechaFin }}
                 </td>
                 <td id="text">
-                    <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar" class="p-button-warning"
-                        (click)="listarPostulantes(convocatoria.id)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar Solicitudes"
+                        class="p-button-warning" (click)="listarPostulantes(convocatoria.id)"></button>
+                </td>
+                <td id="text">
+                    <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar Practicas"
+                        class="p-button-warning" (click)="listarPracticas(convocatoria.id)"></button>
                 </td>
             </tr>
         </ng-template>

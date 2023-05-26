@@ -5,7 +5,11 @@ const routes: Routes = [
   {
     path: 'postulacion',
     loadChildren: () => import("./practicante-postulacion/practicante-postulacion.module").then(m => m.PracticantePostulacionModule)
-  }, 
+  },
+  {
+    path: 'practica',
+    loadChildren: () => import("./publicacion-notas/publicacion-notas.module").then(m => m.PublicacionNotasModule)
+  },
   {
     path: '',
     loadChildren: () => import("./dashboard-practicante/dashboard-practicante.module").then(m => m.DashboardPracticanteModule)
