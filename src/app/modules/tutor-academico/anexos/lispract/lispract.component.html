@@ -1,0 +1,53 @@
+<div class="card">
+    <h2>
+        LISTADO DE CONVENIOS
+    </h2>
+    <p-table #dt2 [value]="Practicas" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['practicantes.nombres']" [tableStyle]="{ 'min-width': '75rem' }">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Ingrese Nombre de Estudiante" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th id="text" style="width:22%">N° de la Practica</th>
+                <th id="text" style="width:22%">Nombre del Estudiante</th>
+                <th id="text" style="width:12%"></th>
+            </tr>
+            <tr>
+                <th id="text">
+                </th>
+                <th id="text">
+                    <p-columnFilter type="text" field="practicantes.nombres"></p-columnFilter>
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-practica>
+            <tr>
+                <td id="text">
+                    {{ practica.id }}
+                </td>
+                <td id="text">
+                    {{ practica.estudiante.nombres }}
+                </td>
+                <td id="text">
+                    <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar" class="p-button-warning"
+                        (click)="traerid(practica.id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">Sin Solicitudes de Empresas.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

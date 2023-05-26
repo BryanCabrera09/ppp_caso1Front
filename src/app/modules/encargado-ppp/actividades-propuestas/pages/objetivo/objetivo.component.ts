@@ -40,6 +40,15 @@ export class ObjetivoComponent implements OnInit{
   }
 
 
+  guardarmateria(){
+    this.actividad.materia=this.objetivop.materia;
+    console.log(this.objetivop.materia)
+    this.actividadservice.editar(this.actividad.id,this.actividad).subscribe(
+      (res)=>{
+        console.log(res)
+      }
+    )
+  }
 
   buscarmateriaxcarrera(id: number){
    this.materiaservice.buscarmateriaxcarrera(id).subscribe(dato => { this.materia = dato; console.log(this.materia) })
