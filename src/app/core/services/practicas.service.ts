@@ -30,7 +30,9 @@ export class PracticasService {
   buscarxEstudiante(id: number) {
     return this.httpClient.get(`${this.baseURL}/buscarxestudiante/${id}`);
   }
-
+  listarByTistaUsuario(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseURL}/listar/usuario/${id}`, { observe: 'response', withCredentials: true });
+  }
   searchByConvo(id: number): Observable<Practica[]> {
     return this.httpClient.get<Practica[]>(`${this.baseURL}/listar/convocatoria/${id}`);
   }
