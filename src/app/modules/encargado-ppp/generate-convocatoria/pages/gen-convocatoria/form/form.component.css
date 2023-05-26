@@ -11,10 +11,6 @@
     overflow-x: hidden;
     border-radius: 20px;
     padding-right: 10%;
-     /* ajusta el ancho según sea necesario */
-    margin:  auto;
-    margin-bottom: 10%;
-    margin-top: 5%;
     text-align: center;
     
   }
@@ -39,8 +35,8 @@
   }
   
   .card-body {
-    /*display: flex;
-    justify-content: flex-end;*/
+    display: flex;
+    justify-content: flex-end;
   }
 
   .button{
@@ -69,11 +65,6 @@
   }
   .container{
     margin-bottom: 10%;
-  }
-
-  .container button{
-    margin-bottom: 20%;
-    margin-top: 5%;
   }
 
   .container h4{

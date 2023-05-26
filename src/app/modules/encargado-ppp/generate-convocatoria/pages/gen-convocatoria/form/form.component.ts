@@ -20,105 +20,100 @@ import { ActividadpService } from 'src/app/core/services/actividadp.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
-export class FormComponent implements OnInit{
+export class FormComponent implements OnInit {
   opcionSeleccionada: string;
   opcionesGuardadas: string[] = [];
   materias: Materia[] = []
-  act: Actividad[]=[]
-  soli: SolicitudEmpresa= new SolicitudEmpresa
-  convoca: ConvocatoriaP= new ConvocatoriaP
+  act: Actividad[] = []
+  soli: SolicitudEmpresa = new SolicitudEmpresa
+  convoca: ConvocatoriaP = new ConvocatoriaP
   actividades: Actividad = new Actividad
   fechaActual: Date = new Date();
-  id: number=0
-  idA: number=0
+  id: number = 0
+  idA: number = 0
 
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/;
 
   ngOnInit(): void {
     this.materiaService.Listarmateria().subscribe(
-      carr=> this.materias = carr
+      carr => this.materias = carr
     );
 
     this.rellenaSoli();
     this.llamaActividades();
-    this.llamarNConvocatoria()
+    //this.llamarNConvocatoria()
   }
-  
-  constructor(private materiaService: MateriaService, private convocaService: ConvocatoriaService,  private activatedRoute: ActivatedRoute,
-    private soliService: SoliEmpresaService, private actividadService: ActividadpService, ){}
 
-  guardarOpcion(e:any) {
-    
-   this.opcionSeleccionada = e.target.value
+  constructor(private materiaService: MateriaService, private convocaService: ConvocatoriaService, private activatedRoute: ActivatedRoute,
+    private soliService: SoliEmpresaService, private actividadService: ActividadpService,) { }
+
+  guardarOpcion(e: any) {
+
+    this.opcionSeleccionada = e.target.value
     if (this.opcionSeleccionada) {
       this.opcionesGuardadas.push(this.opcionSeleccionada);
       this.opcionSeleccionada = ''; // Limpiar la selección después de guardarla
     }
   }
 
-  llamaActividades(){
+  llamaActividades() {
 
-    this.activatedRoute.params.subscribe(params=>{
+    this.activatedRoute.params.subscribe(params => {
       let id = params['id']
 
-      if(id){
+      if (id) {
         this.actividadService.obtenerActividadid(id).subscribe(
-          (data)=>{
+          (data) => {
             this.act = data;
             this.actividades = this.act[0];
             console.log(this.actividades)
-          console.log(this.act)
-          }
-        )
-      }
-    }
-    )
-
-    
-  }
-
-    llamarNConvocatoria(){
-      this.activatedRoute.params.subscribe(params=>{
-        let id = params['id']
-
-        if(id){
-          this.convocaService.buscarxSolicitud(id).subscribe(
-            (data)=>{
-              console.log(data)
-            this.convoca.numero = data.numero+1
-
-              alert(this.convoca.numero)
-            }
-          )
-        }
-      }
-      )
-    }
-
-  rellenaSoli(){
-    
-    this.activatedRoute.params.subscribe(params=>{
-      let id = params['id']
-
-      if(id){
-        this.soliService.buscarxID(id).subscribe(
-          (data: SolicitudEmpresa)=>{
-            this.soli=data
-            this.convoca.solicitudEmpresa=this.soli
-            
+            console.log(this.act)
           }
         )
       }
     })
   }
 
-  guardarConvoca(){
+  /* llamarNConvocatoria() {
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+
+      if (id) {
+        this.convocaService.buscarxSolicitud(id).subscribe(
+          (data) => {
+            console.log(data)
+            this.convoca.numero = data.numero + 1
+            alert(this.convoca.numero)
+          }
+        )
+      }
+    });
+  } */
+
+  rellenaSoli() {
+
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+
+      if (id) {
+        this.soliService.buscarxID(id).subscribe(
+          (data: SolicitudEmpresa) => {
+            this.soli = data
+            this.convoca.solicitudEmpresa = this.soli
+
+          }
+        )
+      }
+    })
+  }
+
+  guardarConvoca() {
     this.convoca.fechaInicio = this.fechaActual
     this.convocaService.guardaConvoca(this.convoca).subscribe(
       (data) => {
         console.log(data);
         this.ngOnInit();
-        Swal.fire('Convocatoria Guardad', 'Convocatoria Guardad con éxito en el sistema', 'success');
+        Swal.fire('Convocatoria Guardada', 'Convocatoria Guardad con éxito en el sistema', 'success');
         localStorage.removeItem('IdSoli')
         //window.location.reload();
       }, (error) => {
@@ -135,23 +130,27 @@ export class FormComponent implements OnInit{
       content: [
         { text: 'CONVOCATORIA – TSDS -PPP-2022-013', style: 'titulo' },
         '\n',
-        { text: ''+this.fechaActual+ '', style: 'fecha' },
+        { text: '' + this.fechaActual + '', style: 'fecha' },
         '\n\n',
         { text: 'A los estudiantes Interesados:', style: 'subtitulo' },
-        'Se convoca a los estudiantes de quinto ciclo en adelante de la carrera de '+this.soli.convenio.carrera.nombre+' que deseen realizar sus prácticas pre profesionales en la empresa FUTURA CIA. LTDA., a presentar la solicitud correspondiente.',
+        'Se convoca a los estudiantes de quinto ciclo en adelante de la carrera de ' + this.soli.convenio.carrera.nombre + ' que deseen realizar sus prácticas pre profesionales en la empresa FUTURA CIA. LTDA., a presentar la solicitud correspondiente.',
         { text: 'Las actividades a desarrollar son:', style: 'subtitulo' },
-        { ul: [
-          this.act.map(dato=>({text:dato.descripcion}))
-        ] },
+        {
+          ul: [
+            this.act.map(dato => ({ text: dato.descripcion }))
+          ]
+        },
         '\n',
         { text: 'Por lo que los postulantes deberán haber aprobado las siguientes asignaturas:', style: 'subtitulo' },
-        { ul: [
-          this.opcionesGuardadas
-        ] },
+        {
+          ul: [
+            this.opcionesGuardadas
+          ]
+        },
         '\n',
-        { text: 'La fecha máxima en la que se receptarán las solicitudes es '+this.convoca.fechaFin+'.', style: 'subtitulo' },
+        { text: 'La fecha máxima en la que se receptarán las solicitudes es ' + this.convoca.fechaFin + '.', style: 'subtitulo' },
         '\n',
-        { text: 'Para mayor información contactarse con el'+this.soli.convenio.firmaInst.usuario.nombre+' '+this.soli.convenio.firmaInst.usuario.apellido+', docente responsable de prácticas pre profesionales de la carrera.', style: 'subtitulo' },
+        { text: 'Para mayor información contactarse con el' + this.soli.convenio.firmaInst.usuario.nombre + ' ' + this.soli.convenio.firmaInst.usuario.apellido + ', docente responsable de prácticas pre profesionales de la carrera.', style: 'subtitulo' },
         '\n',
         { text: 'Nota: Adjunto a la solicitud se debe remitir la hoja de vida, para lo cual deberá registrarse en el portal web encuentraempleo, e imprimir el currículo en formato moderno a través del siguiente enlace:', style: 'nota' },
         { text: 'https://encuentraempleo.trabajo.gob.ec', link: 'https://encuentraempleo.trabajo.gob.ec', color: 'blue' },
@@ -167,7 +166,7 @@ export class FormComponent implements OnInit{
         { text: 'Atentamente,', style: 'firmado' },
         '\n\n',
         { text: '_______________________', style: 'firma' },
-        this.soli.convenio.firmaInst.usuario.nombre+' '+this.soli.convenio.firmaInst.usuario.apellido,
+        this.soli.convenio.firmaInst.usuario.nombre + ' ' + this.soli.convenio.firmaInst.usuario.apellido,
         'Responsable de Prácticas pre profesionales',
         this.soli.convenio.carrera.nombre,
         'INSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY',
@@ -204,7 +203,7 @@ export class FormComponent implements OnInit{
         }
       }
     };
-  
+
     pdfMake.createPdf(documentoPDF).open();
   }
 
