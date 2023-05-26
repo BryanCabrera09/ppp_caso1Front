@@ -28,6 +28,7 @@ import { PasswordModule } from 'primeng/password';
 import { TableModule } from 'primeng/table';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { ProcesoSeleccionComponent } from './pages/gen-convocatoria/proceso-seleccion/proceso-seleccion.component';
 
 
@@ -61,7 +62,8 @@ import { ProcesoSeleccionComponent } from './pages/gen-convocatoria/proceso-sele
     PasswordModule,
     TableModule,
     ToggleButtonModule,
-    InputTextareaModule
+    InputTextareaModule,
+    RadioButtonModule
 
   ]
 })
