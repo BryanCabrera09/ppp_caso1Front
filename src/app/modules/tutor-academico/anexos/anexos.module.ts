@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { AnexosRoutingModule } from './anexos-routing.module';
 import { AnxochComponent } from './anxoch/anxoch.component';
+import { LispractComponent } from './lispract/lispract.component';
 
 
 @NgModule({
   declarations: [
-    AnxochComponent
+    AnxochComponent,
+    LispractComponent
   ],
   imports: [
     CommonModule,
