@@ -7,44 +7,27 @@ import { Router } from '@angular/router';
   templateUrl: './gen-convocatoria.component.html',
   styleUrls: ['./gen-convocatoria.component.css']
 })
-export class GenConvocatoriaComponent implements OnInit{
+export class GenConvocatoriaComponent implements OnInit {
 
-  soliE: SolicitudEmpresa[]=[]
+  solicitudes: SolicitudEmpresa[] = [];
+
   loading: boolean = true;
-  id: number = 0
-  idform:number
+  idform: number;
 
   ngOnInit(): void {
     this.soliEmpresaService.ListarSoli().subscribe(
-      soli=> {
-        this.soliE = soli.map(
-          result=>{
-            let soli = new SolicitudEmpresa
-            soli.id = result.id
-           soli.fechaInicioTen= result.fechaInicioTen
-           soli.fechaMaxTen = result.fechaMaxTen
-           soli.numPracticantes = result.numPracticantes
-            soli.numHoras = result.numHoras
-           soli.estado = result.estado
-           soli.convenio = result.convenio
-           soli.actividad = result.actividad
-           this.id = result.id
-           return soli;
-          }
-        )
-        this.loading = false;
+      soli => {
+        this.solicitudes = soli;
       }
     );
-
-    localStorage.removeItem('IdSoli')
+    this.loading = false;
   }
 
-  constructor(private soliEmpresaService: SoliEmpresaService, private router: Router){}
+  constructor(private soliEmpresaService: SoliEmpresaService, private router: Router) { }
 
-  capturarid(id: any){
-    
+  capturarid(id: any) {
+
     this.idform = id
-    //localStorage.setItem('IdSoli', JSON.stringify(id));
-    this.router.navigate(['/encargado-practicas/convocatoria/form/'+this.idform]);
+    this.router.navigate(['/encargado-practicas/convocatoria/form/' + this.idform]);
   }
 }

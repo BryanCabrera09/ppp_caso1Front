@@ -1,52 +1,56 @@
-<div class="card">
-    <h2>Solicitud</h2>
-
-    <form #reg="ngForm" (ngSubmit)="Guardarsoli(reg)">
-        <div class="col- ig-12 col-md-11">
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Numero de estudiantes</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="number"  class="form-control" name="estudiantes" [(ngModel)]="soliempresa.numPracticantes" required>
-        
+<div class="container">
+    <div class="content">
+        <p-panel id="panelregempresa" header="Registro Solicitud">
+            <div class="panel over overflow-auto p-grid p-fluid">
+                <h4 style="text-align: center">Datos Solicitud</h4>
+                <div class="p-grid p-fluid justify-content-center align-items-center">
+                    <div class="col-sm">
+                        <input type="hidden" #id class="form-control" style="width: 200%;" name="estudiantes"
+                            [(ngModel)]="soliempresa.id" required>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <div class="col">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" class="form-control" name="estudiantes"
+                                        [(ngModel)]="soliempresa.numPracticantes" [pKeyFilter]="'int'" pInputText
+                                        required />
+                                    <label for="float-input">Número de Practicantes</label>
+                                </span>
+                            </div>
+                            <div class="p-col-3 p-md-4">
+                                <span class="p-float-label">
+                                    <p-calendar [(ngModel)]="fechaI" [minDate]="fechaActual" [showIcon]="true"
+                                        name="fechai" appendTo="body" [readonlyInput]="true"></p-calendar>
+                                    <label for="float-input">Fecha Inicio</label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="p-col-3 p-md-4">
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" class="form-control" name="estudiantes"
+                                        [(ngModel)]="soliempresa.numHoras" [pKeyFilter]="'int'" pInputText required />
+                                    <label for=" float-input">Número de Horas</label>
+                                </span>
+                            </div>
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-float-label">
+                                    <p-calendar [(ngModel)]="fechaF" [minDate]="fechaI" [disabled]="!fechaI"
+                                        name="fechaf" appendTo="body" [showIcon]="true"
+                                        [readonlyInput]="true"></p-calendar>
+                                    <label for="float-input">Fecha Fin</label>
+                                </span>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <button pButton pRipple type="button" label="Registrar Solicitud" icon="pi pi-check"
+                            iconPos="right" class="p-button-rounded p-button-primary" (click)="Guardarsoli()"></button>
+                    </div>
                 </div>
             </div>
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Numero de horas</h4>
-                </label>
-                <div class="col-sm">
-                    <input type="number"  class="form-control"  name="estudiantes"  [(ngModel)]="soliempresa.numHoras" required>
-        
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Fecha Inicio</h4>
-                </label>
-                <div class="col-sm">
-					<input type="date" id="caducidad" name="caducidad" [(ngModel)]="fechaI" required="required">
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="Codigo DEWEY" class="col-sm col-form-label">
-                    <h4>Fecha Fin</h4>
-                </label>
-                <div class="col-sm">
-					<input type="date" id="caducidad" name="caducidad" [(ngModel)]="fechaF" required="required">
-                </div>
-            </div>
-        </div>
-
-        <button type="submit" class="crear"> Guardar</button>
-
-    </form>
-
+        </p-panel>
+    </div>
 </div>
-
-
-

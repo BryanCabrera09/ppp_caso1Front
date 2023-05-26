@@ -54,9 +54,9 @@ export class AceptacionSolicitudComponent implements OnInit {
   guardarPostulacion() {
 
     if (this.estado === 'aprobado') {
-      this.solicitudEmpre.estado = 1;
-    } else if (this.estado === 'desaprobado') {
       this.solicitudEmpre.estado = 2;
+    } else if (this.estado === 'desaprobado') {
+      this.solicitudEmpre.estado = 3;
     }
 
     console.log(this.solicitudEmpre.estado);
