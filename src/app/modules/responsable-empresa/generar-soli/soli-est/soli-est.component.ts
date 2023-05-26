@@ -24,6 +24,7 @@ export class SoliEstComponent implements OnInit {
   fechaF: Date=  new Date;
   id :number = 0
 
+
   constructor( private solicitudEmService:SoliEmpresaService, private empservicio:RegEmpresaServiceService,
     private convenioService:ConvenioService){
 
@@ -57,6 +58,8 @@ export class SoliEstComponent implements OnInit {
     this.solicitudEmService.guardarsolicitud(this.soliempresa).subscribe(
       (data) => {
         console.log(data);
+        const soliid=data.id
+        console.log(soliid)
         this.ngOnInit();
         Swal.fire('Solicitud guardado','Solicitud Guadado con exito','success');
       },(error) =>{
