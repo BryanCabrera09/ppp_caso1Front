@@ -83,31 +83,40 @@ export class VerEmpresaComponent implements OnInit {
   generarPDF() {
     const documentDefinition = {
       content: [
-        { text: 'Lista de Actividades', style: 'header' },
-        { text: ' ', style: 'space' },
+        { text: 'Solicitud emitida por entidad receptora', style: 'header' },
+        { text: ' ' },
+        { text: 'Cuenca, …… de …………………. del 2023' },
+        { text: 'Magister' },
+        { text: 'Juan Gabriel Espinoza.' },
+        { text: 'RESPONSABLE DE PRÁCTICAS PRE PROFESIONALES' },
+        { text: 'INSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY' },
+        { text: 'Su Despacho. -' },
+        { text: ' ' },
+        { text: 'De mi consideración:' },
+        { text: ' ' },
+        { text: 'Reciba un cordial saludo de quienes conformamos NOMBRE DE LA ENTIDAD RECEPTORA en atención del convenio que mantenemos con el Instituto Superior Tecnológico del Azuay, doy a conocer que se requiere de dos estudiantes para realizar actividades relacionadas con el desarrollo de software:' },
+        { text: 'Describir las actividades a realizar, ejemplo:' },
         ...this.actividades.map(actividad => {
-          return [
-            { text: 'Nombre:', style: 'subheader' },
-            { text: this.actividad.descripcion },
-            { text: 'Descripción:', style: 'subheader' },
-            { text: actividad.descripcion },
-            { text: ' ', style: 'space' },
-          ];
-        })
+          return { text: actividad.descripcion };
+        }),
+        { text: 'La fecha de inicio tentativa es el 14 de marzo de 2023.' },
+        { text: 'Solicito comedidamente se me informe si esta petición es viable, y en caso de serlo, se me haga conocer el listado de estudiantes que podrían ingresar a la empresa.' },
+        { text: ' ' },
+        { text: 'Agradezco de antemano la atención que brinde a la presente.' },
+        { text: ' ' },
+        { text: 'Atentamente,' },
+        { text: ' ' },
+        { text: '_______________________' },
+        { text: 'Nombre de la persona que solicita' },
+        { text: 'Cargo en la empresa' },
+        { text: 'Nro. Contacto' }
       ],
       styles: {
         header: {
           fontSize: 18,
           bold: true,
           alignment: 'center',
-        },
-        subheader: {
-          fontSize: 14,
-          bold: true,
-        },
-        space: {
-          margin: [0, 10, 0, 10],
-        },
+        }
       },
     };
 
