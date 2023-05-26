@@ -7,7 +7,6 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Empresa } from 'src/app/core/models/empresa';
 import { UsersfenixService } from 'src/app/core/services/usersfenix.service';
 import { Estudiante } from 'src/app/core/models/estudiante';
-import { DocenteFenix } from 'src/app/core/models/docente-fenix';
 import { Usuario } from 'src/app/core/models/usuario';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';

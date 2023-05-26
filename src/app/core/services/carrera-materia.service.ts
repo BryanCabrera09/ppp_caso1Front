@@ -13,8 +13,8 @@ export class CarreraMateriaService {
 
   constructor(private http: HttpClient) { }
 
-  searchCarrera(id: number) {
-    return this.http.get(`${this.searchUrl}/buscar/${id}`);
+  searchCarrera(idCarrera: number) {
+    return this.http.get(`${this.searchUrl}/buscar/idCarrera`, { params: { idCarrera } });
   }
 
   ListarCarrera(): Observable<Carrera[]> {

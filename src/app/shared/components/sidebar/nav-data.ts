@@ -89,7 +89,7 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: 'generate/report',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-book',
         label: 'Obligaciones del Estudiante',
         role: 'Practicante'
     },
