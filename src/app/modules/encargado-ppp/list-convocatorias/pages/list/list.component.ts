@@ -26,20 +26,7 @@ export class ListComponent implements OnInit {
   cargarConvocatorias() {
     this.convocatoriaService.obtenerConvocatoria().subscribe(
       data => {
-        this.convocatorias = data.map(
-          result => {
-            let convocatoria = new ConvocatoriaP;
-            convocatoria.id = result.id;
-            convocatoria.fechaInicio = result.fechaInicio;
-            convocatoria.fechaFin = result.fechaFin;
-            convocatoria.numero = result.numero;
-            this.empresa = result.solicitudEmpresa!.convenio!.empresa!.nombre;
-            console.log(this.empresa)
-            this.id = result.id;
-            console.log(result);
-            return convocatoria;
-          }
-        );
+        this.convocatorias = data;
       }
     );
     this.loading = false;
@@ -47,6 +34,11 @@ export class ListComponent implements OnInit {
 
   listarPostulantes(id: any) {
     this.id = id;
-    this.router.navigate(['encargado-practicas/encargado//lista-practicantes/' + this.id]);
+    this.router.navigate(['encargado-practicas/encargado/lista-practicantes/' + this.id]);
+  }
+
+  listarPracticas(id: any) {
+    this.id = id;
+    this.router.navigate(['encargado-practicas/practicas/lista-practicas/' + this.id]);
   }
 }

@@ -13,43 +13,45 @@
                             <div class="p-col-3 p-md-4">
                                 <span class="p-float-label">
                                     <p-calendar [(ngModel)]="fechaI" [minDate]="fechaActual" [showIcon]="true"
-                                        [readonlyInput]="true"></p-calendar>
+                                        name="fechai" appendTo="body" [readonlyInput]="true"></p-calendar>
                                     <label for="float-input">Fecha Inicio</label>
                                 </span>
                             </div>
                             <div class="p-col-12 p-md-4">
                                 <span class="p-float-label">
                                     <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="Convenio.numero" [pKeyFilter]="'int'" maxlength="13" minlength="13"
-                                        pInputText required />
+                                        [(ngModel)]="Convenio.numero" [pKeyFilter]="'int'" name="numeroconv" pInputText
+                                        required />
                                     <label for="float-input">Número de Convenio</label>
                                 </span>
                             </div>
                             <div class="p-col-3 p-md-4">
-                                <p-dropdown name="disponibilidad" [options]="TutorA" optionLabel="usuario.nombre"
-                                    optionValue="id" placeholder="Seleccione" [required]="true"
-                                    (onChange)="TutorHunter($event.value)">
-                                </p-dropdown>
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" [(ngModel)]="nombreTuttor" disabled="true"
+                                        name="tutor" placeholder="Ingrese su Título" pInputText>
+                                    <label for=" float-input">Responsable Prácticas</label>
+                                </span>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-col-12 p-md-4">
                                 <span class="p-float-label">
-                                    <p-calendar [(ngModel)]="fechaF" [minDate]="fechaActual" [showIcon]="true"
+                                    <p-calendar [(ngModel)]="fechaF" [minDate]="fechaI" [disabled]="!fechaI"
+                                        name="fechaf" appendTo="body" [showIcon]="true"
                                         [readonlyInput]="true"></p-calendar>
                                     <label for="float-input">Fecha Fin</label>
                                 </span>
                             </div>
                             <div class="p-col-3 p-md-4">
                                 <p-dropdown name="disponibilidad" [options]="Carreras" optionLabel="nombre"
-                                    optionValue="id" optionLabel="nombre" placeholder="Seleccione" [required]="true"
-                                    (onChange)="CarreraHunter($event.value)">
+                                    name="carreras" optionValue="id" optionLabel="nombre" placeholder="Seleccione"
+                                    [required]="true" (onChange)="CarreraHunter($event.value)">
                                 </p-dropdown>
                             </div>
                             <div class="p-col-3 p-md-4">
                                 <span class="p-float-label">
-                                    <input (change)="imageSelected($event)" formControlName="foto" accept="pdf/*"
-                                        name="foto" type="file" class="form-control" id="float-input" required />
+                                    <input (change)="imageSelected($event)" accept="pdf/*" name="foto" type="file"
+                                        class="form-control" id="float-input" required />
                                     <label for="float-input"></label>
                                 </span>
                                 <div *ngIf="file" class="mt-3 text-center">

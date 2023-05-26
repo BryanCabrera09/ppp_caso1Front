@@ -20,7 +20,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
-        routeLink: '/sds',
+        routeLink: 'anexos/anexocho',
         icon: 'fa-solid fa-house',
         label: 'Reporte Final',
         role: 'Tutor Academico'
@@ -38,11 +38,11 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Empresa',
         items: [
             {
-                routeLink: 'products/level1.1',
+                routeLink: 'soli/veremp',
                 label: 'Registro Solicitud',
             },
             {
-                routeLink: 'products/level1.2',
+                routeLink: 'soli/listemp',
                 label: 'Lista Solicitud',
             }
         ]
@@ -77,6 +77,7 @@ export const navbarData: INavbarData[] = [
     },
   
     {
+
         routeLink: '/practicante/postulacion/postulacion-estudiante',
         icon: 'fal fa-file',
         label: 'Postulacion PPP',
@@ -89,13 +90,13 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: 'media',
-        icon: 'fal fa-camera',
+        routeLink: 'generate/report',
+        icon: 'fas fa-book',
         label: 'Obligaciones del Estudiante',
         role: 'Practicante'
     },
     {
-        routeLink: 'settings',
+        routeLink: 'salud/report',
         icon: 'fal fa-cog',
         label: 'Induccion Salud Ocupacional',
         expanded: true,
@@ -108,8 +109,8 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: 'media',
-        icon: 'fal fa-camera',
+        routeLink: 'practica/calificacion-practicante',
+        icon: 'fas fa-star',
         label: 'Ver Calificación Final',
         role: 'Practicante'
     },
@@ -119,7 +120,7 @@ export const navbarData: INavbarData[] = [
         label: 'Dashboard',
         role: 'Responsable Practicas'
     },
-    {
+    /* {
         routeLink: 'media',
         icon: 'fas fa-chalkboard-teacher',
         label: 'Designación Tutores',
@@ -136,7 +137,7 @@ export const navbarData: INavbarData[] = [
             }
         ],
         role: 'Responsable Practicas',
-    },
+    }, */
     {
         routeLink: 'empresa/register-empresa',
         icon: 'fas fa-building',
@@ -164,7 +165,7 @@ export const navbarData: INavbarData[] = [
     {
         routeLink: 'convocatorias/lista-convocatorias',
         icon: 'fa-solid fa-person-circle-check',
-        label: 'Solicitudes Practicantes',
+        label: 'Convocatorias',
         role: 'Responsable Practicas'
     },
     {
@@ -196,5 +197,23 @@ export const navbarData: INavbarData[] = [
         icon: 'fal fa-camera',
         label: 'Evaluación del Estudiante',
         role: 'Tutor Especifico'
+    },
+    {
+        routeLink: '/sup-admin',
+        icon: 'fa-solid fa-house',
+        label: 'Dashboard',
+        role: 'Administrador'
+    },
+    {
+        routeLink: '/sup-admin/register',
+        icon: 'fas fa-users',
+        label: 'Asignar Usuarios',
+        role: 'Administrador'
+    },
+    {
+        routeLink: '/sup-admin/list-users',
+        icon: 'fas fa-address-book',
+        label: 'Listado Usuarios',
+        role: 'Administrador'
     },
 ];

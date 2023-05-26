@@ -3,10 +3,10 @@ import { SolicitudEmpresa } from "./solicitud-empresa"
 
 export class Actividad {
 
-    id?:number
-    descripcion?:string
+    id?: number
+    descripcion?: string
 
-    solicitudEmpresa?:SolicitudEmpresa
-    materia?:Materia
+    solicitudEmpresa?: SolicitudEmpresa
+    materia?: Materia
 
 }

@@ -2,33 +2,33 @@
     <p-table #dt2 [value]="empresas" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['cedula', 'nombre', 'apellido', 'ciclo']" [tableStyle]="{ 'min-width': '75rem' }">
+        [globalFilterFields]="['convenio.empresa.nombre', 'convenio.empresa.ruc']" [tableStyle]="{ 'min-width': '75rem' }">
         <ng-template pTemplate="caption">
             <div class="flex">
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Ingrese Numero de Cedula o Apellido" />
+                        placeholder="Ingrese Nombre de Empresa" />
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th id="text" style="width:22%">Nombre Empresa</th>
-                <th id="text" style="width:22%">Actividades Propuestas</th>
+                <th id="text" style="width:22%">Número de RUC</th>
                 <th id="text" style="width:22%">Fecha de Inicio</th>
+                <th id="text" style="width:22%">Fecha de Fin</th>
                 <th id="text" style="width:12%">Aprobación/Desaprobación</th>
             </tr>
             <tr>
                 <th id="text">
-                    <p-columnFilter type="text" field="cedula"></p-columnFilter>
+                    <p-columnFilter type="text" field="convenio.empresa.nombre"></p-columnFilter>
                 </th>
                 <th id="text">
-                    <p-columnFilter type="text" field="nombre"></p-columnFilter>
+                    <p-columnFilter type="text" field="convenio.empresa.ruc"></p-columnFilter>
                 </th>
-                <th id="text">
-                    <p-columnFilter type="text" field="ciclo"></p-columnFilter>
-                </th>
+                <th></th>
+                <th></th>
                 <th></th>
             </tr>
         </ng-template>
@@ -38,14 +38,17 @@
                     {{ solicitud.convenio.empresa.nombre }}
                 </td>
                 <td id="text">
-                    {{ solicitud.nombre }}
+                    {{ solicitud.convenio.empresa.ruc }}
                 </td>
                 <td id="text">
-                    {{ solicitud.apellido }}
+                    {{ solicitud.fechaInicioTen }}
+                </td>
+                <td id="text">
+                    {{ solicitud.fechaMaxTen }}
                 </td>
                 <td id="text">
                     <button pButton pRipple type="button" icon="pi pi-pencil" label="" class="p-button-warning"
-                        (click)="editarEmpresa(empresa)"></button>
+                        (click)="editarEmpresa(solicitud)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -57,7 +60,7 @@
     </p-table>
 </div>
 
-<!-- <p-dialog header="Editar usuario" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}" [baseZIndex]="10000"
+<p-dialog header="Editar usuario" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
     <ng-template pTemplate="body">
         <div class="p-grid p-fluid">
@@ -65,40 +68,57 @@
                 <div class="col">
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
-                            <input id="float-input" type="text" class="form-control" [(ngModel)]="empresa.nombre"
-                                [pKeyFilter]="'int'" maxlength="10" minlength="10" disabled="true" pInputText>
-                            <label for="float-input">Cédula</label>
+                            <input id="float-input" type="text" class="form-control"
+                                [(ngModel)]="solicitudEmpre.convenio.empresa.ruc" [pKeyFilter]="'int'" maxlength="10"
+                                minlength="10" disabled="true" pInputText>
+                            <label for="float-input">N° De RUC</label>
                         </span>
                     </div>
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
                             <input id="float-input" type="text" class="form-control" disabled="true"
-                                [(ngModel)]="practestudiant.nombre" maxlength="30" minlength="3" pInputText>
-                            <label for="float-input">Nombres</label>
+                                [(ngModel)]="solicitudEmpre.fechaInicioTen" maxlength="30" minlength="6" pInputText>
+                            <label for="float-input">Fecha Inicio</label>
                         </span>
                     </div>
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
-                            <input id="float-input" type="text" class="form-control" disabled="true"
-                                [(ngModel)]="practestudiant.ciclo" maxlength="30" minlength="6" pInputText>
-                            <label for="float-input">Ciclo</label>
+                            <input id="float-input" type="text" class="form-control"
+                                [(ngModel)]="solicitudEmpre.numHoras" maxlength="30" minlength="3" disabled="true"
+                                pInputText>
+                            <label for="float-input">Horas Prácticas</label>
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" class="form-control"
+                                [(ngModel)]="solicitudEmpre.numPracticantes" maxlength="30" minlength="3"
+                                disabled="true" pInputText>
+                            <label for="float-input">Practicantes Solicitados</label>
                         </span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
-                            <input id="float-input" type="text" class="form-control" disabled="true"
-                                [(ngModel)]="practestudiant.correo" maxlength=" 30" minlength="6" pInputText>
-                            <label for="float-input">Correo Electrónico</label>
+                            <input id="float-input" type="text" class="form-control"
+                                [(ngModel)]="solicitudEmpre.convenio.empresa.nombre" [pKeyFilter]="'int'" maxlength="10"
+                                minlength="10" disabled="true" pInputText>
+                            <label for="float-input">Empresa</label>
                         </span>
                     </div>
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
-                            <input id="float-input" type="text" class="form-control"
-                                [(ngModel)]="practestudiant.apellido" maxlength="30" minlength="3" disabled="true"
-                                pInputText>
-                            <label for="float-input">Apellidos</label>
+                            <input id="float-input" type="text" class="form-control" disabled="true"
+                                [(ngModel)]="solicitudEmpre.fechaMaxTen" maxlength=" 30" minlength="6" pInputText>
+                            <label for="float-input">Fecha Final</label>
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-float-label">
+                            <textarea id="float-input" class="form-control" disabled="true" rows="5" cols="30"
+                                pInputTextarea [(ngModel)]="actividadDescript"></textarea>
+                            <label for="float-input">Actividades A Realizar</label>
                         </span>
                     </div>
                     <div class="p-col-12 p-md-4">
@@ -134,4 +154,4 @@
             </div>
         </div>
     </ng-template>
-</p-dialog> -->
+</p-dialog>

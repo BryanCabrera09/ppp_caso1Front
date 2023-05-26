@@ -8,7 +8,7 @@ const routes: Routes = [
     component: GenConvocatoriaComponent,
   },
   {
-    path: 'form',
+    path: 'form/:id',
     component: FormComponent,
   },
 ];

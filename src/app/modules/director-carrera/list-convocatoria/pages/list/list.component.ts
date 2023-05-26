@@ -24,24 +24,14 @@ export class ListComponent implements OnInit {
   cargarConvocatorias() {
     this.convocatoriaService.obtenerConvocatoria().subscribe(
       data => {
-        this.convocatorias = data.map(
-          result => {
-            let convocatoria = new ConvocatoriaP;
-            convocatoria.id = result.id;
-            convocatoria.fechaInicio = result.fechaInicio;
-            convocatoria.fechaFin = result.fechaFin;
-            convocatoria.numero = result.numero;
-            this.id = result.id;
-            return convocatoria;
-          }
-        );
+        this.convocatorias = data;
       }
     );
     this.loading = false;
   }
 
-  listarPostulantes() {
-    localStorage.setItem('convocatoriaId', this.id.toString());
-    this.router.navigate(['director-carrera/director/lista-practicantes']);
+  listarPostulantes(id: any) {
+    this.id = id;
+    this.router.navigate(['encargado-practicas/encargado/lista-practicantes/' + this.id]);
   }
 }

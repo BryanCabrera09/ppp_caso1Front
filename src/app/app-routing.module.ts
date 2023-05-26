@@ -9,6 +9,7 @@ import { WelcomeAcademicoComponent } from './modules/tutor-academico/welcome-aca
 import { WelcomeEspecificoComponent } from './modules/tutor-especifico/welcome-especifico/welcome-especifico.component';
 import { AuthComponent } from './modules/home/auth/pages/auth.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { WelcomeAdminComponent } from './modules/sup-admin/welcome-admin/welcome-admin.component';
 
 const routes: Routes = [
 
@@ -20,37 +21,42 @@ const routes: Routes = [
   },
   {
     path: 'director-carrera',
-    component: WelcomeDirectorComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_DIREC']},
+    component: WelcomeDirectorComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_DIREC'] },
     loadChildren: () => import('./modules/director-carrera/director-carrera.module').then(m => m.DirectorCarreraModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
     path: 'encargado-practicas',
-    component: WelcomeEncargadoComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_RESPP']},
+    component: WelcomeEncargadoComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_RESPP'] },
     loadChildren: () => import('./modules/encargado-ppp/encargado-ppp.module').then(m => m.EncargadoPppModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
     path: 'practicante',
-    component: WelcomePracticanteComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_ESTUD']},
+    component: WelcomePracticanteComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_ESTUD'] },
     loadChildren: () => import('./modules/practicante/practicante.module').then(m => m.PracticanteModule) // se importa un modulo que tiene routing es decir ruta 
   },
   {
     path: 'responsable-empresa',
-    component: WelcomeEmpresaComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_GEREN']},
+    component: WelcomeEmpresaComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_GEREN'] },
     loadChildren: () => import('./modules/responsable-empresa/responsable-empresa.module').then(m => m.ResponsableEmpresaModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
     path: 'tutor-academico',
-    component: WelcomeAcademicoComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_TISTA']},
+    component: WelcomeAcademicoComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_TISTA'] },
     loadChildren: () => import('./modules/tutor-academico/tutor-academico.module').then(m => m.TutorAcademicoModule) // se importa un modulo que tiene routing es decir ruta 
 
   },
   {
-    path: 'tutor-especifico', 
-    component: WelcomeEspecificoComponent, canActivate: [AuthGuard], data: {expectedRoles: ['ROLE_TEMP']},
+    path: 'tutor-especifico',
+    component: WelcomeEspecificoComponent, canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_TEMP'] },
     loadChildren: () => import('./modules/tutor-especifico/tutor-especifico.module').then(m => m.TutorEspecificoModule) // se importa un modulo que tiene routing es decir ruta 
+  },
+  {
+    path: 'sup-admin',
+    component: WelcomeAdminComponent, /* canActivate: [AuthGuard], data: { expectedRoles: ['ROLE_TEMP'] }, */
+    loadChildren: () => import('./modules/sup-admin/sup-admin.module').then(m => m.SupAdminModule) // se importa un modulo que tiene routing es decir ruta 
   },
 ];
 

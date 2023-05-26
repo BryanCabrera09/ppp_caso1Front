@@ -1,0 +1,33 @@
+.title-wrapper {
+    margin-bottom: 25px;
+}
+
+.table td {
+    position: relative;
+}
+
+.table td span {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #4aa240;
+}
+
+.table td.selected span {
+    display: block;
+}
+
+.column-width {
+    width: 20%;
+  }
+  
+  .column-width-special {
+    width: 5%;
+  }
+  
+  

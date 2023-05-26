@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Practica } from 'src/app/core/models/practica';
 import { PracticasService } from 'src/app/core/services/practicas.service';
 
@@ -17,29 +17,36 @@ export class ListarPracticasComponent {
   id: number;
   loading: boolean = true;
 
-  constructor(private practicaService: PracticasService, private router: Router) { }
+  constructor(private practicaService: PracticasService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.cargarPracticas();
   }
 
   cargarPracticas() {
-    this.practicaService.obtenerPractica().subscribe(
-      data => {
-        this.practicas = data.map(
-          result => {
-            let practica = new Practica;
-            practica.id = result.id;
-            practica.inicio = result.inicio;
-            practica.fin = result.fin;
-            practica.nsemanas = result.nsemanas;
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      console.log(id)
+      if (id) {
+        this.practicaService.searchByConvo(id).subscribe(
+          data => {
+            this.practicas = data.map(
+              result => {
+                let practica = new Practica;
+                practica.id = result.id;
+                practica.inicio = result.inicio;
+                practica.fin = result.fin;
+                practica.nsemanas = result.nsemanas;
 
-            this.practica.id = result.id;
-            console.log(this.id);
-            return practica;
+                this.practica.id = result.id;
+                console.log(this.id);
+                return practica;
+              }
+            );
           }
         );
       }
+    }
     );
     this.loading = false;
   }

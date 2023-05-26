@@ -34,14 +34,13 @@ export class RegEmpresaComponent implements OnInit {
             return empresa;
           }
         )
-        this.loading = false;
       }
     );
+    this.loading = false;
   }
 
   traerid(id: any) {
     this.id = id;
-    //localStorage.setItem('IdEmpresa', JSON.stringify(idemp));
     this.router.navigate(['/encargado-practicas/empresa/form/' + this.id]);
   }
 

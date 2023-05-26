@@ -19,6 +19,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { ToastModule } from 'primeng/toast';
     ToastModule,
     CardModule,
     KeyFilterModule,
-    InputTextModule
+    InputTextModule,
+    InputTextareaModule
   ]
 })
 export class AceptacionEmpresaModule { }

@@ -36,10 +36,12 @@
                 <div class="p-grid p-fluid justify-content-center align-items-center">
                     <div class="d-flex flex-row">
                         <div class="col">
-                            <div class="p-col-12 p-md-4">
+                            <div class="p-col-3 p-md-4">
                                 <span class="p-float-label">
-                                    <p-calendar [minDate]="" [showIcon]="true" [readonlyInput]="true"></p-calendar>
-                                    <label for="float-input">Fecha Inicio</label>
+                                    <input id="float-input" type="text" class="form-control"
+                                        [(ngModel)]="convoca.numero" [pKeyFilter]="blockSpecial" maxlength="100"
+                                        minlength="10" pInputText required />
+                                    <label for="float-input">Convocatoria N°</label>
                                 </span>
                             </div>
 

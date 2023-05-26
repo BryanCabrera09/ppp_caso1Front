@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: 'register-tutor/:id',
     component: RegTutorComponent,
+  },
+  {
+    path: 'register-tutor-emp/:id',
+    component: RegTutorComponent,
   }
 ];
 

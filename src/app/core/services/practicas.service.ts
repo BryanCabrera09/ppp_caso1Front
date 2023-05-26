@@ -26,4 +26,12 @@ export class PracticasService {
   editarPractica(id: number, practica: Practica): Observable<any> {
     return this.httpClient.post(`${this.baseURL}/editar/${id}`, practica);
   }
+
+  buscarxEstudiante(id: number) {
+    return this.httpClient.get(`${this.baseURL}/buscarxestudiante/${id}`);
+  }
+
+  searchByConvo(id: number): Observable<Practica[]> {
+    return this.httpClient.get<Practica[]>(`${this.baseURL}/listar/convocatoria/${id}`);
+  }
 }

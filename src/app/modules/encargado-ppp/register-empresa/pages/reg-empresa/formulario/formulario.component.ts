@@ -5,7 +5,7 @@ import { Empresa } from 'src/app/core/models/empresa';
 
 import Swal from 'sweetalert2';
 import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -20,12 +20,10 @@ export class FormularioComponent implements OnInit {
 
   estado: string[] = [];
 
-
-
   estadoSelect: string
   isMisionFilled: boolean = false;
 
-  constructor(private EmpresaService: RegEmpresaServiceService, private activatedRoute: ActivatedRoute) { }
+  constructor(private EmpresaService: RegEmpresaServiceService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
 
@@ -37,12 +35,14 @@ export class FormularioComponent implements OnInit {
   }
 
   public crearempresa() {
-    console.log("Se ha realizado un click")
 
     this.empresa.activo = true;
 
-    this.EmpresaService.create(this.empresa).subscribe()
-    window.location.reload();
+    this.EmpresaService.create(this.empresa).subscribe(
+      (result: Empresa) => {
+        this.router.navigate(['encargado-practicas/tutoresp/register-tutor-emp/' + result.id]);
+      }
+    )
   }
 
   boton: boolean = false;
@@ -91,7 +91,7 @@ export class FormularioComponent implements OnInit {
             console.log(data);
             this.ngOnInit();
             Swal.fire('Empresa Guardada', 'Empresa Guardada con éxito en el sistema', 'success');
-            window.location.reload();
+            this.router.navigate(['encargado-practicas/empresa/register-empresa']);
           }, (error) => {
             console.log(error);
             Swal.fire('Error', 'Empresa no Guardada', 'error');

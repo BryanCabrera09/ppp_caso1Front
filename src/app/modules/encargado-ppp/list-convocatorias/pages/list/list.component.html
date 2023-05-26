@@ -2,40 +2,42 @@
     <p-table #dt2 [value]="convocatorias" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['numero', 'incio', 'fin']" [tableStyle]="{ 'min-width': '75rem' }">
+        [globalFilterFields]="['numero', 'solicitudEmpresa.convenio.empresa.nombre']"
+        [tableStyle]="{ 'min-width': '75rem' }">
         <ng-template pTemplate="caption">
             <div class="flex">
                 <span class="p-input-icon-left ml-auto">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Ingrese Número de Convocatoria" />
+                        placeholder="Ingrese Nombre de Convocatoria" />
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th id="text" style="width:22%">Número de Convocatoria</th>
+                <th id="text" style="width:22%">Convocatoria</th>
                 <th id="text" style="width:22%">Fecha de Inicio</th>
                 <th id="text" style="width:22%">Fecha de Fin</th>
+                <th id="text" style="width:12%"></th>
                 <th id="text" style="width:12%"></th>
             </tr>
             <tr>
                 <th id="text">
-                    <p-columnFilter type="text" field="numero"></p-columnFilter>
+                    <p-columnFilter type="text" field="solicitudEmpresa.convenio.empresa.nombre"></p-columnFilter>
                 </th>
                 <th id="text">
-                    <p-columnFilter type="text" field="inicio"></p-columnFilter>
                 </th>
                 <th id="text">
-                    <p-columnFilter type="text" field="fin"></p-columnFilter>
                 </th>
+                <th></th>
                 <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-convocatoria>
             <tr>
                 <td id="text-convo">
-                    {{ 'CONVOCATORIA PRACTICAS PREPROFESIONALES - '+empresa + ' ' + convocatoria.numero }}
+                    {{ 'CONVOCATORIA PRACTICAS PREPROFESIONALES -
+                    '+convocatoria.solicitudEmpresa.convenio.empresa.nombre + ' ' + convocatoria.numero }}
                 </td>
                 <td id="text">
                     {{ convocatoria.fechaInicio }}
@@ -44,14 +46,18 @@
                     {{ convocatoria.fechaFin }}
                 </td>
                 <td id="text">
-                    <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar" class="p-button-warning"
-                        (click)="listarPostulantes(convocatoria.id)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar Solicitudes"
+                        class="p-button-warning" (click)="listarPostulantes(convocatoria.id)"></button>
+                </td>
+                <td id="text">
+                    <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar Practicas"
+                        class="p-button-warning" (click)="listarPracticas(convocatoria.id)"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="5">Sin Solicitudes de Empresas.</td>
+                <td colspan="5">Sin Convocatorias.</td>
             </tr>
         </ng-template>
     </p-table>

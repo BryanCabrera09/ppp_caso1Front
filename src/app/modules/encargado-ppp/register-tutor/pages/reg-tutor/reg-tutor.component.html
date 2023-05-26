@@ -93,7 +93,7 @@
                         class="p-button-rounded p-button-primary" (click)="registerTutor()"></button>
                     <br><br>
                     <button pButton pRipple type="button" label="Generar PDF" icon="fas fa-file-pdf" iconPos="right"
-                        *ngIf="!enabledButton"
+                        *ngIf="enabledButton"
                         class="p-button-rounded p-button-primary p-button-sm p-button-generate-pdf"
                         (click)="generarPDF()"></button>
                 </div>

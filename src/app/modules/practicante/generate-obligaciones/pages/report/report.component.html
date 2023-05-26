@@ -1,0 +1,86 @@
+<div class="container">
+    <p-panel id="panelregempresa">
+        <div class="panel over overflow-auto p-grid p-fluid">
+            <h4 style="text-align: center">Obligaciones del Estudiante</h4>
+            <div class="p-grid p-fluid justify-content-center align-items-center" style="margin-top: 2%;">
+                <div class="d-flex flex-row">
+                    <div class="col">
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.cedula" class="form-control"
+                                    [pKeyFilter]="'int'" disabled="true" maxlength="10" minlength="10"
+                                    placeholder="Ingrese Número de Cédula" pInputText>
+                                <label for="float-input">Número de Cédula</label>
+                            </span>
+                        </div>
+                        <div class="p-col-12 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="empresa.nombre" disabled="true"
+                                    class="form-control" maxlength="100" minlength="10" pInputText required />
+                                <label for="float-input">Nombre Empresa</label>
+                            </span>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="email" [(ngModel)]="usuario.correo" disabled="true"
+                                    class="form-control" placeholder="Ingrese Dirección de Email" pInputText>
+                                <label for=" float-input">Correo Electrónico</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" disabled="true" class="form-control"
+                                    [(ngModel)]="usuario.nombre + ' ' + usuario.apellido"
+                                    placeholder="Ingrese Nombres Completos" pInputText>
+                                <label for="float-input">Nombres Completos</label>
+                            </span>
+                        </div>
+                        <div class="p-col-12 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="convocatoria.numero" disabled="true"
+                                    class="form-control" maxlength="100" minlength="10" pInputText required />
+                                <label for="float-input">Número de Convocatoria</label>
+                            </span>
+                        </div>
+                        <div class="p-col-3 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.telefono" disabled="true"
+                                    class="form-control" placeholder=" Ingrese Número Telefónico" pInputText>
+                                <label for=" float-input">Número de Teléfono</label>
+                            </span>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="p-col-12 p-md-4">
+                    <!-- <button pButton pRipple type="button" label="Registrar Tutor" icon="pi pi-check" iconPos="right"
+                        class="p-button-rounded p-button-primary" (click)="registerTutor()"></button> -->
+                    <br><br>
+                    <button pButton pRipple type="button" label="Generar PDF" icon="fas fa-file-pdf" iconPos="right"
+                        class="p-button-rounded p-button-primary p-button-sm p-button-generate-pdf"
+                        (click)="generarPDF()"></button>
+                </div>
+            </div>
+        </div>
+    </p-panel>
+</div>
+
+<p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="body">
+        <div class="p-grid p-fluid">
+            <div class="p-col-3 p-md-4">
+                <span class="p-float-label">
+                    <input name="foto" id="float-input" (change)="fileSelected($event)" accept=".pdf" type="file"
+                        class="form-control" required />
+                    <label for="float-input"></label>
+                </span>
+                <!--  <div *ngIf="file" class="mt-3 text-center">
+                    <img [src]="file" class="rounded" alt="..." style="max-width: 50%;" />
+                </div> -->
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

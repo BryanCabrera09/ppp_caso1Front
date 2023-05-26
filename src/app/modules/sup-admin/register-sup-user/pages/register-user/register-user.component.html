@@ -1,0 +1,102 @@
+<section class="d-flex h-100 text-center">
+
+    <div class="cover-container">
+
+        <div class="container">
+            <div class="card">
+                <div class="top-row background-top-row"> <img
+                        src="https://eduv.tecazuay.edu.ec/pluginfile.php/1/theme_academi/logo/1671035251/LOGO%20CUADRADO_SIN%20FONDO.png"
+                        width="140" height="100"> </div>
+
+                <div class="content">
+                    <h1>Registrar Usuario</h1>
+                    <h1>TecAzuay</h1>
+
+                    <div class="items panel over overflow-auto ">
+
+                        <div class="row p-grid p-fluid">
+                            <div class="col" style="margin-left: 20px;">
+                                <div class="input-field p-col-12">
+                                    <span class="p-float-label">
+                                        <input id="float-input" type="text" [(ngModel)]="usuario.cedula"
+                                            [pKeyFilter]="'int'" maxlength="10" minlength="10"
+                                            (ngModelChange)="buscarCedulaCompleta()"
+                                            placeholder="Ingrese Número de Cédula" pInputText>
+                                        <label for="float-input">Número de Cédula</label>
+                                    </span>
+                                </div>
+
+                                <div class="input-field p-col-12">
+                                    <span class="p-float-label">
+                                        <input id="float-input" type="text" disabled="true" [(ngModel)]="usuario.nombre"
+                                            placeholder="Ingrese Nombres Completos" pInputText>
+                                        <label for="float-input">Nombres</label>
+                                    </span>
+                                </div>
+
+                                <div class="input-field p-col-12">
+                                    <span class="p-float-label">
+                                        <input id="float-input" type="text" disabled="true" [(ngModel)]="usuario.titulo"
+                                            placeholder="Ingrese su Título" pInputText>
+                                        <label for=" float-input">Título</label>
+                                    </span>
+                                </div>
+
+                                <div class="input-field p-col-12">
+                                    <span class="p-float-label">
+                                        <p-password [toggleMask]="true" [(ngModel)]="usuario.password"></p-password>
+                                        <label for="float-input">Password</label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="input-field p-col-12">
+                                    <span class="p-float-label">
+                                        <input id="float-input" type="email" disabled="true"
+                                            [(ngModel)]="usuario.correo" placeholder="Ingrese Dirección de Email"
+                                            pInputText>
+                                        <label for=" float-input">Correo Electrónico</label>
+                                    </span>
+                                </div>
+
+                                <div class="input-field p-col-12">
+                                    <span class="p-float-label">
+                                        <input id="float-input" type="text" disabled="true"
+                                            [(ngModel)]="usuario.apellido" placeholder="Ingrese Apellidos Completos"
+                                            pInputText>
+                                        <label for=" float-input">Apellidos</label>
+                                    </span>
+                                </div>
+
+                                <div class="input-field p-col-12">
+                                    <span class="p-float-label">
+                                        <input id="float-input" type="text" [(ngModel)]="usuario.telefono"
+                                            [pKeyFilter]="'int'" maxlength="10" minlength="10"
+                                            placeholder="Ingrese Número Telefónico" pInputText>
+                                        <label for=" float-input">Número de Teléfono</label>
+                                    </span>
+                                </div>
+                                <div class="input-field p-col-12">
+                                    <p-dropdown [options]="roles" [(ngModel)]="selectedRol" name="rol"
+                                        [showClear]="true" placeholder="Seleccionar Rol Usuario">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="p-col-12 p-md-4">
+                            <button pButton pRipple type="button" label="Registrarse" icon="pi pi-check" iconPos="right"
+                                class="p-button-rounded p-button-primary" (click)="signUpUser()"></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

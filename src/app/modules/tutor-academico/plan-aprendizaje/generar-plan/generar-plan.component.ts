@@ -20,7 +20,6 @@ export class GenerarPlanComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.practica = JSON.parse(params['practica']);
       console.log(this.practica);
-      // Use the practica object as needed
     });
   }
 

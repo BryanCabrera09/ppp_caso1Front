@@ -1,0 +1,146 @@
+<div class="card">
+    <p-table #dt2 [value]="authorities" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['usuario.cedula','usuario.apellido']" [tableStyle]="{ 'min-width': '75rem' }">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Ingrese Número de Cédula o Apellido" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th id="text" style="width:30%">N° de Cédula</th>
+                <th id="text" style="width:22%">Nombres Completos</th>
+                <th id="text" style="width:22%">Apellidos Completos</th>
+                <th id="text" style="width:22%">Correo Electronico</th>
+                <th id="text" style="width:22%">Número de Teléfono</th>
+                <th id="text" style="width:22%">Rol</th>
+                <th id="text" style="width:12%">Aprobación/Desaprobación</th>
+            </tr>
+            <tr>
+                <th id="text">
+                    <p-columnFilter type="text" field="usuario.cedula"></p-columnFilter>
+                </th>
+                <th id="text">
+                    <p-columnFilter type="text" field="usuario.nombre"></p-columnFilter>
+                </th>
+                <th id="text">
+                    <p-columnFilter type="text" field="usuario.apellido"></p-columnFilter>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-authority>
+            <tr>
+                <td id="text">
+                    {{ authority.usuario.cedula }}
+                </td>
+                <td id="text">
+                    {{ authority.usuario.nombre }}
+                </td>
+                <td id="text">
+                    {{ authority.usuario.apellido }}
+                </td>
+                <td id="text">
+                    {{ authority.usuario.correo }}
+                </td>
+                <td id="text">
+                    {{ authority.usuario.telefono }}
+                </td>
+                <td id="text">
+                    {{ authority.name }}
+                </td>
+                <td id="text">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" label=""
+                        (click)="editarUsuario(authority)" class="p-button-warning"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">Sin Usuarios Registrados.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Editar usuario" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="body">
+        <div class="p-grid p-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" class="form-control" [(ngModel)]="usuario.cedula"
+                                [pKeyFilter]="'int'" maxlength="10" minlength="10" disabled="true" pInputText>
+                            <label for="float-input">N° de Cédula</label>
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" class="form-control" disabled="true"
+                                [(ngModel)]="usuario.nombre" maxlength="30" minlength="6" pInputText>
+                            <label for="float-input">Nombres Completos</label>
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" class="form-control" disabled="true"
+                                [(ngModel)]="usuario.titulo" maxlength="30" minlength="6" pInputText>
+                            <label for="float-input">Titulo</label>
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-md-4" *ngIf="authority.name !== 'ROLE_ADMIN'">
+                        <p-dropdown [options]="roles" [(ngModel)]="selectedRol" name="rol" appendTo="body"
+                            placeholder="Actualizar Rol Usuario">
+                        </p-dropdown>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" class="form-control" [(ngModel)]="usuario.correo"
+                                maxlength="30" minlength="3" disabled="true" pInputText>
+                            <label for="float-input">Correo Electrónico</label>
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" class="form-control" [(ngModel)]="usuario.apellido"
+                                maxlength="30" minlength="3" disabled="true" pInputText>
+                            <label for="float-input">Apellidos Completos</label>
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-float-label">
+                            <input id="float-input" type="text" class="form-control" [(ngModel)]="usuario.telefono"
+                                [pKeyFilter]="'int'" maxlength="10" minlength="10" disabled="true" pInputText>
+                            <label for="float-input">Número de Teléfono</label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-4">
+                <div class="row">
+                    <div class="col">
+                        <button pButton pRipple type="button" label="Actualizar" icon="pi pi-check" iconPos="right"
+                            class="p-button-rounded p-button-success" (click)="guardarRol()"></button>
+                    </div>
+                    <div class="col">
+                        <button pButton pRipple type="button" label="Cancelar" icon="pi pi-times" iconPos="right"
+                            class="p-button-rounded p-button-danger" (click)="cancelar()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>
