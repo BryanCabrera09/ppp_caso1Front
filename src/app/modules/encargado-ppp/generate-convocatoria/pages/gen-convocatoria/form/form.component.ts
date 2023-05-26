@@ -32,6 +32,8 @@ export class FormComponent implements OnInit{
   id: number=0
   idA: number=0
 
+  blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/;
+
   ngOnInit(): void {
     this.materiaService.Listarmateria().subscribe(
       carr=> this.materias = carr
@@ -75,7 +77,7 @@ export class FormComponent implements OnInit{
   }
 
   rellenaSoli(){
-    this.convoca.numero = 2
+    
     this.activatedRoute.params.subscribe(params=>{
       let id = params['id']
 

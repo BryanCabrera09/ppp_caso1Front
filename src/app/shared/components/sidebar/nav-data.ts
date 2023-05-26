@@ -20,7 +20,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
-        routeLink: '/sds',
+        routeLink: 'anexos/anexocho',
         icon: 'fa-solid fa-house',
         label: 'Reporte Final',
         role: 'Tutor Academico'
