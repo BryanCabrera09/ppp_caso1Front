@@ -65,7 +65,7 @@ export const navbarData: INavbarData[] = [
         label: 'Dashboard',
         role: 'Practicante'
     },
-  
+
     {
 
         routeLink: '/practicante/postulacion/postulacion-estudiante',
@@ -135,7 +135,7 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Practicas'
     },
     {
-        routeLink: 'media',
+        routeLink: 'objetivos/registrar-objetivos',
         icon: 'fas fa-bullseye',
         label: 'Objetivos Segun Materia',
         role: 'Responsable Practicas'

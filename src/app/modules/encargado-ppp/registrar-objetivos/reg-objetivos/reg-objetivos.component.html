@@ -29,9 +29,9 @@
           <tr *ngFor="let obj of Objetivomateria">
             <td>{{obj.materia.nombre}}</td>
             <td>{{obj.descripcion}}</td>
-            
+
           </tr>
-      </tbody>
+        </tbody>
 
       </table>
 
@@ -45,71 +45,64 @@
           <div class="modal-header">
             <h4 class="modal-title">GeeksForGeeks</h4>
           </div>
-          <form >
-          <div class="modal-body">
-            <label>ASIGNATURA</label>
+          <form>
+            <div class="modal-body">
+              <label>ASIGNATURA</label>
 
-            <select name="disponibilidad" (change)="Materiacon($event)"required>
-              <option>Seleccione</option>
-              <option *ngFor="let asignatura of MateriasO" value="{{asignatura.id}}">{{asignatura.nombre}}</option>
-            </select>
+              <select name="disponibilidad" (change)="Materiacon($event)" required>
+                <option>Seleccione</option>
+                <option *ngFor="let asignatura of MateriasO" value="{{asignatura.id}}">{{asignatura.nombre}}</option>
+              </select>
 
-            <br><br>
-            <label>OBJETIVO</label><br>
-            <textarea #name rows="5" cols="60" [(ngModel)]="objetivo.descripcion" required></textarea>
+              <br><br>
+              <label>OBJETIVO</label><br>
+              <textarea #name rows="5" cols="60" [(ngModel)]="objetivo.descripcion" required></textarea>
 
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="crear" (click)="GuardarObjeto(objetivo, name.value)">
-              Guardar
-            </button>
-          </div>
-        </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="crear" (click)="GuardarObjeto(objetivo, name.value)">
+                Guardar
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
 
-<button
-  style="margin: 50px; padding: 10px"
-  type="button"
-  class="btn btn-primary"
-  (click)="openPopups()">Añadir Asignatura
-</button>
+    <button style="margin: 50px; padding: 10px" type="button" class="btn btn-primary" (click)="openPopups()">Añadir
+      Asignatura
+    </button>
 
 
-<div
-  class="modal"
-  tabindex="-1"
-  role="dialog"
-  [ngStyle]="{'display':displayStyle2}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">GeeksForGeeks</h4>
-      </div>
-      <form >
-      <div class="modal-body">
-        <label>Carrera</label>
-        
-            <select name="disponibilidad" (change)="Carreracon($event)"required>
-              <option>Seleccione</option>
-              <option *ngFor="let carreras of Carreras" value="{{carreras.id}}">{{carreras.nombre}}</option>
-            </select>
-            <br><br>
-            <label>Asignatura</label><br>
-            <input type="text"  class="form-control" name="Asignatura" [(ngModel)]="materia.nombre" required>
-          
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle2}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">GeeksForGeeks</h4>
           </div>
-        
-          <div class="modal-footer">
-            <button type="submit" class="crear" (click)="GuardarAsignatura(materia)">
-              Guardar
-            </button>
+          <form>
+            <div class="modal-body">
+              <label>Carrera</label>
+
+              <select name="disponibilidad" (change)="Carreracon($event)" required>
+                <option>Seleccione</option>
+                <option *ngFor="let carreras of Carreras" value="{{carreras.id}}">{{carreras.nombre}}</option>
+              </select>
+              <br><br>
+              <label>Asignatura</label><br>
+              <input type="text" class="form-control" name="Asignatura" [(ngModel)]="materia.nombre" required>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="crear" (click)="GuardarAsignatura(materia)">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
     </div>
-  </div>
-</div>
 
 
 
