@@ -28,6 +28,8 @@ export class ConvocatoriaService {
     return this.httpClient.post<ConvocatoriaP>(`${this.searchUrl}/crear`,convocatoria,{headers: this.httpHeaders})
   }
 
-  
+  buscarxSolicitud(id:number){
+    return this.httpClient.get<ConvocatoriaP>(`${this.searchUrl}/buscar/solEmpresa/${id}`)
+  }
  
 }

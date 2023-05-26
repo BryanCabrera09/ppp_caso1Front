@@ -26,10 +26,11 @@
                                 </span>
                             </div>
                             <div class="p-col-3 p-md-4">
-                                <p-dropdown name="disponibilidad" [options]="TutorA" optionLabel="usuario.nombre"
-                                    optionValue="id" placeholder="Seleccione" [required]="true"
-                                    (onChange)="TutorHunter($event.value)">
-                                </p-dropdown>
+                                <span class="p-float-label">
+                                    <input id="float-input" type="text" [(ngModel)]="nombreTuttor"
+                                         placeholder="Ingrese su Título" pInputText>
+                                    <label for=" float-input">Título</label>
+                                </span>
                             </div>
                         </div>
                         <div class="col">
