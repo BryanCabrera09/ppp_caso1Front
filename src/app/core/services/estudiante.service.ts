@@ -17,4 +17,8 @@ export class EstudianteService {
     return this.httpClient.get(`${this.baseURL}/buscarxusuario/` + id);
   }
 
+  listarest(): Observable<Estudiante[]>{
+    return this.httpClient.get<Estudiante[]>(`${this.baseURL}/listar`)
+  }
+
 }
