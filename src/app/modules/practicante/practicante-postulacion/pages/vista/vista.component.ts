@@ -8,6 +8,12 @@ import { ConvocatoriaService } from 'src/app/core/services/convocatoria.service'
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Usuario } from 'src/app/core/models/usuario';
+import { SoliEstudiante } from 'src/app/core/models/soli-estudiante';
+import { SoliEstudianteService } from 'src/app/core/services/soli-estudiante.service';
+import Swal from 'sweetalert2';
+import { Convenio } from 'src/app/core/models/convenio';
+import { Estudiante } from 'src/app/core/models/estudiante';
+import { EstudianteService } from 'src/app/core/services/estudiante.service';
 
 @Component({
   selector: 'app-vista',
@@ -22,17 +28,30 @@ export class VistaComponent implements OnInit {
   displayEU: boolean;
   actividad: Actividad;
   convocatoria: ConvocatoriaP;
+  
+  estudiante= new Estudiante;
+  solicitude: SoliEstudiante = new SoliEstudiante()
+
+
+  fechaI: Date = new Date;
 
   user: Usuario;
 
   constructor(private convocatoriaService: ConvocatoriaService,
-    private actividadservice: ActividadpService, private route: ActivatedRoute) { }
+    private actividadservice: ActividadpService, private route: ActivatedRoute, private soliestudianteservice: SoliEstudianteService,
+    private estudianteservice:EstudianteService) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('userdetails') || "");
     this.route.queryParams.subscribe(params => {
       this.convocatoria = JSON.parse(params['convocatoria']);
       console.log(this.convocatoria);
+      this.estudianteservice.buscarxUsuario(this.user.id).subscribe(
+        (resul:Estudiante)=>{
+        this.estudiante=resul;
+        }
+      )
+
       this.obtenerActividadid(this.convocatoria.solicitudEmpresa.id)
     });
     this.obtenerConvocatoria();
@@ -40,7 +59,7 @@ export class VistaComponent implements OnInit {
   }
 
   private obtenerConvocatoria() {
-    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
+    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato;})
   }
 
 
@@ -56,6 +75,25 @@ export class VistaComponent implements OnInit {
     )
 
   }
+
+  Guardarsoli() {
+
+    this.solicitude.estado=0;
+    this.solicitude.fechaEnvio = this.fechaI;
+    this.solicitude.estudiante=this.estudiante;
+    this.solicitude.convocatoria=this.convocatoria;
+
+    this.soliestudianteservice.guardarsolicitud(this.solicitude).subscribe(
+      (data: SoliEstudiante) => {
+        console.log(data);
+        Swal.fire('Solicitud guardado', 'Solicitud Guadada con exito', 'success');
+      
+      }, (error) => {
+        console.log(error);
+        Swal.fire('Error', 'Solicitud no se pudo Guardar', 'error');
+      }
+    )
+  };
 
   getBase64ImageFromAssets(imagePath: string): Promise<string> {
     return fetch(imagePath)
