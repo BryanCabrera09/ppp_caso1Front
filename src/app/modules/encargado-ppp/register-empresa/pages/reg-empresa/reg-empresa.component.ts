@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./reg-empresa.component.css']
 })
 export class RegEmpresaComponent implements OnInit {
-
+ 
   empresas: Empresa[] = [];
 
   loading: boolean = true;

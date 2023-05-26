@@ -7,7 +7,7 @@ import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
 import { ConvocatoriaService } from 'src/app/core/services/convocatoria.service';
 
 //import pdfMake from 'pdfmake/build/pdfMake';
-// pdfMake.vfs = pdfFonts.pdfMake.vsf;
+// pdfMake.vfs = pdfFonts.pdfMake.vsf; 
 
 @Component({
   selector: 'app-seleccion',
@@ -29,22 +29,7 @@ export class SeleccionComponent implements OnInit {
     this.obtenerConvocatoria();
   }
 
-  createPdf() {
-    const pdfDefinition: any = {
-      content: [
-        {
-          text: 'hola mundo'
-        }
-      ]
-    }
 
-    const pdf = pdfMake.createPdf(pdfDefinition);
-    pdf.open();
-  }
-
-
-  // const pdf= pdfMake.createPDF(pdfDefinition);
-  // pdf.open();
 }
 
 

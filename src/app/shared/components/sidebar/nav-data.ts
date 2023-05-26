@@ -8,7 +8,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
-        routeLink: '/d',
+        routeLink: '/tutor-academico/registro-visitas/registro',
         icon: 'fa-solid fa-house',
         label: 'Seguimiento (Anexo 5)',
         role: 'Tutor Academico'
@@ -75,8 +75,9 @@ export const navbarData: INavbarData[] = [
         label: 'Dashboard',
         role: 'Practicante'
     },
+  
     {
-        routeLink: '/encargado-practicas/empresa/register',
+        routeLink: '/practicante/postulacion/postulacion-estudiante',
         icon: 'fal fa-file',
         label: 'Postulacion PPP',
         role: 'Practicante'
@@ -149,7 +150,7 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Practicas'
     },
     {
-        routeLink: 'media',
+        routeLink: '/encargado-practicas/actividades/actividad-propuesta',
         icon: 'fas fa-tasks',
         label: 'Actividades Propuestas',
         role: 'Responsable Practicas'
