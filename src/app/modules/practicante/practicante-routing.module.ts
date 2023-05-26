@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'salud',
     loadChildren: () => import("./salud-ocupacional/salud-ocupacional.module").then(m => m.SaludOcupacionalModule)
   },
+  {
+    path: 'reporte',
+    loadChildren: () => import("./reporte-semanal/reporte-semanal.module").then(m => m.ReporteSemanalModule)
+  },
 ];
 
 @NgModule({

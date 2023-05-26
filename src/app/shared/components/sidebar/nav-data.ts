@@ -8,13 +8,13 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
-        routeLink: '/d',
+        routeLink: '/tutor-academico/registro-visitas/registro',
         icon: 'fa-solid fa-house',
         label: 'Seguimiento (Anexo 5)',
         role: 'Tutor Academico'
     },
     {
-        routeLink: '/da',
+        routeLink: '/tutor-academico/calificacion/practica-tutor',
         icon: 'fa-solid fa-house',
         label: 'Evaluación de Prácticas',
         role: 'Tutor Academico'
@@ -65,9 +65,11 @@ export const navbarData: INavbarData[] = [
         label: 'Dashboard',
         role: 'Practicante'
     },
+  
     {
-        routeLink: 'postulacion/postulacion-estudiante',
-        icon: 'fas fa-file',
+
+        routeLink: '/practicante/postulacion/postulacion-estudiante',
+        icon: 'fal fa-file',
         label: 'Postulacion PPP',
         role: 'Practicante'
     },
@@ -91,7 +93,7 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: 'media',
+        routeLink: 'reporte/semanal',
         icon: 'fal fa-camera',
         label: 'Reporte Semanal de Actividades',
         role: 'Practicante'
@@ -139,7 +141,7 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Practicas'
     },
     {
-        routeLink: 'media',
+        routeLink: '/encargado-practicas/actividades/actividad-propuesta',
         icon: 'fas fa-tasks',
         label: 'Actividades Propuestas',
         role: 'Responsable Practicas'
@@ -181,7 +183,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Especifico'
     },
     {
-        routeLink: 'media',
+        routeLink: '/tutor-especifico/calificacion/practica-tutor',
         icon: 'fal fa-camera',
         label: 'Evaluación del Estudiante',
         role: 'Tutor Especifico'

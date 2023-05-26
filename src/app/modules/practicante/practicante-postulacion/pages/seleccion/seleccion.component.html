@@ -20,7 +20,7 @@
         <td>{{convocatoria.solicitudEmpresa.convenio.empresa.nombre}}</td>
         <td>{{convocatoria.fechaInicio}}</td>
         <td>{{convocatoria.fechaFin}}</td>
-        <td><button class="btn btn-primary" [routerLink]="['../vista']" [queryParams]="{ solicitudempresa: convocatoria.solicitudEmpresa| json }">
+        <td><button class="btn btn-primary" [routerLink]="['../vista']" [queryParams]="{ convocatoria: convocatoria| json }">
           Visualizar
         </button></td>
       </tr>

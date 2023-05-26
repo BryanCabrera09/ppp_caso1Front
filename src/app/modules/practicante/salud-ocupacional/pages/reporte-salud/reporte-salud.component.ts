@@ -112,9 +112,11 @@ export class ReporteSaludComponent {
     
         this.guardado = true;
         console.log('Tabla:', this.tabla);
-      } else {
+      } else  {
         this.mostrarMensaje = true;
-        console.log('Debe responder todas las preguntas antes de guardar.');
+        setTimeout(() => {
+          this.mostrarMensaje = false;
+        }, 3000); // Temporizador de 2 segundos (2000 milisegundos)
       }
     }
     
@@ -243,7 +245,9 @@ export class ReporteSaludComponent {
         }
       };
     
-      pdfMake.createPdf(documentDefinition).open();
+      const pdfName = 'A3_InduccionSaludOcupacional.pdf';
+
+      pdfMake.createPdf(documentDefinition).download(pdfName);
     }
     
     

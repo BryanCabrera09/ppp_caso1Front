@@ -15,13 +15,18 @@
       <th>Objetivo</th>
       <th>Asignatura</th>
     </tr>
-    <tr>
-      <td></td>
-      <td></td>
+    <tr >
+      <td>{{actividad.id}}</td>
+      <td>{{this.descripcionObjetivo}}</td>
       <td>
-        <select class="button larger-select">
-          <option>Visualizar</option>
-        </select>
+        <div class="p-col-3 p-md-4">
+          <p-dropdown [options]="materia" [(ngModel)]="selectedMateria" name="practicantes"
+              optionLabel="nombre" optionValue="id" [filter]="true"
+              filterBy="nombre" [showClear]="true"
+              (onChange)="materiaid($event.value)"
+              placeholder="Seleccionar Rol Usuario">
+          </p-dropdown>
+          </div>
       </td>
     </tr>
   </table>
