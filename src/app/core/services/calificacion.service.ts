@@ -16,5 +16,8 @@ export class CalificacionService {
   saveGrade(calificacion: Calificacion): Observable<Calificacion[]> {
     return this.http.post<Calificacion[]>(`${this.searchUrl}/crear`, calificacion);
   }
-  
+
+  buscarxPractica(id: number)/* : Observable<Calificacion[]>  */{
+    return this.http.get/* <Calificacion[]> */(`${this.searchUrl}/listar/practica/${id}`);
+  }
 }
