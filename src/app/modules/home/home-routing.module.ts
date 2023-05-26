@@ -18,6 +18,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import("./notices/notices.module").then(m => m.NoticesModule)
   },
+  {
+    path: '',
+    loadChildren: () => import("./info-ista/info-ista.module").then(m => m.InfoIstaModule)
+  },
 ];
 
 @NgModule({

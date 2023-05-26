@@ -1,6 +1,19 @@
 <section>
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-3" *ngFor="let noticia of convocatorias">
+                <div class="card-body">
+                  <h5 class="card-title">{{ noticia.solicitudEmpresa.convenio.carrera.nombre }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ noticia.solicitudEmpresa.convenio.empresa.nombre }}</h6>
+                  <p class="card-text">{{ noticia.descripcion }}</p>
+                  <p class="card-text"><small class="text-muted">Fecha de inicio: {{ noticia.fechaInicio }}</small></p>
+                  <p class="card-text"><small class="text-muted">Fecha de fin: {{ noticia.fechaFin }}</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
         <div class="form-box ">
             <div class="form-value">
                 <form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm)">

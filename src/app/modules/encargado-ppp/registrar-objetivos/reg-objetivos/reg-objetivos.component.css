@@ -1,119 +1,80 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
-.card {
-    width: 98%;
-    height: 87%;
-    background: #ffffff;
-    position: relative;
-    display: flex;
-    /*place-content: center;*/
-    place-items: center;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    border-radius: 20px;
-     /* ajusta el ancho según sea necesario */
-    margin:  auto;
-    
-  }
-  
-  .card h2 {
-    z-index: 1;
-    color: rgb(6, 127, 193);
-    font-size: 2em;
-  }
-  
-  .card-body {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
- 
-  
-  
-  table, td, th {
-      
-    border: 1px solid white;
-    color: rgb(10, 10, 10);
-    z-index: 1;
-    color: rgb(12, 11, 11);
-    font-size: 1em;
-    text-align: center;
-    
-  }
-  
-  table {
-      
-    border-collapse: collapse;
-    width: 100%;
-    color: rgb(15, 14, 14);
-    margin-bottom: 5%;
-   
-  }
-  
-  th {
-      
-    height: 70px;
-    color: rgb(0, 0, 0);
-    background-color: rgb(175, 182, 195);
-   
-  }
-  /* .card:hover:before {
-    background-image: linear-gradient(180deg, rgb(81, 255, 0), purple);
-    animation: rotBGimg 3.5s linear infinite;
-  } */
- 
-  
-  .crear-button {
-    width: 100%;
-    max-width: 200px;
-    padding: 10px 20px;
-    font-size: 1em;
-    border: none;
-    border-radius: 5px;
-    background-color: #2cd83b;
-    color: #fff;
-    margin-bottom: 20px;
-    justify-content: right;
-  }
+/* Estilo de la tabla */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
 
-  button {
-    width: 80%;
-    max-width: 200px;
-    padding: 10% 20%;
-    font-size: 1em;
-    border: none;
-    border-radius: 5px;
-    background-color: #cdcecd;
-    color: #fff;
-    margin-bottom: 20px;
-  }
-  
-  @media screen and (max-width: 768px) {
-    button {
-      font-size: 0.8em;
-      margin-bottom: 10px;
-    }
-  }
-  
-  @media screen and (max-width: 480px) {
-    button {
-      font-size: 0.7em;
-      padding: 5px 10px;
-    }
-  }
+h1 {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  text-align: center;
+  font-weight: bold;
+}
 
-  .crear{
-    background-color: rgb(45, 143, 219);
-    width: 100%;
-    max-width: 200px;
-    padding: 10px 20px;
-    font-size: 1em;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    margin-bottom: 20px;
-    margin-right: auto;
-  }
+.h {
+  margin-top: 2%;
+  text-align: center;
+  font-weight: bold;
+}
 
-  .input {
-    width: 80%;
-  }
+body {
+  font-family: "Times New Roman", Times, serif;
+}
+
+#text {
+  text-align: center;
+}
+
+table td:hover {
+  background-color: rgb(255, 255, 255);
+}
+
+th {
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+#header {
+  margin: 3;
+  text-align: center;
+}
+
+h2 {
+  align-self: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+#button {
+  margin-top: 2%;
+  width: 50%;
+}
