@@ -19,4 +19,7 @@ export class ObjetivoMateriaService{
     Guardarobj(objetivo:Objetivomateria): Observable<Objetivomateria>{
       return this.http.post<Objetivomateria>(`${this.ObjUrl}/crear`, objetivo);
     }
+    listarxmateria(id: number): Observable<Objetivomateria[]>{
+      return this.http.get<Objetivomateria[]>(`${this.ObjUrl}/listarxmateria/${id}`);
+    }
 }

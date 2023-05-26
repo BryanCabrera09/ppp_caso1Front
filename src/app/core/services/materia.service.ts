@@ -23,4 +23,8 @@ export class MateriaService {
     guardarcar(materia:Materia):Observable<Materia>{
       return this.http.post<Materia>(`${this.ObjUrl}/crear`,materia);
     }
+
+    buscarmateriaxcarrera(id:number): Observable<Materia[]>{
+      return this.http.get<Materia[]>(`${this.ObjUrl}/buscar/carrera/${id}`);
+  }
 }

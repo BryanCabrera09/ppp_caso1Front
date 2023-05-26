@@ -8,7 +8,7 @@
 	<div class="container">
 		<h1 class="centered">Convocatoria Prácticas Pre Profesionales</h1>
 
-		<h2 class="empresa">{{solicitudempresa.convenio.empresa.nombre}}</h2>
+		<h2 class="empresa">{{convocatoria.solicitudEmpresa.convenio.empresa.nombre}}</h2>
 		<p >Se convoca a los estudiantes de la carrera <b>{{actividad.materia.carrera.nombre}}</b>  que deseen realizar sus prácticas pre profesionales en la empresa: {{actividad.solicitudEmpresa.convenio.empresa.nombre}} a presentar la solicitud correspondiente</p>
 
 		<h2>Actividades:</h2>
@@ -27,7 +27,7 @@
 	</div>
 
 	<div class="button-container">
-		<button>Postular</button>
+		<button (click)="generarPDF()"> Postular</button>
 	</div>
 </body>
 </html>

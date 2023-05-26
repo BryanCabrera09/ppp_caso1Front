@@ -1,14 +1,40 @@
 <div class="row">
-  <div class="col-sm-6 pr-sm-2" *ngFor="let practica of practicas; let i = index">
+  <div class="col-sm-6 pr-sm-2" *ngFor="let practica of practicas; let i = index;">
     <div class="statistics-grid mb-4">
       <div class="card card_border border-primary-top p-4">
-        <i style="font-size: 3em; color: #343a40;" class="fa fa-user-circle-o"></i>
-        <h3 class="text-dark number">{{ practica.id }}</h3>
-        <p class="stat-text">{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}</p>
-        <p class="stat-text">{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}</p>
-        <button class="btn btn-primary" [routerLink]="['../generar-nota']" [queryParams]="{ practica: practica | json }">
-          Calificar
-        </button>
+        <div class="row">
+          <div class="col-sm-8">
+            <i></i>
+            <div *ngIf="practica.calificacion && practica.calificacion.url">
+              <i class="material-icons text-success">check_circle</i>
+            </div>
+            <div *ngIf="!practica.calificacion">
+              <i class="material-icons text-info">warning</i>
+            </div>
+            <div *ngIf="practica.calificacion && !practica.calificacion.url">
+              <i class="material-icons text-warning">info</i>
+            </div>
+            <p class="stat-text">{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}</p>
+            <p class="stat-text">{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}</p>
+          </div>
+          <div class="col-sm-4 text-center">
+            <div *ngIf="practica.calificacion && practica.calificacion.url">
+              <button class="btn btn-success btn-block">
+                Ver PDF
+              </button>
+            </div>
+            <div *ngIf="!practica.calificacion">
+              <button class="btn btn-primary btn-block" [routerLink]="['../generar-nota']" [queryParams]="{ practica: practica | json }">
+                Calificar
+              </button>
+            </div>
+            <div *ngIf="practica.calificacion && !practica.calificacion.url">
+              <button class="btn btn-warning btn-block">
+                Subir PDF
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
