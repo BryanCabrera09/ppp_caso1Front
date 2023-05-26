@@ -27,4 +27,8 @@ export class ActividadpService {
     return this.httpClient.get<Actividad[]>(`${this.baseURL}/buscar/${id}`);
   }
 
+  editar(id: number, entidad: Actividad): Observable<Actividad> {
+    const url = `${this.baseURL}/editar/${id}`;
+    return this.httpClient.post<Actividad>(url, entidad);
+  }
 }
