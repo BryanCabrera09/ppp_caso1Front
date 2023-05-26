@@ -38,11 +38,11 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Empresa',
         items: [
             {
-                routeLink: 'products/level1.1',
+                routeLink: 'soli/veremp',
                 label: 'Registro Solicitud',
             },
             {
-                routeLink: 'products/level1.2',
+                routeLink: 'soli/listemp',
                 label: 'Lista Solicitud',
             }
         ]
