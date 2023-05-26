@@ -20,6 +20,12 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
+        routeLink: '/tutor-academico/plan-aprendizaje/practica-tutor',
+        icon: 'fal fa-camera',
+        label: 'Plan de aprendizaje',
+        role: 'Tutor Academico'
+    },
+    {
         routeLink: 'anexos/anexocho',
         icon: 'fa-solid fa-house',
         label: 'Reporte Final',
@@ -32,10 +38,20 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Empresa'
     },
     {
-        routeLink: 'soli/listemp',
-        icon: 'fas fa-paper-plane',
+        routeLink: 'products',
+        icon: 'fal fa-box-open',
         label: 'Envio de Solicitud',
-        role: 'Responsable Empresa'
+        role: 'Responsable Empresa',
+        items: [
+            {
+                routeLink: 'soli/veremp',
+                label: 'Registro Solicitud',
+            },
+            {
+                routeLink: 'soli/listemp',
+                label: 'Lista Solicitud',
+            }
+        ]
     },
     {
         routeLink: 'statistics',
