@@ -6,6 +6,7 @@ import { Materia } from 'src/app/core/models/materia';
 import { MateriaService } from 'src/app/core/services/materia.service';
 import { ObjetivoMateriaService } from 'src/app/core/services/objetivos-materia.service';
 import { Objetivomateria } from 'src/app/core/models/objetivo-materia';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class ObjetivoComponent implements OnInit {
     console.log(this.objetivop.materia)
     this.actividadservice.editar(this.actividad.id, this.actividad).subscribe(
       (res) => {
+        Swal.fire('Actividad Relacionada', 'Proceso Realizado con Exito', 'success');
         console.log(res)
       }
     )

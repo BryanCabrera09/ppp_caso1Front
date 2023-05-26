@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Convocatorias</title>
 
-  </head>
-  <body>
-    <div>
-        <h1>Seleccione una empresa:</h1>
-        <p>recuerde que solo puede postular a una y enviar una solicitud.</p>
-    </div>
-    <table>
-      <tr>
-        <th>EMPRESAS</th>
-        <th>Fecha Inicio</th>
-        <th>Fecha Fin</th>
-        <th>Postular</th>
-      </tr>
-      <tr *ngFor="let convocatoria of convocatoriap">
-        <td>{{convocatoria.solicitudEmpresa.convenio.empresa.nombre}}</td>
-        <td>{{convocatoria.fechaInicio}}</td>
-        <td>{{convocatoria.fechaFin}}</td>
-        <td><button class="btn btn-primary" [routerLink]="['../vista']" [queryParams]="{ convocatoria: convocatoria| json }">
+<head>
+  <title>Convocatorias</title>
+
+</head>
+
+<body>
+  <div>
+    <h1>Seleccione una empresa:</h1>
+    <p>recuerde que solo puede postular a una y enviar una solicitud.</p>
+  </div>
+  <table>
+    <tr>
+      <th>EMPRESAS</th>
+      <th>Fecha Inicio</th>
+      <th>Fecha Fin</th>
+      <th>Postular</th>
+    </tr>
+    <tr *ngFor="let convocatoria of convocatoriap">
+      <td>{{convocatoria.solicitudEmpresa.convenio.empresa.nombre}}</td>
+      <td>{{convocatoria.fechaInicio}}</td>
+      <td>{{convocatoria.fechaFin}}</td>
+      <td><button class="btn btn-primary" [routerLink]="['../vista']"
+          [queryParams]="{ convocatoria: convocatoria| json }">
           Visualizar
         </button></td>
-      </tr>
-    
-    </table>
-  </body>
-</html>
+    </tr>
 
+  </table>
+</body>
+
+</html>
