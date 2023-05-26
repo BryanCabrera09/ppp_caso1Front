@@ -16,20 +16,24 @@ import { ConvocatoriaService } from 'src/app/core/services/convocatoria.service'
 })
 export class SeleccionComponent implements OnInit {
 
-  convocatoria: Convocatoria[];
-  convocatoriap: ConvocatoriaP[];
+  convocatorias: ConvocatoriaP[];
+
+  loading: boolean = true;
 
   constructor(private convocatoriaService: ConvocatoriaService) { }
 
   private obtenerConvocatoria() {
-    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
+    this.convocatoriaService.obtenerConvocatoria().subscribe(
+      dato => {
+        this.convocatorias = dato;
+      }
+    );
+    this.loading = false;
   }
 
   ngOnInit() {
     this.obtenerConvocatoria();
   }
-
-
 }
 
 

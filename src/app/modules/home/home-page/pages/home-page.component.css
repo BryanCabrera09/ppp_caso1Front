@@ -12,7 +12,7 @@ section {
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(rgba(181, 162, 162, 0.4), transparent),
+  background: linear-gradient(rgba(181, 162, 162, 0.2), transparent),
     url(https://th.bing.com/th/id/OIG.JYUpvZfs.eviXMWtJqoZ?pcl=1b1a19&pid=ImgGn);
   text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
   background-size: cover;
@@ -27,6 +27,23 @@ section {
 .tittle,
 .subtittle {
   margin-top: 3%;
+}
+
+#lead {
+  margin-top: 20px;
+}
+
+.subtittle {
+  background: linear-gradient(
+    to right,
+    rgb(5, 5, 5),
+    #ffffff,
+    rgb(255, 255, 255)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: justify;
+  font-weight: bold;
 }
 
 /*
