@@ -123,17 +123,6 @@ export class ReportComponent implements OnInit {
 
   async generarPDF() {
 
-    //Fecha Actual
-    const fecha = new Date();
-    const options: any = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    };
-    const formatter = new Intl.DateTimeFormat('es-EC', options);
-    const fechaFormateada = formatter.format(fecha);
-    const fechaCompleta = `Cuenca, ${fechaFormateada}`;
-
     //Logo Ista 
     const imageData = await this.getBase64ImageFromAssets("assets/images/Logo-ISTA.png");
 
@@ -184,7 +173,7 @@ export class ReportComponent implements OnInit {
         {
           type: 'lower-alpha',
           ol: [
-            'No divulgar a terceras personas o instituciones el contenido de cualquier documentación o información de la empresa NOMBRE DE LA EMPRESA XXXXXXXX., que haya sido obtenida como parte del proceso de prácticas preprofesionales;',
+            'No divulgar a terceras personas o instituciones el contenido de cualquier documentación o información de la empresa ' + this.empresa.nombre + ', que haya sido obtenida como parte del proceso de prácticas preprofesionales;',
             'No permitir a terceros el manejo de documentación de la empresa, que pueda tener en mi poder;',
             'No explotar y aprovechar en beneficio propio, o permitir el uso por otros, de las informaciones obtenidas o conocimientos adquiridos durante el proceso de formación dual;',
             'En caso de tener acceso a documentación importante de la empresa asumo ética y responsablemente el manejo y/o acceso a la misma.',
@@ -199,11 +188,15 @@ export class ReportComponent implements OnInit {
           style: 'signature'
         },
         {
-          text: 'Nombre del estudiante',
+          text: this.usuario.nombre.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ') + ' ' + this.usuario.apellido.split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+              .join(' '),
           style: 'signature'
         },
         {
-          text: 'Número de Cédula',
+          text: this.usuario.cedula,
           style: 'signature'
         }
       ],

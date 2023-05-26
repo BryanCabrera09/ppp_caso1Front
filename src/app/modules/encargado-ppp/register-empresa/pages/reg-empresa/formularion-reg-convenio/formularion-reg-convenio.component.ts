@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { formatDate } from '@angular/common';
 import { Empresa } from 'src/app/core/models/empresa';
 import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class FormularionRegConvenioComponent implements OnInit {
 
   fechaSumada: Date;
   nombreTuttor: string;
-  idtutor:number
+  idtutor: number
   fechaActual: Date = new Date();
 
   id: number = 0
@@ -47,7 +48,7 @@ export class FormularionRegConvenioComponent implements OnInit {
     this.guardarTutor()
   }
 
-  constructor(private carreraService: CarreraMateriaService, private TutorAService: TutorAcademicoService,
+  constructor(private carreraService: CarreraMateriaService, private TutorAService: TutorAcademicoService, private router: Router,
     private convenioService: ConvenioService, private empresaService: RegEmpresaServiceService, private tutorService: TutorAcademicoService) {
     this.carreraService.ListarCarrera().subscribe(
       Carr => this.Carreras = Carr
@@ -57,12 +58,11 @@ export class FormularionRegConvenioComponent implements OnInit {
       dato => { this.TutorA = dato; }
     )
 
-    this.nombreTuttor=''
-      this.idtutor=0
+    this.nombreTuttor = ''
+    this.idtutor = 0
   }
 
   CarreraHunter(value: any) {
-    alert(value)
     this.carreraService.searchCarrera(value).subscribe(
       (data: Carrera) => {
         this.carrera = data
@@ -70,34 +70,23 @@ export class FormularionRegConvenioComponent implements OnInit {
     )
   }
 
-  TutorHunter(e: any) {
-    alert(e)
-    this.TutorAService.searchTutor(e).subscribe(
-      (data: TutorAcademico) => {
-        this.tutor = data
-        console.log(this.tutor)
-      }
-    )
-  }
-
-  guardarTutor(){
+  guardarTutor() {
     this.usuario = JSON.parse(sessionStorage.getItem('userdetails')!);
     this.idUs = this.usuario.id
-    this.nombreTuttor = this.usuario.nombre +' '+ this.usuario.apellido
+    this.nombreTuttor = this.usuario.nombre + ' ' + this.usuario.apellido
     console.log(this.nombreTuttor)
     this.tutorService.buscarxusuario(this.idUs).subscribe(
-    (data:TutorAcademico)=>{
-      this.tutor = data
-    } 
+      (data: TutorAcademico) => {
+        this.tutor = data
+      }
 
     )
-      
+
   }
 
   guardarEmpresa() {
     const empresa = JSON.parse(localStorage.getItem('empresa') + '');
     this.id = parseInt(empresa)
-
 
     this.empresaService.buscarporxID1(this.id).subscribe(
       (data: Empresa) => {
@@ -120,7 +109,7 @@ export class FormularionRegConvenioComponent implements OnInit {
         console.log(data);
         this.ngOnInit();
         Swal.fire('Convenio Guardado', 'Convenio Guardado con éxito en el sistema', 'success');
-
+        this.router.navigate(['encargado-practicas/empresa/register-empresa']);
       }, (error) => {
         console.log(error);
         Swal.fire('Error', 'Nose Pudo Guardar el Convenio', 'error');

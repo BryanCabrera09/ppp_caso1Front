@@ -34,9 +34,9 @@ export class RegEmpresaComponent implements OnInit {
             return empresa;
           }
         )
-        this.loading = false;
       }
     );
+    this.loading = false;
   }
 
   traerid(id: any) {

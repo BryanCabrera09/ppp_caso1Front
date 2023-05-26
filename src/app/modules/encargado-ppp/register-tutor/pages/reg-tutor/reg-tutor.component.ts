@@ -18,6 +18,7 @@ import { Practica } from 'src/app/core/models/practica';
 import { UsuarioService } from 'src/app/core/services/usuario.service';
 import { TutorEmpresarial } from 'src/app/core/models/tutor-empresarial';
 import { TutorEmpresarialService } from 'src/app/core/services/tutor-empresarial.service';
+import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
 
 @Component({
   selector: 'app-reg-tutor',
@@ -67,7 +68,7 @@ export class RegTutorComponent implements OnInit {
   expCorreo: RegExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   valCorreo: boolean = true;
 
-  constructor(private userService: UsersfenixService, private toastr: ToastrService,
+  constructor(private userService: UsersfenixService, private toastr: ToastrService, private empresaService: RegEmpresaServiceService,
     private tutorService: TutorEmpresarialService, private practicanteService: SolipracticantesService, private activatedRoute: ActivatedRoute,
     private practicaService: PracticasService, private usuarioService: UsuarioService) { }
 
@@ -82,10 +83,12 @@ export class RegTutorComponent implements OnInit {
   obtenerPractica() {
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
-      console.log(id)
-      if (id) {
+      const url = this.activatedRoute.snapshot.url.join('/');
+      console.log(url)
+      if (id && url === 'register-tutor/' + id) {
         this.practicaService.searchPracticaById(id).subscribe(
           (data: Practica) => {
+            console.log('no entro para la empresa');
             this.empresa.nombre = data.convocatoria.solicitudEmpresa.convenio.empresa.nombre;
             this.empresa.id = data.convocatoria.solicitudEmpresa.convenio.empresa.id;
             this.empresa.matriz = data.convocatoria.solicitudEmpresa.convenio.empresa.matriz;
@@ -101,6 +104,20 @@ export class RegTutorComponent implements OnInit {
                 this.practicantes = practicante;
               }
             )
+          }
+        );
+      } else if (id && url === 'register-tutor-emp/' + id) {
+        this.empresaService.buscarporxID1(id).subscribe(
+          (data: Empresa) => {
+            this.empresa.nombre = data.nombre;
+            this.empresa.id = data.id;
+            this.empresa.matriz = data.matriz;
+            this.empresa.mision = data.mision;
+            this.empresa.objetivo = data.objetivo;
+            this.empresa.activo = data.activo;
+            this.empresa.ruc = data.ruc;
+            this.empresa.vision = data.vision;
+            console.log('entro para la empresa');
           }
         );
       }
@@ -226,9 +243,9 @@ export class RegTutorComponent implements OnInit {
       this.toastr.error("Campo Contraseña vacio!", "Error!");
     }
 
-    if (this.selectedPracticante === undefined || this.selectedPracticante === null) {
+    /* if (this.selectedPracticante === undefined || this.selectedPracticante === null) {
       this.toastr.error("Seleccione un Practicante!", "Error!");
-    }
+    } */
 
     if (this.selectedResponsable === '' || this.selectedResponsable === null) {
       this.toastr.error("Seleccione un Responsable!", "Error!");
@@ -253,7 +270,8 @@ export class RegTutorComponent implements OnInit {
         (result: TutorInstituto) => {
           this.activatedRoute.params.subscribe(params => {
             let id = params['id']
-            if (id) {
+            const url = this.activatedRoute.snapshot.url.join('/');
+            if (id && url === 'register-tutor/' + id) {
               this.practicaService.searchPracticaById(id).subscribe(
                 (data: Practica) => {
                   this.practica.id = data.id;
@@ -282,6 +300,9 @@ export class RegTutorComponent implements OnInit {
                     );
                 }
               );
+            } else if (id) {
+              this.enabledButton = true;
+              Swal.fire('Registro', 'Gerente Empresa Creado', 'success');
             }
           })
         }
