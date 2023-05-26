@@ -26,7 +26,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
-        routeLink: 'anexos/anexocho',
+        routeLink: 'anexos/listapract',
         icon: 'fa-solid fa-house',
         label: 'Reporte Final',
         role: 'Tutor Academico'
