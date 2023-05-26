@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { ReporteSemanalRoutingModule } from './reporte-semanal-routing.module';
 import { Anexo6GenerateComponent } from './pages/anexo6-generate/anexo6-generate.component';
 
@@ -11,7 +11,8 @@ import { Anexo6GenerateComponent } from './pages/anexo6-generate/anexo6-generate
   ],
   imports: [
     CommonModule,
-    ReporteSemanalRoutingModule
+    ReporteSemanalRoutingModule,
+    FormsModule
   ]
 })
 export class ReporteSemanalModule { }
