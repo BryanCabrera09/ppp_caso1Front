@@ -167,3 +167,11 @@ button {
   justify-content: center;
   align-items: center;
 }
+
+#form-convoca {
+  margin-right: 260px;
+}
+
+#form-auth {
+  margin-left: 260px;
+}
