@@ -13,8 +13,13 @@ export class CalificacionService {
 
   constructor(private http: HttpClient) { }
 
-  saveGrade(calificacion: Calificacion): Observable<Calificacion[]> {
-    return this.http.post<Calificacion[]>(`${this.searchUrl}/crear`, calificacion);
+  saveGrade(calificacion: Calificacion): Observable<Calificacion> {
+    return this.http.post<Calificacion>(`${this.searchUrl}/crear`, calificacion);
   }
   
+  listbyPractica(id: number): Observable<Calificacion[]> {
+    const url = `${this.searchUrl}/listar/practica/${id}`;
+    return this.http.get<Calificacion[]>(url);
+  }
+
 }

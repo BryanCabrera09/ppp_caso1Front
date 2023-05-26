@@ -9,6 +9,7 @@ export class Calificacion{
     d?:number;
     e?:number;
     total?:number;
+    url = [];
 
     practica?:Practica;
 }
