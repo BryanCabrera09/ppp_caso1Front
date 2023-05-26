@@ -43,7 +43,7 @@ export class AceptacionSolicitudComponent implements OnInit {
 
   obtenerSolicitudes() {
 
-    this.solicitudService.ListarSoli().subscribe(
+    this.solicitudService.ListarSoliPend().subscribe(
       data => {
         this.empresas = data;
       }

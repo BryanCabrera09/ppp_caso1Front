@@ -1,34 +1,60 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Convocatorias</title>
-
-</head>
-
-<body>
-  <div>
-    <h1>Seleccione una empresa:</h1>
-    <p>recuerde que solo puede postular a una y enviar una solicitud.</p>
-  </div>
-  <table>
-    <tr>
-      <th>EMPRESAS</th>
-      <th>Fecha Inicio</th>
-      <th>Fecha Fin</th>
-      <th>Postular</th>
-    </tr>
-    <tr *ngFor="let convocatoria of convocatoriap">
-      <td>{{convocatoria.solicitudEmpresa.convenio.empresa.nombre}}</td>
-      <td>{{convocatoria.fechaInicio}}</td>
-      <td>{{convocatoria.fechaFin}}</td>
-      <td><button class="btn btn-primary" [routerLink]="['../vista']"
-          [queryParams]="{ convocatoria: convocatoria| json }">
-          Visualizar
-        </button></td>
-    </tr>
-
-  </table>
-</body>
-
-</html>
+<div class="card">
+  <h1>Seleccione una empresa</h1>
+  <p style="align-self: center; font-style: italic;">Recuerde que solo puede postular a una y enviar una solicitud.</p>
+  <p-table #dt2 [value]="convocatorias" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
+    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['numero', 'solicitudEmpresa.convenio.empresa.nombre']"
+    [tableStyle]="{ 'min-width': '75rem' }">
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Ingrese Nombre de Empresa" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th id="text" style="width:22%">Empresa</th>
+        <th id="text" style="width:22%">Fecha de Inicio</th>
+        <th id="text" style="width:22%">Fecha de Fin</th>
+        <th id="text" style="width:12%"></th>
+      </tr>
+      <tr>
+        <th id="text">
+          <p-columnFilter type="text" field="solicitudEmpresa.convenio.empresa.nombre"></p-columnFilter>
+        </th>
+        <th id="text">
+        </th>
+        <th id="text">
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-convocatoria>
+      <tr>
+        <td id="text-convo">
+          {{ 'CONVOCATORIA PRACTICAS PREPROFESIONALES -
+          '+convocatoria.solicitudEmpresa.convenio.empresa.nombre + ' ' + convocatoria.numero }}
+        </td>
+        <td id="text">
+          {{ convocatoria.fechaInicio }}
+        </td>
+        <td id="text">
+          {{ convocatoria.fechaFin }}
+        </td>
+        <td id="text">
+          <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar" class="p-button-warning"
+            [routerLink]="['../vista']" [queryParams]="{ convocatoria: convocatoria| json }"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">Sin Solicitudes de Empresas.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

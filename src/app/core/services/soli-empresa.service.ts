@@ -28,4 +28,8 @@ export class SoliEmpresaService {
     return this.http.post(`${this.searchUrl}/editar/${id}`, empresa);
   }
 
+  ListarSoliPend(): Observable<SolicitudEmpresa[]> {
+    return this.http.get<SolicitudEmpresa[]>(`${this.searchUrl}/estadoEnviado`);
+  }
+
 }
