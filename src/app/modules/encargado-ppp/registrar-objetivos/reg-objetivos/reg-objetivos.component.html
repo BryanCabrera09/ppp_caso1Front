@@ -38,7 +38,7 @@
         </td>
         <td id="text">
           <button pButton pRipple type="button" icon="pi pi-trash" style="background-color: rgb(245, 64, 64);"
-            label="Quitar Actividad" class="p-button-warning" (click)="eliminarObjetivo(objetivo.id)"></button>
+            label="Quitar Objetivo" class="p-button-warning" (click)="eliminarObjetivo(objetivo.id)"></button>
         </td>
       </tr>
     </ng-template>
@@ -64,8 +64,8 @@
       <div class="row">
         <div class="p-col-12 p-md-4">
           <p-dropdown [options]="carreras" [(ngModel)]="selectedCarrera" name="docente" optionLabel="nombre"
-            optionValue="id" [filter]="true" filterBy="apellidos" [showClear]="true" placeholder="Seleccionar Carrera"
-            (onChange)="carreraCon($event.value)">
+            appendTo="body" optionValue="id" [filter]="true" filterBy="apellidos" [showClear]="true"
+            placeholder="Seleccionar Carrera" (onChange)="carreraCon($event.value)">
           </p-dropdown>
         </div>
         <div class="p-col-12 p-md-4">
@@ -95,8 +95,8 @@
       <div class="row">
         <div class="p-col-12 p-md-4">
           <p-dropdown [options]="materias" [(ngModel)]="selectedMateria" name="docente" optionLabel="nombre"
-            optionValue="id" [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Seleccionar Materia"
-            (onChange)="materiaCon($event.value)">
+            appendTo="body" optionValue="id" [filter]="true" filterBy="nombre" [showClear]="true"
+            placeholder="Seleccionar Materia" (onChange)="materiaCon($event.value)">
           </p-dropdown>
         </div>
         <div class="p-col-12 p-md-4">

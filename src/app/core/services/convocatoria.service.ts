@@ -9,27 +9,25 @@ import baserUrl from '../helpers/helperUrl';
 })
 export class ConvocatoriaService {
 
-
-
   private searchUrl = `${baserUrl}/convocatoria`;
 
-  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
+  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
   constructor(private httpClient: HttpClient) { }
 
-  obtenerConvocatoria():Observable<ConvocatoriaP[]>{
+  obtenerConvocatoria(): Observable<ConvocatoriaP[]> {
     return this.httpClient.get<ConvocatoriaP[]>(`${this.searchUrl}/listar`)
   }
-  
+
   listarConvocatorias(): Observable<any> {
-    return this.httpClient.get(baserUrl + '/noticias', { observe: 'response' })
+    return this.httpClient.get(`${baserUrl}/noticias`, { observe: 'response' })
   }
 
-  guardaConvoca(convocatoria:ConvocatoriaP):Observable<ConvocatoriaP>{
-    return this.httpClient.post<ConvocatoriaP>(`${this.searchUrl}/crear`,convocatoria,{headers: this.httpHeaders})
+  guardaConvoca(convocatoria: ConvocatoriaP): Observable<ConvocatoriaP> {
+    return this.httpClient.post<ConvocatoriaP>(`${this.searchUrl}/crear`, convocatoria, { headers: this.httpHeaders })
   }
 
-  buscarxSolicitud(id:number){
+  buscarxSolicitud(id: number) {
     return this.httpClient.get<ConvocatoriaP>(`${this.searchUrl}/buscar/solEmpresa/${id}`)
   }
- 
+
 }

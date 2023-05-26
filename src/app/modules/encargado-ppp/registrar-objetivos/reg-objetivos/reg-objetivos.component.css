@@ -78,3 +78,10 @@ h2 {
   margin-top: 2%;
   width: 50%;
 }
+
+.small-dropdown .p-dropdown-label {
+  font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
+  padding: 2px 8px; /* Ajusta los valores de padding según tus necesidades */
+  height: 24px; /* Ajusta la altura según tus necesidades */
+  line-height: 20px; /* Ajusta la altura de línea según tus necesidades */
+}

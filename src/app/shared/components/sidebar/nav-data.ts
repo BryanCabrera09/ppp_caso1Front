@@ -38,20 +38,10 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Empresa'
     },
     {
-        routeLink: 'products',
-        icon: 'fal fa-box-open',
+        routeLink: 'soli/listemp',
+        icon: 'fas fa-paper-plane',
         label: 'Envio de Solicitud',
-        role: 'Responsable Empresa',
-        items: [
-            {
-                routeLink: 'soli/veremp',
-                label: 'Registro Solicitud',
-            },
-            {
-                routeLink: 'soli/listemp',
-                label: 'Lista Solicitud',
-            }
-        ]
+        role: 'Responsable Empresa'
     },
     {
         routeLink: 'statistics',
@@ -126,24 +116,6 @@ export const navbarData: INavbarData[] = [
         label: 'Dashboard',
         role: 'Responsable Practicas'
     },
-    /* {
-        routeLink: 'media',
-        icon: 'fas fa-chalkboard-teacher',
-        label: 'Designación Tutores',
-        items: [
-            {
-                routeLink: 'practicas/lista-practicas',
-                label: 'Designación Tutor',
-                role: 'Responsable Practicas'
-            },
-            {
-                routeLink: 'coupens/create',
-                label: 'Listado Tutores',
-                role: 'Responsable Practicas'
-            }
-        ],
-        role: 'Responsable Practicas',
-    }, */
     {
         routeLink: 'empresa/register-empresa',
         icon: 'fas fa-building',

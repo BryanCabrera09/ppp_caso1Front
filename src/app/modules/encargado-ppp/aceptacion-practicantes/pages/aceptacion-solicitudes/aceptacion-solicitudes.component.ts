@@ -66,6 +66,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
                 practicante.correo = result.estudiante.usuario.correo;
                 practicante.estado = result.estado;
                 practicante.fechaEnvio = result.fechaEnvio;
+                this.estudiante = result.estudiante;
                 return practicante;
               }
             );
@@ -89,6 +90,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
         this.practestudiant.estado = 2;
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 3;
+        this.estudiante.prioridad = true;
       }
     } else if (this.practestudiant.estado === 2) {
       if (this.estado === 'aprobado') {
@@ -97,6 +99,8 @@ export class AceptacionSolicitudesComponent implements OnInit {
         this.practestudiant.estado = 1;
       }
     }
+
+    this.practestudiant.estudiante = this.estudiante;
 
     console.log(this.practestudiant.estado);
     this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(
