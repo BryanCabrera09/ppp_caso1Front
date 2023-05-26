@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Actividades propuestas</title>
 
 </head>
+
 <body>
   <div>
     <h1>Actividades propuestas</h1>
@@ -15,18 +17,16 @@
       <th>Objetivo</th>
       <th>Asignatura</th>
     </tr>
-    <tr >
+    <tr>
       <td>{{actividad.id}}</td>
       <td>{{this.descripcionObjetivo}}</td>
       <td>
         <div class="p-col-3 p-md-4">
-          <p-dropdown [options]="materia" [(ngModel)]="selectedMateria" name="practicantes"
-              optionLabel="nombre" optionValue="id" [filter]="true"
-              filterBy="nombre" [showClear]="true"
-              (onChange)="materiaid($event.value)"
-              placeholder="Seleccionar Rol Usuario">
+          <p-dropdown [options]="materia" [(ngModel)]="selectedMateria" name="practicantes" optionLabel="nombre"
+            optionValue="id" [filter]="true" filterBy="nombre" [showClear]="true" (onChange)="materiaid($event.value)"
+            placeholder="Seleccionar Materia">
           </p-dropdown>
-          </div>
+        </div>
       </td>
       <td>
        <button (click)="guardarmateria()">GUARDAR</button>
@@ -35,4 +35,5 @@
   </table>
   
 </body>
+
 </html>

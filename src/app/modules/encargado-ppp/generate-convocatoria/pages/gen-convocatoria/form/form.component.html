@@ -18,15 +18,9 @@
                     </div>
                 </div>
             </div>
-
         </p-panel>
     </div>
 </div>
-
-
-
-
-
 
 <div class="container">
     <div class="content">
@@ -39,8 +33,7 @@
                             <div class="p-col-3 p-md-4">
                                 <span class="p-float-label">
                                     <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="convoca.numero" [pKeyFilter]="blockSpecial" maxlength="100"
-                                        minlength="10" pInputText required />
+                                        [(ngModel)]="convoca.numero" [pKeyFilter]="blockSpecial" pInputText required />
                                     <label for="float-input">Convocatoria N°</label>
                                 </span>
                             </div>
@@ -49,21 +42,22 @@
                         <div class="col">
                             <div class="p-col-12 p-md-4">
                                 <span class="p-float-label">
-                                    <p-calendar [(ngModel)]="convoca.fechaFin" [minDate]="fechaActual" [showIcon]="true" [readonlyInput]="true"></p-calendar>
+                                    <p-calendar [(ngModel)]="convoca.fechaFin" [minDate]="fechaActual" [showIcon]="true"
+                                        appendTo="body" [readonlyInput]="true"></p-calendar>
                                     <label for="float-input">Fecha max</label>
                                 </span>
                             </div>
-
                         </div>
                     </div>
 
                     <div class="p-col-12 p-md-4">
                         <button pButton pRipple type="button" label="Crear Convocatoria" icon="pi pi-check"
-                          (click)="guardarConvoca()"  iconPos="right" class="p-button-rounded p-button-primary"></button>
+                            (click)="guardarConvoca()" iconPos="right"
+                            class="p-button-rounded p-button-primary"></button>
                     </div>
                     <div class="p-col-12 p-md-4">
-                        <button pButton pRipple type="button" label="Crear Convocatoria" icon="pi pi-check"
-                          (click)="generarPDF()"  iconPos="right" class="p-button-rounded p-button-primary"></button>
+                        <button pButton pRipple type="button" label="Generar PDF" icon="pi pi-check"
+                            (click)="generarPDF()" iconPos="right" class="p-button-rounded p-button-primary"></button>
                     </div>
 
                 </div>

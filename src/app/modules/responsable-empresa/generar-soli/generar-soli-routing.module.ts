@@ -6,16 +6,15 @@ import { VerEmpresaComponent } from './ver-empresa/ver-empresa.component';
 
 const routes: Routes = [
   {
-    path: 'lista',
+    path: 'lista/:id',
     component: SoliEstComponent,
-
-  },
+  },
   {
     path: 'listemp',
     component: ListaEmpresaComponent,
   },
   {
-    path: 'veremp',
+    path: 'veremp/:id',
     component: VerEmpresaComponent,
   },
 
