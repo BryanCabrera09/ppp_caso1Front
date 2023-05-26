@@ -1,0 +1,94 @@
+.container {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 15px;
+  position: sticky;
+  align-content: center;
+}
+
+.p-button-generate-pdf {
+  background-color: #ff0000;
+}
+
+.panel {
+  height: 500px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+#btnreg {
+  background-color: black;
+}
+
+#btnreg {
+  background-color: rgb(12, 12, 12);
+  border-bottom-color: rgb(2, 2, 2);
+  border-color: black;
+
+  color: white;
+  letter-spacing: 0.1rem;
+}
+
+#btnreg:hover,
+#btnreg:focus {
+  color: black;
+  border-bottom-color: rgb(8, 8, 8);
+
+  border-color: black;
+  background-color: rgb(13, 243, 166);
+}
+#panelregempresa {
+  margin: 20px;
+}
+
+/*SCROLL VIEW*/
+
+.over::-webkit-scrollbar {
+  width: 0px;
+  background-color: #fff;
+}
+
+.content-select i {
+  position: absolute;
+  right: 20px;
+  top: calc(50% - 13px);
+  width: 16px;
+  height: 16px;
+  display: block;
+  border-left: 4px solid #ffffff;
+  border-bottom: 4px solid #899790;
+  transform: rotate(-45deg); /* Giramos el cuadrado */
+  transition: all 0.25s ease;
+}
+
+.content-select:hover i {
+  margin-top: 3px;
+}
+
+.content-select {
+  max-width: 250px;
+  position: relative;
+}
+
+.content-select select {
+  display: inline-block;
+  width: 415px;
+  cursor: pointer;
+  padding: 7px 10px;
+  height: 42px;
+  outline: 0;
+  border: 0;
+  background: #ffffff;
+  color: #000000;
+  font-size: 1em;
+  font-family: "Quicksand", sans-serif;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.content-select select:hover {
+  background: #ffffff;
+}

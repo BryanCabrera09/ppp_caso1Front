@@ -28,13 +28,15 @@ import { PasswordModule } from 'primeng/password';
 import { TableModule } from 'primeng/table';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ProcesoSeleccionComponent } from './pages/gen-convocatoria/proceso-seleccion/proceso-seleccion.component';
 
 
 
 @NgModule({
   declarations: [
     GenConvocatoriaComponent,
-    FormComponent
+    FormComponent,
+    ProcesoSeleccionComponent
   ],
   imports: [
     CommonModule,

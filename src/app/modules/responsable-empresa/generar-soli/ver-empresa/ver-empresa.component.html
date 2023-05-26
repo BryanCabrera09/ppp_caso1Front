@@ -1,1 +1,15 @@
+<form (ngSubmit)="guardarActividades()">
+    <div *ngFor="let actividad of actividades; let i = index">
+      <label>Nombre:</label>
+      <input type="text" [(ngModel)]="actividad.nombre" name="nombre{{i}}" required>
+      <label>Descripción:</label>
+      <textarea [(ngModel)]="actividad.descripcion" name="descripcion{{i}}" required></textarea>
+      <button type="button" (click)="eliminarActividad(i)">Eliminar</button>
+    </div>
+  
+    <button type="button" (click)="agregarActividad()">Agregar actividad</button>
+    <button type="submit">Guardar actividades</button>
+  </form>
+  
 
+  <button (click)="generarPDF()">Generar PDF</button>

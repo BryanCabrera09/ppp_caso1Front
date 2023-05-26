@@ -13,7 +13,11 @@ const routes: Routes = [
   {
     path: 'calificacion',
     loadChildren: () => import("./calificacion/calificacion.module").then(m => m.CalificacionModule)
-  }
+  },
+  {
+path: 'anexos',
+  loadChildren: () => import("./anexos/anexos.module").then(m => m.AnexosModule)
+},
 ];
 
 @NgModule({

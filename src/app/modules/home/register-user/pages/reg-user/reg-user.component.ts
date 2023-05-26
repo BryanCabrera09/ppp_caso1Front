@@ -31,7 +31,7 @@ export class RegUserComponent implements OnInit {
   expCorreo: RegExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
   valCorreo: boolean = true;
 
-  constructor(private toastr: ToastrService, private router: Router, private userService: RegisterUserService, 
+  constructor(private toastr: ToastrService, private router: Router, private userService: RegisterUserService,
     private fenixService: UsersfenixService, private carreraService: CarreraMateriaService) { }
 
   ngOnInit() {
@@ -129,6 +129,9 @@ export class RegUserComponent implements OnInit {
           console.log(result);
           Swal.fire('Registro', 'Usuario registrado correctamente', 'success');
           this.router.navigate(['/login'])
+        },
+        (error) => {
+          console.log('Error:', error.error);
         }
       );
     };

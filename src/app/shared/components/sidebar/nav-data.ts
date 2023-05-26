@@ -20,7 +20,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
-        routeLink: '/sds',
+        routeLink: 'anexos/anexocho',
         icon: 'fa-solid fa-house',
         label: 'Reporte Final',
         role: 'Tutor Academico'
@@ -38,11 +38,11 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Empresa',
         items: [
             {
-                routeLink: 'products/level1.1',
+                routeLink: 'soli/veremp',
                 label: 'Registro Solicitud',
             },
             {
-                routeLink: 'products/level1.2',
+                routeLink: 'soli/listemp',
                 label: 'Lista Solicitud',
             }
         ]
@@ -76,8 +76,8 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: '/encargado-practicas/empresa/register',
-        icon: 'fal fa-file',
+        routeLink: 'postulacion/postulacion-estudiante',
+        icon: 'fas fa-file',
         label: 'Postulacion PPP',
         role: 'Practicante'
     },
@@ -89,7 +89,7 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: 'generate/report',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-book',
         label: 'Obligaciones del Estudiante',
         role: 'Practicante'
     },

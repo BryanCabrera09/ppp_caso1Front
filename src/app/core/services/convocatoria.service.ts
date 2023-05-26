@@ -9,13 +9,15 @@ import baserUrl from '../helpers/helperUrl';
 })
 export class ConvocatoriaService {
 
-  private baseURL="http://localhost:8080/convocatoria/listar";
-  private baseURL1="http://localhost:8080/convocatoria/crear";
+
+
+  private searchUrl = `${baserUrl}/convocatoria`;
+
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   constructor(private httpClient: HttpClient) { }
 
   obtenerConvocatoria():Observable<ConvocatoriaP[]>{
-    return this.httpClient.get<ConvocatoriaP[]>(`${this.baseURL}`)
+    return this.httpClient.get<ConvocatoriaP[]>(`${this.searchUrl}/listar`)
   }
   
   listarConvocatorias(): Observable<any> {
@@ -23,7 +25,11 @@ export class ConvocatoriaService {
   }
 
   guardaConvoca(convocatoria:ConvocatoriaP):Observable<ConvocatoriaP>{
-    return this.httpClient.post<ConvocatoriaP>(`${this.baseURL1}`,convocatoria,{headers: this.httpHeaders})
+    return this.httpClient.post<ConvocatoriaP>(`${this.searchUrl}/crear`,convocatoria,{headers: this.httpHeaders})
+  }
+
+  buscarxSolicitud(id:number){
+    return this.httpClient.get<ConvocatoriaP>(`${this.searchUrl}/buscar/solEmpresa/${id}`)
   }
  
 }

@@ -22,4 +22,8 @@ export class CalificacionService {
     return this.http.get<Calificacion[]>(url);
   }
 
+  buscarxPractica(id: number)/* : Observable<Calificacion[]>  */{
+    return this.http.get/* <Calificacion[]> */(`${this.searchUrl}/listar/practica/${id}`);
+  }
+  
 }

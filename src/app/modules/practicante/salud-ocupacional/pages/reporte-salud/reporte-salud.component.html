@@ -1,45 +1,46 @@
 <div class="card p-3">
-    <h2 class="mb-4">SALUD OCUPACIONAL Y ENTREGA DE EQUIPOS DE PROTECCIÓN PERSONAL</h2>
-  
-    <form (ngSubmit)="submitForm()">
-      <div *ngFor="let pregunta of preguntas" class="mb-3">
-        <label class="fw-bold">{{ pregunta }}</label>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="respuesta-{{ pregunta }}" value="si" [(ngModel)]="respuestas[pregunta]">
-          <label class="form-check-label">Si</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="respuesta-{{ pregunta }}" value="no" [(ngModel)]="respuestas[pregunta]">
-          <label class="form-check-label">No</label>
-        </div>
-        <input type="text" class="form-control mt-2" placeholder="observaciones" [(ngModel)]="observaciones[pregunta]">
+  <h2 class="mb-4">SALUD OCUPACIONAL Y ENTREGA DE EQUIPOS DE PROTECCIÓN PERSONAL</h2>
+
+  <form (ngSubmit)="submitForm()">
+    <div *ngFor="let pregunta of preguntas" class="mb-3">
+      <label class="fw-bold">{{ pregunta }}</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="respuesta-{{ pregunta }}" value="si" [(ngModel)]="respuestas[pregunta]">
+        <label class="form-check-label">Si</label>
       </div>
-  
-      <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-  
-    <h2 class="mt-4">Tabla de Datos</h2>
-  
-    <table class="table mt-3">
-      <thead>
-        <tr>
-          <th>Aspectos</th>
-          <th>Si</th>
-          <th>No</th>
-          <th>Observaciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let fila of tabla">
-          <td>{{ fila.pregunta }}</td>
-          <td>{{ fila.respuestaSi }}</td>
-          <td>{{ fila.respuestaNo }}</td>
-          <td>{{ fila.observaciones }}</td>
-        </tr>
-      </tbody>
-      
-    </table>
-  
-    <button (click)="generatePDF()" class="btn btn-primary">Generar PDF</button>
-  </div>
-  
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="respuesta-{{ pregunta }}" value="no" [(ngModel)]="respuestas[pregunta]">
+        <label class="form-check-label">No</label>
+      </div>
+      <input type="text" class="form-control mt-2" placeholder="Observaciones" name="observaciones-{{ pregunta }}" [(ngModel)]="observaciones[pregunta]">
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="guardado">Guardar</button>
+  </form>
+
+  <br>
+
+  <div *ngIf="mostrarMensaje" class="alert alert-warning">Debe responder todas las preguntas antes de guardar.</div>
+
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>Aspectos</th>
+        <th>Si</th>
+        <th>No</th>
+        <th>Observaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fila of tabla">
+        <td>{{ fila.pregunta }}</td>
+        <td>{{ fila.respuestaSi }}</td>
+        <td>{{ fila.respuestaNo }}</td>
+        <td>{{ fila.observaciones }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button (click)="generarPDF()" class="btn btn-primary">Generar PDF</button>
+
+</div>
