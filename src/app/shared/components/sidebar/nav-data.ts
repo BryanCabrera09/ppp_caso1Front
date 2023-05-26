@@ -101,7 +101,7 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: 'media',
+        routeLink: 'reporte/semanal',
         icon: 'fal fa-camera',
         label: 'Reporte Semanal de Actividades',
         role: 'Practicante'
