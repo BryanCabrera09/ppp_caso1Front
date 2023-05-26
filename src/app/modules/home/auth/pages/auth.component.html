@@ -15,48 +15,51 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-box ">
-            <div class="form-value">
-                <form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm)">
-                    <h2>Login</h2>
-                    <div class="inputbox">
-                        <ion-icon name="mail-outline"></ion-icon>
-                        <input id="username" name="username" type="email" [(ngModel)]="usuario.correo" required>
-                        <label for="">Email</label>
-                    </div>
-                    <div class="inputbox">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input type="password" id="password" name="password" [(ngModel)]="usuario.password" required>
-                        <label for="">Password</label>
-                    </div>
-                    <div class="forget">
-                        <label for=""><input type="checkbox">Remember Me
-                            <!-- <a href="#">Forget Password</a> --></label>
-                    </div>
+            <div class="col-md-6">
+                <div class="form-box">
+                    <div class="form-value">
+                        <form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm)">
+                            <h2>Login</h2>
+                            <div class="inputbox">
+                                <ion-icon name="mail-outline"></ion-icon>
+                                <input id="username" name="username" type="email" [(ngModel)]="usuario.correo" required>
+                                <label for="">Email</label>
+                            </div>
+                            <div class="inputbox">
+                                <ion-icon name="lock-closed-outline"></ion-icon>
+                                <input type="password" id="password" name="password" [(ngModel)]="usuario.password"
+                                    required>
+                                <label for="">Password</label>
+                            </div>
+                            <div class="forget">
+                                <label for=""><input type="checkbox">Remember Me
+                                    <!-- <a href="#">Forget Password</a> --></label>
+                            </div>
 
-                    <div class="inputbox2 ">
-                        <button class="btn btn-success" type="submit">Iniciar Sesión</button>
+                            <div class="inputbox2 ">
+                                <button class="btn btn-success" type="submit">Iniciar Sesión</button>
+                            </div>
+
+                            <div class="inputbox2 col-12 text-center">
+                                ó
+                            </div>
+                            <!-- <div class="inputbox2  col-12 text-center">
+                                <div id="buttonDiv"></div>
+                            </div> -->
+
+                            <!-- <div class="inputbox2 col-12 text-center">
+                                <button style="color: aliceblue;" class="btn btn-info" (click)="logInGoogle()">Login With
+                                    Google</button>
+                            </div> -->
+
+                            <div class="register">
+                                <p>Don't have a account <a (click)="createAccout()" onclick="return false">¿No
+                                        tienes cuenta?</a></p>
+                            </div>
+
+                        </form>
                     </div>
-
-                    <div class="inputbox2 col-12 text-center">
-                        ó
-                    </div>
-                    <!-- <div class="inputbox2  col-12 text-center">
-                        <div id="buttonDiv"></div>
-                    </div> -->
-
-                    <!-- <div class="inputbox2 col-12 text-center">
-                        <button style="color: aliceblue;" class="btn btn-info" (click)="logInGoogle()">Login With
-                            Google</button>
-                    </div> -->
-
-                    <div class="register">
-                        <p>Don't have a account <a (click)="createAccout()" onclick="return false">¿No
-                                tienes cuenta?</a></p>
-                    </div>
-
-                </form>
+                </div>
             </div>
         </div>
     </div>
