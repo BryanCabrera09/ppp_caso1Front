@@ -5,21 +5,28 @@ import { Observable } from 'rxjs';
 import { Objetivomateria } from "../models/objetivo-materia";
 
 @Injectable({
-    providedIn: 'root'
-  })
+  providedIn: 'root'
+})
 
-export class ObjetivoMateriaService{
-    private ObjUrl = `${baserUrl}/objetivoMateria`;
+export class ObjetivoMateriaService {
 
-    constructor(private http: HttpClient) { }
+  private ObjUrl = `${baserUrl}/objetivoMateria`;
 
-    Listarob(): Observable<Objetivomateria[]> {
-        return this.http.get<Objetivomateria[]>(`${this.ObjUrl}/listar`);
-      }
-    Guardarobj(objetivo:Objetivomateria): Observable<Objetivomateria>{
-      return this.http.post<Objetivomateria>(`${this.ObjUrl}/crear`, objetivo);
-    }
-    listarxmateria(id: number): Observable<Objetivomateria[]>{
-      return this.http.get<Objetivomateria[]>(`${this.ObjUrl}/listarxmateria/${id}`);
-    }
+  constructor(private http: HttpClient) { }
+
+  Listarob(): Observable<Objetivomateria[]> {
+    return this.http.get<Objetivomateria[]>(`${this.ObjUrl}/listar`);
+  }
+
+  Guardarobj(objetivo: Objetivomateria): Observable<Objetivomateria> {
+    return this.http.post<Objetivomateria>(`${this.ObjUrl}/crear`, objetivo);
+  }
+
+  listarxmateria(id: number): Observable<Objetivomateria[]> {
+    return this.http.get<Objetivomateria[]>(`${this.ObjUrl}/listarxmateria/${id}`);
+  }
+
+  eliminarObjetivo(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.ObjUrl}/eliminar/${id}`);
+  }
 }

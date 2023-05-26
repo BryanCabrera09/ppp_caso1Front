@@ -20,6 +20,9 @@ export class HeaderHomeComponent {
     } else if (this.router.url === '/login') {
       this.activeLink = '';
       this.activeLink = 'login';
+    } else if (this.router.url === '/mision-vision-principios') {
+      this.activeLink = '';
+      this.activeLink = 'info';
     }
   }
 
@@ -27,6 +30,12 @@ export class HeaderHomeComponent {
 
     this.activeLink = 'home';
     this.router.navigate(['/'])
+  }
+
+  goToInfo(): void {
+
+    this.activeLink = 'info';
+    this.router.navigate(['/mision-vision-principios'])
   }
 
   goToLogin(): void {

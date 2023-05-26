@@ -76,7 +76,8 @@
             <nav class="nav nav-masthead justify-content-center float-md-end">
                 <a class="nav-link fw-bold py-1 px-0" [ngClass]="{'active': activeLink === 'home'}"
                     (click)="goToHome()">Home</a>
-                <a class="nav-link fw-bold py-1 px-0" href="#">Misión y Visión</a>
+                <a class="nav-link fw-bold py-1 px-0" [ngClass]="{'active': activeLink === 'info'}"
+                    (click)="goToInfo()">Misión y Visión</a>
                 <a class="nav-link fw-bold py-1 px-0" [ngClass]="{'active': activeLink === 'login'}"
                     (click)="goToLogin()">Inciar Sesión</a>
             </nav>

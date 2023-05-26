@@ -52,7 +52,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
       let id = params['id']
       console.log(id)
       if (id) {
-        this.solicitudService.getPostulantes(id).subscribe(
+        this.solicitudService.getPostulantesByEstadoPend(id).subscribe(
           data => {
             console.log(this.practicantes);
             this.practicantes = data.map(
@@ -97,9 +97,6 @@ export class AceptacionSolicitudesComponent implements OnInit {
         this.practestudiant.estado = 1;
       }
     }
-
-
-    //this.practestudiant.fechaEnvio = new Date();
 
     console.log(this.practestudiant.estado);
     this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(

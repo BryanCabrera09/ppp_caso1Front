@@ -1,120 +1,139 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Carrera } from 'src/app/core/models/carrera';
 import { Materia } from 'src/app/core/models/materia';
 import { Objetivomateria } from 'src/app/core/models/objetivo-materia';
 import { CarreraMateriaService } from 'src/app/core/services/carrera-materia.service';
 import { ObjetivoMateriaService } from 'src/app/core/services/objetivos-materia.service';
-import {MateriaService} from 'src/app/core/services/materia.service';
-import { NgForm } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MateriaService } from 'src/app/core/services/materia.service';
 import Swal from 'sweetalert2';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-reg-objetivos',
   templateUrl: './reg-objetivos.component.html',
   styleUrls: ['./reg-objetivos.component.css'],
 })
-export class RegObjetivosComponent implements OnInit{
-  
-  public objetivo:Objetivomateria =new Objetivomateria();
-  public materia:Materia= new Materia();
-  public carrera:Carrera= new Carrera();
-  Objetivomateria: Objetivomateria[]
-  Carreras: Carrera[] = []
-  MateriasO : Materia[]
+export class RegObjetivosComponent implements OnInit {
 
+  objetivo: Objetivomateria = new Objetivomateria();
+  materia: Materia = new Materia();
+  carrera: Carrera = new Carrera();
 
+  objetivosMateria: Objetivomateria[];
+  carreras: Carrera[] = [];
+  materias: Materia[];
 
-  constructor(private objetivomateriaservice:ObjetivoMateriaService,private carreraService: CarreraMateriaService, private materiaService: MateriaService) {
-    this.carreraService.ListarCarrera().subscribe(
-      Carr => this.Carreras = Carr
-    )
-  }
-  
+  loading: boolean = true;
+  displayPopup: boolean = false;
+  displayPopups: boolean = false;
+
+  selectedCarrera: string;
+  selectedMateria: string;
+
+  constructor(private objetivomateriaservice: ObjetivoMateriaService, private carreraService: CarreraMateriaService, private materiaService: MateriaService,
+    private toastr: ToastrService) { }
+
   ngOnInit() {
-    this.objetivomateriaservice.Listarob().subscribe(
-      obj=> this.Objetivomateria=obj
-      
-    )
-    
-    this.materiaService.Listarmateria().subscribe(
-      mat => this.MateriasO=mat
+
+    this.cleanCampos();
+    this.obtenerObjetivs();
+
+
+    this.carreraService.ListarCarrera().subscribe(
+      data => {
+        this.carreras = data;
+      }
     )
 
-    
+    this.materiaService.Listarmateria().subscribe(
+      data => {
+        this.materias = data;
+      }
+    )
   }
-  
-  displayStyle = "none";
-  displayStyle2 = "none";
-  
+
+  obtenerObjetivs() {
+    this.objetivomateriaservice.Listarob().subscribe(
+      data => {
+        this.objetivosMateria = data;
+      }
+    )
+    this.loading = false;
+  }
+
+  cleanCampos() {
+    this.selectedCarrera = null;
+    this.selectedMateria = null;
+    this.objetivo = new Objetivomateria;
+    this.materia = new Materia;
+    this.carrera = new Carrera;
+  }
+
   openPopup() {
-    this.displayStyle = "block";
-  }
-  closePopup() {
-    this.displayStyle = "none";
+    this.cleanCampos();
+    this.displayPopup = true;
   }
   openPopups() {
-    this.displayStyle2 = "block";
-  }
-  closePopups() {
-    this.displayStyle2 = "none";
+    this.cleanCampos();
+    this.displayPopups = true;
   }
 
+  eliminarObjetivo(id: any) {
+    this.objetivomateriaservice.eliminarObjetivo(id).subscribe(
+      result => {
+        this.toastr.error("Objetivo Materia Eliminada", "");
+        this.obtenerObjetivs();
+      })
+  }
 
-  Carreracon(e: any) {
-    this.carreraService.searchCarrera(e.target.value).subscribe(
+  carreraCon(value) {
+    this.carreraService.searchCarrera(value).subscribe(
       (data: Carrera) => {
-        this.carrera= data
-        
-        
+        this.carrera = data
       }
     )
   }
 
-  Materiacon(e: any){
-    this.materiaService.buscarMateria(e.target.value).subscribe(
+  materiaCon(value) {
+    this.materiaService.buscarMateria(value).subscribe(
       (data: Materia) => {
-        this.materia= data
+        this.materia = data
       }
     )
   }
 
-  GuardarAsignatura(asignatura: any) {
-    
+  GuardarAsignatura() {
+
     this.materia.carrera = this.carrera
-    this.materiaService.guardarcar(this.materia).subscribe(
-      (data)=>{
+    this.materiaService.guardarCarrera(this.materia).subscribe(
+      (data) => {
         console.log(data);
         this.ngOnInit();
-        Swal.fire('Asignatura Guardado', 'Asignatura Guardado con exito en el sistema','success');
+        Swal.fire('Asignatura Guardado', 'Asignatura Guardado con exito en el sistema', 'success');
 
-      },(error)=>{
+      }, (error) => {
         console.log(error);
-        Swal.fire('Error','Nose Guardo la Asignatura', 'error');
+        Swal.fire('Error', 'Nose Guardo la Asignatura', 'error');
       }
     );
-    localStorage.removeItem('asignatura')
-    this.closePopups();
+    localStorage.removeItem('asignatura');
 
   }
 
-  GuardarObjeto(objetivo: any, prueba:string) {
-    objetivo.descripcion = prueba;
+  GuardarObjeto() {
+
     this.objetivo.materia = this.materia
     this.objetivomateriaservice.Guardarobj(this.objetivo).subscribe(
-      (data)=>{
+      (data) => {
         console.log(data);
         this.ngOnInit();
-        Swal.fire('Objetivo Guardado','Objetivo Guardado con Exito','success');
-
-      },(error)=>{
+        Swal.fire('Objetivo Guardado', 'Objetivo Guardado con Exito', 'success');
+      }, (error) => {
         console.log(error);
-        Swal.fire('Error','Objetivo no se Pudo Guardar','error');
+        Swal.fire('Error', 'Objetivo no se Pudo Guardar', 'error');
       }
     );
-      localStorage.removeItem('objetivo');
-      this.closePopup();
+    localStorage.removeItem('objetivo');
   }
 
 }
