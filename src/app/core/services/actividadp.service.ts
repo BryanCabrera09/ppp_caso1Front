@@ -24,7 +24,14 @@ export class ActividadpService {
   }
 
   actividadBySolicitud(id: number): Observable<Actividad[]> {
-    return this.httpClient.get<Actividad[]>(`${this.baseURL}/buscar/${id}`);
+    return this.httpClient.get<Actividad[]>(`${this.baseURL}/listarxSolicitudEmpresa2`, { params: { id } });
   }
 
+  registerActividad(actividad: Actividad) {
+    return this.httpClient.post(this.baseURL + '/crear', actividad);
+  }
+
+  eliminarActividad(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseURL}/eliminar/${id}`);
+  }
 }

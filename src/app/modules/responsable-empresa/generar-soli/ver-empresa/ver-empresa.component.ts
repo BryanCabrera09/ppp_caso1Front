@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Actividad } from 'src/app/core/models/actividad';
+import { SolicitudEmpresa } from 'src/app/core/models/solicitud-empresa';
+import { ActividadpService } from 'src/app/core/services/actividadp.service';
+import { SoliEmpresaService } from 'src/app/core/services/soli-empresa.service';
+import Swal from 'sweetalert2';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -9,26 +16,69 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   templateUrl: './ver-empresa.component.html',
   styleUrls: ['./ver-empresa.component.css']
 })
-export class VerEmpresaComponent {
+export class VerEmpresaComponent implements OnInit {
+
   actividades: Actividad[] = [];
 
+  actividad = new Actividad;
+  solicitudEmpresa = new SolicitudEmpresa;
+  loading: boolean = true;
 
-  agregarActividad() {
-    this.actividades.push({ nombre: '', descripcion: '' });
+  constructor(private actividadService: ActividadpService, private toastr: ToastrService, private activatedRoute: ActivatedRoute, private solicitudSerice: SoliEmpresaService) { }
+
+  ngOnInit() {
+    this.obtenerActividades();
+    this.obtenerSolicitud();
   }
 
-  eliminarActividad(index: number) {
-    this.actividades.splice(index, 1);
+  guardarActividad() {
+
+    this.actividadService.registerActividad(this.actividad).subscribe(
+      result => {
+        this.toastr.success("Actividad Creada", "Success");
+        this.actividad.descripcion = '';
+        this.obtenerActividades();
+      });
   }
 
-  guardarActividades() {
-    // Aquí puedes realizar cualquier lógica adicional para guardar las actividades,
-    // como enviar la lista al servidor o almacenarla en el almacenamiento local.
-
-    // Por ahora, simplemente mostraremos las actividades en la consola.
-    console.log(this.actividades);
+  obtenerSolicitud() {
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      console.log(id)
+      if (id) {
+        this.solicitudSerice.buscarxID(id).subscribe(
+          (data: SolicitudEmpresa) => {
+            this.solicitudEmpresa = data;
+            this.actividad.solicitudEmpresa = this.solicitudEmpresa;
+          }
+        )
+      }
+    });
   }
 
+  eliminarActividad(id: any) {
+    this.actividadService.eliminarActividad(id).subscribe(
+      result => {
+        this.toastr.error("Actividad Eliminada", "");
+        this.actividad.descripcion = '';
+        this.obtenerActividades();
+      })
+  }
+
+  obtenerActividades() {
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      console.log(id)
+      if (id) {
+        this.actividadService.actividadBySolicitud(id).subscribe(
+          result => {
+            this.actividades = result;
+          }
+        );
+      }
+    });
+    this.loading = false;
+  }
 
   generarPDF() {
     const documentDefinition = {
@@ -38,7 +88,7 @@ export class VerEmpresaComponent {
         ...this.actividades.map(actividad => {
           return [
             { text: 'Nombre:', style: 'subheader' },
-            { text: actividad.nombre },
+            { text: this.actividad.descripcion },
             { text: 'Descripción:', style: 'subheader' },
             { text: actividad.descripcion },
             { text: ' ', style: 'space' },
@@ -60,13 +110,8 @@ export class VerEmpresaComponent {
         },
       },
     };
-  
+
     pdfMake.createPdf(documentDefinition).open();
   }
 
 }
-
-  interface Actividad {
-    nombre: string;
-    descripcion: string;
-  }

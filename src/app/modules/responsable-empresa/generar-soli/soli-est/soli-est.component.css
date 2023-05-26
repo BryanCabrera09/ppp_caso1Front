@@ -1,69 +1,90 @@
-.card {
-  width: 50%;
-  height: 50%;
-  background: #c6c3c3;
-  position: relative;
-  display: flex;
-  color: #000000;
-  place-content: center;
-  place-items: center;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  border-radius: 20px;
-  padding-right: 10%;
-   /* ajusta el ancho según sea necesario */
-  margin:  auto;
-  margin-bottom: 10%;
-  margin-top: 5%;
-  text-align: center;
-  
-}
-
-.card h2 {
-  z-index: 1;
-  color: rgb(252, 252, 252);
-  font-size: 2em;
-  width: 120%;
-  margin-bottom: 10%;
-  margin-left: 60% ;
-}
-
-h2 {
-  z-index: 1;
-  color: rgb(35, 142, 213);
-  font-size: 2em;
-  width: 120%;
-  margin-bottom: 20%;
- 
-  margin-right: 40% ;
-}
-
-.card-body {
-  /*display: flex;
-  justify-content: flex-end;*/
-}
-
-.button{
-  width: 80%;
-  max-width: 200px;
-  padding: 10% 20%;
-  font-size: 1em;
-  border: none;
-  border-radius: 5px;
-  background-color: #cdcecd;
-  color: #fff;
-  margin-bottom: 20px;
-}
-
-.crear{
+.container {
   width: 100%;
-  max-width: 50%;
-  padding: 10px 20px;
+  background-color: #fff;
+  border-radius: 15px;
+  position: sticky;
+  align-content: center;
+}
+
+.panel {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#btnreg {
+  background-color: black;
+}
+
+#btnreg {
+  background-color: rgb(12, 12, 12);
+  border-bottom-color: rgb(2, 2, 2);
+  border-color: black;
+
+  color: white;
+  letter-spacing: 0.1rem;
+}
+
+#btnreg:hover,
+#btnreg:focus {
+  color: black;
+  border-bottom-color: rgb(8, 8, 8);
+
+  border-color: black;
+  background-color: rgb(13, 243, 166);
+}
+#panelregempresa {
+  margin: 20px;
+}
+
+/*SCROLL VIEW*/
+
+.over::-webkit-scrollbar {
+  width: 0px;
+  background-color: #fff;
+}
+
+.content-select i {
+  position: absolute;
+  right: 20px;
+  top: calc(50% - 13px);
+  width: 16px;
+  height: 16px;
+  display: block;
+  border-left: 4px solid #ffffff;
+  border-bottom: 4px solid #899790;
+  transform: rotate(-45deg); /* Giramos el cuadrado */
+  transition: all 0.25s ease;
+}
+
+.content-select:hover i {
+  margin-top: 3px;
+}
+
+.content-select {
+  max-width: 250px;
+  position: relative;
+}
+
+.content-select select {
+  display: inline-block;
+  width: 415px;
+  cursor: pointer;
+  padding: 7px 10px;
+  height: 42px;
+  outline: 0;
+  border: 0;
+  background: #ffffff;
+  color: #000000;
   font-size: 1em;
-  border: none;
+  font-family: "Quicksand", sans-serif;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  background-color: #2cd83b;
-  color: #fff;
-  margin-bottom: 20px;
-  border-left: -20%;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.content-select select:hover {
+  background: #ffffff;
 }

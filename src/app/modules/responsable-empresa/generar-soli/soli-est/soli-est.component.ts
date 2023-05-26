@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Convenio } from 'src/app/core/models/convenio';
 import { Empresa } from 'src/app/core/models/empresa';
 import { SolicitudEmpresa } from 'src/app/core/models/solicitud-empresa';
@@ -15,58 +16,56 @@ import Swal from 'sweetalert2';
   styleUrls: ['./soli-est.component.css']
 })
 export class SoliEstComponent implements OnInit {
-  public convenio:Convenio = new Convenio();
-  public soliempresa:SolicitudEmpresa = new SolicitudEmpresa();
-  public empresas:Empresa = new Empresa();
-  SolicitudA :SolicitudEmpresa[];
+
+  convenio: Convenio = new Convenio();
+  soliempresa: SolicitudEmpresa = new SolicitudEmpresa();
+  empresas: Empresa = new Empresa();
+  SolicitudA: SolicitudEmpresa[];
+
   selectedDate: Date;
-  fechaI:Date;
-  fechaF: Date=  new Date;
-  id :number = 0
+  fechaI: Date;
+  fechaF: Date = new Date;
 
+  fechaActual: Date = new Date();
 
-  constructor( private solicitudEmService:SoliEmpresaService, private empservicio:RegEmpresaServiceService,
-    private convenioService:ConvenioService){
-
-  }
+  constructor(private solicitudEmService: SoliEmpresaService, private router: Router,
+    private convenioService: ConvenioService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-   this.guardaremp()
+    this.guardarEmp();
   }
 
-  guardaremp(){
-    const convenio = JSON.parse(localStorage.getItem('IdCon') + '');
-    this.id = parseInt(convenio)
-
-    this.convenioService.Buscarcon(this.id).subscribe(
-      (data: Convenio) => {
-        this.convenio= data
-        this.soliempresa.convenio = this.convenio
-
-        
+  guardarEmp() {
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      console.log(id)
+      if (id) {
+        this.convenioService.Buscarcon(id).subscribe(
+          (data: Convenio) => {
+            this.convenio = data
+            this.soliempresa.convenio = this.convenio
+          }
+        )
       }
-    )
+    });
   }
 
+  Guardarsoli() {
 
+    this.soliempresa.fechaInicioTen = this.fechaI;
+    this.soliempresa.fechaMaxTen = this.fechaF;
+    this.soliempresa.estado = 1;
 
-  Guardarsoli(reg:NgForm){
-    this.soliempresa.fechaInicioTen = this.fechaI
-    this.soliempresa.fechaMaxTen = this.fechaF
-    this.soliempresa.estado = 1
-    
     this.solicitudEmService.guardarsolicitud(this.soliempresa).subscribe(
-      (data) => {
+      (data: SolicitudEmpresa) => {
         console.log(data);
-        const soliid=data.id
-        console.log(soliid)
-        this.ngOnInit();
-        Swal.fire('Solicitud guardado','Solicitud Guadado con exito','success');
-      },(error) =>{
+        Swal.fire('Solicitud guardado', 'Solicitud Guadada con exito', 'success');
+        this.router.navigate(['responsable-empresa/soli/veremp/' + data.id]);
+      }, (error) => {
         console.log(error);
-        Swal.fire('Error', 'Solicitud no se pudo Guardar','error');
+        Swal.fire('Error', 'Solicitud no se pudo Guardar', 'error');
       }
     )
   };
-  
+
 }

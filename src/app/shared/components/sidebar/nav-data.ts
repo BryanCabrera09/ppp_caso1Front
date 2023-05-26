@@ -32,20 +32,10 @@ export const navbarData: INavbarData[] = [
         role: 'Responsable Empresa'
     },
     {
-        routeLink: 'products',
-        icon: 'fal fa-box-open',
+        routeLink: 'soli/listemp',
+        icon: 'fas fa-paper-plane',
         label: 'Envio de Solicitud',
-        role: 'Responsable Empresa',
-        items: [
-            {
-                routeLink: 'soli/veremp',
-                label: 'Registro Solicitud',
-            },
-            {
-                routeLink: 'soli/listemp',
-                label: 'Lista Solicitud',
-            }
-        ]
+        role: 'Responsable Empresa'
     },
     {
         routeLink: 'statistics',
