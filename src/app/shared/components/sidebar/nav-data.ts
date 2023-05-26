@@ -14,7 +14,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
-        routeLink: '/tutor-academico/plan-aprendizaje/practica-tutor',
+        routeLink: '/tutor-academico/calificacion/practica-tutor',
         icon: 'fa-solid fa-house',
         label: 'Evaluación de Prácticas',
         role: 'Tutor Academico'
@@ -193,7 +193,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Especifico'
     },
     {
-        routeLink: '/tutor-especifico/plan-aprendizaje/practica-tutor',
+        routeLink: '/tutor-especifico/calificacion/practica-tutor',
         icon: 'fal fa-camera',
         label: 'Evaluación del Estudiante',
         role: 'Tutor Especifico'
