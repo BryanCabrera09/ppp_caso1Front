@@ -5,26 +5,26 @@ import { Observable } from 'rxjs';
 import { Materia } from "../models/materia";
 
 @Injectable({
-    providedIn: 'root'
-  })
+  providedIn: 'root'
+})
 
 export class MateriaService {
-    private ObjUrl = `${baserUrl}/materia`;
+  private ObjUrl = `${baserUrl}/materia`;
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    buscarMateria(id:number){
-        return this.http.get(`${this.ObjUrl}/buscar/${id}`);
-    }
+  buscarMateria(id: number) {
+    return this.http.get(`${this.ObjUrl}/buscar/${id}`);
+  }
 
-    Listarmateria(): Observable<Materia[]> {
-        return this.http.get<Materia[]>(`${this.ObjUrl}/listar`);
-      }
-    guardarcar(materia:Materia):Observable<Materia>{
-      return this.http.post<Materia>(`${this.ObjUrl}/crear`,materia);
-    }
+  Listarmateria(): Observable<Materia[]> {
+    return this.http.get<Materia[]>(`${this.ObjUrl}/listar`);
+  }
+  guardarCarrera(materia: Materia): Observable<Materia> {
+    return this.http.post<Materia>(`${this.ObjUrl}/crear`, materia);
+  }
 
-    buscarmateriaxcarrera(id:number): Observable<Materia[]>{
-      return this.http.get<Materia[]>(`${this.ObjUrl}/buscar/carrera/${id}`);
+  buscarmateriaxcarrera(id: number): Observable<Materia[]> {
+    return this.http.get<Materia[]>(`${this.ObjUrl}/buscar/carrera/${id}`);
   }
 }

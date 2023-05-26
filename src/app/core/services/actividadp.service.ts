@@ -27,10 +27,8 @@ export class ActividadpService {
     return this.httpClient.get<Actividad[]>(`${this.baseURL}/listarxSolicitudEmpresa2`, { params: { id } });
   }
 
-
-  editar(id: number, entidad: Actividad): Observable<Actividad> {
-    const url = `${this.baseURL}/editar/${id}`;
-    return this.httpClient.post<Actividad>(url, entidad);
+  editar(id: number, actividad: Actividad): Observable<any> {
+    return this.httpClient.post(`${this.baseURL}/editar/${id}`, actividad);
   }
 
   registerActividad(actividad: Actividad) {

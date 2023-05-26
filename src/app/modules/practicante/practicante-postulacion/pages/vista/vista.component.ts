@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Actividad } from 'src/app/core/models/actividad';
 import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
 import { SolicitudEmpresa } from 'src/app/core/models/solicitud-empresa';
@@ -16,19 +16,17 @@ import { Usuario } from 'src/app/core/models/usuario';
 })
 export class VistaComponent implements OnInit {
 
-  convocatoriap:ConvocatoriaP[];
-  actividades:Actividad[];
+  convocatoriap: ConvocatoriaP[];
+  actividades: Actividad[];
   enabledButton: boolean;
   displayEU: boolean;
-  actividad:Actividad;
+  actividad: Actividad;
   convocatoria: ConvocatoriaP;
- 
-  user : Usuario;
 
-  constructor(private convocatoriaService:ConvocatoriaService,
-    private actividadservice:ActividadpService,private route: ActivatedRoute){}
-  
- 
+  user: Usuario;
+
+  constructor(private convocatoriaService: ConvocatoriaService,
+    private actividadservice: ActividadpService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('userdetails') || "");
@@ -37,26 +35,26 @@ export class VistaComponent implements OnInit {
       console.log(this.convocatoria);
       this.obtenerActividadid(this.convocatoria.solicitudEmpresa.id)
     });
- this.obtenerConvocatoria();
+    this.obtenerConvocatoria();
 
   }
 
-  private obtenerConvocatoria(){
-    this.convocatoriaService.obtenerConvocatoria().subscribe(dato =>{this.convocatoriap=dato;})
+  private obtenerConvocatoria() {
+    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
   }
 
 
-  obtenerActividadid(id : number) {
-  
-    this.actividadservice.obtenerActividadid(id).subscribe( 
-      (data)=>{
-        this.actividades=data;
+  obtenerActividadid(id: number) {
+
+    this.actividadservice.obtenerActividadid(id).subscribe(
+      (data) => {
+        this.actividades = data;
         console.log(this.actividades);
-        this.actividad=this.actividades[0];
-        console.log("actividad"+this.actividad)
+        this.actividad = this.actividades[0];
+        console.log("actividad" + this.actividad)
       }
     )
-  
+
   }
 
   getBase64ImageFromAssets(imagePath: string): Promise<string> {
@@ -92,7 +90,7 @@ export class VistaComponent implements OnInit {
     //Logo Ista 
     const imageData = await this.getBase64ImageFromAssets("assets/images/Logo-ISTA.png");
 
-    pdfMake.vfs = pdfFonts.pdfMake.vfs 
+    pdfMake.vfs = pdfFonts.pdfMake.vfs
 
     // definir las márgenes del documento
     var marginLeft = 74;
@@ -124,12 +122,16 @@ export class VistaComponent implements OnInit {
           lineHeight: 1.5
         },
         {
-          text: '\nMagíster\n'+this.convocatoria.solicitudEmpresa.convenio.firmaInst.usuario.nombre+'\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA '+this.convocatoria.solicitudEmpresa.convenio.carrera.nombre+'\nEn su Despacho. -\n\nDe mi consideración:',
+          text: '\nMagíster\n' + this.convocatoria.solicitudEmpresa.convenio.firmaInst.usuario.nombre + '\nRESPONSABLE DE PRÁCTICAS PRE PROFESIONALES DE LA CARRERA ' + this.convocatoria.solicitudEmpresa.convenio.carrera.nombre + '\nEn su Despacho. -\n\nDe mi consideración:',
           style: 'body',
           lineHeight: 1.5
         },
         {
-          text: ['Por medio de la presente, Yo,'+this.user.nombre+' '+this.user.apellido+', con número de cédula '+this.user.cedula+', estudiante del quinto ciclo del periodo académico '+this.user.periodo+' de la carrera de Tecnología Superior en Desarrollo de Software, solicito comedidamente se autorice mi postulación para realizar las 240 horas de prácticas pre profesionales en la empresa '+this.convocatoria.solicitudEmpresa.convenio.empresa.nombre+'. según solicitud: CONVOCATORIA '+this.convocatoria.fechaInicio+' ' +this.convocatoria.fechaFin+'.'],
+          text: ['Por medio de la presente, Yo, ' + this.user.nombre.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ') + ' ' + this.user.apellido.split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+              .join(' ') + ', con número de cédula ' + this.user.cedula + ', estudiante del quinto ciclo del periodo académico ' + this.user.periodo + ' de la carrera de Tecnología Superior en Desarrollo de Software, solicito comedidamente se autorice mi postulación para realizar las 240 horas de prácticas pre profesionales en la empresa ' + this.convocatoria.solicitudEmpresa.convenio.empresa.nombre + '. según solicitud: CONVOCATORIA ' + this.convocatoria.fechaInicio + ' ' + this.convocatoria.fechaFin + '.'],
           style: 'body'
         },
         {
@@ -145,11 +147,15 @@ export class VistaComponent implements OnInit {
           style: 'subheader'
         },
         {
-          text: '\n\n\n\n_______________________\n'+this.user.nombre+' '+this.user.apellido+'\n'+this.user.telefono+'\n'+this.user.correo+'',
-          style: 'body'
+          text: '\n\n\n\n_______________________\n' + this.user.nombre.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ') + ' ' + this.user.apellido.split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+              .join(' ') + '\n' + this.user.telefono + '\n' + this.user.correo + '',
+          style: 'signature'
         },
-       
-    
+
+
 
       ],
       styles: {
@@ -168,8 +174,9 @@ export class VistaComponent implements OnInit {
           alignment: 'justify',
           lineHeight: 1.15
         },
-        bold: {
+        signature: {
           bold: true,
+          alignment: 'center',
         },
       }
     };
@@ -180,7 +187,7 @@ export class VistaComponent implements OnInit {
   }
 
 
- 
+
 
 
 }

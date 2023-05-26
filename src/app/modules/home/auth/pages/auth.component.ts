@@ -8,6 +8,7 @@ import { getCookie } from 'typescript-cookie';
 import jwt_decode from 'jwt-decode';
 
 import { catchError, throwError } from 'rxjs';
+import { ConvocatoriaService } from 'src/app/core/services/convocatoria.service';
 
 @Component({
   selector: 'app-auth',
@@ -24,9 +25,18 @@ export class AuthComponent implements OnInit {
   authStatus: string;
   usuario = new Usuario();
 
-  constructor(private loginService: AuthService, private router: Router, private toastr: ToastrService) { }
+  convocatorias: any[];
 
-  ngOnInit(): void { }
+  constructor(private loginService: AuthService, private router: Router, private toastr: ToastrService,
+    private convocatoriaService: ConvocatoriaService) { }
+
+  ngOnInit() {
+    this.convocatoriaService.listarConvocatorias().subscribe(
+      data => {
+        this.convocatorias = data.body;
+        console.log(this.convocatorias);
+      });
+  }
 
   loginUser(loginForm: NgForm) {
     this.loginService.validateLoginDetails(this.usuario).pipe(

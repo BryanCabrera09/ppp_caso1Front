@@ -21,6 +21,14 @@ export class SolipracticantesService {
     return this.http.get<Practicante[]>(`${this.convocatoriaUrl}/listarxconvocatoria2`, { params: { id } });
   }
 
+  getPostulantesByEstadoPend(id: number): Observable<Practicante[]> {
+    return this.http.get<Practicante[]>(`${this.convocatoriaUrl}/listarpendientesxconvocatoria`, { params: { id } });
+  }
+
+  getPostulantesByEstadoAprob(id: number): Observable<Practicante[]> {
+    return this.http.get<Practicante[]>(`${this.convocatoriaUrl}/listaraprobadasxconvocatoria`, { params: { id } });
+  }
+
   updatePostulacion(practicante: Practicante, id: number): Observable<any> {
     return this.http.post(`${this.convocatoriaUrl}/editar/${id}`, practicante);
   }

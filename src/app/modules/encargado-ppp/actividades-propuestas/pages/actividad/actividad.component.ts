@@ -9,17 +9,17 @@ import { ActividadpService } from 'src/app/core/services/actividadp.service';
 })
 export class ActividadComponent implements OnInit {
 
-  actividad:Actividad[];
+  actividad: Actividad[];
 
   ngOnInit(): void {
     this.obtenerActividad()
   }
 
-  constructor(private actividadservice:ActividadpService){}
+  constructor(private actividadservice: ActividadpService) { }
 
-  private obtenerActividad(){
-    this.actividadservice.obtenerActividad().subscribe(dato =>{this.actividad=dato;})
+  private obtenerActividad() {
+    this.actividadservice.obtenerActividad().subscribe(dato => { this.actividad = dato; })
   }
-  
+
 
 }

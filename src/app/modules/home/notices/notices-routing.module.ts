@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConvocatoriasComponent } from './convocatorias/convocatorias.component';
 
 const routes: Routes = [
-  { path: 'ultimas', component: ConvocatoriasComponent }
+  {
+    path: 'ultimas',
+    component: ConvocatoriasComponent
+  }
 ];
 
 @NgModule({
