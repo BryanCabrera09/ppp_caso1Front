@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PlanAprendizajeRoutingModule } from './plan-aprendizaje-routing.module';
 import { GenerarPlanComponent } from './generar-plan/generar-plan.component';
 import { PracticasTutorComponent } from './practicas-tutor/practicas-tutor.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { PracticasTutorComponent } from './practicas-tutor/practicas-tutor.compo
   ],
   imports: [
     CommonModule,
-    PlanAprendizajeRoutingModule
+    PlanAprendizajeRoutingModule,
+    FormsModule
   ]
 })
 export class PlanAprendizajeModule { }
