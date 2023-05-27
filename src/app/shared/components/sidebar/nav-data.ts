@@ -60,7 +60,7 @@ export const navbarData: INavbarData[] = [
         ]
     },
     {
-        routeLink: 'coupens',
+        routeLink: '/responsable-empresa/practicas/lista-practicas',
         icon: 'fas fa-user-tie',
         label: 'Asignación Tutor Específico',
         role: 'Responsable Empresa',

@@ -15,6 +15,8 @@ import { Convenio } from 'src/app/core/models/convenio';
 import { Estudiante } from 'src/app/core/models/estudiante';
 import { EstudianteService } from 'src/app/core/services/estudiante.service';
 import { AnexosService } from 'src/app/core/services/anexos.service';
+import { Anexos } from 'src/app/core/models/anexos';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-vista',
@@ -29,8 +31,8 @@ export class VistaComponent implements OnInit {
   displayEU: boolean;
   actividad: Actividad;
   convocatoria: ConvocatoriaP;
-
   estudiante = new Estudiante;
+  anexo = new Anexos;
   solicitude: SoliEstudiante = new SoliEstudiante()
 
   archivo: File;
@@ -42,9 +44,9 @@ export class VistaComponent implements OnInit {
 
   constructor(private convocatoriaService: ConvocatoriaService, private router: Router, private anexoService: AnexosService,
     private actividadservice: ActividadpService, private route: ActivatedRoute, private soliestudianteservice: SoliEstudianteService,
-    private estudianteservice: EstudianteService) { }
+    private estudianteservice: EstudianteService, private toastr: ToastrService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('userdetails') || "");
     this.route.queryParams.subscribe(params => {
       this.convocatoria = JSON.parse(params['convocatoria']);
@@ -83,6 +85,37 @@ export class VistaComponent implements OnInit {
     );
   }
 
+  updatePDFSolicitud() {
+    console.log(this.id);
+    this.soliestudianteservice.guardarPDF(this.archivo, this.id).subscribe(
+      (response: any) => {
+        Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+        this.router.navigate(['../lista-practicas']);
+      },
+      (error) => {
+        console.error('Error al actualizar el PDF', error);
+        Swal.fire('Registro', 'Error al subir el PDF', 'error');
+      }
+    );
+  }
+
+  enviarPDF() {
+    this.displayEU = true;
+  }
+
+  guardarAnexo() {
+    this.anexo.tipo = 2;
+    this.anexoService.registerAnexo(this.anexo).subscribe(
+      (response: Anexos) => {
+        this.id = response.id;
+        this.toastr.success("Anexo Creado", "Anexo");
+      },
+      (error) => {
+        this.toastr.error("Error al Crear Anexo", "Anexo");
+      }
+    );
+  }
+
   obtenerActividadid(id: number) {
 
     this.actividadservice.obtenerActividadid(id).subscribe(
@@ -93,7 +126,6 @@ export class VistaComponent implements OnInit {
         console.log("actividad" + this.actividad)
       }
     )
-
   }
 
   Guardarsoli() {
@@ -133,6 +165,8 @@ export class VistaComponent implements OnInit {
   }
 
   async generarPDF() {
+
+    this.guardarAnexo();
 
     //Fecha Actual
     const fecha = new Date();

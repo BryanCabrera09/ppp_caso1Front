@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Practicante } from 'src/app/core/models/practicante';
-import { SolipracticantesService } from 'src/app/core/services/solipracticantes.service';
 
 //PrimeNg Imports
 import { Table } from 'primeng/table';
@@ -13,6 +11,9 @@ import { Practica } from 'src/app/core/models/practica';
 import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
 import { ToastrService } from 'ngx-toastr';
 import { ConvocatoriaService } from 'src/app/core/services/convocatoria.service';
+import { HttpResponse } from '@angular/common/http';
+import { SoliEstudiante } from 'src/app/core/models/soli-estudiante';
+import { SoliEstudianteService } from 'src/app/core/services/soli-estudiante.service';
 
 @Component({
   selector: 'app-aceptacion-solicitud-director',
@@ -21,13 +22,13 @@ import { ConvocatoriaService } from 'src/app/core/services/convocatoria.service'
 })
 export class AceptacionSolicitudDirectorComponent implements OnInit {
 
-  practicantes: Practicante[] = [];
+  solicitudes: SoliEstudiante[] = [];
 
   convocatoria = new ConvocatoriaP;
-  practestudiant = new Practicante;
   practica = new Practica;
   usuario = new Usuario;
   estudiante = new Estudiante;
+  solicitud = new SoliEstudiante
 
   estado: string;
   estadoaprov: string;
@@ -42,7 +43,7 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   loading: boolean = true;
   statuses: any[] = [];
 
-  constructor(private solicitudService: SolipracticantesService, private router: Router, private activatedRoute: ActivatedRoute,
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private soliEstudianteService: SoliEstudianteService,
     private practicaService: PracticasService, private toastr: ToastrService, private convocatoriaService: ConvocatoriaService) { }
 
   ngOnInit() {
@@ -58,26 +59,13 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
       let id = params['id']
       console.log(id)
       if (id) {
-        this.solicitudService.getPostulantesByEstadoPend(id).subscribe(
+        this.soliEstudianteService.getPostulantesByEstadoPend(id).subscribe(
           data => {
-            this.practicantes = data.map(
-              result => {
-                let practicante = new Practicante;
-                practicante.cedula = result.estudiante.usuario.cedula;
-                practicante.nombre = result.estudiante.usuario.nombre;
-                practicante.apellido = result.estudiante.usuario.apellido;
-                practicante.ciclo = result.estudiante.ciclo;
-                practicante.id = result.id;
-                practicante.correo = result.estudiante.usuario.correo;
-                practicante.estado = result.estado;
-                practicante.fechaEnvio = result.fechaEnvio;
-                this.estudiante = result.estudiante;
-                return practicante;
-              }
-            );
-            this.loading = false;
+            this.solicitudes = data;
+            console.log(this.solicitudes);
           }
         );
+        this.loading = false;
       }
     })
   }
@@ -102,47 +90,67 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
     this.fechaF = this.convocatoria.solicitudEmpresa.fechaMaxTen;
     this.practica.inicio = this.fechaI;
     this.practica.fin = this.fechaF;
-    this.practicaService.create(this.practica).subscribe(
-      result => {
-        /*  console.log(result);
-         Swal.fire('Aprobacion', 'Aprobacion Registrada', 'success');
-         this.limpiar();
-         this.router.navigate(['/dashboard']) */
-      }
-    )
+   this.practicaService.create(this.practica).subscribe()
+  }
+
+  descargarPDF(value) {
+    this.soliEstudianteService.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'documento.pdf';
+  }
+
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
   }
 
   guardarPostulacion() {
 
-    if (this.practestudiant.estado === 0) {
+    if (this.solicitud.estado === 0) {
       if (this.estado === 'aprobado') {
-        this.practestudiant.estado = 1;
+        this.solicitud.estado = 1;
       } else if (this.estado === 'desaprobado') {
-        this.practestudiant.estado = 3;
+        this.solicitud.estado = 3;
       }
-    } else if (this.practestudiant.estado === 1) {
+    } else if (this.solicitud.estado === 1) {
       if (this.estado === 'aprobado') {
-        this.practestudiant.estado = 2;
+        this.solicitud.estado = 2;
         this.aprobado = true;
         this.toastr.success('Complete los campos habilitados');
       } else if (this.estado === 'desaprobado') {
-        this.practestudiant.estado = 3;
+        this.solicitud.estado = 3;
         this.estudiante.prioridad = true;
       }
-    } else if (this.practestudiant.estado === 2) {
+    } else if (this.solicitud.estado === 2) {
       if (this.estado === 'aprobado') {
-        this.practestudiant.estado = 2;
+        this.solicitud.estado = 2;
       } else if (this.estado === 'desaprobado') {
-        this.practestudiant.estado = 1;
+        this.solicitud.estado = 1;
       }
     }
 
     if (this.practica.nsemanas !== null || this.practica.nsemanas !== undefined && this.practica.departamento !== null || this.practica.departamento !== '' || this.practica.departamento !== undefined) {
-      this.practestudiant.estudiante = this.estudiante;
 
-      console.log(this.practestudiant.estado);
+      this.solicitud.estudiante = this.estudiante;
+
+      console.log(this.solicitud.estado);
       this.registrarPractica();
-      this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(
+      this.soliEstudianteService.updatePostulacion(this.solicitud, this.solicitud.id).subscribe(
         result => {
           console.log(result);
           Swal.fire('Aprobacion', 'Aprobacion Registrada', 'success');
@@ -155,27 +163,30 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
     }
   }
 
-  editarPracticante(practicante: Practicante) {
+  editarPracticante(solicitud: SoliEstudiante) {
 
     this.displayEU = true;
 
-    this.practestudiant.id = practicante.id;
+    this.solicitud.id = solicitud.id;
+    this.solicitud = solicitud;
 
-    this.solicitudService.searchPracticanteById(this.practestudiant.id).subscribe(
-      (result: Practicante) => {
+    this.soliEstudianteService.searchSoliEstudianteById(this.solicitud.id).subscribe(
+      (result: SoliEstudiante) => {
         console.log(result);
-        this.practestudiant.estudiante = result.estudiante;
-        this.practestudiant.convocatoria = result.convocatoria;
+        this.estudiante = result.estudiante;
+        this.usuario = result.estudiante.usuario;
+        this.solicitud.estudiante = result.estudiante;
+        this.solicitud.convocatoria = result.convocatoria;
       }
     )
 
-    this.practestudiant.cedula = practicante.cedula;
-    this.practestudiant.nombre = practicante.nombre;
-    this.practestudiant.apellido = practicante.apellido;
-    this.practestudiant.ciclo = practicante.ciclo;
-    this.practestudiant.correo = practicante.correo;
-    this.practestudiant.estado = practicante.estado;
-    this.practestudiant.fechaEnvio = practicante.fechaEnvio;
+    this.solicitud.estudiante.usuario.cedula = solicitud.estudiante.usuario.cedula;
+    this.solicitud.estudiante.usuario.nombre = solicitud.estudiante.usuario.nombre;
+    this.solicitud.estudiante.usuario.apellido = solicitud.estudiante.usuario.apellido;
+    this.solicitud.estudiante.usuario.ciclo = solicitud.estudiante.usuario.ciclo;
+    this.solicitud.estudiante.usuario.correo = solicitud.estudiante.usuario.correo;
+    this.solicitud.estado = solicitud.estado;
+    this.solicitud.fechaEnvio = solicitud.fechaEnvio;
   }
 
   cancelar() {
@@ -185,14 +196,14 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   limpiar() {
     this.displayEU = false;
 
-    this.practestudiant = new Practicante;
     this.convocatoria = new ConvocatoriaP;
     this.practica = new Practica;
+    this.solicitud = new SoliEstudiante;
     this.usuario = new Usuario;
     this.estudiante = new Estudiante;
 
     this.loading = true;
-    this.practicantes = [];
+    this.solicitudes = [];
     this.obtenerSolicitudes();
   }
 }

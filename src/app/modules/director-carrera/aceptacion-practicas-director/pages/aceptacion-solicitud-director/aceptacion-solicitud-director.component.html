@@ -1,5 +1,5 @@
 <div class="card">
-    <p-table #dt2 [value]="practicantes" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
+    <p-table #dt2 [value]="solicitudes" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [globalFilterFields]="['cedula', 'nombre', 'apellido', 'ciclo']" [tableStyle]="{ 'min-width': '75rem' }">
@@ -19,6 +19,7 @@
                 <th id="text" style="width:22%">Apellidos</th>
                 <th id="text" style="width:15%">Ciclo</th>
                 <th id="text" style="width:12%">Aprobación/Desaprobación</th>
+                <th id="text" style="width:12%">Ver PDF</th>
             </tr>
             <tr>
                 <th id="text">
@@ -34,25 +35,30 @@
                     <p-columnFilter type="text" field="ciclo"></p-columnFilter>
                 </th>
                 <th></th>
+                <th></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-practicante>
+        <ng-template pTemplate="body" let-solicitud>
             <tr>
                 <td id="text">
-                    {{ practicante.cedula }}
+                    {{ solicitud.estudiante.usuario.cedula }}
                 </td>
                 <td id="text">
-                    {{ practicante.nombre }}
+                    {{ solicitud.estudiante.usuario.nombre }}
                 </td>
                 <td id="text">
-                    {{ practicante.apellido }}
+                    {{ solicitud.estudiante.usuario.apellido }}
                 </td>
                 <td id="text">
-                    {{ practicante.ciclo }}
+                    {{ solicitud.estudiante.ciclo }}
                 </td>
                 <td id="text">
                     <button pButton pRipple type="button" icon="pi pi-pencil" label="" class="p-button-warning"
-                        (click)="editarPracticante(practicante)"></button>
+                        (click)="editarPracticante(solicitud)"></button>
+                </td>
+                <td id="text">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" label="" class="p-button-warning"
+                        (click)="descargarPDF(solicitud.id)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -72,7 +78,7 @@
                 <div class="col">
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
-                            <input id="float-input" type="text" class="form-control" [(ngModel)]="practestudiant.cedula"
+                            <input id="float-input" type="text" class="form-control" [(ngModel)]="usuario.cedula"
                                 [pKeyFilter]="'int'" maxlength="10" minlength="10" disabled="true" pInputText>
                             <label for="float-input">Cédula</label>
                         </span>
@@ -80,14 +86,14 @@
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
                             <input id="float-input" type="text" class="form-control" disabled="true"
-                                [(ngModel)]="practestudiant.nombre" maxlength="30" minlength="3" pInputText>
+                                [(ngModel)]="usuario.nombre" maxlength="30" minlength="3" pInputText>
                             <label for="float-input">Nombres</label>
                         </span>
                     </div>
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
                             <input id="float-input" type="text" class="form-control" disabled="true"
-                                [(ngModel)]="practestudiant.ciclo" maxlength="30" minlength="6" pInputText>
+                                [(ngModel)]="estudiante.ciclo" maxlength="30" minlength="6" pInputText>
                             <label for="float-input">Ciclo</label>
                         </span>
                     </div>
@@ -95,7 +101,7 @@
                         <span class="p-float-label">
                             <input id="float-input" type="text" class="form-control" [disabled]="!aprobado"
                                 [(ngModel)]="practica.departamento" maxlength="30" minlength="6" pInputText>
-                            <label for="float-input">Ciclo</label>
+                            <label for="float-input">Nombre de Departamento</label>
                         </span>
                     </div>
                 </div>
@@ -103,15 +109,14 @@
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
                             <input id="float-input" type="text" class="form-control" disabled="true"
-                                [(ngModel)]="practestudiant.correo" maxlength=" 30" minlength="6" pInputText>
+                                [(ngModel)]="usuario.correo" maxlength=" 30" minlength="6" pInputText>
                             <label for="float-input">Correo Electrónico</label>
                         </span>
                     </div>
                     <div class="p-col-12 p-md-4">
                         <span class="p-float-label">
-                            <input id="float-input" type="text" class="form-control"
-                                [(ngModel)]="practestudiant.apellido" maxlength="30" minlength="3" disabled="true"
-                                pInputText>
+                            <input id="float-input" type="text" class="form-control" [(ngModel)]="usuario.apellido"
+                                maxlength="30" minlength="3" disabled="true" pInputText>
                             <label for="float-input">Apellidos</label>
                         </span>
                     </div>

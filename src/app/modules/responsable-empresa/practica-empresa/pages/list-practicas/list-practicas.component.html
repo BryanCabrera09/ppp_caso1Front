@@ -1,0 +1,60 @@
+<div class="card">
+    <p-table #dt2 [value]="practicas" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['numero', 'incio', 'fin']" [tableStyle]="{ 'min-width': '75rem' }">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Ingrese Número de Convocatoria" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th id="text" style="width:22%">Fecha Inicio</th>
+                <th id="text" style="width:22%">Fecha Fin</th>
+                <th id="text" style="width:22%">Numero de Semanas</th>
+                <th id="text" style="width:12%"></th>
+                <!-- <th id="text" style="width:12%"></th> -->
+            </tr>
+            <tr>
+                <th id="text">
+                    <p-columnFilter type="text" field="numero"></p-columnFilter>
+                </th>
+                <th id="text">
+                    <p-columnFilter type="text" field="inicio"></p-columnFilter>
+                </th>
+                <th id="text">
+                    <p-columnFilter type="text" field="fin"></p-columnFilter>
+                </th>
+                <th></th>
+                <!-- <th></th> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-practica>
+            <tr>
+                <td id="text">
+                    {{ practica.inicio }}
+                </td>
+                <td id="text">
+                    {{ practica.fin }}
+                </td>
+                <td id="text">
+                    {{ practica.nsemanas }}
+                </td>
+                <!-- <td id="text">
+                    <button pButton pRipple type="button" icon="pi pi-eye" label="Asignar Tutor Especifico"
+                        class="p-button-warning" (click)="asignarTutorEspecifico(practica.id)"></button>
+                </td> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">Sin Practicas.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

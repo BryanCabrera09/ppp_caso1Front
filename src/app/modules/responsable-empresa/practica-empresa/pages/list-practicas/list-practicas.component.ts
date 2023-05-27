@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Practica } from 'src/app/core/models/practica';
 import { PracticasService } from 'src/app/core/services/practicas.service';
 
 @Component({
-  selector: 'app-listar-practicas',
-  templateUrl: './listar-practicas.component.html',
-  styleUrls: ['./listar-practicas.component.css']
+  selector: 'app-list-practicas',
+  templateUrl: './list-practicas.component.html',
+  styleUrls: ['./list-practicas.component.css']
 })
-export class ListarPracticasComponent implements OnInit {
+export class ListPracticasComponent implements OnInit {
 
   practicas: Practica[] = [];
 
@@ -53,11 +53,6 @@ export class ListarPracticasComponent implements OnInit {
 
   asignarTutorEspecifico(id: any) {
     this.id = id;
-    this.router.navigate(['encargado-practicas/tutoresp/register-tutor/' + this.id]);
-  }
-
-  asignarTutorAcademico(id: any) {
-    this.id = id;
-    this.router.navigate(['encargado-practicas/tutoracad/register-tutor/' + this.id]);
+    this.router.navigate(['responsable-empresa/tutoresp/reg-tutor/' + this.id]);
   }
 }

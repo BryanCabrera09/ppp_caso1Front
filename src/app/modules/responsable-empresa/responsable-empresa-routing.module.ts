@@ -10,6 +10,14 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import("./dashboard-empresa/dashboard-empresa.module").then(m => m.DashboardEmpresaModule)
   },
+  {
+    path: 'practicas',
+    loadChildren: () => import("./practica-empresa/practica-empresa.module").then(m => m.PracticaEmpresaModule)
+  },
+  {
+    path: 'tutoresp',
+    loadChildren: () => import("./reg-tutor-especifico/reg-tutor-especifico.module").then(m => m.RegTutorEspecificoModule)
+  },
 ];
 
 @NgModule({

@@ -33,6 +33,7 @@
 	<div class="button-container">
 		<button (click)="Guardarsoli()"> Postular</button>
 		<button (click)="generarPDF()"> Descargar PDF</button>
+		<button (click)="enviarPDF()"> Enviar PDF</button>
 	</div>
 </body>
 
@@ -53,7 +54,7 @@
                 </div> -->
 			</div>
 			<button pButton pRipple type="button" label="Enviar PDF" icon="pi pi-check" iconPos="right"
-				class="p-button-rounded p-button-primary" (click)="updatePDF()"></button>
+				class="p-button-rounded p-button-primary" (click)="updatePDFSolicitud()"></button>
 		</div>
 	</ng-template>
 </p-dialog>

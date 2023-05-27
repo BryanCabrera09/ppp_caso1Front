@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Practicante } from '../models/practicante';
 import baserUrl from '../helpers/helperUrl';
@@ -43,5 +43,13 @@ export class SolipracticantesService {
 
   practicanteByConvoId(id: number): Observable<Practicante[]> {
     return this.http.get<Practicante[]>(`${this.convocatoriaUrl}/listaraprobadasxconvocatoria`, { params: { id } });
+  }
+
+  guardarPDF(archivo: File, id: number) {
+    const formData = new FormData();
+    formData.append('archivo', archivo, archivo.name);
+    formData.append('id', id.toString());
+
+    return this.http.post(`${this.convocatoriaUrl}/guardarpdf`, formData, { responseType: 'text' });
   }
 }
