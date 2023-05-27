@@ -12,6 +12,8 @@ import { PracticaService } from 'src/app/core/services/practica.service';
 })
 export class PracticasTutorComponent {
 
+  mostrarDialogo: boolean;
+
   user = new Usuario();
   practicas: any[] = [];
   calificaciones: Calificacion[] = [];
@@ -61,6 +63,28 @@ export class PracticasTutorComponent {
         practica.calificacion = calificacion;
         console.log(practica)
       }
+    }
+  }
+
+  onUpload(archivo: File) {
+    if (archivo && this.calificacion.id) {
+      const formData = new FormData();
+      formData.append('archivo', archivo);
+      formData.append('id', this.calificacion.id.toString());
+  
+      this.calfService.guardarDocumento(formData, this.calificacion.id)
+        .subscribe(
+          response => {
+            console.log('El documento se ha guardado correctamente.', response);
+            // Realiza las acciones necesarias después de guardar el documento
+          },
+          error => {
+            console.error('Error al guardar el documento.', error);
+            // Realiza las acciones necesarias en caso de error
+          }
+        );
+    } else {
+      console.error('Archivo o ID no válidos.');
     }
   }
 

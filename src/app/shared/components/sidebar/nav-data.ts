@@ -8,7 +8,7 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
-        routeLink: '/tutor-academico/registro-visitas/registro',
+        routeLink: '/tutor-academico/registro-visitas/plan',
         icon: 'fa-solid fa-house',
         label: 'Seguimiento (Anexo 5)',
         role: 'Tutor Academico'
