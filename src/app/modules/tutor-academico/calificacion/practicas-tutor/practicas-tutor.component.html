@@ -16,19 +16,22 @@
             <p class="stat-text">{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}</p>
             <p class="stat-text">{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}</p>
           </div>
+          
           <div class="col-sm-4 text-center">
             <div *ngIf="practica.calificacion && practica.calificacion.url">
-              <button class="btn btn-success btn-block">
+              <button class="btn btn-success btn-block" (click)="descargarPDF(practica.calificacion.id)">
                 Ver PDF
               </button>
             </div>
             <div *ngIf="!practica.calificacion">
-              <button class="btn btn-primary btn-block" [routerLink]="['../generar-nota']" [queryParams]="{ practica: practica | json }">
+              <button class="btn btn-primary btn-block" [routerLink]="['../generar-nota']"
+                [queryParams]="{ practica: practica | json }">
                 Calificar
               </button>
             </div>
             <div *ngIf="practica.calificacion && !practica.calificacion.url">
-              <button class="btn btn-warning btn-block" (click)="mostrarDialogo = true">
+              <button class="btn btn-warning btn-block"
+                (click)="mostrarDialogo = true; calificacion = practica.calificacion">
                 Subir PDF
               </button>
             </div>
@@ -39,10 +42,21 @@
   </div>
 </div>
 
-
 <p-dialog [(visible)]="mostrarDialogo">
   <p-header>
     <h4>Subir PDF</h4>
   </p-header>
-    <p-fileUpload name="archivo" (onUpload)="onUpload($event.file[0])"></p-fileUpload>
+
+  <div class="form-group">
+    <label for="archivo">Seleccionar archivo:</label>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="archivo" (change)="onFileSelected($event)" accept=".pdf" />
+      <label class="custom-file-label" for="archivo">{{ selectedFileName || 'Elegir archivo' }}</label>
+    </div>
+  </div>  
+
+  <div class="p-dialog-footer">
+    <button class="p-button" (click)="uploadFile(); mostrarDialogo = false">Subir</button>
+    <button class="p-button p-button-secondary" (click)="mostrarDialogo = false">Cancelar</button>
+  </div>
 </p-dialog>

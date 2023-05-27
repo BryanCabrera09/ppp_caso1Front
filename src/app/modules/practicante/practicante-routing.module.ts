@@ -26,6 +26,14 @@ const routes: Routes = [
     path: 'reporte',
     loadChildren: () => import("./reporte-semanal/reporte-semanal.module").then(m => m.ReporteSemanalModule)
   },
+  {
+    path: 'reporte',
+    loadChildren: () => import("./reporte-semanal/reporte-semanal.module").then(m => m.ReporteSemanalModule)
+  },
+  {
+    path: 'solicitud',
+    loadChildren: () => import("./respuesta-postulacion/respuesta-postulacion.module").then(m => m.RespuestaPostulacionModule)
+  },
 ];
 
 @NgModule({
