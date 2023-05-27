@@ -25,5 +25,15 @@ export class CalificacionService {
   buscarxPractica(id: number)/* : Observable<Calificacion[]>  */{
     return this.http.get/* <Calificacion[]> */(`${this.searchUrl}/listar/practica/${id}`);
   }
+
+  guardarDocumento(archivo: FormData, id: number) {
+    formData.append('archivo', archivo);
+    formData.append('id', id.toString());
+    return this.http.post(`${this.searchUrl}/guardarpdf`, formData);
+  }
+
+  guardarDocumento(formData: FormData, id: number) {
+    return this.http.post(this.searchUrl, formData);
+  }
   
 }

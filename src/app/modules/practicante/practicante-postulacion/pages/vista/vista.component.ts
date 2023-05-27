@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { Convenio } from 'src/app/core/models/convenio';
 import { Estudiante } from 'src/app/core/models/estudiante';
 import { EstudianteService } from 'src/app/core/services/estudiante.service';
+import { AnexosService } from 'src/app/core/services/anexos.service';
 
 @Component({
   selector: 'app-vista',
@@ -28,18 +29,20 @@ export class VistaComponent implements OnInit {
   displayEU: boolean;
   actividad: Actividad;
   convocatoria: ConvocatoriaP;
-  
-  estudiante= new Estudiante;
+
+  estudiante = new Estudiante;
   solicitude: SoliEstudiante = new SoliEstudiante()
 
+  archivo: File;
+  id: number;
 
   fechaI: Date = new Date;
 
   user: Usuario;
 
-  constructor(private convocatoriaService: ConvocatoriaService,
+  constructor(private convocatoriaService: ConvocatoriaService, private router: Router, private anexoService: AnexosService,
     private actividadservice: ActividadpService, private route: ActivatedRoute, private soliestudianteservice: SoliEstudianteService,
-    private estudianteservice:EstudianteService) { }
+    private estudianteservice: EstudianteService) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('userdetails') || "");
@@ -47,8 +50,8 @@ export class VistaComponent implements OnInit {
       this.convocatoria = JSON.parse(params['convocatoria']);
       console.log(this.convocatoria);
       this.estudianteservice.buscarxUsuario(this.user.id).subscribe(
-        (resul:Estudiante)=>{
-        this.estudiante=resul;
+        (resul: Estudiante) => {
+          this.estudiante = resul;
         }
       )
 
@@ -59,9 +62,26 @@ export class VistaComponent implements OnInit {
   }
 
   private obtenerConvocatoria() {
-    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato;})
+    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
   }
 
+  onFileChange(event: any) {
+    this.archivo = event.target.files[0];
+  }
+
+  updatePDF() {
+    console.log(this.id);
+    this.anexoService.guardarPDF(this.archivo, this.id).subscribe(
+      (response: any) => {
+        Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+        this.router.navigate(['../lista-practicas']);
+      },
+      (error) => {
+        console.error('Error al actualizar el PDF', error);
+        Swal.fire('Registro', 'Error al subir el PDF', 'error');
+      }
+    );
+  }
 
   obtenerActividadid(id: number) {
 
@@ -78,16 +98,16 @@ export class VistaComponent implements OnInit {
 
   Guardarsoli() {
 
-    this.solicitude.estado=0;
+    this.solicitude.estado = 0;
     this.solicitude.fechaEnvio = this.fechaI;
-    this.solicitude.estudiante=this.estudiante;
-    this.solicitude.convocatoria=this.convocatoria;
+    this.solicitude.estudiante = this.estudiante;
+    this.solicitude.convocatoria = this.convocatoria;
 
     this.soliestudianteservice.guardarsolicitud(this.solicitude).subscribe(
       (data: SoliEstudiante) => {
         console.log(data);
         Swal.fire('Solicitud guardado', 'Solicitud Guadada con exito', 'success');
-      
+
       }, (error) => {
         console.log(error);
         Swal.fire('Error', 'Solicitud no se pudo Guardar', 'error');
@@ -192,9 +212,6 @@ export class VistaComponent implements OnInit {
               .join(' ') + '\n' + this.user.telefono + '\n' + this.user.correo + '',
           style: 'signature'
         },
-
-
-
       ],
       styles: {
         header: {
@@ -222,10 +239,6 @@ export class VistaComponent implements OnInit {
     pdfMake.createPdf(documentDefinition).download('SolicitudEstudiante.pdf');
 
     this.displayEU = true;
+
   }
-
-
-
-
-
 }

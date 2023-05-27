@@ -5,11 +5,14 @@ import { Practicante } from 'src/app/core/models/practicante';
 import { Table } from 'primeng/table';
 import { SolipracticantesService } from 'src/app/core/services/solipracticantes.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import Swal from 'sweetalert2';
-import { Convocatoria } from 'src/app/core/models/convocatoria';
 import { Usuario } from 'src/app/core/models/usuario';
 import { Estudiante } from 'src/app/core/models/estudiante';
+import { ToastrService } from 'ngx-toastr';
+import { ConvocatoriaService } from 'src/app/core/services/convocatoria.service';
+import { PracticasService } from 'src/app/core/services/practicas.service';
+import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
+import { Practica } from 'src/app/core/models/practica';
 
 @Component({
   selector: 'app-aceptacion-solicitudes',
@@ -20,9 +23,9 @@ export class AceptacionSolicitudesComponent implements OnInit {
 
   practicantes: Practicante[] = [];
 
-  convocatoria = new Convocatoria;
+  convocatoria = new ConvocatoriaP;
   practestudiant = new Practicante;
-
+  practica = new Practica;
   usuario = new Usuario;
   estudiante = new Estudiante;
 
@@ -31,13 +34,16 @@ export class AceptacionSolicitudesComponent implements OnInit {
   id: number;
   displayEU: boolean = false;
 
+  fechaI: Date;
+  fechaF: Date;
+
+  aprobado: boolean;
+
   loading: boolean = true;
   statuses: any[] = [];
 
-  aprobISTA: boolean;
-  aprobEmpr: boolean;
-
-  constructor(private solicitudService: SolipracticantesService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private solicitudService: SolipracticantesService, private router: Router, private activatedRoute: ActivatedRoute,
+    private practicaService: PracticasService, private toastr: ToastrService, private convocatoriaService: ConvocatoriaService) { }
 
   ngOnInit() {
     this.obtenerSolicitudes();
@@ -77,6 +83,36 @@ export class AceptacionSolicitudesComponent implements OnInit {
     })
   }
 
+  registrarPractica() {
+
+    this.activatedRoute.params.subscribe(params => {
+      let id = params['id']
+      console.log(id)
+      if (id) {
+        this.convocatoriaService.searchConvocatoriaById(id).subscribe(
+          (result: ConvocatoriaP) => {
+            this.convocatoria = result;
+          }
+        )
+      }
+    })
+
+    this.practica.convocatoria = this.convocatoria;
+    this.practica.estudiante = this.estudiante;
+    this.fechaI = this.convocatoria.solicitudEmpresa.fechaInicioTen;
+    this.fechaF = this.convocatoria.solicitudEmpresa.fechaMaxTen;
+    this.practica.inicio = this.fechaI;
+    this.practica.fin = this.fechaF;
+    this.practicaService.create(this.practica).subscribe(
+      result => {
+        /*  console.log(result);
+         Swal.fire('Aprobacion', 'Aprobacion Registrada', 'success');
+         this.limpiar();
+         this.router.navigate(['/dashboard']) */
+      }
+    )
+  }
+
   guardarPostulacion() {
 
     if (this.practestudiant.estado === 0) {
@@ -88,6 +124,8 @@ export class AceptacionSolicitudesComponent implements OnInit {
     } else if (this.practestudiant.estado === 1) {
       if (this.estado === 'aprobado') {
         this.practestudiant.estado = 2;
+        this.aprobado = true;
+        this.toastr.success('Complete los campos habilitados');
       } else if (this.estado === 'desaprobado') {
         this.practestudiant.estado = 3;
         this.estudiante.prioridad = true;
@@ -100,17 +138,22 @@ export class AceptacionSolicitudesComponent implements OnInit {
       }
     }
 
-    this.practestudiant.estudiante = this.estudiante;
+    if (this.practica.nsemanas !== null || this.practica.nsemanas !== undefined && this.practica.departamento !== null || this.practica.departamento !== '' || this.practica.departamento !== undefined) {
+      this.practestudiant.estudiante = this.estudiante;
 
-    console.log(this.practestudiant.estado);
-    this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(
-      result => {
-        console.log(result);
-        this.limpiar();
-        Swal.fire('Aprobacion', 'Aprobacion Registrada', 'success');
-        this.router.navigate(['/dashboard'])
-      }
-    )
+      console.log(this.practestudiant.estado);
+      this.registrarPractica();
+      this.solicitudService.updatePostulacion(this.practestudiant, this.practestudiant.id).subscribe(
+        result => {
+          console.log(result);
+          Swal.fire('Aprobacion', 'Aprobacion Registrada', 'success');
+          this.limpiar();
+          this.router.navigate(['/dashboard'])
+        }
+      )
+    } else {
+      this.toastr.success('Complete los campos habilitados');
+    }
   }
 
   editarPracticante(practicante: Practicante) {
@@ -134,8 +177,6 @@ export class AceptacionSolicitudesComponent implements OnInit {
     this.practestudiant.correo = practicante.correo;
     this.practestudiant.estado = practicante.estado;
     this.practestudiant.fechaEnvio = practicante.fechaEnvio;
-
-    console.log(practicante)
   }
 
   cancelar() {
@@ -146,7 +187,8 @@ export class AceptacionSolicitudesComponent implements OnInit {
     this.displayEU = false;
 
     this.practestudiant = new Practicante;
-    this.convocatoria = new Convocatoria;
+    this.convocatoria = new ConvocatoriaP;
+    this.practica = new Practica;
     this.usuario = new Usuario;
     this.estudiante = new Estudiante;
 

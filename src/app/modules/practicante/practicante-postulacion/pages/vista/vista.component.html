@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>vista</title>
 
 </head>
+
 <body>
 	<div class="container">
 		<h1 class="centered">Convocatoria Prácticas Pre Profesionales</h1>
 
 		<h2 class="empresa">{{convocatoria.solicitudEmpresa.convenio.empresa.nombre}}</h2>
-		<p >Se convoca a los estudiantes de la carrera <b>{{actividad.materia.carrera.nombre}}</b>  que deseen realizar sus prácticas pre profesionales en la empresa: {{actividad.solicitudEmpresa.convenio.empresa.nombre}} a presentar la solicitud correspondiente</p>
+		<p>Se convoca a los estudiantes de la carrera <b>{{actividad.materia.carrera.nombre}}</b> que deseen realizar
+			sus prácticas pre profesionales en la empresa: {{actividad.solicitudEmpresa.convenio.empresa.nombre}} a
+			presentar la solicitud correspondiente</p>
 
 		<h2>Actividades:</h2>
 		<table>
@@ -31,4 +35,25 @@
 		<button (click)="generarPDF()"> Descargar PDF</button>
 	</div>
 </body>
+
 </html>
+
+<p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}"
+	[baseZIndex]="10000" [draggable]="false" [resizable]="false">
+	<ng-template pTemplate="body">
+		<div class="p-grid p-fluid">
+			<div class="p-col-3 p-md-4">
+				<span class="p-float-label">
+					<input name="foto" id="float-input" (change)="onFileChange($event)" accept=".pdf" type="file"
+						class="form-control" required />
+					<label for="float-input"></label>
+				</span>
+				<!--  <div *ngIf="file" class="mt-3 text-center">
+                    <img [src]="file" class="rounded" alt="..." style="max-width: 50%;" />
+                </div> -->
+			</div>
+			<button pButton pRipple type="button" label="Enviar PDF" icon="pi pi-check" iconPos="right"
+				class="p-button-rounded p-button-primary" (click)="updatePDF()"></button>
+		</div>
+	</ng-template>
+</p-dialog>
