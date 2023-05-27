@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Calificacion } from 'src/app/core/models/calificacion';
@@ -19,6 +20,9 @@ export class PracticasTutorComponent {
   calificaciones: Calificacion[] = [];
   calificacion: Calificacion;
 
+  archivo: File;
+  id: number;
+
   constructor(private practicaService: PracticaService, private router: Router,
     private calfService: CalificacionService) { }
 
@@ -39,6 +43,32 @@ export class PracticasTutorComponent {
     );
   }
 
+  descargarPDF(value) {
+    this.calfService.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'documento.pdf';
+  }
+
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }
+
   listarCalificaciones(id: number) {
     this.calfService.listbyPractica(id).subscribe(
       (data) => {
@@ -48,6 +78,10 @@ export class PracticasTutorComponent {
         //this.comparar(this.practicas, this.calificaciones)
       }
     )
+  }
+
+  onFileChange(event: any) {
+    this.archivo = event.target.files[0];
   }
 
   comparar(practicas: any[], calificaciones: Calificacion[]) {

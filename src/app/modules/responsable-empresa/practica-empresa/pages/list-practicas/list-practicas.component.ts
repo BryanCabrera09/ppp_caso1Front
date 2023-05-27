@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Practica } from 'src/app/core/models/practica';
+import { Usuario } from 'src/app/core/models/usuario';
 import { PracticasService } from 'src/app/core/services/practicas.service';
 
 @Component({
@@ -13,6 +14,9 @@ export class ListPracticasComponent implements OnInit {
   practicas: Practica[] = [];
 
   practica = new Practica;
+  usuario = new Usuario;
+
+  idUs: number;
 
   id: number;
   loading: boolean = true;
@@ -24,29 +28,18 @@ export class ListPracticasComponent implements OnInit {
   }
 
   cargarPracticas() {
-    this.activatedRoute.params.subscribe(params => {
-      let id = params['id']
-      console.log(id)
-      if (id) {
-        this.practicaService.searchByConvo(id).subscribe(
-          data => {
-            this.practicas = data.map(
-              result => {
-                let practica = new Practica;
-                practica.id = result.id;
-                practica.inicio = result.inicio;
-                practica.fin = result.fin;
-                practica.nsemanas = result.nsemanas;
+    this.usuario = JSON.parse(sessionStorage.getItem('userdetails')!);
+    this.idUs = this.usuario.id;
+    console.log(this.idUs)
 
-                this.practica.id = result.id;
-                console.log(this.id);
-                return practica;
-              }
-            );
-          }
-        );
+    // Reemplazar con el ID de usuario correspondiente
+    this.practicaService.buscarxTutorEmp(this.idUs).subscribe(
+      data => {
+        this.practicas = data;
+      },
+      (error) => {
+        console.error(error);
       }
-    }
     );
     this.loading = false;
   }

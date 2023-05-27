@@ -85,10 +85,9 @@ export class RegisterTutorComponent implements OnInit {
       let id = params['id']
       const url = this.activatedRoute.snapshot.url.join('/');
       console.log(url)
-      if (id && url === 'register-tutor/' + id) {
+      if (id) {
         this.practicaService.searchPracticaById(id).subscribe(
           (data: Practica) => {
-            console.log('no entro para la empresa');
             this.empresa.nombre = data.convocatoria.solicitudEmpresa.convenio.empresa.nombre;
             this.empresa.id = data.convocatoria.solicitudEmpresa.convenio.empresa.id;
             this.empresa.matriz = data.convocatoria.solicitudEmpresa.convenio.empresa.matriz;
@@ -104,20 +103,6 @@ export class RegisterTutorComponent implements OnInit {
                 this.practicantes = practicante;
               }
             )
-          }
-        );
-      } else if (id && url === 'register-tutor-emp/' + id) {
-        this.empresaService.buscarporxID1(id).subscribe(
-          (data: Empresa) => {
-            this.empresa.nombre = data.nombre;
-            this.empresa.id = data.id;
-            this.empresa.matriz = data.matriz;
-            this.empresa.mision = data.mision;
-            this.empresa.objetivo = data.objetivo;
-            this.empresa.activo = data.activo;
-            this.empresa.ruc = data.ruc;
-            this.empresa.vision = data.vision;
-            console.log('entro para la empresa');
           }
         );
       }
@@ -265,13 +250,13 @@ export class RegisterTutorComponent implements OnInit {
       this.usuario.activo = true;
       this.tutorEmpresarial.usuario = this.usuario;
       this.tutorEmpresarial.empresa = this.empresa;
-      this.role = 'ROLE_GEREN';
+      this.role = 'ROLE_TEMP';
       this.tutorService.registerTutor(this.tutorEmpresarial, this.role).subscribe(
         (result: TutorInstituto) => {
           this.activatedRoute.params.subscribe(params => {
             let id = params['id']
             const url = this.activatedRoute.snapshot.url.join('/');
-            if (id && url === 'register-tutor/' + id) {
+            if (id) {
               this.practicaService.searchPracticaById(id).subscribe(
                 (data: Practica) => {
                   this.practica.id = data.id;
@@ -300,9 +285,6 @@ export class RegisterTutorComponent implements OnInit {
                     );
                 }
               );
-            } else if (id) {
-              this.enabledButton = true;
-              Swal.fire('Registro', 'Gerente Empresa Creado', 'success');
             }
           })
         }

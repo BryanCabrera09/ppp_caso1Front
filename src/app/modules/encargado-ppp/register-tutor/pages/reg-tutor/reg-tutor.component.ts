@@ -300,7 +300,7 @@ export class RegTutorComponent implements OnInit {
                     );
                 }
               );
-            } else if (id) {
+            } else if (id && url === 'register-tutor-emp/' + id) {
               this.enabledButton = true;
               Swal.fire('Registro', 'Gerente Empresa Creado', 'success');
             }

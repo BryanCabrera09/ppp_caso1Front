@@ -9,14 +9,14 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: '/tutor-academico/registro-visitas/plan',
-        icon: 'fa-solid fa-house',
+        icon: 'fas fa-clipboard-list card-icon',
         label: 'Seguimiento (Anexo 5)',
         role: 'Tutor Academico'
     },
     {
         routeLink: '/tutor-academico/calificacion/practica-tutor',
-        icon: 'fa-solid fa-house',
-        label: 'Evaluación de Prácticas',
+        icon: 'fas fa-clipboard-check card-icon',
+        label: 'Evaluación Prácticas',
         role: 'Tutor Academico'
     },
     {
@@ -27,7 +27,7 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: 'anexos/listapract',
-        icon: 'fa-solid fa-house',
+        icon: 'fas fa-file-alt card-icon',
         label: 'Reporte Final',
         role: 'Tutor Academico'
     },

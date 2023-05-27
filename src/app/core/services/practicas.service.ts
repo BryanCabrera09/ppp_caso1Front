@@ -34,7 +34,11 @@ export class PracticasService {
   buscarxEstudiante(id: number) {
     return this.httpClient.get(`${this.baseURL}/buscarxestudiante/${id}`);
   }
-  
+
+  buscarxTutorEmp(id: number): Observable<Practica[]> {
+    return this.httpClient.get<Practica[]>(`${this.baseURL}/buscar/practica/geren`, { params: { id } });
+  }
+
   listarByTistaUsuario(id: number): Observable<any> {
     return this.httpClient.get<any>(`${this.baseURL}/listar/usuario/${id}`, { observe: 'response', withCredentials: true });
   }

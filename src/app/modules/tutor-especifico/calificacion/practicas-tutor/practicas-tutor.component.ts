@@ -76,7 +76,7 @@ export class PracticasTutorComponent {
       console.error('No file selected.');
       return;
     }
-    this.calfService.guardarPDF(this.selectedFile, this.calificacion.id).subscribe(
+    this.calfService.guardarDocumento(this.selectedFile, this.calificacion.id).subscribe(
       (res) => {
         this.reloadPage();
       }

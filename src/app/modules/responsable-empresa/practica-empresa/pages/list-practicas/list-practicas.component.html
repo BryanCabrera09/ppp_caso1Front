@@ -14,28 +14,44 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th id="text" style="width:22%">Fecha Inicio</th>
-                <th id="text" style="width:22%">Fecha Fin</th>
-                <th id="text" style="width:22%">Numero de Semanas</th>
+                <th id="text" style="width:22%">Periodo</th>
+                <th id="text" style="width:22%">Practicante</th>
+                <th id="text" style="width:22%">Departamento</th>
+                <th id="text" style="width:12%">Fecha Inicio</th>
+                <th id="text" style="width:12%">Fecha Fin</th>
+                <th id="text" style="width:8%">Numero de Semanas</th>
                 <th id="text" style="width:12%"></th>
-                <!-- <th id="text" style="width:12%"></th> -->
             </tr>
             <tr>
                 <th id="text">
-                    <p-columnFilter type="text" field="numero"></p-columnFilter>
+                    <p-columnFilter type="text" field="periodo"></p-columnFilter>
                 </th>
                 <th id="text">
-                    <p-columnFilter type="text" field="inicio"></p-columnFilter>
+                    <p-columnFilter type="text" field="estudiante.usuario.apellido"></p-columnFilter>
                 </th>
                 <th id="text">
-                    <p-columnFilter type="text" field="fin"></p-columnFilter>
+                    <p-columnFilter type="text" field="departamento"></p-columnFilter>
+                </th>
+                <th id="text">
+                </th>
+                <th id="text">
+                </th>
+                <th id="text">
                 </th>
                 <th></th>
-                <!-- <th></th> -->
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-practica>
             <tr>
+                <td id="text">
+                    {{ practica.periodo }}
+                </td>
+                <td id="text">
+                    {{ practica.estudiante.usuario.nombre + ' '+practica.estudiante.usuario.apellido }}
+                </td>
+                <td id="text">
+                    {{ practica.departamento }}
+                </td>
                 <td id="text">
                     {{ practica.inicio }}
                 </td>
@@ -45,10 +61,10 @@
                 <td id="text">
                     {{ practica.nsemanas }}
                 </td>
-                <!-- <td id="text">
+                <td id="text-btn">
                     <button pButton pRipple type="button" icon="pi pi-eye" label="Asignar Tutor Especifico"
                         class="p-button-warning" (click)="asignarTutorEspecifico(practica.id)"></button>
-                </td> -->
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

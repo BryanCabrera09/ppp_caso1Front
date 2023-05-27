@@ -21,6 +21,8 @@ export class NotasComponent implements OnInit {
   usuario = new Usuario;
   calificacion = new Calificacion;
 
+  calificaciones: Calificacion[];
+
   idUs: number;
   displayEU: boolean;
   selectedTutor: string;
@@ -32,12 +34,38 @@ export class NotasComponent implements OnInit {
 
   acronimo: string;
 
-  ngOnInit() {
-    this.buscarEstudiante()
-  }
-
   constructor(private estudianteService: EstudianteService, private practicaService: PracticasService, private calificacionService: CalificacionService) { }
 
+  ngOnInit() {
+    this.buscarEstudiante();
+  }
+
+  selectedCell: { [key: string]: number } = {};
+  selectedValues: Map<string, number> = new Map<string, number>();
+
+  toggleCheck(rowKey: string, colIndex: number) {
+    if (this.selectedCell[rowKey] === colIndex) {
+      delete this.selectedCell[rowKey];
+      this.selectedValues.delete(rowKey);
+    } else {
+      this.selectedCell[rowKey] = colIndex;
+      const value = this.getCellValue(rowKey, colIndex);
+      console.log('Valor seleccionado:', value);
+      this.selectedValues.set(rowKey, value);
+      console.log(this.selectedValues)
+    }
+  }
+
+  getCellValue(rowKey: string, colIndex: number): number {
+    const values: { [key: string]: number[] } = {
+      a: [20, 15, 10, 5, 1],
+      b: [20, 15, 10, 5, 1],
+      c: [20, 15, 10, 5, 1],
+      d: [20, 15, 10, 5, 1],
+      e: [20, 15, 10, 5, 1]
+    };
+    return values[rowKey][colIndex];
+  }
 
   buscarEstudiante() {
     // Obtener el estudiante por ID de usuario
@@ -65,7 +93,6 @@ export class NotasComponent implements OnInit {
         this.practica = data;
         this.practica.id = data.id;
         this.cargarCalificacion();
-        console.log(data)
       },
       (error) => {
         console.error(error);

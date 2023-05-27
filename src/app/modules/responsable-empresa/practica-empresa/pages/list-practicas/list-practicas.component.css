@@ -26,6 +26,11 @@ body {
   text-align: center;
 }
 
+#text-btn {
+  text-align: center;
+  white-space: pre-wrap;
+}
+
 table td:hover {
   background-color: rgb(255, 255, 255);
 }
