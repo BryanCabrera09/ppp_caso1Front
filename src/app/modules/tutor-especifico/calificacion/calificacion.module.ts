@@ -5,6 +5,7 @@ import { CalificacionRoutingModule } from './calificacion-routing.module';
 import { GenerarNotaComponent } from './generar-nota/generar-nota.component';
 import { PracticasTutorComponent } from './practicas-tutor/practicas-tutor.component';
 import { MatTableModule } from '@angular/material/table';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     CommonModule,
     CalificacionRoutingModule,
-    MatTableModule
+    MatTableModule,
+    DialogModule
   ]
 })
 export class CalificacionModule { }
