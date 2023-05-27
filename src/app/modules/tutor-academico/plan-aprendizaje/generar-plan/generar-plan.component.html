@@ -1,6 +1,6 @@
-<h1>PLAN DE APRENDIZAJE PRÁCTICO Y DE ROTACIÓN (PAPR)</h1>
+<h1 class="text-center">PLAN DE APRENDIZAJE PRÁCTICO Y DE ROTACIÓN (PAPR)</h1>
 
-<table class="papr-table">
+<table class="papr-table table table-striped">
     <tbody>
         <tr>
             <th>Nombre de la empresa formadora</th>
@@ -37,4 +37,82 @@
     </tbody>
 </table>
 
-<button (click)="generatePDF()">Generate PDF</button>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="departamento">Periodo:</label>
+                    <input type="number" class="form-control" [(ngModel)]="numeroSemanas"
+                        placeholder="Ingrese un número" (ngModelChange)="cargarSemanas()">
+                </div>
+                <div class="form-group">
+                    <label for="departamento">Periodo:</label>
+                    <input type="periodo" class="form-control" [(ngModel)]="practica.periodo" placeholder="Ingrese un periodo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de inicio:</label>
+                    <input type="date" class="form-control" id="practica.inicio" [(ngModel)]="practica.inicio">
+                </div>
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de fin:</label>
+                    <input type="date" class="form-control" id="practica.fin" [(ngModel)]="practica.fin">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" class="form-control" id="descripcion" [(ngModel)]="practica.descripcion"
+                        placeholder="Ingrese una descripción">
+                </div>
+                <div class="form-group">
+                    <label for="departamento">Departamento:</label>
+                    <input type="text" class="form-control" id="departamento" [(ngModel)]="practica.departamento"
+                        placeholder="Ingrese el departamento">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row table-container">
+    <table class="papr-table table table-striped" *ngIf="mostrarTabla && (numeroSemanas === 6 || numeroSemanas === 12)">
+        <thead>
+            <tr>
+                <th rowspan="4" class="text-center">Objetivos de aprendizaje (objetivos aprendizaje específicos)</th>
+                <th rowspan="4" class="text-center">Actividades específicas a desarrollar (objetivos operativos)</th>
+                <th rowspan="4" class="text-center">Funciones/ Áreas/ Perfil de área.</th>
+                <th rowspan="4" class="text-center">Horas destinadas a la actividad</th>
+            </tr>
+            <tr>
+                <th [attr.colspan]="numeroSemanas" class="text-center">Planificación</th>
+            </tr>
+            <tr>
+                <th [attr.colspan]="numeroSemanas" class="text-center">Semanas (n = número de semanas de la fase
+                    prácticas)
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let numero of semanas" class="text-center">{{ numero }}</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div>
+    <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+</div>

@@ -55,7 +55,7 @@ export class PracticasTutorComponent {
       // Buscar la práctica correspondiente utilizando el practicaId
       const practica = practicas.find(p => p.id === practicaId);
 
-      if (practica && calificacion.tutor == 2) {
+      if (practica && calificacion.tutor == 1) {
         // Se encontró una práctica correspondiente
         // Puedes realizar la comparación y operaciones necesarias aquí
         practica.calificacion = calificacion;
