@@ -28,10 +28,11 @@ export class VistaComponent implements OnInit {
   displayEU: boolean;
   actividad: Actividad;
   convocatoria: ConvocatoriaP;
-  
-  estudiante= new Estudiante;
+
+  estudiante = new Estudiante;
   solicitude: SoliEstudiante = new SoliEstudiante()
 
+  descargandoPDF: boolean = false;
 
   fechaI: Date = new Date;
 
@@ -39,7 +40,7 @@ export class VistaComponent implements OnInit {
 
   constructor(private convocatoriaService: ConvocatoriaService,
     private actividadservice: ActividadpService, private route: ActivatedRoute, private soliestudianteservice: SoliEstudianteService,
-    private estudianteservice:EstudianteService) { }
+    private estudianteservice: EstudianteService) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('userdetails') || "");
@@ -47,8 +48,8 @@ export class VistaComponent implements OnInit {
       this.convocatoria = JSON.parse(params['convocatoria']);
       console.log(this.convocatoria);
       this.estudianteservice.buscarxUsuario(this.user.id).subscribe(
-        (resul:Estudiante)=>{
-        this.estudiante=resul;
+        (resul: Estudiante) => {
+          this.estudiante = resul;
         }
       )
 
@@ -59,7 +60,7 @@ export class VistaComponent implements OnInit {
   }
 
   private obtenerConvocatoria() {
-    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato;})
+    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
   }
 
 
@@ -78,16 +79,16 @@ export class VistaComponent implements OnInit {
 
   Guardarsoli() {
 
-    this.solicitude.estado=0;
+    this.solicitude.estado = 0;
     this.solicitude.fechaEnvio = this.fechaI;
-    this.solicitude.estudiante=this.estudiante;
-    this.solicitude.convocatoria=this.convocatoria;
+    this.solicitude.estudiante = this.estudiante;
+    this.solicitude.convocatoria = this.convocatoria;
 
     this.soliestudianteservice.guardarsolicitud(this.solicitude).subscribe(
       (data: SoliEstudiante) => {
         console.log(data);
         Swal.fire('Solicitud guardado', 'Solicitud Guadada con exito', 'success');
-      
+
       }, (error) => {
         console.log(error);
         Swal.fire('Error', 'Solicitud no se pudo Guardar', 'error');

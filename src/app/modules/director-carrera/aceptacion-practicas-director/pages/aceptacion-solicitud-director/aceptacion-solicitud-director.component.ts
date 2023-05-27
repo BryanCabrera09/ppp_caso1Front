@@ -48,7 +48,7 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
       let id = params['id']
       console.log(id)
       if (id) {
-        this.solicitudService.getPostulantes(id).subscribe(
+        this.solicitudService.getPostulantesByEstadoPend(id).subscribe(
           data => {
             this.practicantes = data.map(
               result => {
