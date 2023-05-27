@@ -28,7 +28,7 @@
               </button>
             </div>
             <div *ngIf="practica.calificacion && !practica.calificacion.url">
-              <button class="btn btn-warning btn-block">
+              <button class="btn btn-warning btn-block" (click)="mostrarDialogo = true">
                 Subir PDF
               </button>
             </div>
@@ -38,3 +38,11 @@
     </div>
   </div>
 </div>
+
+
+<p-dialog [(visible)]="mostrarDialogo">
+  <p-header>
+    <h4>Subir PDF</h4>
+  </p-header>
+    <p-fileUpload name="archivo" (onUpload)="onUpload($event.file[0])"></p-fileUpload>
+</p-dialog>
