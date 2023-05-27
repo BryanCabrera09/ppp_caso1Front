@@ -81,7 +81,7 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: 'media',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-check accepted-icon',
         label: 'Solicitudes Aceptadas/Rechazadas',
         role: 'Practicante'
     },
@@ -93,14 +93,14 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: 'salud/report',
-        icon: 'fal fa-cog',
+        icon: 'fas fa-hard-hat card-icon',
         label: 'Induccion Salud Ocupacional',
         expanded: true,
         role: 'Practicante'
     },
     {
         routeLink: 'reporte/semanal',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-clipboard-list card-icon',
         label: 'Reporte Semanal de Actividades',
         role: 'Practicante'
     },
@@ -172,7 +172,7 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: '/tutor-especifico/calificacion/practica-tutor',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-clipboard-check card-icon',
         label: 'Evaluación del Estudiante',
         role: 'Tutor Especifico'
     },
