@@ -15,6 +15,10 @@ export class PracticasService {
 
   constructor(private httpClient: HttpClient) { }
 
+  create(practica: Practica) {
+    return this.httpClient.post(this.baseURL + '/crear', practica);
+  }
+
   obtenerPractica(): Observable<Practica[]> {
     return this.httpClient.get<Practica[]>(`${this.baseURL}/listar`)
   }
@@ -30,9 +34,11 @@ export class PracticasService {
   buscarxEstudiante(id: number) {
     return this.httpClient.get(`${this.baseURL}/buscarxestudiante/${id}`);
   }
+  
   listarByTistaUsuario(id: number): Observable<any> {
     return this.httpClient.get<any>(`${this.baseURL}/listar/usuario/${id}`, { observe: 'response', withCredentials: true });
   }
+
   searchByConvo(id: number): Observable<Practica[]> {
     return this.httpClient.get<Practica[]>(`${this.baseURL}/listar/convocatoria/${id}`);
   }

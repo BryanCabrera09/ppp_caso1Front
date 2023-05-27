@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { Convenio } from 'src/app/core/models/convenio';
 import { Estudiante } from 'src/app/core/models/estudiante';
 import { EstudianteService } from 'src/app/core/services/estudiante.service';
+import { AnexosService } from 'src/app/core/services/anexos.service';
 
 @Component({
   selector: 'app-vista',
@@ -32,13 +33,14 @@ export class VistaComponent implements OnInit {
   estudiante = new Estudiante;
   solicitude: SoliEstudiante = new SoliEstudiante()
 
-  descargandoPDF: boolean = false;
+  archivo: File;
+  id: number;
 
   fechaI: Date = new Date;
 
   user: Usuario;
 
-  constructor(private convocatoriaService: ConvocatoriaService,
+  constructor(private convocatoriaService: ConvocatoriaService, private router: Router, private anexoService: AnexosService,
     private actividadservice: ActividadpService, private route: ActivatedRoute, private soliestudianteservice: SoliEstudianteService,
     private estudianteservice: EstudianteService) { }
 
@@ -63,6 +65,23 @@ export class VistaComponent implements OnInit {
     this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
   }
 
+  onFileChange(event: any) {
+    this.archivo = event.target.files[0];
+  }
+
+  updatePDF() {
+    console.log(this.id);
+    this.anexoService.guardarPDF(this.archivo, this.id).subscribe(
+      (response: any) => {
+        Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+        this.router.navigate(['../lista-practicas']);
+      },
+      (error) => {
+        console.error('Error al actualizar el PDF', error);
+        Swal.fire('Registro', 'Error al subir el PDF', 'error');
+      }
+    );
+  }
 
   obtenerActividadid(id: number) {
 
@@ -193,9 +212,6 @@ export class VistaComponent implements OnInit {
               .join(' ') + '\n' + this.user.telefono + '\n' + this.user.correo + '',
           style: 'signature'
         },
-
-
-
       ],
       styles: {
         header: {
@@ -223,10 +239,6 @@ export class VistaComponent implements OnInit {
     pdfMake.createPdf(documentDefinition).download('SolicitudEstudiante.pdf');
 
     this.displayEU = true;
+
   }
-
-
-
-
-
 }

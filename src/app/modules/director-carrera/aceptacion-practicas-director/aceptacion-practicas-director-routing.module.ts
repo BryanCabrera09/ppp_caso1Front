@@ -4,7 +4,7 @@ import { AceptacionSolicitudDirectorComponent } from './pages/aceptacion-solicit
 
 const routes: Routes = [
   {
-    path: 'lista-practicantes',
+    path: 'lista-practicantes/:id',
     component: AceptacionSolicitudDirectorComponent,
   }
 ];

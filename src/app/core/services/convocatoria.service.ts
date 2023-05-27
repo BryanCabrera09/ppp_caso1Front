@@ -30,4 +30,8 @@ export class ConvocatoriaService {
     return this.httpClient.get<ConvocatoriaP>(`${this.searchUrl}/buscar/solEmpresa/${id}`)
   }
 
+  searchConvocatoriaById(id: number) {
+    return this.httpClient.get(`${this.searchUrl}/buscar/${id}`);
+  }
+
 }

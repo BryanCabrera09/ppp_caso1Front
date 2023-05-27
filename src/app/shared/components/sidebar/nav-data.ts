@@ -61,8 +61,8 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: 'coupens',
-        icon: 'fal fa-tags',
-        label: 'Asignación Tutores Especificos y Generales',
+        icon: 'fas fa-user-tie',
+        label: 'Asignación Tutor Específico',
         role: 'Responsable Empresa',
     },
     {
@@ -159,8 +159,8 @@ export const navbarData: INavbarData[] = [
         role: 'Director Carrera'
     },
     {
-        routeLink: 'convocatorias/lista-convocatoria',
-        icon: 'fal fa-camera',
+        routeLink: 'convocatorias/lista-convocatorias',
+        icon: 'fa-solid fa-person-circle-check',
         label: 'Solicitudes Practicantes',
         role: 'Director Carrera'
     },

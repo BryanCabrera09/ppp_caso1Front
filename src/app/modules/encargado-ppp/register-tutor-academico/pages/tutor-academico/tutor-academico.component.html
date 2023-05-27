@@ -20,6 +20,14 @@
                                 placeholder="Seleccionar Practicante" (onChange)="practicanteId($event.value)">
                             </p-dropdown>
                         </div>
+                        <div class="p-col-12 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.telefono"
+                                    placeholder=" Ingrese Número Telefónico" [pKeyFilter]="'int'" maxlength="10"
+                                    minlength="10" pInputText>
+                                <label for=" float-input">Número de Teléfono</label>
+                            </span>
+                        </div>
                     </div>
                     <div class="col">
                         <div class="p-col-12 p-md-4">
