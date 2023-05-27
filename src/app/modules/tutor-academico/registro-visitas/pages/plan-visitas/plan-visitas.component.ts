@@ -4,13 +4,12 @@ import { Usuario } from 'src/app/core/models/usuario';
 import { PracticaService } from 'src/app/core/services/practica.service';
 
 @Component({
-  selector: 'app-practicas-tutor',
-  templateUrl: './practicas-tutor.component.html',
-  styleUrls: ['./practicas-tutor.component.css']
+  selector: 'app-plan-visitas',
+  templateUrl: './plan-visitas.component.html',
+  styleUrls: ['./plan-visitas.component.css']
 })
-export class PracticasTutorComponent {
+export class PlanVisitasComponent {
 
-  
   user = new Usuario();
   practicas: any[] = []
 
