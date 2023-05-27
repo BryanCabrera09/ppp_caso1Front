@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import baserUrl from '../helpers/helperUrl';
 import { Observable } from 'rxjs';
@@ -30,8 +30,14 @@ export class CalificacionService {
     const formData = new FormData();
     formData.append('archivo', archivo, archivo.name);
     formData.append('id', id.toString());
-
     return this.http.post(`${this.searchUrl}/guardarpdf`, formData, { responseType: 'text' });
+  }
+
+  obtenerPDF(id: number): Observable<HttpResponse<Blob>> {
+    return this.http.get(`${this.searchUrl}/mostrarpdf/${id}`, {
+      responseType: 'blob',
+      observe: 'response'
+    });
   }
 
 }
