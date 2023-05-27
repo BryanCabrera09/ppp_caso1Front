@@ -1,21 +1,33 @@
-  .papr-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .papr-table th, .papr-table td {
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  .papr-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-    text-align: left;
-  }
-  
-  .papr-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
+/* Change background color of table rows */
+.papr-table tbody tr {
+  background-color: #f9f9f9;
+}
 
+/* Change text color of table headers */
+.papr-table thead th {
+  color: #333;
+}
 
+/* Add border to table cells */
+.papr-table td,
+.papr-table th {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  /* Center the text horizontally */
+  vertical-align: middle;
+}
+
+/* Add hover effect to table rows */
+.papr-table tbody tr:hover {
+  background-color: #ebebeb;
+}
+
+/* Add striped effect to table rows */
+.papr-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table-container {
+  margin-bottom: 50px;
+}
