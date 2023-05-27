@@ -74,7 +74,7 @@ export const navbarData: INavbarData[] = [
 
     {
 
-        routeLink: '/practicante/postulacion/postulacion-estudiante',
+        routeLink: '/practicante/postulacion/seleccion-empresa',
         icon: 'fas fa-file-signature',
         label: 'Postulacion PPP',
         role: 'Practicante'

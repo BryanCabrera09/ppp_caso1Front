@@ -1,0 +1,201 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "poppins", sans-serif;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+
+  background: linear-gradient(rgba(181, 162, 162, 0.4), transparent),
+    url(https://th.bing.com/th/id/OIG.JYUpvZfs.eviXMWtJqoZ?pcl=1b1a19&pid=ImgGn);
+  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+  background-size: cover;
+  padding-right: 100px;
+}
+
+.form-box {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+}
+
+h2 {
+  font-size: 2em;
+  color: #fff;
+  text-align: center;
+}
+.inputbox {
+  position: relative;
+  margin: 30px 0;
+  width: 310px;
+  border-bottom: 2px solid #fff;
+}
+.inputbox2 {
+  position: relative;
+  margin: 10px 0;
+  width: 310px;
+}
+.inputbox label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 1em;
+  pointer-events: none;
+  transition: 0.5s;
+}
+input:focus ~ label,
+input:valid ~ label {
+  top: -5px;
+}
+.inputbox input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding: 0 35px 0 5px;
+  color: #fff;
+}
+.inputbox ion-icon {
+  position: absolute;
+  right: 8px;
+  color: #fff;
+  font-size: 1.2em;
+  top: 20px;
+}
+.forget {
+  margin: -15px 0 15px;
+  font-size: 0.9em;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forget label input {
+  margin-right: 3px;
+}
+.forget label a {
+  color: #fff;
+  text-decoration: none;
+}
+.forget label a:hover {
+  text-decoration: underline;
+}
+button {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #020202;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+}
+.register {
+  font-size: 0.9em;
+  color: #fff;
+  text-align: center;
+  /* margin: 25px 0 10px; */
+}
+.register p a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+}
+.register p a:hover {
+  text-decoration: underline;
+}
+
+/*
+ * Header
+ */
+
+.nav-masthead .nav-link {
+  color: rgba(0, 0, 0, 0.5);
+  border-bottom: 0.25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255, 255, 255, 0.25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+#btns {
+  background-color: rgb(218, 211, 211);
+  border-bottom-color: rgb(2, 2, 2);
+  border-color: black;
+  color: aqua;
+}
+
+#btns:hover,
+#btns:focus {
+  color: black;
+  border-bottom-color: rgb(8, 8, 8);
+
+  border-color: black;
+  background-color: rgb(13, 243, 166);
+}
+
+.col-12.text-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#form-convoca {
+  margin-right: 260px;
+}
+
+#form-auth {
+  margin-left: 260px;
+}
+
+.row {
+  margin-top: 25px;
+  margin-left: 100px;
+  margin-bottom: 50px;
+}
+
+.card-title {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  text-align: center;
+}
+
+.card {
+  margin-left: 61px;
+  margin-top: 40px;
+  background-color: rgb(243, 243, 243);
+}
+
+li {
+  margin-top: 10px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: black;
+}

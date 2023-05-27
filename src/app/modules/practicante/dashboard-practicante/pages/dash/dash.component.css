@@ -1,13 +1,63 @@
-section {
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.presentacion {
+  background-color: #f2f2f2;
+  padding: 50px;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+button {
+  background-color: #bbbcbb;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #58a0e8;
+}
+
+.cards {
   display: flex;
-  justify-self: center;
-  align-items: center;
-  min-height: 100vh;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 50px;
+}
+
+.card {
+  background-color: #e6e6e6;
+  border: 1px solid #b9b9b9;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+}
+
+.card img {
   width: 100%;
-  background: linear-gradient(rgba(181, 162, 162, 0.4), transparent),
-    url(https://th.bing.com/th/id/OIG.JYUpvZfs.eviXMWtJqoZ?pcl=1b1a19&pid=ImgGn);
-  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
-  background-size: cover;
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
-  color: rgb(0, 17, 70);
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.card p {
+  margin-bottom: 0;
 }

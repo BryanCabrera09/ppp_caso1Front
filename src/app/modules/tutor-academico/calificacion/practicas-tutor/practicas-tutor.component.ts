@@ -20,7 +20,7 @@ export class PracticasTutorComponent {
   calificacion: Calificacion;
 
   constructor(private practicaService: PracticaService, private router: Router,
-    private calfService: CalificacionService) {}
+    private calfService: CalificacionService) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('userdetails') || "");
@@ -32,7 +32,7 @@ export class PracticasTutorComponent {
       (response) => {
         this.practicas = response.body;
         console.log("Lista de practicas: " + this.practicas);
-        for(let p of this.practicas) {
+        for (let p of this.practicas) {
           this.listarCalificaciones(p.id);
         }
       }
@@ -53,7 +53,7 @@ export class PracticasTutorComponent {
   comparar(practicas: any[], calificaciones: Calificacion[]) {
     for (let calificacion of calificaciones) {
       const practicaId = calificacion.practica.id
-      
+
       // Buscar la práctica correspondiente utilizando el practicaId
       const practica = practicas.find(p => p.id === practicaId);
 
@@ -71,8 +71,8 @@ export class PracticasTutorComponent {
       const formData = new FormData();
       formData.append('archivo', archivo);
       formData.append('id', this.calificacion.id.toString());
-  
-      this.calfService.guardarDocumento(formData, this.calificacion.id)
+
+      this.calfService.guardarDocumento(archivo, this.calificacion.id)
         .subscribe(
           response => {
             console.log('El documento se ha guardado correctamente.', response);

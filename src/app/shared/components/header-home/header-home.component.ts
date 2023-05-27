@@ -23,6 +23,9 @@ export class HeaderHomeComponent {
     } else if (this.router.url === '/mision-vision-principios') {
       this.activeLink = '';
       this.activeLink = 'info';
+    } else if (this.router.url === '/ultimas') {
+      this.activeLink = '';
+      this.activeLink = 'convocatorias';
     }
   }
 
@@ -42,5 +45,11 @@ export class HeaderHomeComponent {
 
     this.activeLink = 'login';
     this.router.navigate(['/login'])
+  }
+
+  goToConvocatoria(): void {
+
+    this.activeLink = 'convocatorias';
+    this.router.navigate(['/ultimas'])
   }
 }
