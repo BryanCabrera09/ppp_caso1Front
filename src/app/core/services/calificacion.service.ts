@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import baserUrl from '../helpers/helperUrl';
 import { Observable } from 'rxjs';
@@ -26,14 +26,28 @@ export class CalificacionService {
     return this.http.get/* <Calificacion[]> */(`${this.searchUrl}/listar/practica/${id}`);
   }
 
- /* guardarDocumento(archivo: FormData, id: number) {
-    formData.append('archivo', archivo);
-    formData.append('id', id.toString());
-    return this.http.post(`${this.searchUrl}/guardarpdf`, formData);
-  }*/
 
-  guardarDocumento(formData: FormData, id: number) {
-    return this.http.post(this.searchUrl, formData);
+  guardarDocumento(archivo: File, id: number): Observable<any> {
+    const formData = new FormData();
+    formData.append('archivo', archivo);
+    return this.http.post(`${this.searchUrl}/guardarpdf/${id}`, formData);
   }
+
+
+  guardarPDF(archivo: File, id: number) {
+    const formData = new FormData();
+    formData.append('archivo', archivo, archivo.name);
+    formData.append('id', id.toString());
+
+    return this.http.post(`${this.searchUrl}/guardarpdf`, formData, { responseType: 'text' });
+  }
+
+  obtenerPDF(id: number): Observable<HttpResponse<Blob>> {
+    return this.http.get(`${this.searchUrl}/mostrarpdf/${id}`, {
+      responseType: 'blob',
+      observe: 'response'
+    });
+  }
+  
   
 }

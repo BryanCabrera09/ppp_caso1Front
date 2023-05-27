@@ -6,7 +6,6 @@ import { GenerarNotaComponent } from './generar-nota/generar-nota.component';
 import { PracticasTutorComponent } from './practicas-tutor/practicas-tutor.component';
 import { MatTableModule } from '@angular/material/table';
 import { DialogModule } from 'primeng/dialog';
-import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -18,8 +17,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     CommonModule,
     CalificacionRoutingModule,
     MatTableModule,
-    DialogModule,
-    FileUploadModule
+    DialogModule
   ]
 })
 export class CalificacionModule { }
