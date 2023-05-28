@@ -19,6 +19,7 @@ export class NotasComponent implements OnInit {
   estudiante = new Estudiante;
   practica = new Practica;
   usuario = new Usuario;
+
   calificacion = new Calificacion;
 
   calificaciones: Calificacion[];
@@ -26,6 +27,8 @@ export class NotasComponent implements OnInit {
   idUs: number;
   displayEU: boolean;
   selectedTutor: string;
+  tutor: string;
+  variable: number;
 
   tutores: string[] = [
     'Calificación Tutor Academico',
@@ -38,6 +41,16 @@ export class NotasComponent implements OnInit {
 
   ngOnInit() {
     this.buscarEstudiante();
+  }
+
+  onTutorChange() {
+    if (this.selectedTutor === 'Calificación Tutor Academico') {
+      this.tutor = 'Tutor Academico';
+      this.cargarCalificacion();
+    } else if (this.selectedTutor === 'Calificación Tutor Específico') {
+      this.tutor = 'Tutor Específico';
+      this.cargarCalificacion();
+    }
   }
 
   selectedCell: { [key: string]: number } = {};
@@ -102,11 +115,157 @@ export class NotasComponent implements OnInit {
   }
 
   cargarCalificacion() {
-    this.calificacionService.buscarxPractica(this.practica.id).subscribe(
-      (data: Calificacion) => {
-        this.calificacion = data;
-        this.calificacion.id = data.id;
-        console.log(data)
+    this.calificacionService.buscarxPracticaEstud(this.practica.id).subscribe(
+      data => {
+        this.calificaciones = data;
+        if (this.selectedTutor === 'Calificación Tutor Academico') {
+          this.calificacion.a = 0;
+          this.calificacion.b = 0;
+          this.calificacion.c = 0;
+          this.calificacion.d = 0;
+          this.calificacion.e = 0;
+          this.calificacion = this.calificaciones.length > 0 ? this.calificaciones[0] : null;
+
+          //Notas A
+          if (this.calificacion.a === 20) {
+            this.toggleCheck('a', 0);
+          } else if (this.calificacion.a === 15) {
+            this.toggleCheck('a', 1);
+          } else if (this.calificacion.a === 10) {
+            this.toggleCheck('a', 2);
+          } else if (this.calificacion.a === 5) {
+            this.toggleCheck('a', 3);
+          } else if (this.calificacion.a === 1) {
+            this.toggleCheck('a', 4);
+          }
+
+          //Notas B
+          if (this.calificacion.b === 20) {
+            this.toggleCheck('b', 0);
+          } else if (this.calificacion.b === 15) {
+            this.toggleCheck('b', 1);
+          } else if (this.calificacion.b === 10) {
+            this.toggleCheck('b', 2);
+          } else if (this.calificacion.b === 5) {
+            this.toggleCheck('b', 3);
+          } else if (this.calificacion.b === 1) {
+            this.toggleCheck('b', 4);
+          }
+
+          //Notas C
+          if (this.calificacion.c === 20) {
+            this.toggleCheck('c', 0);
+          } else if (this.calificacion.c === 15) {
+            this.toggleCheck('c', 1);
+          } else if (this.calificacion.c === 10) {
+            this.toggleCheck('c', 2);
+          } else if (this.calificacion.c === 5) {
+            this.toggleCheck('c', 3);
+          } else if (this.calificacion.c === 1) {
+            this.toggleCheck('c', 4);
+          }
+
+          //Notas D
+          if (this.calificacion.d == 20) {
+            this.toggleCheck('d', 0);
+          } else if (this.calificacion.d === 15) {
+            this.toggleCheck('d', 1);
+          } else if (this.calificacion.d === 10) {
+            this.toggleCheck('d', 2);
+          } else if (this.calificacion.d === 5) {
+            this.toggleCheck('d', 3);
+          } else if (this.calificacion.d === 1) {
+            this.toggleCheck('d', 4);
+          }
+
+          //Notas E
+          if (this.calificacion.e == 20) {
+            this.toggleCheck('e', 0);
+          } else if (this.calificacion.e === 15) {
+            this.toggleCheck('e', 1);
+          } else if (this.calificacion.e === 10) {
+            this.toggleCheck('e', 2);
+          } else if (this.calificacion.e === 5) {
+            this.toggleCheck('e', 3);
+          } else if (this.calificacion.e === 1) {
+            this.toggleCheck('e', 4);
+          }
+        }
+        if (this.selectedTutor === 'Calificación Tutor Específico') {
+          this.calificacion.a = 0;
+          this.calificacion.b = 0;
+          this.calificacion.c = 0;
+          this.calificacion.d = 0;
+          this.calificacion.e = 0;
+          this.calificacion = this.calificaciones.length > 1 ? this.calificaciones[1] : null;
+
+          //Notas A
+          if (this.calificacion.a === 20) {
+            this.toggleCheck('a', 0);
+          } else if (this.calificacion.a === 15) {
+            this.toggleCheck('a', 1);
+          } else if (this.calificacion.a === 10) {
+            this.toggleCheck('a', 2);
+          } else if (this.calificacion.a === 5) {
+            this.toggleCheck('a', 3);
+          } else if (this.calificacion.a === 1) {
+            this.toggleCheck('a', 4);
+          }
+
+          //Notas B
+          if (this.calificacion.b === 20) {
+            this.toggleCheck('b', 0);
+          } else if (this.calificacion.b === 15) {
+            this.toggleCheck('b', 1);
+          } else if (this.calificacion.b === 10) {
+            this.toggleCheck('b', 2);
+          } else if (this.calificacion.b === 5) {
+            this.toggleCheck('b', 3);
+          } else if (this.calificacion.b === 1) {
+            this.toggleCheck('b', 4);
+          }
+
+          //Notas C
+          if (this.calificacion.c === 20) {
+            this.toggleCheck('c', 0);
+          } else if (this.calificacion.c === 15) {
+            this.toggleCheck('c', 1);
+          } else if (this.calificacion.c === 10) {
+            this.toggleCheck('c', 2);
+          } else if (this.calificacion.c === 5) {
+            this.toggleCheck('c', 3);
+          } else if (this.calificacion.c === 1) {
+            this.toggleCheck('c', 4);
+          }
+
+          //Notas D
+          if (this.calificacion.d === 20) {
+            this.toggleCheck('d', 0);
+          } else if (this.calificacion.d === 15) {
+            this.toggleCheck('d', 1);
+          } else if (this.calificacion.d === 10) {
+            this.toggleCheck('d', 2);
+          } else if (this.calificacion.d === 5) {
+            this.toggleCheck('d', 3);
+          } else if (this.calificacion.d === 1) {
+            this.toggleCheck('d', 4);
+          }
+
+          //Notas E
+          if (this.calificacion.e === 20) {
+            this.toggleCheck('e', 0);
+          } else if (this.calificacion.e === 15) {
+            this.toggleCheck('e', 1);
+          } else if (this.calificacion.e === 10) {
+            this.toggleCheck('e', 2);
+          } else if (this.calificacion.e === 5) {
+            this.toggleCheck('e', 3);
+          } else if (this.calificacion.e === 1) {
+            this.toggleCheck('e', 4);
+          }
+
+        }
+
       },
       (error) => {
         console.error(error);
