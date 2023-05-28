@@ -124,6 +124,7 @@ export class NotasComponent implements OnInit {
           this.calificacion.c = 0;
           this.calificacion.d = 0;
           this.calificacion.e = 0;
+          this.selectedCell = {}
           this.calificacion = this.calificaciones.length > 0 ? this.calificaciones[0] : null;
 
           //Notas A
@@ -197,6 +198,7 @@ export class NotasComponent implements OnInit {
           this.calificacion.c = 0;
           this.calificacion.d = 0;
           this.calificacion.e = 0;
+          this.selectedCell = {}
           this.calificacion = this.calificaciones.length > 1 ? this.calificaciones[1] : null;
 
           //Notas A
