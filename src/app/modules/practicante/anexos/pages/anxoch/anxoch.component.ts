@@ -1,27 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { Practicante } from 'src/app/core/models/practicante';
-import { TutorAcademico } from 'src/app/core/models/tutor-academicoRS';
-import { TutorEmpresarial } from 'src/app/core/models/tutor-empresarial';
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-anxoch',
   templateUrl: './anxoch.component.html',
   styleUrls: ['./anxoch.component.css']
 })
-export class AnxochComponent implements OnInit {
-  public tutor:TutorAcademico = new TutorAcademico();
-  public empresarial:TutorEmpresarial =new TutorEmpresarial();
-  public estudiante:Practicante = new Practicante();
-  
-  constructor() { }
-  
-  ngOnInit(){
-    
+export class AnxochComponent implements OnInit{
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
+
+
   generarPDF() {
     const documentDefinition = {
       content: [
@@ -115,7 +106,5 @@ export class AnxochComponent implements OnInit {
 
     pdfMake.createPdf(documentDefinition).open();
   }
-
-
 
 }

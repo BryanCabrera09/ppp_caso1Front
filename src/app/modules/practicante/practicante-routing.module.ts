@@ -34,6 +34,10 @@ const routes: Routes = [
     path: 'solicitud',
     loadChildren: () => import("./respuesta-postulacion/respuesta-postulacion.module").then(m => m.RespuestaPostulacionModule)
   },
+  {
+    path: 'anexos',
+    loadChildren: () => import("./anexos/anexos.module").then(m => m.AnexosModule)
+  },
 ];
 
 @NgModule({

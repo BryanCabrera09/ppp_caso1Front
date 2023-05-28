@@ -2,56 +2,66 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AnexosRoutingModule } from './anexos-routing.module';
-import { AnxochComponent } from './anxoch/anxoch.component';
-import { LispractComponent } from './lispract/lispract.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListpracComponent } from './pages/listprac/listprac.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NgProgressModule } from 'ngx-progressbar';
 import { ToastrModule } from 'ngx-toastr';
-import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { MenubarModule } from 'primeng/menubar';
 import { PanelModule } from 'primeng/panel';
-import { PanelMenuModule } from 'primeng/panelmenu';
-import { RadioButtonModule } from 'primeng/radiobutton';
+import { PasswordModule } from 'primeng/password';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { AnxochComponent } from './pages/anxoch/anxoch.component';
+;
+
+
 
 
 @NgModule({
   declarations: [
-    AnxochComponent,
-    LispractComponent
+    ListpracComponent,
+    AnxochComponent
   ],
   imports: [
     CommonModule,
     AnexosRoutingModule,
     FormsModule,
     NgProgressModule,
-    FormsModule,
-    ToastrModule.forRoot(),
-    AvatarModule,
     ReactiveFormsModule,
-    ButtonModule,
-    ConfirmDialogModule,
-    DialogModule,
-    DropdownModule,
-    InputMaskModule,
-    PanelModule,
-    PanelMenuModule,
-    RadioButtonModule,
-    TableModule,
-    ToastModule,
-    CardModule,
+    MatTableModule,
+    MatTabsModule,
     KeyFilterModule,
+    ToastrModule.forRoot(),
+    PasswordModule,
+    InputMaskModule,
+    ToggleButtonModule,
+    DividerModule,
+    FileUploadModule,
+    DropdownModule,
+    PanelModule,
+    ReactiveFormsModule,
+    MenubarModule,
     InputTextModule,
+    ButtonModule,
+    CardModule,
+    TableModule,
+    DialogModule,
+    InputTextareaModule,
     CalendarModule
+   
   ]
 })
 export class AnexosModule { }

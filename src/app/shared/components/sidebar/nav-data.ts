@@ -25,12 +25,7 @@ export const navbarData: INavbarData[] = [
         label: 'Plan de aprendizaje',
         role: 'Tutor Academico'
     },
-    {
-        routeLink: 'anexos/listapract',
-        icon: 'fas fa-file-alt card-icon',
-        label: 'Reporte Final',
-        role: 'Tutor Academico'
-    },
+   
     {
         routeLink: '/responsable-empresa',
         icon: 'fa-solid fa-house',
@@ -102,6 +97,12 @@ export const navbarData: INavbarData[] = [
         routeLink: 'reporte/semanal',
         icon: 'fas fa-clipboard-list card-icon',
         label: 'Reporte Semanal de Actividades',
+        role: 'Practicante'
+    },
+    {
+        routeLink: 'anexos/lista-practicas',
+        icon: 'fas fa-file-alt card-icon',
+        label: 'Reporte Final',
         role: 'Practicante'
     },
     {

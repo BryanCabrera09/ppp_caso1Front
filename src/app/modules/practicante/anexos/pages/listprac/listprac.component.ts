@@ -2,18 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Estudiante } from 'src/app/core/models/estudiante';
 import { Practica } from 'src/app/core/models/practica';
-import { TutorInstituto } from 'src/app/core/models/tutor-academico';
 import { TutorAcademico } from 'src/app/core/models/tutor-academicoRS';
 import { PracticasService } from 'src/app/core/services/practicas.service';
 import { TutorAcademicoService } from 'src/app/core/services/tutor-academico.service';
 
 @Component({
-  selector: 'app-lispract',
-  templateUrl: './lispract.component.html',
-  styleUrls: ['./lispract.component.css']
+  selector: 'app-listprac',
+  templateUrl: './listprac.component.html',
+  styleUrls: ['./listprac.component.css']
 })
-export class LispractComponent implements OnInit {
-
+export class ListpracComponent implements OnInit{
   practicantes= new Estudiante;
   tutoraca =new TutorAcademico;
   practica =new Practica;
@@ -61,6 +59,4 @@ export class LispractComponent implements OnInit {
       }
     )
   }
-
-
 }
