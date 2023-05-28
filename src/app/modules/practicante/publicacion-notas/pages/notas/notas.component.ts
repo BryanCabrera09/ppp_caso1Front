@@ -119,11 +119,6 @@ export class NotasComponent implements OnInit {
       data => {
         this.calificaciones = data;
         if (this.selectedTutor === 'Calificación Tutor Academico') {
-          this.calificacion.a = 0;
-          this.calificacion.b = 0;
-          this.calificacion.c = 0;
-          this.calificacion.d = 0;
-          this.calificacion.e = 0;
           this.selectedCell = {}
           this.calificacion = this.calificaciones.length > 0 ? this.calificaciones[0] : null;
 
@@ -193,11 +188,6 @@ export class NotasComponent implements OnInit {
           }
         }
         if (this.selectedTutor === 'Calificación Tutor Específico') {
-          this.calificacion.a = 0;
-          this.calificacion.b = 0;
-          this.calificacion.c = 0;
-          this.calificacion.d = 0;
-          this.calificacion.e = 0;
           this.selectedCell = {}
           this.calificacion = this.calificaciones.length > 1 ? this.calificaciones[1] : null;
 
