@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Resultado } from 'src/app/core/models/resultado';
+import { ActividadpService } from 'src/app/core/services/actividadp.service';
 import { PracticasService } from 'src/app/core/services/practicas.service';
+import { ResultadoCarreraService } from 'src/app/core/services/resultado-carrera.service';
+import { ResultadoService } from 'src/app/core/services/resultado.service';
+import Swal from 'sweetalert2';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -17,6 +22,9 @@ export class GenerarPlanComponent implements OnInit {
   semanas: number[] = [];
   mostrarTabla: boolean = false;
 
+  todosSeleccionados: boolean = false;
+  dropdownSeleccionado: boolean[] = [];
+
   cargarSemanas() {
     this.semanas = []; // Restablecer el arreglo semanas
     if (this.numeroSemanas === 6 || this.numeroSemanas === 12) {
@@ -28,53 +36,76 @@ export class GenerarPlanComponent implements OnInit {
   }
 
   practica: any;
+  resultadosCarrera: any[];
+  resultados: Resultado[] = [];
+  actividades: any[];
 
-  constructor(private route: ActivatedRoute, private pracServ: PracticasService) { }
+
+  constructor(private route: ActivatedRoute, private pracServ: PracticasService,
+    private resCarServ: ResultadoCarreraService, private atcServ: ActividadpService,
+    private resServ: ResultadoService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.practica = JSON.parse(params['practica']);
-      console.log(this.practica);
+      console.log("practica: " + this.practica);
+      this.listarResultados(this.practica.estudiante.carrera.id);
+      this.listarActividades(this.practica.convocatoria.solicitudEmpresa.id)
     });
   }
 
-  guardar() {
-    this.pracServ.editarPractica(this.practica.id, this.practica).subscribe(
+  listarResultados(id: number) {
+    this.resCarServ.listarPorCarreraId(id).subscribe(
       (res) => {
-        console.log(res);
+        this.resultadosCarrera = res;
+        console.log("resultadosCarrera: " + this.resultadosCarrera)
       }
     )
   }
 
-  generatePDF() {
-    const docDefinition = {
-      content: [
-        {
-          table: {
-            body: [
-              ['Nombre de la empresa formadora', '{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}'],
-              ['Descripción de la empresa', '{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.mision }}'],
-              ['Carrera', '{{ practica.convocatoria.solicitudEmpresa.convenio.carrera.nombre }}'],
-              ['Resolución de aprobación ITV', 'SIES-ISTA-0XX-XXXX'],
-              ['Número del convenio', `PPP-ISTA-0XX-XXXX: {{ practica.convocatoria.solicitudEmpresa.convenio.numero }}`],
-              ['Nombre del estudiante', '{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}'],
-              ['Cédula', '{{ practica.estudiante.usuario.cedula }}'],
-              ['Correo', '{{ practica.estudiante.usuario.correo }}']
-            ]
-          }
-        }
-      ],
-      styles: {
-        header: {
-          fontSize: 16,
-          bold: true,
-          margin: [0, 0, 0, 10]
-        }
+  listarActividades(id: number) {
+    this.atcServ.obtenerActividadid(id).subscribe(
+      (res) => {
+        this.actividades = res;
+        this.dropdownSeleccionado.fill(false, 0, this.actividades.length);
+        console.log("Actividades: " + this.actividades)
       }
-    };
-
-    pdfMake.createPdf(docDefinition).download('practica.pdf');
+    )
   }
 
+  crearResultado(value, id) {
+    const index = this.actividades.findIndex(atv => atv.id === id);
+    this.dropdownSeleccionado[index] = true;
+    let resultado = new Resultado();
+    let resCarrera: any = {};
+    resCarrera.id = value;
+    let activity: any = {};
+    activity.id = id;
+    resultado.actividad = activity;
+    resultado.resultadoMateria = resCarrera;
+    resultado.practica = this.practica;
+    this.resultados.push(resultado);
+    console.log(this.resultados);
+    if (this.dropdownSeleccionado.every(selected => selected)) {
+      this.todosSeleccionados = true;
+    } 
+  }
+
+  editarPractica() {
+    this.pracServ.editarPractica(this.practica.id, this.practica).subscribe(
+      (res) => {
+        console.log(res);
+        this.gueardarResultados();
+      }
+    )
+  }
+
+  gueardarResultados() {
+      this.resServ.crearMuchos(this.resultados).subscribe(
+        (res) => {
+          console.log(res)
+        }
+      )
+  }  
 
 }
