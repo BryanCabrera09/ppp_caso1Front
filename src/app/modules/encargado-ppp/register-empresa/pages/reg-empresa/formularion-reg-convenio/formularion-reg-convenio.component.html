@@ -1,12 +1,12 @@
 <div class="container">
     <div class="content">
-        <p-panel id="panelregConvenio" header="Registro Convenio">
+        <p-panel id="panelregconvenio" header="Registro convenio">
             <div class="panel over overflow-auto p-grid p-fluid">
-                <h4 style="text-align: center">Datos Convenio</h4>
+                <h4 style="text-align: center">Datos convenio</h4>
                 <div class="cont p-grid p-fluid justify-content-center align-items-center">
                     <div class="col-sm">
-                        <input type="hidden" #Convenioid class="form-control" style="width: 200%;" name="RUC"
-                            [(ngModel)]="Convenio.id" required>
+                        <input type="hidden" #convenioid class="form-control" style="width: 200%;" name="RUC"
+                            [(ngModel)]="convenio.id" required>
                     </div>
                     <div class="d-flex flex-row">
                         <div class="col">
@@ -20,9 +20,9 @@
                             <div class="p-col-12 p-md-4">
                                 <span class="p-float-label">
                                     <input id="float-input" type="text" class="form-control"
-                                        [(ngModel)]="Convenio.numero" [pKeyFilter]="'int'" name="numeroconv" pInputText
+                                        [(ngModel)]="convenio.numero" [pKeyFilter]="'int'" name="numeroconv" pInputText
                                         required />
-                                    <label for="float-input">Número de Convenio</label>
+                                    <label for="float-input">Número de convenio</label>
                                 </span>
                             </div>
                             <div class="p-col-3 p-md-4">
@@ -62,7 +62,7 @@
                         <br>
                     </div>
                     <div class="p-col-12 p-md-4">
-                        <button pButton pRipple type="button" label="Registrar Convenio" icon="pi pi-check"
+                        <button pButton pRipple type="button" label="Registrar convenio" icon="pi pi-check"
                             iconPos="right" class="p-button-rounded p-button-primary"
                             (click)="GuardarConvenio()"></button>
                     </div>

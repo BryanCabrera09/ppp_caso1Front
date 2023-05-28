@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { formatDate } from '@angular/common';
 import { Empresa } from 'src/app/core/models/empresa';
 import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class FormularionRegConvenioComponent implements OnInit {
   empresa1: Empresa = new Empresa()
 
   tutor: TutorAcademico = new TutorAcademico
-  public Convenio: Convenio = new Convenio
+  public convenio: Convenio = new Convenio
   selectedDate: Date;
   fechaI: Date;
   fechaF: Date;
@@ -46,10 +46,12 @@ export class FormularionRegConvenioComponent implements OnInit {
   ngOnInit(): void {
     this.guardarEmpresa()
     this.guardarTutor()
+    this.CapnConvenio()
   }
 
   constructor(private carreraService: CarreraMateriaService, private TutorAService: TutorAcademicoService, private router: Router,
-    private convenioService: ConvenioService, private empresaService: RegEmpresaServiceService, private tutorService: TutorAcademicoService) {
+    private convenioService: ConvenioService, private empresaService: RegEmpresaServiceService, private tutorService: TutorAcademicoService,
+    private activatedRoute: ActivatedRoute) {
     this.carreraService.ListarCarrera().subscribe(
       Carr => this.Carreras = Carr
     )
@@ -70,6 +72,8 @@ export class FormularionRegConvenioComponent implements OnInit {
     )
   }
 
+
+
   guardarTutor() {
     this.usuario = JSON.parse(sessionStorage.getItem('userdetails')!);
     this.idUs = this.usuario.id
@@ -83,27 +87,50 @@ export class FormularionRegConvenioComponent implements OnInit {
     )
 
   }
+  
+  CapnConvenio(){
+    this.activatedRoute.params.subscribe(params=>{
+      let id = params['id']
+      if(id){
+        this.convenioService.buscarxEmpresa(id).subscribe(
+          (data:Convenio)=>{
+            this.convenio.numero = data.numero
+            console.log(data)
+
+          }
+        )
+      }
+    })
+  }
 
   guardarEmpresa() {
-    const empresa = JSON.parse(localStorage.getItem('empresa') + '');
-    this.id = parseInt(empresa)
 
-    this.empresaService.buscarporxID1(this.id).subscribe(
-      (data: Empresa) => {
-        this.empresa1 = data
-        this.Convenio.empresa = this.empresa1
+    this.activatedRoute.params.subscribe(params=>{
+      let id = params['id']
+      if(id){
+        this.empresaService.buscarporxID1(id).subscribe(
+          (data: Empresa) => {
+            this.empresa1 = data
+            this.convenio.empresa = this.empresa1
+          }
+        )
       }
-    )
+
+    })
+
+   
+
+   
   }
 
 
   GuardarConvenio() {
-    this.Convenio.carrera = this.carrera
-    this.Convenio.firmaInst = this.tutor
-    this.Convenio.fechaInicio = this.fechaI
-    this.Convenio.fechaFin = this.fechaF
-    console.log(this.Convenio);
-    this.convenioService.guardarConvenio(this.Convenio).subscribe(
+    this.convenio.carrera = this.carrera
+    this.convenio.firmaInst = this.tutor
+    this.convenio.fechaInicio = this.fechaI
+    this.convenio.fechaFin = this.fechaF
+    console.log(this.convenio);
+    this.convenioService.guardarConvenio(this.convenio).subscribe(
 
       (data) => {
         console.log(data);

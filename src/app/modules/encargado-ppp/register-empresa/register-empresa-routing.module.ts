@@ -18,7 +18,7 @@ const routes: Routes = [
     component: FormularioComponent,
   },
   {
-    path: 'register-convenio',
+    path: 'register-convenio/:id',
     component: FormularionRegConvenioComponent,
   }
 ];

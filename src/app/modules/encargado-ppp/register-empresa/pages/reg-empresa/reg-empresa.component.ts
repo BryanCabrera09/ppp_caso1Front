@@ -45,9 +45,9 @@ export class RegEmpresaComponent implements OnInit {
   }
 
   traerempresa(empresa: any) {
-    const emp = empresa
-    localStorage.setItem('empresa', emp);
-    this.router.navigate(['/encargado-practicas/empresa/register-convenio']);
+    this.id = empresa;
+    
+    this.router.navigate(['/encargado-practicas/empresa/register-convenio/'+ this.id]);
   }
 
   agregarEmpresa() {

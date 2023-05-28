@@ -19,13 +19,7 @@
                                 [showClear]="true" placeholder="Responsable PPP">
                             </p-dropdown>
                         </div>
-                        <div class="p-col-3 p-md-4">
-                            <p-dropdown [options]="practicantes" [(ngModel)]="selectedPracticante"
-                                optionLabel="estudiante.usuario.nombre" optionValue="id" [filter]="true"
-                                filterBy="estudiante.usuario.nombre" [showClear]="true"
-                                placeholder="Seleccionar Practicante" (onChange)="practicanteId($event.value)">
-                            </p-dropdown>
-                        </div>
+                       
                         <div class="p-col-3 p-md-4">
                             <span class="p-float-label">
                                 <input id="float-input" type="text" [(ngModel)]="usuario.titulo"
@@ -89,7 +83,7 @@
                     <br>
                 </div>
                 <div class="p-col-12 p-md-4">
-                    <button pButton pRipple type="button" label="Registrar Tutor" icon="pi pi-check" iconPos="right"
+                    <button pButton pRipple type="button" label="Registrar Gerente" icon="pi pi-check" iconPos="right"
                         class="p-button-rounded p-button-primary" (click)="registerTutor()"></button>
                     <br><br>
                     <button pButton pRipple type="button" label="Generar PDF" icon="fas fa-file-pdf" iconPos="right"

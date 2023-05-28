@@ -10,7 +10,13 @@ import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
 import { SemanaActividad } from 'src/app/core/models/semana-actividad';
 import { SemanaActividadService } from 'src/app/core/services/semana-actividad.service';
 import { Resultado } from 'src/app/core/models/resultado';
-
+interface Activity {
+  date: string; // Cambiado a string para facilitar la manipulación
+  startTime: string;
+  endTime: string;
+  description: string;
+  totalHours: string;
+}
 @Component({
   selector: 'app-anexo6-generate',
   templateUrl: './anexo6-generate.component.html',
@@ -121,16 +127,12 @@ calcularTotalHoras(dia: string): number {
 }
 
 calcularSiguientesDias(): void {
-  let siguienteDia: Date;
+  
 
   const fechaInicial = new Date(this.fechaInicio);
-  for (let i = 1; i <= 5; i++) {
-   siguienteDia = new Date(fechaInicial);
-    siguienteDia.setDate(siguienteDia.getDate() + i);
-    //siguienteDia = this.Sactvidad.dia
-    console.log(siguienteDia)
-    this.Sactvidad.dia = siguienteDia
-  }
+  fechaInicial.setDate(fechaInicial.getDate() + 1);
+  
+  //this.fecha = fechaSeleccionada.toISOString().substring(0, 10)
   
  
 }
@@ -164,7 +166,48 @@ guardar() {
     }
    );
 }
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+days: SemanaActividad[] =[];
+
+addDays(fechaInicial) {
+  const currentDate = new Date(fechaInicial);
+  fechaInicial.setDate(currentDate.getDate() + 1);
+    //this.fecha = fechaSeleccionada.toISOString().substring(0, 10)
+  fechaInicial = this.Sactvidad.dia
+
+}
+
+private formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 
+submitForm() {
+  // Calcular el total de horas trabajadas para cada día
+  const horaInicioDate = new Date(`1970-01-01T${this.Sactvidad.horaInicio}`);
+  const horaFinDate = new Date(`1970-01-01T${this.Sactvidad.horaFin}`);
+  const diferenciaMilisegundos = horaFinDate.getTime() - horaInicioDate.getTime();
+  const horasTrabajadas = diferenciaMilisegundos / (1000 * 60 * 60);
+  this.Sactvidad.totalHoras = Math.abs(horasTrabajadas);
+
+  // Aquí puedes enviar los datos a tu base de datos
+  // Ejemplo de cómo guardar los datos en la consola
+  console.log(this.days);
+
+  
+  this.semanaService.create(this.Sactvidad).subscribe();
+
+  // Restablece los valores de los campos
+ /* this.days.forEach(day => {
+    day.startTime = '';
+    day.endTime = '';
+    day.description = '';
+    day.totalHours = '';
+  });*/
+}
 
 }
