@@ -86,14 +86,6 @@ export class Anexo6GenerateComponent implements OnInit {
     this.loading = false;
   }
 
-
-  // En el componente
-
-
-
-
-
-
   calcularSiguientesDia() {
 
 
@@ -106,15 +98,8 @@ export class Anexo6GenerateComponent implements OnInit {
   }
 
 
-  days: SemanaActividad[] = [];
 
-  addDays(fechaInicial) {
-    const currentDate = new Date(fechaInicial);
-    fechaInicial.setDate(currentDate.getDate() + 1);
-    //this.fecha = fechaSeleccionada.toISOString().substring(0, 10)
-    fechaInicial = this.Sactvidad.dia
 
-  }
 
 
 
@@ -126,12 +111,6 @@ export class Anexo6GenerateComponent implements OnInit {
     const horasTrabajadas = diferenciaMilisegundos / (1000 * 60 * 60);
     this.Sactvidad.totalHoras = Math.abs(horasTrabajadas);
 
-    // Aquí puedes enviar los datos a tu base de datos
-    // Ejemplo de cómo guardar los datos en la consola
-    console.log(this.days);
-    console.log(this.fechaInicio);
-
-    console.log(this.Sactvidad)
 
     this.semanaService.create(this.Sactvidad).subscribe();
 
@@ -142,20 +121,13 @@ export class Anexo6GenerateComponent implements OnInit {
       act: this.Sactvidad.actividad,
       total: this.Sactvidad.totalHoras
     };
-    console.log(fila)
     this.actividad.push(fila)
-    console.log(this.actividad.length)
 
+//Calculo de Horas Semanales
     this.totalHS = this.totalHS + fila.total
-
+////////////////////////////////////////////////
     this.borrar()
-    // Restablece los valores de los campos
-    /* this.days.forEach(day => {
-       day.startTime = '';
-       day.endTime = '';
-       day.description = '';
-       day.totalHours = '';
-     });*/
+  
   }
 
   borrar() {
