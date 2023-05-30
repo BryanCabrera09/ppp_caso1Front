@@ -39,10 +39,12 @@ export class Anexo6GenerateComponent implements OnInit {
   fechaInicio: string;
   fechaFin: string;
   numeroSemana: number;
-
+  currentDate = new Date();
+  finDate = new Date()
 
   displayEU: boolean;
-
+   contador: number=0
+   bandera:boolean = true
 
   constructor(private http: HttpClient, private estudianteService: EstudianteService,
     private practicaService: PracticasService, private semanaService: SemanaActividadService) { }
@@ -78,6 +80,10 @@ export class Anexo6GenerateComponent implements OnInit {
         this.convocatoria = data.convocatoria;
         this.Sactvidad.practica = data
 
+        this.currentDate = data.inicio
+        this.finDate = data.fin
+       console.log(this.Sactvidad.practica.inicio )
+       
       },
       (error) => {
         console.error(error);
@@ -109,7 +115,7 @@ export class Anexo6GenerateComponent implements OnInit {
     const horaFinDate = new Date(`1970-01-01T${this.Sactvidad.horaFin}`);
     const diferenciaMilisegundos = horaFinDate.getTime() - horaInicioDate.getTime();
     const horasTrabajadas = diferenciaMilisegundos / (1000 * 60 * 60);
-    this.Sactvidad.totalHoras = Math.abs(horasTrabajadas);
+    this.Sactvidad.totalHoras = parseFloat(horasTrabajadas.toFixed(1))
 
 
     this.semanaService.create(this.Sactvidad).subscribe();
@@ -127,6 +133,14 @@ export class Anexo6GenerateComponent implements OnInit {
     this.totalHS = this.totalHS + fila.total
 ////////////////////////////////////////////////
     this.borrar()
+////////////////////////////////////////////////
+    this.contador++
+    
+    if(this.contador===5){
+      this.bandera=false
+    }
+    console.log(this.contador);
+    
   
   }
 

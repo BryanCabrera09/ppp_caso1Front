@@ -3,10 +3,10 @@
 
   <div class="mb-3">
     <label class="fw-bold">Fecha inicio de actividades:</label>
-    <input type="date"  class="form-control" [(ngModel)]="fechaInicio"
+    <input type="date"  class="form-control" [min]="currentDate" [max]="finDate" [(ngModel)]="fechaInicio"
       placeholder="DD/MM/AAAA">
     <label class="fw-bold">Fecha fin de la semana de actividades:</label>
-    <input type="date" class="form-control" [(ngModel)]="fechaFin" placeholder="DD/MM/AAAA">
+    <input type="date" class="form-control" [min]="currentDate" [max]="finDate" [(ngModel)]="fechaFin" placeholder="DD/MM/AAAA">
   </div>
 
   <div class="mb-3">
@@ -18,36 +18,6 @@
       </div>
     </div>
   </div>
-  
-
-
-<!--<form (ngSubmit)="submitForm()" style="display: flex; width: 100%;">
- 
-    <h3>Dia 1</h3>
-    <div>
-      <label>Fecha:</label>
-      <input type="date" [(ngModel)]="fechaInicio" name="fechaInicio" required>
-    </div>
-    <div>
-      <label>Hora de inicio:</label>
-      <input type="time" [(ngModel)]="Sactvidad.horaInicio" name="horaInicio" required>
-    </div>
-    <div>
-      <label>Hora de fin:</label>
-      <input type="time" [(ngModel)]="Sactvidad.horaFin" name="horaFin" required>
-    </div>
-    <div>
-      <label>Descripción:</label>
-      <textarea [(ngModel)]="Sactvidad.actividad" name="actividad" rows="3" required></textarea>
-    </div>
-
-    <div>
-    <label>Total Horas</label>
-    {{(Sactvidad.totalHoras)}}
-    </div>
-  
-  <button type="submit">Guardar</button>
-</form>-->
 
 <div class="form">
   <table class="table mt-3">
@@ -69,7 +39,7 @@
         <td></td>
         <td>
           
-          <input type="date" [(ngModel)]="Sactvidad.dia" name="fechaInicio" class="form-control form-control-sm" required>
+          <input type="date" [(ngModel)]="Sactvidad.dia" name="fechaInicio" [min]="fechaInicio" [max]="fechaFin" class="form-control form-control-sm" required>
         </td>
         <td>
           <input type="time" [(ngModel)]="Sactvidad.horaInicio" name="horaInicio" class="form-control form-control-sm" required> 
@@ -81,7 +51,7 @@
         
         <td>
           <div class="d-flex justify-content-end">
-            <button (click)="submitForm()" class="btn btn-primary" >Guardar</button>
+            <button *ngIf="bandera" (click)="submitForm()" class="btn btn-primary" >Guardar</button>
           </div>
         </td>
       </tr>
