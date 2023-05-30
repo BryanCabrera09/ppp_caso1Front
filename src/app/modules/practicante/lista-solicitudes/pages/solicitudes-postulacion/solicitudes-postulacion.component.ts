@@ -68,6 +68,9 @@ export class SolicitudesPostulacionComponent implements OnInit {
       case 0:
         return 'waiting';
 
+      case 1:
+        return 'waiting';
+
       default:
         return null; // Manejar cualquier otro caso inesperado
     }

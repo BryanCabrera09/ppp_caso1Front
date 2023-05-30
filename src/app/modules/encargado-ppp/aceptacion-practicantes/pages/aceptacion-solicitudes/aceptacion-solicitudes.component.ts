@@ -14,6 +14,7 @@ import { Practica } from 'src/app/core/models/practica';
 import { HttpResponse } from '@angular/common/http';
 import { SoliEstudiante } from 'src/app/core/models/soli-estudiante';
 import { SoliEstudianteService } from 'src/app/core/services/soli-estudiante.service';
+import { SolicitudEmpresa } from 'src/app/core/models/solicitud-empresa';
 
 @Component({
   selector: 'app-aceptacion-solicitudes',
@@ -28,12 +29,14 @@ export class AceptacionSolicitudesComponent implements OnInit {
   practica = new Practica;
   usuario = new Usuario;
   estudiante = new Estudiante;
-  solicitud = new SoliEstudiante
+  solicitud = new SoliEstudiante;
+  soliEmpresa = new SolicitudEmpresa;
 
   estado: string;
   estadoaprov: string;
   id: number;
   displayEU: boolean = false;
+  entro: number;
 
   fechaI: Date;
   fechaF: Date;
@@ -86,10 +89,8 @@ export class AceptacionSolicitudesComponent implements OnInit {
 
     this.practica.convocatoria = this.convocatoria;
     this.practica.estudiante = this.estudiante;
-    this.fechaI = this.convocatoria.solicitudEmpresa.fechaInicioTen;
-    this.fechaF = this.convocatoria.solicitudEmpresa.fechaMaxTen;
-    this.practica.inicio = this.fechaI;
-    this.practica.fin = this.fechaF;
+    this.practica.inicio = this.soliEmpresa.fechaInicioTen;
+    this.practica.fin = this.soliEmpresa.fechaMaxTen;
     this.practicaService.create(this.practica).subscribe()
   }
 
@@ -124,10 +125,11 @@ export class AceptacionSolicitudesComponent implements OnInit {
     if (this.solicitud.estado === 0) {
       if (this.estado === 'aprobado') {
         this.solicitud.estado = 1;
+        this.entro = 1;
       } else if (this.estado === 'desaprobado') {
         this.solicitud.estado = 3;
       }
-    } else if (this.solicitud.estado === 1) {
+    } else if (this.solicitud.estado === 1 && this.entro !== 1) {
       if (this.estado === 'aprobado') {
         this.solicitud.estado = 2;
         this.aprobado = true;
@@ -175,8 +177,10 @@ export class AceptacionSolicitudesComponent implements OnInit {
         console.log(result);
         this.estudiante = result.estudiante;
         this.usuario = result.estudiante.usuario;
+        this.soliEmpresa = result.convocatoria.solicitudEmpresa;
         this.solicitud.estudiante = result.estudiante;
         this.solicitud.convocatoria = result.convocatoria;
+        this.solicitud.convocatoria.solicitudEmpresa = result.convocatoria.solicitudEmpresa;
       }
     )
 

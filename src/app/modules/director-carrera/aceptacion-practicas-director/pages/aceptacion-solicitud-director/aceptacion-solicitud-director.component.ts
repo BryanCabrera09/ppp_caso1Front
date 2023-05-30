@@ -34,6 +34,7 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   estadoaprov: string;
   id: number;
   displayEU: boolean = false;
+  entro: number;
 
   fechaI: Date;
   fechaF: Date;
@@ -90,7 +91,7 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
     this.fechaF = this.convocatoria.solicitudEmpresa.fechaMaxTen;
     this.practica.inicio = this.fechaI;
     this.practica.fin = this.fechaF;
-   this.practicaService.create(this.practica).subscribe()
+    this.practicaService.create(this.practica).subscribe()
   }
 
   descargarPDF(value) {
@@ -124,10 +125,11 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
     if (this.solicitud.estado === 0) {
       if (this.estado === 'aprobado') {
         this.solicitud.estado = 1;
+        this.entro = 1;
       } else if (this.estado === 'desaprobado') {
         this.solicitud.estado = 3;
       }
-    } else if (this.solicitud.estado === 1) {
+    } else if (this.solicitud.estado === 1 && this.entro !== 1) {
       if (this.estado === 'aprobado') {
         this.solicitud.estado = 2;
         this.aprobado = true;
