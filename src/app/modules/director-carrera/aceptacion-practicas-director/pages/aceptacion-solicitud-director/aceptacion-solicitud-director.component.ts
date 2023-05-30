@@ -14,6 +14,7 @@ import { ConvocatoriaService } from 'src/app/core/services/convocatoria.service'
 import { HttpResponse } from '@angular/common/http';
 import { SoliEstudiante } from 'src/app/core/models/soli-estudiante';
 import { SoliEstudianteService } from 'src/app/core/services/soli-estudiante.service';
+import { SolicitudEmpresa } from 'src/app/core/models/solicitud-empresa';
 
 @Component({
   selector: 'app-aceptacion-solicitud-director',
@@ -28,7 +29,8 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
   practica = new Practica;
   usuario = new Usuario;
   estudiante = new Estudiante;
-  solicitud = new SoliEstudiante
+  solicitud = new SoliEstudiante;
+  soliEmpresa = new SolicitudEmpresa;
 
   estado: string;
   estadoaprov: string;
@@ -177,6 +179,7 @@ export class AceptacionSolicitudDirectorComponent implements OnInit {
         console.log(result);
         this.estudiante = result.estudiante;
         this.usuario = result.estudiante.usuario;
+        this.soliEmpresa = result.convocatoria.solicitudEmpresa;
         this.solicitud.estudiante = result.estudiante;
         this.solicitud.convocatoria = result.convocatoria;
       }

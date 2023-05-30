@@ -37,6 +37,14 @@
                                 (onChange)="docenteCedula($event.value)">
                             </p-dropdown>
                         </div>
+                        <div class="p-col-12 p-md-4">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" [(ngModel)]="usuario.correo" disabled="true"
+                                    placeholder=" Ingrese Número Telefónico" [pKeyFilter]="'int'" maxlength="10"
+                                    minlength="10" pInputText>
+                                <label for=" float-input">Correo Electrónico</label>
+                            </span>
+                        </div>
                         <div class="p-col-3 p-md-4">
                             <span class="p-float-label">
                                 <p-password [toggleMask]="true" name="password"

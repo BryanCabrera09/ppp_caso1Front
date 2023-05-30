@@ -15,6 +15,7 @@ import { EstudianteService } from 'src/app/core/services/estudiante.service';
 import { AnexosService } from 'src/app/core/services/anexos.service';
 import { Anexos } from 'src/app/core/models/anexos';
 import { ToastrService } from 'ngx-toastr';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-vista',
@@ -25,13 +26,17 @@ export class VistaComponent implements OnInit {
 
   convocatoriap: ConvocatoriaP[];
   actividades: Actividad[];
+  solicitudes: any[] = [];
+
   enabledButton: boolean;
   displayEU: boolean;
+
   actividad: Actividad;
   convocatoria: ConvocatoriaP;
+  soli = new SoliEstudiante;
   estudiante = new Estudiante;
   anexo = new Anexos;
-  solicitude: SoliEstudiante = new SoliEstudiante()
+  solicitud = new SoliEstudiante;
 
   archivo: File;
   id: number;
@@ -58,6 +63,7 @@ export class VistaComponent implements OnInit {
       this.obtenerActividadid(this.convocatoria.solicitudEmpresa.id)
     });
     this.obtenerConvocatoria();
+    this.obtenerSolicitudes();
 
   }
 
@@ -65,25 +71,22 @@ export class VistaComponent implements OnInit {
     this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
   }
 
-  onFileChange(event: any) {
-    this.archivo = event.target.files[0];
-  }
+  private obtenerSolicitudes() {
 
-  updatePDF() {
-    console.log(this.id);
-    this.anexoService.guardarPDF(this.archivo, this.id).subscribe(
-      (response: any) => {
-        Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
-        this.router.navigate(['../lista-practicas']);
-      },
-      (error) => {
-        console.error('Error al actualizar el PDF', error);
-        Swal.fire('Registro', 'Error al subir el PDF', 'error');
+    this.soliestudianteservice.getPostulacionesEnviadas(this.user.id).subscribe(
+      data => {
+        this.solicitudes = data;
+        console.log(data);
       }
     );
   }
 
+  onFileChange(event: any) {
+    this.archivo = event.target.files[0];
+  }
+
   updatePDFSolicitud() {
+
     console.log(this.id);
     this.soliestudianteservice.guardarPDF(this.archivo, this.id).subscribe(
       (response: any) => {
@@ -97,8 +100,34 @@ export class VistaComponent implements OnInit {
     );
   }
 
-  enviarPDF() {
-    this.displayEU = true;
+  descargarPDF(value) {
+    this.soliestudianteservice.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]=((['"]).?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'documento.pdf';
+  }
+
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
   guardarAnexo() {
@@ -128,15 +157,16 @@ export class VistaComponent implements OnInit {
 
   Guardarsoli() {
 
-    this.solicitude.estado = 0;
-    this.solicitude.fechaEnvio = this.fechaI;
-    this.solicitude.estudiante = this.estudiante;
-    this.solicitude.convocatoria = this.convocatoria;
+    this.solicitud.estado = 0;
+    this.solicitud.fechaEnvio = this.fechaI;
+    this.solicitud.estudiante = this.estudiante;
+    this.solicitud.convocatoria = this.convocatoria;
 
-    this.soliestudianteservice.guardarsolicitud(this.solicitude).subscribe(
+    this.soliestudianteservice.guardarsolicitud(this.solicitud).subscribe(
       (data: SoliEstudiante) => {
         console.log(data);
         Swal.fire('Solicitud guardado', 'Solicitud Guadada con exito', 'success');
+        this.generarPDF();
 
       }, (error) => {
         console.log(error);

@@ -56,6 +56,8 @@ export class SolicitudesPostulacionComponent implements OnInit {
       this.estadoString = 'Aprobado'
     } else if (status === 3) {
       this.estadoString = 'Recazado'
+    } else if (status === 1) {
+      this.estadoString = 'Enviado'
     }
 
     switch (status) {
