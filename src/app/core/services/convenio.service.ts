@@ -29,7 +29,7 @@ export class ConvenioService {
     return this.http.get(`${this.searchUrl}/buscar/${id}`);
   }
 
-  buscarxEmpresa(id:number){
-    return this.http.get(`${this.searchUrl}/buscar/empresa/${id}`);
+  buscarxEmpresa(){
+    return this.http.get(`${this.searchUrl}buscar/ultimo`);
   }
 }
