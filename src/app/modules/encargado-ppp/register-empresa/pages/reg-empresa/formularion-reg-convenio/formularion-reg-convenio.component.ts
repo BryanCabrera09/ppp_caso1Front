@@ -94,7 +94,7 @@ export class FormularionRegConvenioComponent implements OnInit {
       
         this.convenioService.buscarxEmpresa().subscribe(
           (data:Convenio)=>{
-           // this.convenio.numero = data.numero
+           this.convenio.numero = data.numero + 1
             console.log(data)
 
           }

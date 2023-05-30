@@ -30,6 +30,6 @@ export class ConvenioService {
   }
 
   buscarxEmpresa(){
-    return this.http.get(`${this.searchUrl}buscar/ultimo`);
+    return this.http.get(`${this.searchUrl}/buscar/ultimo`);
   }
 }
