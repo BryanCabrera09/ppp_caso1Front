@@ -40,6 +40,10 @@ export class SoliEstudianteService {
     return this.http.get<SoliEstudiante[]>(`${this.searchUrl}/listarxconvocatoria2`, { params: { id } });
   }
 
+  getPostulacionesEnviadas(id: number): Observable<SoliEstudiante[]> {
+    return this.http.get<SoliEstudiante[]>(`${this.searchUrl}/listar/estud/usuario/${id}`);
+  }
+
   getPostulantesByEstadoPend(id: number): Observable<SoliEstudiante[]> {
     return this.http.get<SoliEstudiante[]>(`${this.searchUrl}/listarpendientesxconvocatoria`, { params: { id } });
   }
