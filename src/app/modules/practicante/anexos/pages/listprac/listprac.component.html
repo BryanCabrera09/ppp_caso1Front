@@ -1,54 +1,51 @@
-<div class="card">
-    <h2>
-        LISTADO DE CONVENIOS
-    </h2>
-    <p-table #dt2 [value]="Practicas" dataKey="id" [resizableColumns]="true" styleClass="p-datatable-gridlines"
-        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
-        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [globalFilterFields]="['practicantes.nombres']" [tableStyle]="{ 'min-width': '75rem' }">
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <span class="p-input-icon-left ml-auto">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Ingrese Nombre de Estudiante" />
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th id="text" style="width:22%">N° de la Practica</th>
-                <th id="text" style="width:22%">Nombre del Estudiante</th>
-                <th id="text" style="width:12%"></th>
-            </tr>
-            <tr>
-                <th id="text">
-                </th>
-                <th id="text">
-                    <p-columnFilter type="text" field="practicantes.nombres"></p-columnFilter>
-                </th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-practica>
-            <tr>
-                <td id="text">
-                    {{ practica.id }}
-                </td>
-                <td id="text">
-                    {{ practica.estudiante.nombres }}
-                </td>
-                <td id="text">
-                    <button pButton pRipple type="button" icon="pi pi-eye" label="Visualizar" class="p-button-warning"
-                        (click)="traerid(practica.id)"></button>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="5">Sin Solicitudes de Empresas.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+<div class="container">
+  <table class="week-table">
+    <thead>
+      <tr>
+        <th>Semana</th>
+        <th>Desde</th>
+        <th>Hasta</th>
+        <th>Evidencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let semana of getActividadesPorSemana(); let i = index">
+        <td>{{ semana.semana }}</td>
+        <td>{{ semana.actividades[0].dia | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ semana.actividades[semana.actividades.length - 1].dia | date: 'dd/MM/yyyy' }}</td>
+        <td>
+          <div class="file-upload">
+            <label for="fileInput{{i}}" class="custom-file-upload">
+              <i class="fas fa-cloud-upload-alt"></i> Agregar Evidencia
+            </label>
+            <input id="fileInput{{i}}" type="file" accept="image/*" (change)="dropped($event, i)">
+          </div>
+          <img *ngIf="imagenesSemana[i]" [src]="imagenesSemana[i]" width="100" height="100">
+        </td>
+        
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="conclusion-container">
+    <textarea placeholder="Agregar conclusión" [(ngModel)]="conclusion" rows="4"></textarea>
+    <div class="button-container">
+      <button class="pdf-button" (click)="generarPDF()">Generar Informe Final</button>
+    </div>
+  </div>
 </div>
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
 
