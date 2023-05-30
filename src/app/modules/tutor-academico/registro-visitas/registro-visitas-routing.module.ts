@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistroComponent } from './pages/registro/registro.component';
-import { PracticasTutorComponent } from '../plan-aprendizaje/practicas-tutor/practicas-tutor.component';
 import { PlanVisitasComponent } from './pages/plan-visitas/plan-visitas.component';
 
 const routes: Routes = [
-  { path: 'registro', component: RegistroComponent},
-  { path: 'plan', component: PlanVisitasComponent},
+  {
+    path: 'registro',
+    component: RegistroComponent
+  },
+  {
+    path: 'plan',
+    component: PlanVisitasComponent
+  },
 ];
 
 @NgModule({

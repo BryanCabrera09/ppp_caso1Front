@@ -4,8 +4,14 @@ import { PracticasTutorComponent } from './practicas-tutor/practicas-tutor.compo
 import { GenerarPlanComponent } from './generar-plan/generar-plan.component';
 
 const routes: Routes = [
-  { path: 'practica-tutor', component: PracticasTutorComponent},
-  { path: 'generar-plan', component: GenerarPlanComponent}
+  {
+    path: 'practica-tutor',
+    component: PracticasTutorComponent
+  },
+  {
+    path: 'generar-plan',
+    component: GenerarPlanComponent
+  }
 ];
 
 @NgModule({

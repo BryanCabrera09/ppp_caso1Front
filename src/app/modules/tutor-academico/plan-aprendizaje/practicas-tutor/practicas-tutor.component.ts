@@ -9,7 +9,6 @@ import { PracticaService } from 'src/app/core/services/practica.service';
   styleUrls: ['./practicas-tutor.component.css']
 })
 export class PracticasTutorComponent {
-
   
   user = new Usuario();
   practicas: any[] = []

@@ -38,6 +38,10 @@ const routes: Routes = [
     path: 'anexos',
     loadChildren: () => import("./anexos/anexos.module").then(m => m.AnexosModule)
   },
+  {
+    path: 'solicitud',
+    loadChildren: () => import("./lista-solicitudes/lista-solicitudes.module").then(m => m.ListaSolicitudesModule)
+  },
 ];
 
 @NgModule({

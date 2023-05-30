@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Formularios</title>
 
 </head>
+
 <body>
   <h1>REGISTRO DE VISITA A EMPRESA FORMADORA RECEPTORA</h1>
   <h2>1. Datos Informativos:</h2>
@@ -17,12 +19,12 @@
       <div class="form-group">
         <label for="semana">Semana:</label>
         <input type="text" id="semaana" name="semana" [(ngModel)]="practica.estudiante.nsemanas">
-        
+
       </div>
       <div class="form-group">
         <label for="tutor-institucional">Tutor Institucional:</label>
         <input type="text" id="tutor" name="tutor" [(ngModel)]="practica.tutorInstituto.usuario.nombre">
-    
+
       </div>
       <div class="form-group">
         <label for="tutor-especifico">Tutor Específico:</label>
@@ -51,11 +53,11 @@
     <form id="form2">
       <div class="form-group">
         <label for="informe">Informe Actividad Seguimiento:</label>
-        <textarea id="informe" name="informe" rows="4" ></textarea>
+        <textarea id="informe" name="informe" rows="4"></textarea>
       </div>
       <div class="form-group">
         <label for="observaciones">Observaciones:</label>
-        <textarea id="observaciones" name="observaciones" rows="4" ></textarea>
+        <textarea id="observaciones" name="observaciones" rows="4"></textarea>
       </div>
     </form>
   </div>
@@ -68,12 +70,12 @@
         <label for="observaciones-generales">Observaciones Generales:</label>
         <textarea id="observaciones-generales" name="observaciones-generales" rows="4"></textarea>
       </div>
-  
-     
+
+
     </form>
-   
+
   </div>
   <button>Generar</button>
 </body>
-</html>
 
+</html>

@@ -21,7 +21,7 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: '/tutor-academico/plan-aprendizaje/practica-tutor',
-        icon: 'fal fa-camera',
+        icon: 'fas fa-chalkboard-teacher',
         label: 'Plan de aprendizaje',
         role: 'Tutor Academico'
     },
@@ -75,7 +75,7 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
-        routeLink: 'media',
+        routeLink: '/practicante/solicitud/postulacion',
         icon: 'fas fa-check accepted-icon',
         label: 'Solicitudes Aceptadas/Rechazadas',
         role: 'Practicante'

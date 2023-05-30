@@ -4,8 +4,14 @@ import { PracticasTutorComponent } from './practicas-tutor/practicas-tutor.compo
 import { GenerarNotaComponent } from './generar-nota/generar-nota.component';
 
 const routes: Routes = [
-  { path: 'practica-tutor', component: PracticasTutorComponent},
-  { path: 'generar-nota', component: GenerarNotaComponent}
+  {
+    path: 'practica-tutor',
+    component: PracticasTutorComponent
+  },
+  {
+    path: 'generar-nota',
+    component: GenerarNotaComponent
+  }
 ];
 
 @NgModule({
