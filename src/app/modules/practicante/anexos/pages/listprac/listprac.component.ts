@@ -25,6 +25,7 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 export class ListpracComponent implements OnInit{
   actividades: SemanaActividad[] = []; // Lista de actividades
   imagenesSemana: any[] = [];
+  actividadesporsemana: any[] =[];
 
 
 
@@ -69,6 +70,7 @@ export class ListpracComponent implements OnInit{
   semanasValidas: boolean[] = [];
   getActividadesPorSemana() {
     const actividadesPorSemana = [];
+    const actividadesPorSemana2=this.getActividadesPorSemana; 
     const numDiasPorSemana = 5;
     const totalSemanas = Math.ceil(this.actividades.length / numDiasPorSemana);
   
@@ -115,7 +117,7 @@ export class ListpracComponent implements OnInit{
   conclusion: string = '';
 
   generarPDF() {
-    
+    /*
     if (this.semanasValidas.includes(false)) {
       this.toastr.error('Debes agregar todas las imagenes', 'Datos Incompletos');
       return;
@@ -124,11 +126,11 @@ export class ListpracComponent implements OnInit{
     if (!this.conclusion || this.conclusion.trim() === '') {
       this.toastr.error('Debes agregar una conclusión', 'Datos Incompletos');
       return;
-    }
+    }*/
 
 
     this.practica.concluciones=this.conclusion;
-    this.editarPractica(this.practica.id, this.practica);
+    //this.editarPractica(this.practica.id, this.practica);
     this.generarPDF1();
   }
 
@@ -136,6 +138,7 @@ export class ListpracComponent implements OnInit{
     this.semanaService.listaractividades(id).subscribe(
       (data: any[]) => {
         this.actividades = data;
+        this.actividadesporsemana=this.getActividadesPorSemana();
       },
       (error) => {
         console.error('Error al obtener las actividades', error);
@@ -160,6 +163,7 @@ export class ListpracComponent implements OnInit{
   }
   async generarPDF1() {
 
+   
     const nomnreEst = this.usuario.nombre.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') + ' ' + this.usuario.apellido.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')
     const nombreInstituto = this.practica.tutorInstituto.usuario.nombre.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') + ' ' + this.practica.tutorInstituto.usuario.apellido.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
     const nombreEspecifico = this.practica.tutorEmpresarial.usuario.nombre.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') + ' ' + this.practica.tutorEmpresarial.usuario.apellido.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
@@ -174,7 +178,7 @@ export class ListpracComponent implements OnInit{
     const fechaCompleta = `Cuenca, ${fechaFormateada}`;
 
     function convertirNumeroEnLetras(numero) {
-      const numerosEnLetras = ['Cero', 'Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto', 'Egresado']; // Agrega más elementos según necesites
+      const numerosEnLetras = ['Egresado', 'Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto', 'Sexto']; // Agrega más elementos según necesites
       return numerosEnLetras[numero] || '';
     }
     
@@ -248,7 +252,7 @@ export class ListpracComponent implements OnInit{
               ['CORREO ELECTRÓNICO:', { text: this.practica.tutorInstituto.usuario.correo, colSpan: 3, style: 'tableHeader' }, '', ''],
               [{ text: 'E. PERIODO DE DURACIÓN DE LAS ACTIVIDADES DE PRÁCTICAS PREPROFESIONALES', colSpan: 4, style: 'tableHeader' }, '', '', ''],
               ['TIEMPO DE DURACIÓN (Horas):', { text: '240', colSpan: 3, style: 'tableHeader' }, '', ''],
-              ['FECHA DE INICIO:\ndd/mm/aaaa', '12/03/2023', 'FECHA DE FINALIZACIÓN:\ndd/mm/aaaa', '03/05/2023'],
+              ['FECHA DE INICIO:\ndd/mm/aaaa',this.actividades[0].dia, 'FECHA DE FINALIZACIÓN:\ndd/mm/aaaa', this.actividades[this.actividades.length-1].dia],
             ]
           }
 
@@ -269,9 +273,8 @@ export class ListpracComponent implements OnInit{
           margin: [0, 10, 0, 0]
         },
         {
-          text: 'Objetivo\n\n' + this.practica.convocatoria.solicitudEmpresa.convenio.empresa.objetivo + '\n\nMisión\n\n' + this.practica.convocatoria.solicitudEmpresa.convenio.empresa.mision,
-          style: 'subheader',
-          margin: [0, 10, 0, 0]
+          ul: this.actividades.map(actividad => `${actividad.dia}: ${actividad.actividad}`),
+          margin: [0, 5, 0, 5] 
         },
         {
           text: '4.  EVIDENCIAS' ,
@@ -279,17 +282,23 @@ export class ListpracComponent implements OnInit{
           margin: [0, 10, 0, 0]
         },
         {
-          text: 'Lista y descripción de las evidencias presentadas\n' + '(Fotografías, capturas de pantalla, informes, diagramas, documentación, etc.)',
-          style: 'subheader',
-          margin: [0, 10, 0, 0]
+          ul: this.actividadesporsemana.map(semana => 
+            `Semana ${semana.semana}
+            Desde ${semana.actividades[0].dia} Hasta ${semana.actividades[semana.actividades.length - 1].dia}
+            <img src="data:image/png;base64,${this.imagenesSemana}" alt="Imagen de la semana" />
+            `),
+          
+          
+          margin: [0, 5, 0, 5] 
         },
+      
         {
           text: '5.  CONCLUSIONES',
           style: 'subheaderBold',
           margin: [0, 10, 0, 0]
         },
         {
-          text:  this.practica.concluciones,
+          text:  this.conclusion,
           style: 'subheader',
           margin: [0, 10, 0, 0]
         },
@@ -347,9 +356,10 @@ export class ListpracComponent implements OnInit{
       }
     };
 
+    
     // Generar el PDF
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-    pdfDocGenerator.download('A8_InformeFinal.pdf');
+    pdfDocGenerator.download('A8_InformeFinal'+this.usuario.apellido+'.pdf');
   }
 
 
