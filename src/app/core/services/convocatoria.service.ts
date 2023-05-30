@@ -34,4 +34,6 @@ export class ConvocatoriaService {
     return this.httpClient.get(`${this.searchUrl}/buscar/${id}`);
   }
 
+  
+
 }

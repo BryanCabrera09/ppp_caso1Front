@@ -18,73 +18,93 @@
       </div>
     </div>
   </div>
-  <div class="form">
-    <table class="table mt-3">
-      <thead>
-        <tr>
-          <th>Día</th>
-          <th>Hora de ingreso</th>
-          <th>Hora de salida</th>
-          <th>Total Horas</th>
-          <th>Detalle de actividad realizada</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <tr>
-
-          <td>Lunes</td>
-          <td>
-            <input type="text" class="form-control form-control-sm">
-          </td>
-          <td>
-            <input type="text" class="form-control form-control-sm">
-          </td>
-          <td>22</td>
-          <td>
-            <input type="text" class="form-control form-control-lg">
-          </td>
-          <td>
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-primary" (click)="guardar()">Guardar</button>
-            </div>
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
-  </div>
-  <div class="mt-3">
-    <label class="fw-bold">Número Total de Horas:</label>
-    {{ calcularTotalHorasSemana() }}
-
-    <div class="d-flex justify-content-end">
-     
-    </div>
-  </div>
+  
 
 
-<form (ngSubmit)="submitForm()">
+<!--<form (ngSubmit)="submitForm()" style="display: flex; width: 100%;">
  
     <h3>Dia 1</h3>
     <div>
       <label>Fecha:</label>
-      <input type="hidden" [(ngModel)]="fechaInicio"  required>
+      <input type="date" [(ngModel)]="fechaInicio" name="fechaInicio" required>
     </div>
     <div>
       <label>Hora de inicio:</label>
-      <input type="time" [(ngModel)]="Sactvidad.horaInicio" required>
+      <input type="time" [(ngModel)]="Sactvidad.horaInicio" name="horaInicio" required>
     </div>
     <div>
       <label>Hora de fin:</label>
-      <input type="time" [(ngModel)]="Sactvidad.horaFin"  required>
+      <input type="time" [(ngModel)]="Sactvidad.horaFin" name="horaFin" required>
     </div>
     <div>
       <label>Descripción:</label>
-      <textarea [(ngModel)]="Sactvidad.actividad"  rows="3" required></textarea>
+      <textarea [(ngModel)]="Sactvidad.actividad" name="actividad" rows="3" required></textarea>
+    </div>
+
+    <div>
+    <label>Total Horas</label>
+    {{(Sactvidad.totalHoras)}}
     </div>
   
   <button type="submit">Guardar</button>
-</form>
+</form>-->
+
+<div class="form">
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Fecha</th>
+        <th>Hora de ingreso</th>
+        <th>Hora de salida</th>
+        <th>Detalle de actividad realizada</th>
+        <th>Total Horas</th>
+        <th>  </th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+
+        <td></td>
+        <td>
+          
+          <input type="date" [(ngModel)]="Sactvidad.dia" name="fechaInicio" class="form-control form-control-sm" required>
+        </td>
+        <td>
+          <input type="time" [(ngModel)]="Sactvidad.horaInicio" name="horaInicio" class="form-control form-control-sm" required> 
+        </td>
+        <td><input type="time" [(ngModel)]="Sactvidad.horaFin" name="horaFin" class="form-control form-control-sm" required></td>
+        <td>
+          <input type="text" [(ngModel)]="Sactvidad.actividad" name="actividad" class="form-control form-control-lg">
+        </td>
+        
+        <td>
+          <div class="d-flex justify-content-end">
+            <button (click)="submitForm()" class="btn btn-primary" >Guardar</button>
+          </div>
+        </td>
+      </tr>
+
+      <tr *ngFor="let fila of actividad">
+        <td></td>
+        <td>{{fila.dia}}</td>
+        <td>{{fila.horaI}}</td>
+        <td>{{fila.horaF}}</td>
+        <td>{{fila.act}}</td>
+        <td>{{fila.total}}</td>
+        <td></td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+<div class="mt-3">
+  <label class="fw-bold">Número Total de Horas:</label>
+      <input type="text" disabled style="border: 1px solid transparent; text-align: center;" value="{{totalHS}}">
+  <div class="d-flex justify-content-end">
+   
+  </div>
+</div>
 </div>
 

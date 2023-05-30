@@ -89,18 +89,18 @@ export class FormularionRegConvenioComponent implements OnInit {
   }
   
   CapnConvenio(){
-    this.activatedRoute.params.subscribe(params=>{
-      let id = params['id']
-      if(id){
-        this.convenioService.buscarxEmpresa(id).subscribe(
+   /* this.activatedRoute.params.subscribe(params=>{
+      let id = params['id']*/
+      
+        this.convenioService.buscarxEmpresa().subscribe(
           (data:Convenio)=>{
-            this.convenio.numero = data.numero
+           this.convenio.numero = data.numero + 1
             console.log(data)
 
           }
         )
-      }
-    })
+      
+    
   }
 
   guardarEmpresa() {
