@@ -41,6 +41,7 @@ export class FormComponent implements OnInit {
 
     this.rellenaSoli();
     this.llamaActividades();
+    this.traernumero()
     //this.llamarNConvocatoria()
   }
 
@@ -74,21 +75,13 @@ export class FormComponent implements OnInit {
     })
   }
 
-  /* llamarNConvocatoria() {
-    this.activatedRoute.params.subscribe(params => {
-      let id = params['id']
-
-      if (id) {
-        this.convocaService.buscarxSolicitud(id).subscribe(
-          (data) => {
-            console.log(data)
-            this.convoca.numero = data.numero + 1
-            alert(this.convoca.numero)
-          }
-        )
-      }
-    });
-  } */
+traernumero(){
+  this.convocaService.traerNumero().subscribe(
+    (data:ConvocatoriaP)=>{
+      this.convoca.numero = data.numero+1
+    }
+  )
+}
 
   rellenaSoli() {
 

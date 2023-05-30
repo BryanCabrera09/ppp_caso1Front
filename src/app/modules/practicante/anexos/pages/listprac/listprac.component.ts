@@ -38,7 +38,7 @@ export class ListpracComponent implements OnInit{
   constructor(private practicanteServicio :PracticasService,private userl: TutorAcademicoService, private router:Router, private estudianteService: EstudianteService){}
   
   ngOnInit() {
-    this.tutoruser();
+    //this.tutoruser();
     this.buscarEstudiante();
   }
 
