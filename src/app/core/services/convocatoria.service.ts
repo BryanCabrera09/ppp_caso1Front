@@ -33,7 +33,10 @@ export class ConvocatoriaService {
   searchConvocatoriaById(id: number) {
     return this.httpClient.get(`${this.searchUrl}/buscar/${id}`);
   }
+  traerNumero() {
+    return this.httpClient.get(`${this.searchUrl}/buscar/ultimo`);
+  }
 
-  
+
 
 }
