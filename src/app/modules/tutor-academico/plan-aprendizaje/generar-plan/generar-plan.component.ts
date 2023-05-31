@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Resultado } from 'src/app/core/models/resultado';
@@ -42,7 +42,8 @@ export class GenerarPlanComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private pracServ: PracticasService,
     private resCarServ: ResultadoCarreraService, private atcServ: ActividadpService,
-    private resServ: ResultadoService, private fb: FormBuilder) { }
+    private resServ: ResultadoService, private fb: FormBuilder,
+    private router: Router) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -67,9 +68,13 @@ export class GenerarPlanComponent implements OnInit {
       (res) => {
         this.actividades = res;
         this.formResultado = this.fb.group({});
-        this.actividades.forEach((actividad, index) => {
-          this.formResultado.addControl(`horas_${index}`, this.fb.control('', Validators.required));
-        });
+        this.startFormR();
+        for (let i = 0; i <= this.actividades.length; i++) {
+          this.formResultado.get('horas_' + i)?.valueChanges.subscribe(() => {
+            this.sumarHoras();
+            console.log(this.formResultado.get('horas_' + i).value)
+          });
+        }
       }
     )
   }
@@ -101,6 +106,14 @@ export class GenerarPlanComponent implements OnInit {
     this.resServ.crearMuchos(this.resultados).subscribe(
       (res) => {
         console.log(res)
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Plan de aprendizaje generado con exito',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.router.navigate(['../tutor-academico/plan-aprendizaje/practica-tutor']);
       }
     )
   }
@@ -122,19 +135,20 @@ export class GenerarPlanComponent implements OnInit {
     if (this.formPractica.invalid) {
       this.markAllFieldsAsTouchedPractica();
       return false;
-    } 
+    }
     this.currentStep++;
     return true;
   }
 
   siguienteResultados(): boolean {
-      if (this.formResultado.invalid) {
-        this.markAllFieldsAsTouchedResultado();
-        return false;
-      } 
-      this.cargarSemanas(this.formPractica.get('numeroSemanas')?.value);
-      this.currentStep++;
-      return true;
+    if (this.formResultado.invalid) {
+      this.markAllFieldsAsTouchedResultado();
+      return false;
+    }
+    this.cargarSemanas(this.formPractica.get('numeroSemanas')?.value);
+    // this.currentStep++;
+    this.editarPractica();
+    return true;
   }
 
   markAllFieldsAsTouchedPractica() {
@@ -160,6 +174,10 @@ export class GenerarPlanComponent implements OnInit {
     return control?.invalid && control?.touched;
   }
 
+  isInvalidSuma(): boolean {
+   return this.sumarHoras === this.practica.convocatoria.solicitudEmpresa.numHoras ? false : true; 
+  }
+
   currentStep: number = 1;
 
   anterior() {
@@ -169,6 +187,22 @@ export class GenerarPlanComponent implements OnInit {
   }
 
   formResultado?: FormGroup;
+  totalHoras: number = 0;
+
+  sumarHoras() {
+    let sum = 0;
+    for (let i = 0; i <= this.actividades.length; i++) {
+      const horas = this.formResultado.get('horas_' + i)?.value;
+      sum += horas ? parseInt(horas) : 0;
+    }
+    this.totalHoras = sum;
+  }
+
+  startFormR() {
+    this.actividades.forEach((actividad, index) => {
+      this.formResultado.addControl(`horas_${index}`, this.fb.control('', Validators.required));
+    });
+  }
 
   
 
