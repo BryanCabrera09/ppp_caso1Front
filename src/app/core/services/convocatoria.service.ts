@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
@@ -37,6 +37,19 @@ export class ConvocatoriaService {
     return this.httpClient.get(`${this.searchUrl}/buscar/ultimo`);
   }
 
+  obtenerPDF(id: number): Observable<HttpResponse<Blob>> {
+    return this.httpClient.get(`${this.searchUrl}/mostrarpdf/${id}`, {
+      responseType: 'blob',
+      observe: 'response'
+    });
+  }
 
+  guardarPDF(archivo: File, id: number) {
+    const formData = new FormData();
+    formData.append('archivo', archivo, archivo.name);
+    formData.append('id', id.toString());
+
+    return this.httpClient.post(`${this.searchUrl}/guardarpdf`, formData, { responseType: 'text' });
+  }
 
 }

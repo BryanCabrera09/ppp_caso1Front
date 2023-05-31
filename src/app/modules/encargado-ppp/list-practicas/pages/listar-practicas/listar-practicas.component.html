@@ -46,8 +46,16 @@
                     {{ practica.nsemanas }}
                 </td>
                 <td id="text">
-                    <button pButton pRipple type="button" icon="pi pi-eye" label="Asignar Tutor Academico"
-                        class="p-button-warning" (click)="asignarTutorAcademico(practica.id)"></button>
+
+                    <div *ngIf="!practica.tutorInstituto">
+                        <button pButton pRipple type="button" icon="pi pi-eye" label="Asignar Tutor Academico"
+                            class="p-button-warning" (click)="asignarTutorAcademico(practica.id)"></button>
+                    </div>
+                    <div *ngIf="datosExistentes">
+                        <button pButton pRipple type="button" icon="pi pi-eye" label="Descargar PDF"
+                            class="p-button-warning" (click)="descargarPDF(anexo.id)"></button>
+                    </div>
+
                 </td>
                 <!-- <td id="text">
                     <button pButton pRipple type="button" icon="pi pi-eye" label="Asignar Tutor Especifico"

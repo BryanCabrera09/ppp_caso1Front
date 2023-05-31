@@ -40,6 +40,12 @@ h1 {
   box-sizing: border-box;
 }
 
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 50px;
+}
 
 .card-image {
   width: 100%;

@@ -87,30 +87,30 @@ export class FormularionRegConvenioComponent implements OnInit {
     )
 
   }
-  
-  CapnConvenio(){
-   /* this.activatedRoute.params.subscribe(params=>{
-      let id = params['id']*/
-      
-        this.convenioService.buscarxEmpresa().subscribe(
-          (data:Convenio)=>{
-           this.convenio.numero = data.numero + 1
-            console.log(data)
 
-          },
-          (error)=>{
-            this.convenio.numero = '1'
-          }
-        )
-      
-    
+  CapnConvenio() {
+    /* this.activatedRoute.params.subscribe(params=>{
+       let id = params['id']*/
+
+    this.convenioService.buscarxEmpresa().subscribe(
+      (data: Convenio) => {
+        this.convenio.numero = data.numero + 1
+        console.log(data)
+
+      },
+      (error) => {
+        this.convenio.numero = '1'
+      }
+    )
+
+
   }
 
   guardarEmpresa() {
 
-    this.activatedRoute.params.subscribe(params=>{
+    this.activatedRoute.params.subscribe(params => {
       let id = params['id']
-      if(id){
+      if (id) {
         this.empresaService.buscarporxID1(id).subscribe(
           (data: Empresa) => {
             this.empresa1 = data
@@ -121,9 +121,9 @@ export class FormularionRegConvenioComponent implements OnInit {
 
     })
 
-   
 
-   
+
+
   }
 
 

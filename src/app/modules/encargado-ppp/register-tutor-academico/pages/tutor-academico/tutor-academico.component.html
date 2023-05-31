@@ -66,6 +66,11 @@
                             class="p-button-rounded p-button-primary p-button-sm p-button-generate-pdf"
                             (click)="displayEU = true"></button>
                     </div>
+                    <div *ngIf="datosExistentes">
+                        <button pButton pRipple type="button" label="Descargar PDF" icon="pi pi-download"
+                            iconPos="right" class="p-button-rounded p-button-primary p-button-sm"
+                            (click)="descargarPDF(anexo.id)"></button>
+                    </div>
                 </div>
             </div>
         </div>

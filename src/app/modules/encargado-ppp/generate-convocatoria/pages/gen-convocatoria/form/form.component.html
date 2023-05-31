@@ -57,8 +57,27 @@
                     </div>
                     <div class="p-col-12 p-md-4">
                         <button pButton pRipple type="button" label="Generar PDF" icon="pi pi-check"
-                            (click)="generarPDF()" iconPos="right" class="p-button-rounded p-button-primary"></button>
+                            (click)="generarPDF(); displayEU = true" iconPos="right"
+                            class="p-button-rounded p-button-primary"></button>
                     </div>
+
+                    <p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width:
+                    '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+                        <ng-template pTemplate="body">
+                            <div class="p-grid p-fluid">
+                                <div class="p-col-3 p-md-4">
+                                    <span class="p-float-label">
+                                        <input name="foto" id="float-input" (change)="onFileChange($event)"
+                                            accept=".pdf" type="file" class="form-control" required />
+                                        <label for="float-input"></label>
+                                    </span>
+                                </div>
+                                <button pButton pRipple type="button" label="Enviar PDF" icon="pi pi-check"
+                                    iconPos="right" class="p-button-rounded p-button-primary"
+                                    (click)="updatePDFSolicitud(); displayEU = false"></button>
+                            </div>
+                        </ng-template>
+                    </p-dialog>
 
                 </div>
             </div>

@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actividad } from 'src/app/core/models/actividad';
@@ -103,6 +104,32 @@ export class AceptacionSolicitudComponent implements OnInit {
 
   cancelar() {
     this.limpiar();
+  }
+
+  descargarPDF(value) {
+    this.solicitudService.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'solicitud-empresa.pdf';
+  }
+
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
   }
 
   limpiar() {

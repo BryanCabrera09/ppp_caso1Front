@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -5,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Anexos } from 'src/app/core/models/anexos';
 import { Empresa } from 'src/app/core/models/empresa';
 import { Estudiante } from 'src/app/core/models/estudiante';
 import { Practica } from 'src/app/core/models/practica';
@@ -12,6 +14,7 @@ import { Practicante } from 'src/app/core/models/practicante';
 import { TutorInstituto } from 'src/app/core/models/tutor-academico';
 import { TutorEmpresarial } from 'src/app/core/models/tutor-empresarial';
 import { Usuario } from 'src/app/core/models/usuario';
+import { AnexosService } from 'src/app/core/services/anexos.service';
 import { PracticasService } from 'src/app/core/services/practicas.service';
 import { RegEmpresaServiceService } from 'src/app/core/services/reg-empresa-service.service';
 import { SolipracticantesService } from 'src/app/core/services/solipracticantes.service';
@@ -33,6 +36,7 @@ export class RegisterTutorComponent implements OnInit {
   estudiante = new Estudiante;
   practica = new Practica;
   empresa = new Empresa;
+  anexo = new Anexos;
 
   empresas: Empresa[] = [];
   practicantes: Practicante[] = [];
@@ -44,19 +48,23 @@ export class RegisterTutorComponent implements OnInit {
   selectedResponsable: string;
   selectedPracticante: string;
   selectedRol: string;
-
-  acronimo: string;
-  enabledButton: boolean = false;
   gerenteGeneral: string;
-
+  acronimo: string;
   role: string;
   nombre: string;
   apellido: string;
   cedula: string;
+
+  enabledButton: boolean = false;
+  datosExistentes: boolean;
   displayEU: boolean;
+  entrPrac: boolean;
 
   selectedCedula: string;
   idConvo: number;
+
+  archivo: File;
+  id: number;
 
   rol: string[] = [
     'Gerente Empresa', 'Tutor Especifico'
@@ -70,7 +78,7 @@ export class RegisterTutorComponent implements OnInit {
 
   constructor(private userService: UsersfenixService, private toastr: ToastrService, private empresaService: RegEmpresaServiceService,
     private tutorService: TutorEmpresarialService, private practicanteService: SolipracticantesService, private activatedRoute: ActivatedRoute,
-    private practicaService: PracticasService, private usuarioService: UsuarioService) { }
+    private practicaService: PracticasService, private usuarioService: UsuarioService, private anexoService: AnexosService) { }
 
   ngOnInit() {
 
@@ -88,6 +96,7 @@ export class RegisterTutorComponent implements OnInit {
       if (id) {
         this.practicaService.searchPracticaById(id).subscribe(
           (data: Practica) => {
+            this.practica = data;
             this.empresa.nombre = data.convocatoria.solicitudEmpresa.convenio.empresa.nombre;
             this.empresa.id = data.convocatoria.solicitudEmpresa.convenio.empresa.id;
             this.empresa.matriz = data.convocatoria.solicitudEmpresa.convenio.empresa.matriz;
@@ -101,12 +110,24 @@ export class RegisterTutorComponent implements OnInit {
             this.practicanteService.practicanteByConvoId(this.idConvo).subscribe(
               practicante => {
                 this.practicantes = practicante;
+                this.entrPrac = true;
+                this.buscarAnexo();
               }
             )
           }
         );
       }
     })
+  }
+
+  buscarAnexo() {
+    this.anexoService.listarPorTipo(this.practica.id, 2).subscribe(
+      (data: Anexos) => {
+        this.anexo = data;
+        this.datosExistentes = true;
+        console.log(this.anexo);
+      }
+    );
   }
 
   obtenerResponsablePPP() {
@@ -152,6 +173,65 @@ export class RegisterTutorComponent implements OnInit {
         console.log(this.practicante);
       }
     )
+  }
+
+  onFileChange(event: any) {
+    this.archivo = event.target.files[0];
+  }
+
+  updatePDF() {
+
+    this.anexo.tipo = 2;
+    this.anexo.practica = this.practica;
+    this.anexoService.registerAnexo(this.anexo).subscribe(
+      (response: Anexos) => {
+        this.id = response.id;
+        this.anexoService.guardarPDF(this.archivo, this.id).subscribe(
+          (response: any) => {
+            Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+            this.reloadPage();
+          },
+          (error) => {
+            console.error('Error al actualizar el PDF', error);
+            Swal.fire('Registro', 'Error al subir el PDF', 'error');
+          }
+        );
+        this.toastr.success("Anexo Creado", "Anexo");
+      },
+      (error) => {
+        this.toastr.error("Error al Crear Anexo", "Anexo");
+      }
+    );
+  }
+
+  reloadPage() {
+    window.location.reload();
+  }
+
+  descargarPDF(value) {
+    this.anexoService.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]=((['"]).?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'tutor-especifico.pdf';
+  }
+
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
   }
 
   gerenteEmpresa(value) {

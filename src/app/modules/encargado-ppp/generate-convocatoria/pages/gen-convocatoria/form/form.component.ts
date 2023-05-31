@@ -14,6 +14,7 @@ import { SoliEmpresaService } from 'src/app/core/services/soli-empresa.service';
 import Swal from 'sweetalert2';
 import { Actividad } from 'src/app/core/models/actividad';
 import { ActividadpService } from 'src/app/core/services/actividadp.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-form',
@@ -29,8 +30,12 @@ export class FormComponent implements OnInit {
   convoca: ConvocatoriaP = new ConvocatoriaP
   actividades: Actividad = new Actividad
   fechaActual: Date = new Date();
-  id: number = 0
   idA: number = 0
+
+  displayEU: boolean;
+
+  archivo: File;
+  id: number;
 
   blockSpecial: RegExp = /^[^<>*!#@$%^_=+?`\|{}[\]~"'\.\,=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVQWXYZ/;:]+$/;
 
@@ -61,7 +66,7 @@ export class FormComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
-
+      this.id = id;
       if (id) {
         this.actividadService.obtenerActividadid(id).subscribe(
           (data) => {
@@ -75,16 +80,64 @@ export class FormComponent implements OnInit {
     })
   }
 
-traernumero(){
-  this.convocaService.traerNumero().subscribe(
-    (data:ConvocatoriaP)=>{
-      this.convoca.numero = data.numero+1
-    },
-    (error:any)=>{
-      this.convoca.numero=1
+  onFileChange(event: any) {
+    this.archivo = event.target.files[0];
+  }
+
+  updatePDFSolicitud() {
+
+    this.convocaService.guardarPDF(this.archivo, this.id).subscribe(
+      (response: any) => {
+        Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+        this.reloadPage();
+      },
+      (error) => {
+        console.error('Error al actualizar el PDF', error);
+        Swal.fire('Registro', 'Error al subir el PDF', 'error');
+      }
+    );
+  }
+
+  descargarPDF(value) {
+    this.convocaService.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]=((['"]).?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
     }
-  )
-}
+    return 'SolicitudEstudiante.pdf';
+  }
+
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  reloadPage() {
+    window.location.reload();
+  }
+
+  traernumero() {
+    this.convocaService.traerNumero().subscribe(
+      (data: ConvocatoriaP) => {
+        this.convoca.numero = data.numero + 1
+      },
+      (error: any) => {
+        this.convoca.numero = 1
+      }
+    )
+  }
 
   rellenaSoli() {
 
@@ -119,18 +172,79 @@ traernumero(){
     );
   }
 
+  async getBase64ImageFromAssets(imagePath: string): Promise<string> {
+    const response = await fetch(imagePath);
+    const blob = await response.blob();
 
-  generarPDF() {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+
+  async generarPDF() {
+
+    //Fecha Actual
+    const fecha = new Date();
+    const options: any = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    const formatter = new Intl.DateTimeFormat('es-EC', options);
+    const fechaFormateada = formatter.format(fecha);
+    const fechaCompleta = `Cuenca, ${fechaFormateada}`;
+
+    //Logo Ista 
+    const imageData = await this.getBase64ImageFromAssets("assets/images/Logo-ISTA.png");
+
+    // definir las márgenes del documento
+    var marginLeft = 74;
+    var marginRight = 74;
+    var marginTop = 25;
+    var marginBottom = 100;
+
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
     const documentoPDF = {
+      pageSize: 'A4',
+      pageMargins: [marginLeft, marginTop, marginRight, marginBottom],
       content: [
-        { text: 'CONVOCATORIA – TSDS -PPP-2022-013', style: 'titulo' },
+        {
+          image: imageData,
+          width: 145,
+          height: 45,
+          alignment: "left",
+          margin: [0, 0, 0, 10],
+        },
+        {
+          text: 'CONVOCATORIA – TSDS -PPP-2022-013',
+          style: 'titulo'
+        },
         '\n',
-        { text: '' + this.fechaActual + '', style: 'fecha' },
+        {
+          text: fechaCompleta,
+          style: 'subheader',
+          alignment: 'right',
+          margin: [0, -10, 0, 0]
+        },
         '\n\n',
-        { text: 'A los estudiantes Interesados:', style: 'subtitulo' },
+        {
+          text: 'A los estudiantes Interesados:',
+          style: 'subtitulo'
+        },
         'Se convoca a los estudiantes de quinto ciclo en adelante de la carrera de ' + this.soli.convenio.carrera.nombre + ' que deseen realizar sus prácticas pre profesionales en la empresa FUTURA CIA. LTDA., a presentar la solicitud correspondiente.',
-        { text: 'Las actividades a desarrollar son:', style: 'subtitulo' },
+        {
+          text: 'Las actividades a desarrollar son:',
+          style: 'subtitulo'
+        },
         {
           ul: [
             this.act.map(dato => ({ text: dato.descripcion }))
@@ -200,7 +314,7 @@ traernumero(){
       }
     };
 
-    pdfMake.createPdf(documentoPDF).open();
+    pdfMake.createPdf(documentoPDF).download('convocatoria.pdf');
   }
 
 }

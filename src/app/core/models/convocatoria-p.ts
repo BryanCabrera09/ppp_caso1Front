@@ -5,6 +5,7 @@ export class ConvocatoriaP {
     fechaInicio?: Date;
     fechaFin?: Date;
     numero?: number;
+    url: any;
 
     solicitudEmpresa: SolicitudEmpresa
 }

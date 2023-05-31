@@ -132,7 +132,7 @@ export class TutorAcademicoComponent implements OnInit {
     if (matches != null && matches[1]) {
       return matches[1].replace(/['"]/g, '');
     }
-    return 'obligaciones-estudiante.pdf';
+    return 'tutor-academico.pdf';
   }
 
   private downloadFile(data: Blob, filename: string) {
