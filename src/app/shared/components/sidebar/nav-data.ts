@@ -38,22 +38,7 @@ export const navbarData: INavbarData[] = [
         label: 'Envio de Solicitud',
         role: 'Responsable Empresa'
     },
-    {
-        routeLink: 'statistics',
-        icon: 'fal fa-chart-bar',
-        label: 'Seleccion de Estudiantes',
-        role: 'Responsable Empresa',
-        items: [
-            {
-                routeLink: 'products/level1.1',
-                label: 'Proceso de Selección',
-            },
-            {
-                routeLink: 'products/level1.2',
-                label: 'Lista Estudiantes',
-            }
-        ]
-    },
+
     {
         routeLink: '/responsable-empresa/practicas/lista-practicas',
         icon: 'fas fa-user-tie',

@@ -184,9 +184,9 @@ export class Anexo6GenerateComponent implements OnInit {
       { text: '', style: 'subheader' },
       {
         table: {
-          widths: [50,'*', '*',-450],
+          widths: [,'*', '*','*','*','*'],
           body: [
-            ['Semanas',' '],
+            ['Semana',' '],
             [
               'Número de semana\n1',
               'Hora de ingreso: 14H00'+this.actividad.map(fila=>[fila.horaI])     +'Hora de salida: 18H00      Total Horas: 4\nDetalle de actividad realizada / ',
