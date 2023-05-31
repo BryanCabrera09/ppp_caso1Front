@@ -46,4 +46,8 @@ export class PracticasService {
   searchByConvo(id: number): Observable<Practica[]> {
     return this.httpClient.get<Practica[]>(`${this.baseURL}/listar/convocatoria/${id}`);
   }
+
+  buscarxTutorIns(id: number): Observable<Practica[]> {
+    return this.httpClient.get<Practica[]>(`${this.baseURL}/listar/usuario/${id}` );
+  }
 }

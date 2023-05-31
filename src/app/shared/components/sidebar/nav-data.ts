@@ -14,6 +14,12 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
+        routeLink: '/tutor-academico/ver/estudiantes',
+        icon: 'fas fa-clipboard-list card-icon',
+        label: 'Actividades del estudiante',
+        role: 'Tutor Academico'
+    },
+    {
         routeLink: '/tutor-academico/calificacion/practica-tutor',
         icon: 'fas fa-clipboard-check card-icon',
         label: 'Evaluación Prácticas',
