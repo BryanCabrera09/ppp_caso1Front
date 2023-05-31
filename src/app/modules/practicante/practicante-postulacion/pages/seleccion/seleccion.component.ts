@@ -18,17 +18,19 @@ export class SeleccionComponent implements OnInit {
 
   constructor(private convocatoriaService: ConvocatoriaService) { }
 
+  ngOnInit() {
+    this.obtenerConvocatoria();
+  }
+
   private obtenerConvocatoria() {
     this.convocatoriaService.obtenerConvocatoria().subscribe(
       dato => {
-        this.convocatorias = dato;
+        const fechaActual = new Date();
+        this.convocatorias = dato.filter(convocatoria => new Date(convocatoria.fechaFin) <= fechaActual);
+        //this.convocatorias = dato;
       }
     );
     this.loading = false;
-  }
-
-  ngOnInit() {
-    this.obtenerConvocatoria();
   }
 }
 

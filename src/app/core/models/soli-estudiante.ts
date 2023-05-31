@@ -7,7 +7,7 @@ export class SoliEstudiante {
     id: number
     estado: number;
     fechaEnvio: Date;
-    url = [];
+    url: any;
 
     estudiante: Estudiante
     convocatoria: ConvocatoriaP
