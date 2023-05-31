@@ -31,12 +31,17 @@
     <textarea placeholder="Agregar conclusión" [(ngModel)]="conclusion" rows="4"></textarea>
     <div class="button-container">
       <button class="pdf-button" (click)="generarPDF()">Generar Informe Final</button>
-      
     </div>
   </div>
+
   <div class="conclusion-container">
     <input type="file" (change)="onFileSelected($event)"><br>
     <button pButton pRipple type="button" label="Enviar PDF" icon="pi pi-check" iconPos="right" 
     class="p-button-rounded p-button-primary" (click)="updatePDF()"></button>
+<br>
+    <button pButton pRipple type="button" label="Ver PDF" icon="pi pi-check" iconPos="right" 
+    class="p-button-rounded p-button-primary" (click)="descargarPDF(anexoId)"></button>
   </div>
+
 </div>
+
