@@ -13,6 +13,12 @@ import { PracticasService } from 'src/app/core/services/practicas.service';
 //PDF Import
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Anexos } from 'src/app/core/models/anexos';
+import { AnexosService } from 'src/app/core/services/anexos.service';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
+import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report',
@@ -23,17 +29,23 @@ export class ReportComponent implements OnInit {
 
   loading: boolean = true
   estudianteId: number;
+
   estudiante = new Estudiante;
   practica = new Practica;
   usuario = new Usuario;
   empresa = new Empresa;
   convocatoria = new ConvocatoriaP;
-
+  anexo = new Anexos;
   calificacion = new Calificacion;
 
   idUs: number;
-
+  archivo: File;
+  id: number;
+  anexoId: number;
   displayEU: boolean;
+  datosExistentes: boolean;
+
+  entrPrac: boolean;
 
   acronimo: string;
 
@@ -41,7 +53,8 @@ export class ReportComponent implements OnInit {
     this.buscarEstudiante()
   }
 
-  constructor(private estudianteService: EstudianteService, private practicaService: PracticasService, private calificacionService: CalificacionService) { }
+  constructor(private estudianteService: EstudianteService, private practicaService: PracticasService, private router: Router,
+    private calificacionService: CalificacionService, private anexoService: AnexosService, private toastr: ToastrService) { }
 
 
   buscarEstudiante() {
@@ -69,13 +82,27 @@ export class ReportComponent implements OnInit {
         this.practica = data;
         this.empresa = data.convocatoria.solicitudEmpresa.convenio.empresa;
         this.convocatoria = data.convocatoria;
+        this.entrPrac = true;
         this.buscarCalificaciones();
+        this.buscarAnexo();
       },
       (error) => {
         console.error(error);
       }
     );
     this.loading = false;
+  }
+
+  buscarAnexo() {
+    this.anexoService.listarPorTipo(this.practica.id, 4).subscribe(
+      (data: Anexos) => {
+        this.anexo = data;
+
+        this.anexoId = this.anexo.id;
+        this.datosExistentes = true;
+        console.log(data);
+      }
+    );
   }
 
   buscarCalificaciones() {
@@ -92,17 +119,63 @@ export class ReportComponent implements OnInit {
     this.loading = false;
   }
 
-  fileSelected(event: any) {
-    const file: File = event.target.files[0];
-    const reader = new FileReader();
+  onFileChange(event: any) {
+    this.archivo = event.target.files[0];
+  }
 
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      // Aquí puedes almacenar o procesar la cadena Base64 como necesites
-      console.log(base64String);
-    };
+  updatePDF() {
 
-    reader.readAsDataURL(file);
+    this.anexo.tipo = 4;
+    this.anexo.practica = this.practica;
+    this.anexoService.registerAnexo(this.anexo).subscribe(
+      (response: Anexos) => {
+        this.id = response.id;
+        this.anexoService.guardarPDF(this.archivo, this.id).subscribe(
+          (response: any) => {
+            Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+            this.reloadPage();
+          },
+          (error) => {
+            console.error('Error al actualizar el PDF', error);
+            Swal.fire('Registro', 'Error al subir el PDF', 'error');
+          }
+        );
+        this.toastr.success("Anexo Creado", "Anexo");
+      },
+      (error) => {
+        this.toastr.error("Error al Crear Anexo", "Anexo");
+      }
+    );
+  }
+
+  reloadPage() {
+    window.location.reload();
+  }
+
+  descargarPDF(value) {
+    this.anexoService.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]=((['"]).?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'obligaciones-estudiante.pdf';
+  }
+
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
   }
 
   async getBase64ImageFromAssets(imagePath: string): Promise<string> {
@@ -223,6 +296,10 @@ export class ReportComponent implements OnInit {
       }
     };
 
-    pdfMake.createPdf(documentDefinition).open()/* download('obligaciones-estudiante.pdf') */;
+    pdfMake.createPdf(documentDefinition).download('obligaciones-estudiante-' + this.usuario.nombre.split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ') + ' ' + this.usuario.apellido.split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ') + '.pdf');
   }
 }

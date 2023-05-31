@@ -68,7 +68,19 @@ export class VistaComponent implements OnInit {
   }
 
   private obtenerConvocatoria() {
-    this.convocatoriaService.obtenerConvocatoria().subscribe(dato => { this.convocatoriap = dato; })
+    this.convocatoriaService.obtenerConvocatoria().subscribe(
+      dato => {
+        this.convocatoriap = dato;
+      }
+    )
+  }
+
+  buscarEstudiante() {
+    this.estudianteservice.buscarxUsuario(this.user.id).subscribe(
+      (data: Estudiante) => {
+        this.estudiante = data;
+      }
+    );
   }
 
   private obtenerSolicitudes() {
@@ -81,17 +93,20 @@ export class VistaComponent implements OnInit {
     );
   }
 
+  getCurrentDate(): Date {
+    return new Date();
+  }
+
   onFileChange(event: any) {
     this.archivo = event.target.files[0];
   }
 
-  updatePDFSolicitud() {
+  updatePDFSolicitud(value) {
 
-    console.log(this.id);
-    this.soliestudianteservice.guardarPDF(this.archivo, this.id).subscribe(
+    this.soliestudianteservice.guardarPDF(this.archivo, value).subscribe(
       (response: any) => {
         Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
-        this.router.navigate(['../lista-practicas']);
+        this.reloadPage();
       },
       (error) => {
         console.error('Error al actualizar el PDF', error);
@@ -113,7 +128,7 @@ export class VistaComponent implements OnInit {
     if (matches != null && matches[1]) {
       return matches[1].replace(/['"]/g, '');
     }
-    return 'documento.pdf';
+    return 'SolicitudEstudiante.pdf';
   }
 
   private downloadFile(data: Blob, filename: string) {
@@ -128,19 +143,6 @@ export class VistaComponent implements OnInit {
 
   reloadPage() {
     window.location.reload();
-  }
-
-  guardarAnexo() {
-    this.anexo.tipo = 2;
-    this.anexoService.registerAnexo(this.anexo).subscribe(
-      (response: Anexos) => {
-        this.id = response.id;
-        this.toastr.success("Anexo Creado", "Anexo");
-      },
-      (error) => {
-        this.toastr.error("Error al Crear Anexo", "Anexo");
-      }
-    );
   }
 
   obtenerActividadid(id: number) {
@@ -193,8 +195,6 @@ export class VistaComponent implements OnInit {
   }
 
   async generarPDF() {
-
-    this.guardarAnexo();
 
     //Fecha Actual
     const fecha = new Date();
@@ -251,7 +251,7 @@ export class VistaComponent implements OnInit {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join(' ') + ' ' + this.user.apellido.split(' ')
               .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-              .join(' ') + ', con número de cédula ' + this.user.cedula + ', estudiante del quinto ciclo del periodo académico ' + this.user.periodo + ' de la carrera de Tecnología Superior en Desarrollo de Software, solicito comedidamente se autorice mi postulación para realizar las 240 horas de prácticas pre profesionales en la empresa ' + this.convocatoria.solicitudEmpresa.convenio.empresa.nombre + '. según solicitud: CONVOCATORIA ' + this.convocatoria.fechaInicio + ' ' + this.convocatoria.fechaFin + '.'],
+              .join(' ') + ', con número de cédula ' + this.user.cedula + ', estudiante del quinto ciclo del periodo académico ' + this.estudiante.periodo + ' de la carrera de Tecnología Superior en Desarrollo de Software, solicito comedidamente se autorice mi postulación para realizar las 240 horas de prácticas pre profesionales en la empresa ' + this.convocatoria.solicitudEmpresa.convenio.empresa.nombre + '. según solicitud: CONVOCATORIA ' + this.convocatoria.fechaInicio + ' ' + this.convocatoria.fechaFin + '.'],
           style: 'body'
         },
         {
@@ -298,7 +298,11 @@ export class VistaComponent implements OnInit {
       }
     };
 
-    pdfMake.createPdf(documentDefinition).download('SolicitudEstudiante.pdf');
+    pdfMake.createPdf(documentDefinition).download('SolicitudEstudiante-' + this.user.nombre.split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ') + ' ' + this.user.apellido.split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ') + '.pdf');
 
     this.displayEU = true;
 

@@ -1,115 +1,122 @@
-<h3 class="text-center">PLAN DE APRENDIZAJE PRÁCTICO Y DE ROTACIÓN (PAPR)</h3>
+<!-- <h3 class="text-center">PLAN DE APRENDIZAJE PRÁCTICO Y DE ROTACIÓN (PAPR)</h3> -->
 
-<table class="papr-table table table-striped">
-    <tbody>
-        <tr>
-            <th>Nombre de la empresa formadora</th>
-            <td>{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}</td>
-        </tr>
-        <tr>
-            <th>Descripción de la empresa</th>
-            <td>{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.mision }}</td>
-        </tr>
-        <tr>
-            <th>Carrera</th>
-            <td>{{ practica.convocatoria.solicitudEmpresa.convenio.carrera.nombre }}</td>
-        </tr>
-        <tr>
-            <th>Resolución de aprobación ITV</th>
-            <td>SIES-ISTA-0XX-XXXX</td>
-        </tr>
-        <tr>
-            <th>Número del convenio</th>
-            <td>PPP-ISTA-0XX-XXXX: {{ practica.convocatoria.solicitudEmpresa.convenio.numero }} </td>
-        </tr>
-        <tr>
-            <th>Nombre del estudiante</th>
-            <td>{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}</td>
-        </tr>
-        <tr>
-            <th>Cédula</th>
-            <td>{{ practica.estudiante.usuario.cedula }}</td>
-        </tr>
-        <tr>
-            <th>Correo</th>
-            <td>{{ practica.estudiante.usuario.correo }}</td>
-        </tr>
-    </tbody>
-</table>
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header class="custom-header">
+            <mat-panel-title class="mat-align-right">
+                Información
+            </mat-panel-title>
+            <mat-panel-description>
+                <p class="card-text">{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}
+                </p>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
 
-<div class="row">
-    <div class="col">
         <div class="card">
             <div class="card-body">
-                <div class="form-group">
-                    <label for="departamento">Periodo:</label>
-                    <input type="number" class="form-control" [(ngModel)]="numeroSemanas"
-                        placeholder="Ingrese un número" (ngModelChange)="cargarSemanas()">
-                </div>
-                <div class="form-group">
-                    <label for="departamento">Periodo:</label>
-                    <input type="periodo" class="form-control" [(ngModel)]="practica.periodo" placeholder="Ingrese un periodo">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title">Nombre de la empresa formadora</h5>
+                        <p class="card-text">{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}</p>
+                    </div>
+                    <div class="col">
+                        <h5 class="card-title">Carrera</h5>
+                        <p class="card-text">{{ practica.convocatoria.solicitudEmpresa.convenio.carrera.nombre }}</p>
+                    </div>
+                    <div class="col">
+                        <h5 class="card-title">Nombre del estudiante</h5>
+                        <p class="card-text">{{ practica.estudiante.usuario.nombre }} {{
+                            practica.estudiante.usuario.apellido }}</p>
+                    </div>
+                    <div class="col">
+                        <h5 class="card-title">Cédula</h5>
+                        <p class="card-text">{{ practica.estudiante.usuario.cedula }}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </mat-expansion-panel>
+</mat-accordion>
 
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="fechaInicio">Fecha de inicio:</label>
-                    <input type="date" class="form-control" id="practica.inicio" [(ngModel)]="practica.inicio">
-                </div>
-                <div class="form-group">
-                    <label for="fechaFin">Fecha de fin:</label>
-                    <input type="date" class="form-control" id="practica.fin" [(ngModel)]="practica.fin">
-                </div>
+
+<div class="card" *ngIf="currentStep === 1">
+    <div class="card-body">
+        <form [formGroup]="formPractica" (ngSubmit)="siguientePractica()">
+            <div class="form-group">
+                <label for="numero">Número de semanas:</label>
+                <input type="number" class="form-control" formControlName="numeroSemanas"
+                    placeholder="Ingrese un número" [class.is-invalid]="isInvalidFormP('numeroSemanas')">
+                <small *ngIf="isInvalidFormP('numeroSemanas')" class="text-danger">Ingresar numero de semanas (6 o
+                    12)</small>
             </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="descripcion">Descripción:</label>
-                    <input type="text" class="form-control" id="descripcion" [(ngModel)]="practica.descripcion"
-                        placeholder="Ingrese una descripción">
-                </div>
-                <div class="form-group">
-                    <label for="departamento">Departamento:</label>
-                    <input type="text" class="form-control" id="departamento" [(ngModel)]="practica.departamento"
-                        placeholder="Ingrese el departamento">
-                </div>
+            <div class="form-group">
+                <label for="periodo">Periodo:</label>
+                <input type="periodo" class="form-control" formControlName="periodo" placeholder="Ingrese un periodo"
+                    [class.is-invalid]="isInvalidFormP('periodo')">
+                <small *ngIf="isInvalidFormP('periodo')" class="text-danger">Campo obligatorio!</small>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="fechaInicio">Fecha de inicio:</label>
+                <input type="date" class="form-control" id="practica.inicio" formControlName="inicio"
+                    [class.is-invalid]="isInvalidFormP('inicio')">
+                <small *ngIf="isInvalidFormP('inicio')" class="text-danger">Campo obligatorio!</small>
+            </div>
+            <div class="form-group">
+                <label for="fechaFin">Fecha de fin:</label>
+                <input type="date" class="form-control" id="practica.fin" formControlName="fin"
+                    [class.is-invalid]="isInvalidFormP('fin')">
+                <small *ngIf="isInvalidFormP('fin')" class="text-danger">Campo obligatorio!</small>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <input type="text" class="form-control" id="descripcion" formControlName="descripcion"
+                    placeholder="Ingrese una descripción" [class.is-invalid]="isInvalidFormP('descripcion')">
+                <small *ngIf="isInvalidFormP('descripcion')" class="text-danger">Campo obligatorio!</small>
+            </div>
+            <div class="form-group">
+                <label for="departamento">Departamento:</label>
+                <input type="text" class="form-control" id="departamento" formControlName="departamento"
+                    placeholder="Ingrese el departamento" [class.is-invalid]="isInvalidFormP('departamento')">
+                <small *ngIf="isInvalidFormP('departamento')" class="text-danger">Campo obligatorio!</small>
+            </div>
+            <button type="submit" class="btn btn-info">Siguiente</button>
+        </form>
     </div>
-
 </div>
 
-
-<div class="card">
+<div class="card" *ngIf="currentStep === 2">
     <div class="card-body">
-      <h5 class="card-title text-center">Actividades</h5>
-      <div *ngFor="let atv of actividades">
-        <div class="card">
-          <div class="card-body">
-            <p class="card-text">{{ atv.descripcion }}</p>
-            <p-dropdown [options]="resultadosCarrera" name="resultados" optionLabel="descripcion"
-            optionValue="id" [filter]="true" filterBy="descripcion" [showClear]="true" (onChange)="crearResultado($event.value, atv.id)"
-            placeholder="Resultado esperado">
-          </p-dropdown>
-          </div>
+        <h5 class="card-title text-center">Actividades</h5>
+        <div class="row">
+            <div class="col-md-6" *ngFor="let atv of actividades; let i = index">
+                <div class="card">
+                    <div class="card-body mat-align-right">
+                        <p>{{ atv.descripcion }}</p>
+                        <p-dropdown [options]="resultadosCarrera" name="resultados" optionLabel="descripcion"
+                            optionValue="id" [filter]="true" filterBy="descripcion" [showClear]="true"
+                            (onChange)="crearResultado($event.value, atv.id)" placeholder="Resultado esperado">
+                        </p-dropdown>
+                        <form [formGroup]="formResultado" (ngSubmit)="siguienteResultados()">
+                            <div class="mt-3" class="form-group">
+                                <p for="departamento">Número de horas:</p>
+                                <input type="number" class="form-control" id="departamento"
+                                    [formControlName]="'horas_' + i" placeholder="Ingrese número de horas"
+                                    [class.is-invalid]="isInvalidFormR('horas_' + i)">
+                                <small *ngIf="isInvalidFormR('horas_' + i)" class="text-danger">Campo
+                                    obligatorio!</small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <button (click)="siguienteResultados()" *ngIf="currentStep < 3" class="btn btn-info">Siguiente</button>
+        <button (click)="anterior()" *ngIf="currentStep > 1" class="btn btn-warning">Anterior</button>
     </div>
-  </div>
-  
+</div>
 
-
-<div class="row table-container">
-    <table class="papr-table table table-striped" *ngIf="mostrarTabla && (numeroSemanas === 6 || numeroSemanas === 12)">
+<div class="row table-container" *ngIf="currentStep === 3">
+    <table class="papr-table table table-striped">
         <thead>
             <tr>
                 <th rowspan="4" class="text-center">Objetivos de aprendizaje (objetivos aprendizaje específicos)</th>
@@ -118,10 +125,10 @@
                 <th rowspan="4" class="text-center">Horas destinadas a la actividad</th>
             </tr>
             <tr>
-                <th [attr.colspan]="numeroSemanas" class="text-center">Planificación</th>
+                <th [attr.colspan]="columnas" class="text-center">Planificación</th>
             </tr>
             <tr>
-                <th [attr.colspan]="numeroSemanas" class="text-center">Semanas (n = número de semanas de la fase
+                <th [attr.colspan]="columnas" class="text-center">Semanas (n = número de semanas de la fase
                     prácticas)
                 </th>
             </tr>
@@ -129,9 +136,10 @@
                 <th *ngFor="let numero of semanas" class="text-center">{{ numero }}</th>
             </tr>
         </thead>
+        <tbody>
+            
+        </tbody>
     </table>
+    <button class="btn btn-success" (click)="editarPractica()">Guardar</button>
+    <button (click)="anterior()" *ngIf="currentStep > 1">Anterior</button>
 </div>
-
-<div>
-    <button class="btn btn-primary" [disabled]="!todosSeleccionados" (click)="editarPractica()">Guardar</button>
-  </div>
