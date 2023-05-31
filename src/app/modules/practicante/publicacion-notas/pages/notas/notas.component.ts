@@ -91,6 +91,7 @@ export class NotasComponent implements OnInit {
       (data: Estudiante) => {
         this.estudiante = data;
         this.estudiante.id = data.id;
+        console.log(data)
         this.buscarPracticas();
       },
       (error) => {

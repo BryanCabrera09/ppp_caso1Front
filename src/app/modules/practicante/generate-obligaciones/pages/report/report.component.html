@@ -61,7 +61,7 @@
                             (click)="descargarPDF(anexoId)"></button>
                     </div>
                     <br><br>
-                    <div *ngIf="!datosExistentes">
+                    <div *ngIf="!datosExistentes && entrPrac">
                         <button pButton pRipple type="button" label="Generar PDF" (click)="displayEU = true"
                             icon="fas fa-file-pdf"
                             class="p-button-rounded p-button-primary p-button-sm p-button-generate-pdf"

@@ -63,7 +63,6 @@ export class ReportComponent implements OnInit {
     this.idUs = this.usuario.id;
     console.log(this.idUs)
 
-    // Reemplazar con el ID de usuario correspondiente
     this.estudianteService.buscarxUsuario(this.idUs).subscribe(
       (data: Estudiante) => {
         this.estudiante.id = data.id;
@@ -76,7 +75,6 @@ export class ReportComponent implements OnInit {
   }
 
   buscarPracticas() {
-    // Obtener las prácticas del estudiante por su ID
     this.practicaService.buscarxEstudiante(this.estudiante.id).subscribe(
       (data: Practica) => {
         this.practica = data;
@@ -97,10 +95,8 @@ export class ReportComponent implements OnInit {
     this.anexoService.listarPorTipo(this.practica.id, 4).subscribe(
       (data: Anexos) => {
         this.anexo = data;
-
-        this.anexoId = this.anexo.id;
         this.datosExistentes = true;
-        console.log(data);
+        console.log(this.anexo);
       }
     );
   }

@@ -30,6 +30,8 @@
 	</div>
 
 	<div class="button-container" *ngFor="let soli of solicitudes; let i = index;">
+		<div *ngIf="soli.estudiante && soli.url"><button (click)="descargarPDF(soli.id)"> Ver
+				PDF</button></div>
 		<div
 			*ngIf="!soli.estudiante && (soli.estado === 0 || soli.estado === 3) && soli.convocatoria.fechaFin < fechaI">
 			<button (click)="Guardarsoli()">
@@ -39,10 +41,9 @@
 			<button (click)="displayEU = true; solicitud = soli.estudiante; solicitud = soli.id"> Subir
 				PDF</button>
 		</div>
-		<div *ngIf="soli.estudiante && soli.url"><button (click)="descargarPDF(soli.id)"> Ver
-				PDF</button></div>
 
-		<p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}"
+
+		<p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width: '50vw'}"
 			[baseZIndex]="10000" [draggable]="false" [resizable]="false">
 			<ng-template pTemplate="body">
 				<div class="p-grid p-fluid">
