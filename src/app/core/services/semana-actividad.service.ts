@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SemanaActividad } from '../models/semana-actividad';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,5 +21,9 @@ export class SemanaActividadService {
   obtenerSemana(): Observable<SemanaActividad[]> {
     return this.http.get<SemanaActividad[]>(`${this.searchUrl}/listar`)
   }
+
+  listaractividades(id: number): Observable<SemanaActividad[]> {
+    return this.http.get<SemanaActividad[]>(`${this.searchUrl}/buscar/estudiante/${id}`);
+  }  
 
 }

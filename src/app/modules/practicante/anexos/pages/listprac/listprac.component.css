@@ -1,0 +1,66 @@
+.week-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .week-table th,
+  .week-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .week-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .custom-file-upload {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 4px;
+  }
+  
+  .custom-file-upload:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Estilo para el ícono */
+  .custom-file-upload i {
+    margin-right: 5px;
+  }
+
+  .conclusion-container {
+    margin-top: 20px;
+  }
+  
+  
+  .conclusion-container textarea {
+    padding: 8px;
+    width: 500px;
+    height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  
+  .pdf-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pdf-button:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  
