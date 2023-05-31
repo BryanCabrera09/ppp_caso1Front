@@ -8,6 +8,18 @@ import { Visita } from 'src/app/core/models/visita';
 import { VisitaActividad } from 'src/app/core/models/visita-actividad';
 import { VisitaActividadService } from 'src/app/core/services/visita-actividad.service';
 import { VisitaService } from 'src/app/core/services/visita.service';
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+(pdfMake as any).defaultConfig = {
+  defaultStyle: {
+    font: 'times'
+  }
+};
+
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -41,7 +53,7 @@ export class RegistroComponent implements OnInit {
       console.log(this.estudiante)
       console.log(this.practica);
       this.buscarvisita(this.practica.id)
-      this.startForm();
+   
     });
 
    
@@ -69,19 +81,22 @@ export class RegistroComponent implements OnInit {
      console.log(dato)
     for(let v of this.visitaA){
     
-      v.visita = dato
+     v.visita = dato
+
      this.visitaactividadservice.createVisitaA(v).subscribe(
       res=>{
         console.log(res)
       }
      )
     }
+    Swal.fire('Solicitud guardado', 'Solicitud Guadada con exito', 'success');
  
    })
  
 }
 
 agregarvisitaactividad(){
+
 
   this.visitaA.push(this.visitaa);
   console.log(this.visitaA)
@@ -90,26 +105,90 @@ agregarvisitaactividad(){
 
 
 
-startForm() {
-  this.formulario = this.fb.group({
-    actividad: ['',Validators.required],
-    observacion: ['', Validators.required],
-    observaciong: ['', Validators.required],
+ 
 
-  });
+
+
+
+generarPDF() {
+
+  pdfMake.vfs = pdfFonts.pdfMake.vfs
+  // Crear los datos para las tablas
+  const dataTabla1 = [
+    ['Columna 1', 'Columna 2'],
+    ['Dato 1', 'Dato 2' ],
+    ['Dato 4', 'Dato 5', ]
+  ]
+
+  const dataTabla2 = [
+    ['Columna A', 'Columna B'],
+    ['Info A1', 'Info B1'],
+    ['Info A2', 'Info B2']
+  ];
+
+  // Definir las configuraciones de las tablas
+  const table1 = {
+    table: {
+      body: dataTabla1
+    }
+  };
+
+  const table2 = {
+    table: {
+      body: dataTabla2
+    }
+  };
+
+  // Crear el documento PDF
+  const documentDefinition = {
+    content: [
+      {
+        text: 'INSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY',
+        style: 'header'
+      },
+      {
+        text: 'TECNOLOGÍA SUPERIOR EN DESARROLLO DE SOFTWARE',
+        style: 'header'
+      },
+      {
+        text: 'ANEXO 5\nREGISTRO DE VISITA A EMPRESA FORMADORA RECEPTORA',
+        style: 'subheader',
+        margin: [0, 20, 0, 10]
+      },
+      { text: 'Tabla 1', style: 'tableHeader' },
+      table1,
+      { text: 'Tabla 2', style: 'tableHeader' },
+      table2
+    ],
+    styles: {
+      header: {
+        fontSize: 16,
+        bold: true,
+        alignment: 'center',
+        margin: [0, 10, 0, 0],
+    
+      },
+      subheader: {
+        fontSize: 14,
+        bold: true,
+        alignment: 'center',
+        margin: [0, 0, 0, 10],
+   
+      },
+      tableHeader: {
+        bold: true,
+        fontSize: 12,
+        color: 'black',
+        alignment: 'center',
+        
+      }
+    }
+  };
+  
+
+  // Generar el PDF y abrirlo en una nueva pestaña del navegador
+  pdfMake.createPdf(documentDefinition).download('evaluacion.pdf');
 }
-
-markAllFieldsAsTouched() {
-  Object.values(this.formulario.controls).forEach(control => {
-    control.markAsTouched();
-  });
-}
-
-isInvalid(controlName: string): boolean {
-  const control = this.formulario.get(controlName);
-  return control?.invalid && control?.touched;
-}
-
 
 
 }

@@ -6,4 +6,5 @@ export class VisitaActividad {
     actividad: string;
     observacion: string;
     visita: Visita
+    
 }
