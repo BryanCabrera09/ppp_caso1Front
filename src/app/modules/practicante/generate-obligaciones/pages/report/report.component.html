@@ -58,7 +58,7 @@
                     <div *ngIf="datosExistentes">
                         <button pButton pRipple type="button" label="Descargar PDF" icon="pi pi-download"
                             iconPos="right" class="p-button-rounded p-button-primary"
-                            (click)="descargarPDF(anexoId)"></button>
+                            (click)="descargarPDF(anexo.id)"></button>
                     </div>
                     <br><br>
                     <div *ngIf="!datosExistentes && entrPrac">

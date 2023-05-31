@@ -22,8 +22,8 @@ export class AnexosService {
   }
 
   listarPorTipo(idpractica: number, tipo: number) {
-    const url = `${this.anexoUrl}/listarxtipo?idpractica=${idpractica}&tipo=${tipo}`;
-    return this.http.get(url);
+    const url = `${this.anexoUrl}/listarxtipo/${idpractica}`;
+    return this.http.get(url, { params: { tipo } });
   }
 
   guardarPDF(archivo: File, id: number) {

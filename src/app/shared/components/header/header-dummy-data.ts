@@ -36,14 +36,6 @@ export const userItems = [
         label: 'Perfil'
     },
     {
-        icon: 'far fa-cog',
-        label: 'Configuracion'
-    },
-    {
-        icon: 'far fa-unlock-alt',
-        label: 'Bloquear Pantalla'
-    },
-    {
         icon: 'far fa-power-off',
         label: 'Cerrar Sesión'
     },
