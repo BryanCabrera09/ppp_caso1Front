@@ -14,6 +14,10 @@ import { TutorAcademicoService } from 'src/app/core/services/tutor-academico.ser
 import { ToastrService } from 'ngx-toastr';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Anexos } from 'src/app/core/models/anexos';
+import Swal from 'sweetalert2';
+import { AnexosService } from 'src/app/core/services/anexos.service';
+import { HttpResponse } from '@angular/common/http';
 
 
 
@@ -45,11 +49,14 @@ export class ListpracComponent implements OnInit{
   Practicas:Practica[]=[];
 
   id: number;
-  
+  displayEU: boolean;
   loading: boolean=true;
   idUs: any;
+  anexo = new Anexos;
 
-  constructor(private practicanteServicio :PracticasService,private userl: TutorAcademicoService, private router:Router, private estudianteService: EstudianteService,private toastr: ToastrService, private semanaService: SemanaActividadService){}
+  archivo: File;
+
+  constructor(private practicanteServicio :PracticasService, private anexoService: AnexosService,private userl: TutorAcademicoService, private router:Router, private estudianteService: EstudianteService,private toastr: ToastrService, private semanaService: SemanaActividadService){}
   
   ngOnInit() { 
     this.buscarEstudiante();
@@ -109,6 +116,36 @@ export class ListpracComponent implements OnInit{
       }
     }
   }
+  verPDF(id: number): void {
+    this.anexoService.obtenerPDF(id).subscribe(
+      (response: HttpResponse<Blob>) => {
+        const filename = this.obtenerNombreArchivo(response);
+        this.descargarPDF(response.body, filename);
+      },
+      (error) => {
+        console.error('Error al obtener el PDF:', error);
+      }
+    );
+  }
+  descargarPDF(blob: Blob, filename: string): void {
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }
+  obtenerNombreArchivo(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('content-disposition');
+    const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+    const matches = filenameRegex.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'archivo.pdf'; // Nombre de archivo predeterminado si no se encuentra en la cabecera
+  }
+
+  
   
   
   conclusion: string = '';
@@ -355,6 +392,47 @@ export class ListpracComponent implements OnInit{
     // Generar el PDF
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
     pdfDocGenerator.download('A8_InformeFinal '+this.usuario.apellido+'.pdf');
+  }
+
+  selectedFile: File | null = null;
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  
+  }
+  onFileChange(event: any) {
+    this.archivo = event.target.files[0];
+  }
+  updatePDF() {
+    this.anexo.tipo = 8;
+    this.anexo.practica = this.practica;
+    this.anexoService.registerAnexo(this.anexo).subscribe(
+      (response: Anexos) => {
+        this.id = response.id;
+        if (this.selectedFile) {
+          this.anexoService.guardarPDF(this.selectedFile, this.id).subscribe(
+            (response: any) => {
+              Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+              this.reloadPage();
+            },
+            (error) => {
+              console.error('Error al actualizar el PDF', error);
+              Swal.fire('Registro', 'Error al subir el PDF', 'error');
+            }
+          );
+        } else {
+          Swal.fire('Registro', 'No se ha seleccionado ningún archivo', 'error');
+        }
+        this.toastr.success("Anexo Creado", "Anexo");
+      },
+      (error) => {
+        this.toastr.error("Error al Crear Anexo", "Anexo");
+      }
+    );
+  }
+  
+  reloadPage() {
+    window.location.reload();
   }
 
   getImagesList() {
