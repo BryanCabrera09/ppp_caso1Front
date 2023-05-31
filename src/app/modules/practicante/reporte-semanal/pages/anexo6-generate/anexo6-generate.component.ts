@@ -184,12 +184,16 @@ export class Anexo6GenerateComponent implements OnInit {
       { text: '', style: 'subheader' },
       {
         table: {
-          widths: [,'*', '*','*','*','*'],
+          widths: ['*', '*','*','*','*','*'],
           body: [
-            ['Semana',' '],
+            ['Semana','Dia','Hora Inicio', 'Hora Fin', 'Actividades', 'Total Horas'],
             [
-              'Número de semana\n1',
-              'Hora de ingreso: 14H00'+this.actividad.map(fila=>[fila.horaI])     +'Hora de salida: 18H00      Total Horas: 4\nDetalle de actividad realizada / ',
+              'Número de semana\n '+this.numeroSemana,
+              this.actividad.map(fila=>[fila.dia]) ,    
+              this.actividad.map(fila=>[fila.horaI]) ,
+              this.actividad.map(fila=>[fila.horaF]) ,
+              this.actividad.map(fila=>[fila.act]) ,
+              this.actividad.map(fila=>[fila.total]) ,
 
             ]
           ]
