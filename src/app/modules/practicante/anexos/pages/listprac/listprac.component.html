@@ -18,7 +18,7 @@
             <label for="fileInput{{i}}" class="custom-file-upload">
               <i class="fas fa-cloud-upload-alt"></i> Agregar Evidencia
             </label>
-            <input id="fileInput{{i}}" type="file" accept="image/*" (change)="dropped($event, i)">
+            <input id="fileInput{{i}}" type="file" accept="image/*" (change)="onFileSelected($event)">
           </div>
           <img *ngIf="imagenesSemana[i]" [src]="imagenesSemana[i]" width="100" height="100">
         </td>
@@ -31,23 +31,12 @@
     <textarea placeholder="Agregar conclusión" [(ngModel)]="conclusion" rows="4"></textarea>
     <div class="button-container">
       <button class="pdf-button" (click)="generarPDF()">Generar Informe Final</button>
-      <button class="pdf-button" (click)="generarPDF()">Subir PDF</button>
+      
     </div>
   </div>
-  
+  <div class="conclusion-container">
+    <input type="file" (change)="onFileSelected($event)"><br>
+    <button pButton pRipple type="button" label="Enviar PDF" icon="pi pi-check" iconPos="right" 
+    class="p-button-rounded p-button-primary" (click)="updatePDF()"></button>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-  
-
