@@ -169,7 +169,6 @@ export class VistaComponent implements OnInit {
         console.log(data);
         Swal.fire('Solicitud guardado', 'Solicitud Guadada con exito', 'success');
         this.generarPDF();
-
       }, (error) => {
         console.log(error);
         Swal.fire('Error', 'Solicitud no se pudo Guardar', 'error');
@@ -251,7 +250,7 @@ export class VistaComponent implements OnInit {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join(' ') + ' ' + this.user.apellido.split(' ')
               .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-              .join(' ') + ', con número de cédula ' + this.user.cedula + ', estudiante del quinto ciclo del periodo académico ' + this.estudiante.periodo + ' de la carrera de Tecnología Superior en Desarrollo de Software, solicito comedidamente se autorice mi postulación para realizar las 240 horas de prácticas pre profesionales en la empresa ' + this.convocatoria.solicitudEmpresa.convenio.empresa.nombre + '. según solicitud: CONVOCATORIA ' + this.convocatoria.fechaInicio + ' ' + this.convocatoria.fechaFin + '.'],
+              .join(' ') + ', con número de cédula ' + this.user.cedula + ', estudiante del quinto ciclo del periodo académico ' + this.estudiante.periodo + ' de la carrera de Tecnología Superior en Desarrollo de Software, solicito comedidamente se autorice mi postulación para realizar las 240 horas de prácticas pre profesionales en la empresa ' + this.convocatoria.solicitudEmpresa.convenio.empresa.nombre + '. según solicitud: CONVOCATORIA ' + this.convocatoria.numero + '.'],
           style: 'body'
         },
         {
@@ -305,6 +304,7 @@ export class VistaComponent implements OnInit {
         .join(' ') + '.pdf');
 
     this.displayEU = true;
+    this.reloadPage();
 
   }
 }

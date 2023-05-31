@@ -18,6 +18,9 @@ import Swal from 'sweetalert2';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { HttpResponse } from '@angular/common/http';
+import { AnexosService } from 'src/app/core/services/anexos.service';
+import { Anexos } from 'src/app/core/models/anexos';
 
 @Component({
   selector: 'app-tutor-academico',
@@ -35,18 +38,22 @@ export class TutorAcademicoComponent implements OnInit {
   practicantes: Practicante[] = [];
   responsableppp: Usuario[] = [];
   responsableEmpresa: Usuario[] = [];
+
   practicante = new Practicante;
   estudiante = new Estudiante;
   practica = new Practica;
+  anexo = new Anexos;
+  docente = new DocenteFenix;
 
   practicanteName: string;
   tutorName: string;
   empresa: string;
   acronimo: string;
+
   enabledButton: boolean;
   displayEU: boolean;
-
-  docente: DocenteFenix = new DocenteFenix;
+  datosExistentes: boolean;
+  entrPrac: boolean;
 
   selectedDocente: string;
   selectedPracticante: string;
@@ -64,7 +71,7 @@ export class TutorAcademicoComponent implements OnInit {
 
   constructor(private userService: UsersfenixService, private toastr: ToastrService, private router: Router,
     private tutorService: TutorAcademicoService, private practicanteService: SolipracticantesService, private activatedRoute: ActivatedRoute,
-    private practicaService: PracticasService, private usuarioService: UsuarioService) { }
+    private practicaService: PracticasService, private usuarioService: UsuarioService, private anexoService: AnexosService) { }
 
   ngOnInit() {
 
@@ -84,17 +91,58 @@ export class TutorAcademicoComponent implements OnInit {
   }
 
   updatePDF() {
-    console.log(this.id);
-    this.tutorService.guardarPDF(this.archivo, this.id).subscribe(
-      (response: any) => {
-        Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
-        this.router.navigate(['../lista-practicas']);
+
+    this.anexo.tipo = 1;
+    this.anexo.practica = this.practica;
+    this.anexoService.registerAnexo(this.anexo).subscribe(
+      (response: Anexos) => {
+        this.id = response.id;
+        this.anexoService.guardarPDF(this.archivo, this.id).subscribe(
+          (response: any) => {
+            Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+            this.reloadPage();
+          },
+          (error) => {
+            console.error('Error al actualizar el PDF', error);
+            Swal.fire('Registro', 'Error al subir el PDF', 'error');
+          }
+        );
+        this.toastr.success("Anexo Creado", "Anexo");
       },
       (error) => {
-        console.error('Error al actualizar el PDF', error);
-        Swal.fire('Registro', 'Error al subir el PDF', 'error');
+        this.toastr.error("Error al Crear Anexo", "Anexo");
       }
     );
+  }
+
+  reloadPage() {
+    window.location.reload();
+  }
+
+  descargarPDF(value) {
+    this.anexoService.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]=((['"]).?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'obligaciones-estudiante.pdf';
+  }
+
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
   }
 
   obtenerPractica() {
@@ -103,17 +151,30 @@ export class TutorAcademicoComponent implements OnInit {
       if (id) {
         this.practicaService.searchPracticaById(id).subscribe(
           (data: Practica) => {
+            this.practica = data;
             this.empresa = data.convocatoria.solicitudEmpresa.convenio.empresa.nombre;
             this.idConvo = data.convocatoria.id;
             this.practicanteService.practicanteByConvoId(this.idConvo).subscribe(
               practicante => {
                 this.practicantes = practicante;
+                this.entrPrac = true;
+                this.buscarAnexo();
               }
             )
           }
         );
       }
     })
+  }
+
+  buscarAnexo() {
+    this.anexoService.listarPorTipo(this.practica.id, 1).subscribe(
+      (data: Anexos) => {
+        this.anexo = data;
+        this.datosExistentes = true;
+        console.log(this.anexo);
+      }
+    );
   }
 
   obtenerResponsablePPP() {
@@ -217,7 +278,6 @@ export class TutorAcademicoComponent implements OnInit {
       this.toastr.error("Establesca Una Contraseña!", "Error!");
     }
 
-
     if (this.usuario.password === undefined || this.usuario.password === null || this.empresa === '' || this.empresa === null || this.tutorInstituto.idDocente === undefined || this.tutorInstituto.idDocente === null || this.selectedDocente === '' || this.selectedDocente === null
       || this.selectedPracticante === '' || this.selectedPracticante === null) {
 
@@ -256,6 +316,7 @@ export class TutorAcademicoComponent implements OnInit {
                         console.log(resultprac);
                         this.enabledButton = true;
                         Swal.fire('Registro', 'Tutor Academico Creado', 'success');
+                        this.generarPDF();
                         /* this.router.navigate(['/login']) */
                       }
                     );

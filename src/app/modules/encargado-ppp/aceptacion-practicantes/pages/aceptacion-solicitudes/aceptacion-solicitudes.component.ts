@@ -107,7 +107,7 @@ export class AceptacionSolicitudesComponent implements OnInit {
     if (matches != null && matches[1]) {
       return matches[1].replace(/['"]/g, '');
     }
-    return 'documento.pdf';
+    return 'solicitud-estudiante.pdf';
   }
 
   private downloadFile(data: Blob, filename: string) {
