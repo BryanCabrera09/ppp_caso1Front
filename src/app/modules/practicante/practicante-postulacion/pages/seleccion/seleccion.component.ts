@@ -26,7 +26,7 @@ export class SeleccionComponent implements OnInit {
     this.convocatoriaService.obtenerConvocatoria().subscribe(
       dato => {
         const fechaActual = new Date();
-        this.convocatorias = dato.filter(convocatoria => new Date(convocatoria.fechaFin) <= fechaActual);
+        this.convocatorias = dato.filter(convocatoria => new Date(convocatoria.fechaFin) >= fechaActual);
         //this.convocatorias = dato;
       }
     );
