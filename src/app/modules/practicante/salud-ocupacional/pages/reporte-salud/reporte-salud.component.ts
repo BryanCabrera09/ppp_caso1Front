@@ -55,6 +55,7 @@ export class ReporteSaludComponent {
 
   idUs: number;
 
+  datosExistentes: boolean;
   displayEU: boolean;
   entrPrac: boolean;
 
@@ -94,6 +95,16 @@ export class ReporteSaludComponent {
     this.archivo = event.target.files[0];
   }
 
+  buscarAnexo() {
+    this.anexoService.listarPorTipo(this.practica.id, 12).subscribe(
+      (data: Anexos) => {
+        this.anexo = data;
+        this.datosExistentes = true;
+        console.log(this.anexo);
+      }
+    );
+  }
+
   updatePDF() {
 
     this.anexo.tipo = 12;
@@ -101,24 +112,26 @@ export class ReporteSaludComponent {
     this.anexoService.registerAnexo(this.anexo).subscribe(
       (response: Anexos) => {
         this.id = response.id;
+        this.anexoService.guardarPDF(this.archivo, this.id).subscribe(
+          (response: any) => {
+            Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
+            this.reloadPage();
+          },
+          (error) => {
+            console.error('Error al actualizar el PDF', error);
+            Swal.fire('Registro', 'Error al subir el PDF', 'error');
+          }
+        );
         this.toastr.success("Anexo Creado", "Anexo");
       },
       (error) => {
         this.toastr.error("Error al Crear Anexo", "Anexo");
       }
     );
+  }
 
-    console.log(this.id);
-    this.anexoService.guardarPDF(this.archivo, this.id).subscribe(
-      (response: any) => {
-        Swal.fire('Registro', 'PDF actualizado correctamente', 'success');
-        this.router.navigate(['../lista-practicas']);
-      },
-      (error) => {
-        console.error('Error al actualizar el PDF', error);
-        Swal.fire('Registro', 'Error al subir el PDF', 'error');
-      }
-    );
+  reloadPage() {
+    window.location.reload();
   }
 
   descargarPDF(value) {
@@ -154,6 +167,7 @@ export class ReporteSaludComponent {
         this.empresa = data.convocatoria.solicitudEmpresa.convenio.empresa;
         this.convocatoria = data.convocatoria;
         this.entrPrac = true;
+        this.buscarAnexo();
       },
       (error) => {
         console.error(error);

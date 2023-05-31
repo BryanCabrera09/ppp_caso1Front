@@ -44,9 +44,11 @@
     </tbody>
   </table>
 
-  <button (click)="generarPDF()" id="btn-pdf" *ngIf="entrPrac && btnPdf" class="btn btn-primary">Generar PDF</button>
 
-  <button (click)="descargarPDF(anexo.id)" id="btn-pdf" *ngIf="practica && btnPdf" class="btn btn-primary">Ver
+  <button (click)="generarPDF(); displayEU = true" id="btn-pdf" *ngIf="!datosExistentes && entrPrac && btnPdf"
+    class="btn btn-primary">Generar PDF</button>
+
+  <button (click)="descargarPDF(anexo.id)" *ngIf="datosExistentes" id="btn-pdf" class="btn btn-primary">Ver
     PDF</button>
 
   <div *ngIf="!entrPrac" class="alert alert-warning">No cuenta con una practica.</div>
