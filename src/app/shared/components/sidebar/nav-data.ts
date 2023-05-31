@@ -14,6 +14,12 @@ export const navbarData: INavbarData[] = [
         role: 'Tutor Academico'
     },
     {
+        routeLink: '/tutor-academico/ver/estudiantes',
+        icon: 'fas fa-clipboard-list card-icon',
+        label: 'Actividades del estudiante',
+        role: 'Tutor Academico'
+    },
+    {
         routeLink: '/tutor-academico/calificacion/practica-tutor',
         icon: 'fas fa-clipboard-check card-icon',
         label: 'Evaluación Prácticas',
@@ -94,6 +100,12 @@ export const navbarData: INavbarData[] = [
         routeLink: 'practica/calificacion-practicante',
         icon: 'fas fa-star',
         label: 'Ver Calificación Final',
+        role: 'Practicante'
+    },
+    {
+        routeLink: 'presentar/anexos',
+        icon: 'fas fa-file-alt card-icon',
+        label: 'Anexos a Presentar',
         role: 'Practicante'
     },
     {
