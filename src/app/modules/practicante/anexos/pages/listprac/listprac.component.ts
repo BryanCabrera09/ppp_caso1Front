@@ -52,6 +52,7 @@ export class ListpracComponent implements OnInit{
   displayEU: boolean;
   loading: boolean=true;
   idUs: any;
+  anexoId: number;
   anexo = new Anexos;
 
   archivo: File;
@@ -116,18 +117,8 @@ export class ListpracComponent implements OnInit{
       }
     }
   }
-  verPDF(id: number): void {
-    this.anexoService.obtenerPDF(id).subscribe(
-      (response: HttpResponse<Blob>) => {
-        const filename = this.obtenerNombreArchivo(response);
-        this.descargarPDF(response.body, filename);
-      },
-      (error) => {
-        console.error('Error al obtener el PDF:', error);
-      }
-    );
-  }
-  descargarPDF(blob: Blob, filename: string): void {
+
+  descargarPDF1(blob: Blob, filename: string): void {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -481,6 +472,40 @@ export class ListpracComponent implements OnInit{
       }
     );
     this.loading = false;
+  }
+  buscarAnexo() {
+    this.anexoService.listarPorTipo(this.practica.id, 4).subscribe(
+      (data: Anexos) => {
+        this.anexo = data;
+        this.anexoId = this.anexo.id;
+        console.log(data);
+      }
+    );
+  }
+
+  descargarPDF(value) {
+    this.anexoService.obtenerPDF(value).subscribe(response => {
+      const filename = this.getFilenameFromResponse(response);
+      this.downloadFile(response.body, filename);
+    });
+  }
+
+  private getFilenameFromResponse(response: HttpResponse<Blob>): string {
+    const contentDispositionHeader = response.headers.get('Content-Disposition');
+    const matches = /filename[^;=\n]=((['"]).?\2|[^;\n]*)/.exec(contentDispositionHeader);
+    if (matches != null && matches[1]) {
+      return matches[1].replace(/['"]/g, '');
+    }
+    return 'SolicitudEstudiante.pdf';
+  }
+  private downloadFile(data: Blob, filename: string) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
   }
 
 }
