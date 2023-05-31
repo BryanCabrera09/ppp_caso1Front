@@ -97,6 +97,9 @@ export class FormularionRegConvenioComponent implements OnInit {
            this.convenio.numero = data.numero + 1
             console.log(data)
 
+          },
+          (error)=>{
+            this.convenio.numero = '1'
           }
         )
       

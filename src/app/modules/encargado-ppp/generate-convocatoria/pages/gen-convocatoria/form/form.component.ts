@@ -79,6 +79,9 @@ traernumero(){
   this.convocaService.traerNumero().subscribe(
     (data:ConvocatoriaP)=>{
       this.convoca.numero = data.numero+1
+    },
+    (error:any)=>{
+      this.convoca.numero=1
     }
   )
 }

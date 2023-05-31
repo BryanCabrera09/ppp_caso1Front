@@ -4,7 +4,7 @@ import { TutorAcademico } from "./tutor-academicoRS"
 
 export class Convenio {
     id?:number;
-    numero?: string;;
+    numero?: string;
     fechaInicio?: Date;
     fechaFin?: Date;
     

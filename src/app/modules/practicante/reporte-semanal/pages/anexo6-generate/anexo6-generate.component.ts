@@ -9,7 +9,10 @@ import { Empresa } from 'src/app/core/models/empresa';
 import { ConvocatoriaP } from 'src/app/core/models/convocatoria-p';
 import { SemanaActividad } from 'src/app/core/models/semana-actividad';
 import { SemanaActividadService } from 'src/app/core/services/semana-actividad.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Resultado } from 'src/app/core/models/resultado';
+
 interface Activity {
   date: string; // Cambiado a string para facilitar la manipulación
   startTime: string;
@@ -43,8 +46,10 @@ export class Anexo6GenerateComponent implements OnInit {
   finDate = new Date()
 
   displayEU: boolean;
-   contador: number=0
-   bandera:boolean = true
+  contador: number = 0
+  bandera: boolean = true
+  nombre:string
+  apellido:string
 
   constructor(private http: HttpClient, private estudianteService: EstudianteService,
     private practicaService: PracticasService, private semanaService: SemanaActividadService) { }
@@ -58,6 +63,8 @@ export class Anexo6GenerateComponent implements OnInit {
     this.usuario = JSON.parse(sessionStorage.getItem('userdetails')!);
     this.idUs = this.usuario.id;
     console.log(this.idUs)
+    this.nombre= this.usuario.nombre
+    this.apellido = this.usuario.apellido
 
     // Reemplazar con el ID de usuario correspondiente
     this.estudianteService.buscarxUsuario(this.idUs).subscribe(
@@ -76,14 +83,16 @@ export class Anexo6GenerateComponent implements OnInit {
     this.practicaService.buscarxEstudiante(this.estudiante.id).subscribe(
       (data: Practica) => {
         this.practica = data;
+        this.practica.estudiante.nombres = data.estudiante.nombres
+        alert(data.estudiante.nombres)
         this.empresa = data.convocatoria.solicitudEmpresa.convenio.empresa;
         this.convocatoria = data.convocatoria;
         this.Sactvidad.practica = data
 
         this.currentDate = data.inicio
         this.finDate = data.fin
-       console.log(this.Sactvidad.practica.inicio )
-       
+        console.log(this.Sactvidad.practica.inicio)
+
       },
       (error) => {
         console.error(error);
@@ -114,9 +123,10 @@ export class Anexo6GenerateComponent implements OnInit {
     const horaInicioDate = new Date(`1970-01-01T${this.Sactvidad.horaInicio}`);
     const horaFinDate = new Date(`1970-01-01T${this.Sactvidad.horaFin}`);
     const diferenciaMilisegundos = horaFinDate.getTime() - horaInicioDate.getTime();
-    const horasTrabajadas = diferenciaMilisegundos / (1000 * 60 * 60);
-    this.Sactvidad.totalHoras = parseFloat(horasTrabajadas.toFixed(1))
+    const minutosTrabajados = diferenciaMilisegundos / (1000 * 60);
+    const horasTrabajadas = minutosTrabajados / 60;
 
+    this.Sactvidad.totalHoras = parseFloat(horasTrabajadas.toFixed(2));
 
     this.semanaService.create(this.Sactvidad).subscribe();
 
@@ -129,19 +139,19 @@ export class Anexo6GenerateComponent implements OnInit {
     };
     this.actividad.push(fila)
 
-//Calculo de Horas Semanales
+    //Calculo de Horas Semanales
     this.totalHS = this.totalHS + fila.total
-////////////////////////////////////////////////
+    ////////////////////////////////////////////////
     this.borrar()
-////////////////////////////////////////////////
+    ////////////////////////////////////////////////
     this.contador++
-    
-    if(this.contador===5){
-      this.bandera=false
+
+    if (this.contador === 5) {
+      this.bandera = false
     }
     console.log(this.contador);
-    
-  
+
+
   }
 
   borrar() {
@@ -149,6 +159,94 @@ export class Anexo6GenerateComponent implements OnInit {
     this.Sactvidad.horaInicio = null
     this.Sactvidad.horaFin = null
     this.Sactvidad.actividad = ""
+  }
+
+
+
+
+  // const pdfMake = require('pdfmake');
+
+  async generarPDF() {
+    // Cargar las fuentes de pdfMake
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+    // Contenido del PDF
+    const content = [
+      { text: 'INSTITUTO SUPERIOR UNIVERSITARIO TECNOLÓGICO DEL AZUAY', style: 'header' },
+      { text: this.practica.convocatoria.solicitudEmpresa.convenio.carrera.nombre, style: 'subheader' },
+      { text: 'ANEXO 6', style: 'subheader' },
+      { text: 'Reportes semanales de aprendizaje', style: 'subheader' },
+      { text: 'Nombre estudiante: '+this.nombre+' '+this.apellido  },
+      { text: 'Carrera: '+ this.practica.convocatoria.solicitudEmpresa.convenio.carrera.nombre },
+      { text: 'Periodo Académico: Mayo – Octubre 2022 '+ this.practica.periodo},
+      { text: 'Nombre de la empresa formadora: '+ this.practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre },
+      { text: 'Fecha inicio y fin de la semana de actividades: '+this.practica.inicio+' - '+this.practica.fin },
+      { text: '', style: 'subheader' },
+      {
+        table: {
+          widths: [50,'*', '*',-450],
+          body: [
+            ['Semanas',' '],
+            [
+              'Número de semana\n1',
+              'Hora de ingreso: 14H00'+this.actividad.map(fila=>[fila.horaI])     +'Hora de salida: 18H00      Total Horas: 4\nDetalle de actividad realizada / ',
+
+            ]
+          ]
+        }
+      },
+      { text: '\n' },
+      
+
+      {
+        table: {
+          widths: ['*', '*', '*'],
+          body: [
+
+            [' \n\n\n\n\n\n', ' ', ' '],
+
+            [
+              'Tutor Específico\nFirma y Sello', 'Estudiante\nFirma', 'Tutor Académico\nFirma y Sello'
+            ]
+          ],
+          style:'table',
+          aligment: 'center'
+        }
+      },
+
+
+
+
+    ];
+
+    // Estilos del documento
+    const styles = {
+      header: {
+        fontSize: 16,
+        bold: true,
+        margin: [0, 0, 0, 10],
+        alignment: 'center'
+      },
+      subheader: {
+        fontSize: 14,
+        bold: true,
+        margin: [0, 10, 0, 5],
+        alignment: 'center'
+      },
+      table:{
+        blod: true
+      }
+    };
+
+    // Definir el documento PDF
+    const docDefinition = {
+      content: content,
+      styles: styles,
+    };
+
+    // Generar el PDF
+    pdfMake.createPdf(docDefinition).open();
+
   }
 
 }

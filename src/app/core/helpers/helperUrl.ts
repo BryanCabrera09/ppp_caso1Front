@@ -1,2 +1,2 @@
-let baserUrl = 'http://localhost:8080'
+let baserUrl = 'https://pppcasouno-production.up.railway.app'
 export default baserUrl;
