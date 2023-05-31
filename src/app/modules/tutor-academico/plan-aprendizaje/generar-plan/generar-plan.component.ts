@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -18,20 +19,18 @@ import Swal from 'sweetalert2';
 })
 export class GenerarPlanComponent implements OnInit {
 
-  numeroSemanas: number;
+  columnas: number;
   semanas: number[] = [];
   mostrarTabla: boolean = false;
+  horas: number;
 
-  todosSeleccionados: boolean = false;
-  dropdownSeleccionado: boolean[] = [];
-
-  cargarSemanas() {
+  cargarSemanas(numero: number) {
     this.semanas = []; // Restablecer el arreglo semanas
-    if (this.numeroSemanas === 6 || this.numeroSemanas === 12) {
-      for (let i = 1; i <= this.numeroSemanas; i++) {
+    if (numero === 6 || numero === 12) {
+      for (let i = 1; i <= numero; i++) {
         this.semanas.push(i);
       }
-      this.mostrarTabla = true; // Mostrar la tabla
+      this.columnas = numero;
     }
   }
 
@@ -43,12 +42,13 @@ export class GenerarPlanComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private pracServ: PracticasService,
     private resCarServ: ResultadoCarreraService, private atcServ: ActividadpService,
-    private resServ: ResultadoService) { }
+    private resServ: ResultadoService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.practica = JSON.parse(params['practica']);
-      console.log("practica: " + this.practica);
+      this.startForm();
+      console.log(this.practica);
       this.listarResultados(this.practica.estudiante.carrera.id);
       this.listarActividades(this.practica.convocatoria.solicitudEmpresa.id)
     });
@@ -58,7 +58,6 @@ export class GenerarPlanComponent implements OnInit {
     this.resCarServ.listarPorCarreraId(id).subscribe(
       (res) => {
         this.resultadosCarrera = res;
-        console.log("resultadosCarrera: " + this.resultadosCarrera)
       }
     )
   }
@@ -67,45 +66,118 @@ export class GenerarPlanComponent implements OnInit {
     this.atcServ.obtenerActividadid(id).subscribe(
       (res) => {
         this.actividades = res;
-        this.dropdownSeleccionado.fill(false, 0, this.actividades.length);
-        console.log("Actividades: " + this.actividades)
+        this.formResultado = this.fb.group({});
+        this.actividades.forEach((actividad, index) => {
+          this.formResultado.addControl(`horas_${index}`, this.fb.control('', Validators.required));
+        });
       }
     )
   }
 
   crearResultado(value, id) {
-    const index = this.actividades.findIndex(atv => atv.id === id);
-    this.dropdownSeleccionado[index] = true;
     let resultado = new Resultado();
     let resCarrera: any = {};
     resCarrera.id = value;
     let activity: any = {};
     activity.id = id;
+    resultado.id = 0;
     resultado.actividad = activity;
     resultado.resultadoMateria = resCarrera;
     resultado.practica = this.practica;
     this.resultados.push(resultado);
     console.log(this.resultados);
-    if (this.dropdownSeleccionado.every(selected => selected)) {
-      this.todosSeleccionados = true;
-    } 
   }
 
   editarPractica() {
+    console.log(this.practica)
     this.pracServ.editarPractica(this.practica.id, this.practica).subscribe(
       (res) => {
-        console.log(res);
         this.gueardarResultados();
       }
     )
   }
 
   gueardarResultados() {
-      this.resServ.crearMuchos(this.resultados).subscribe(
-        (res) => {
-          console.log(res)
-        }
-      )
-  }  
+    this.resServ.crearMuchos(this.resultados).subscribe(
+      (res) => {
+        console.log(res)
+      }
+    )
+  }
 
+  formPractica?: FormGroup;
+
+  startForm() {
+    this.formPractica = this.fb.group({
+      numeroSemanas: ['', [Validators.required, validarNumeroSemanas]],
+      periodo: ['', Validators.required],
+      inicio: ['', Validators.required],
+      fin: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      departamento: ['', Validators.required]
+    });
+  }
+
+  siguientePractica(): boolean {
+    if (this.formPractica.invalid) {
+      this.markAllFieldsAsTouchedPractica();
+      return false;
+    } 
+    this.currentStep++;
+    return true;
+  }
+
+  siguienteResultados(): boolean {
+      if (this.formResultado.invalid) {
+        this.markAllFieldsAsTouchedResultado();
+        return false;
+      } 
+      this.cargarSemanas(this.formPractica.get('numeroSemanas')?.value);
+      this.currentStep++;
+      return true;
+  }
+
+  markAllFieldsAsTouchedPractica() {
+    Object.values(this.formPractica.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+
+  markAllFieldsAsTouchedResultado() {
+    Object.values(this.formResultado.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+
+  // Dentro de tu clase de componente
+  isInvalidFormP(controlName: string): boolean {
+    const control = this.formPractica.get(controlName);
+    return control?.invalid && control?.touched;
+  }
+
+  isInvalidFormR(controlName: string): boolean {
+    const control = this.formResultado.get(controlName);
+    return control?.invalid && control?.touched;
+  }
+
+  currentStep: number = 1;
+
+  anterior() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
+  }
+
+  formResultado?: FormGroup;
+
+  
+
+}
+
+function validarNumeroSemanas(control: AbstractControl): ValidationErrors | null {
+  const valor = control.value;
+  if (valor !== 6 && valor !== 12) {
+    return { invalidNumeroSemanas: true };
+  }
+  return null;
 }
