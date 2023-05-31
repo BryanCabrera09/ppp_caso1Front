@@ -70,7 +70,6 @@ export class ListpracComponent implements OnInit{
   semanasValidas: boolean[] = [];
   getActividadesPorSemana() {
     const actividadesPorSemana = [];
-    const actividadesPorSemana2=this.getActividadesPorSemana; 
     const numDiasPorSemana = 5;
     const totalSemanas = Math.ceil(this.actividades.length / numDiasPorSemana);
   
@@ -103,8 +102,6 @@ export class ListpracComponent implements OnInit{
         const reader = new FileReader();
         
         reader.onload = (fileReaderEvent: any) => {
-          // Aquí puedes hacer cualquier procesamiento necesario con la imagen
-          // Por ejemplo, puedes leer el archivo y guardarlo en la lista temporal
           this.imagenesSemana[semanaIndex] = fileReaderEvent.target.result;
         };
   
@@ -117,7 +114,7 @@ export class ListpracComponent implements OnInit{
   conclusion: string = '';
 
   generarPDF() {
-    /*
+    
     if (this.semanasValidas.includes(false)) {
       this.toastr.error('Debes agregar todas las imagenes', 'Datos Incompletos');
       return;
@@ -126,11 +123,11 @@ export class ListpracComponent implements OnInit{
     if (!this.conclusion || this.conclusion.trim() === '') {
       this.toastr.error('Debes agregar una conclusión', 'Datos Incompletos');
       return;
-    }*/
+    }
 
 
     this.practica.concluciones=this.conclusion;
-    //this.editarPractica(this.practica.id, this.practica);
+    this.editarPractica(this.practica.id, this.practica);
     this.generarPDF1();
   }
 
@@ -281,17 +278,15 @@ export class ListpracComponent implements OnInit{
           style: 'subheaderBold',
           margin: [0, 10, 0, 0]
         },
+       
+       
         {
-          ul: this.actividadesporsemana.map(semana => 
-            `Semana ${semana.semana}
-            Desde ${semana.actividades[0].dia} Hasta ${semana.actividades[semana.actividades.length - 1].dia}
-            <img src="data:image/png;base64,${this.imagenesSemana}" alt="Imagen de la semana" />
-            `),
-          
-          
-          margin: [0, 5, 0, 5] 
+          ul: this.getImagesList().map(item => [
+            item.text,
+            { image: item.image, width: item.width }
+          ]),
+          ol: this.actividadesporsemana.map(semana => `Semana ${semana.semana} Desde ${semana.actividades[0].dia} Hasta ${semana.actividades[semana.actividades.length - 1].dia}`)
         },
-      
         {
           text: '5.  CONCLUSIONES',
           style: 'subheaderBold',
@@ -359,10 +354,24 @@ export class ListpracComponent implements OnInit{
     
     // Generar el PDF
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-    pdfDocGenerator.download('A8_InformeFinal'+this.usuario.apellido+'.pdf');
+    pdfDocGenerator.download('A8_InformeFinal '+this.usuario.apellido+'.pdf');
   }
 
-
+  getImagesList() {
+    const listItems = []; 
+    this.actividadesporsemana.forEach((semana, index) => {
+      const listItem = {
+        text: `Semana ${semana.semana} Desde ${semana.actividades[0].dia} Hasta ${semana.actividades[semana.actividades.length - 1].dia}`,
+        image: this.imagenesSemana[index],
+        width: 150,
+        margin: [0, 15, 0, 15] 
+      };
+      listItems.push(listItem);
+    });
+    return listItems;
+  }
+  
+  
 
 
   buscarEstudiante() {
