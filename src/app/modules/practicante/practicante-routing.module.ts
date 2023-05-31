@@ -42,6 +42,10 @@ const routes: Routes = [
     path: 'solicitud',
     loadChildren: () => import("./lista-solicitudes/lista-solicitudes.module").then(m => m.ListaSolicitudesModule)
   },
+  {
+    path: 'presentar',
+    loadChildren: () => import("./anexos-presentar/anexos-presentar.module").then(m => m.AnexosPresentarModule)
+  },
 ];
 
 @NgModule({

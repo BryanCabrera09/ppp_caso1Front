@@ -97,6 +97,12 @@ export const navbarData: INavbarData[] = [
         role: 'Practicante'
     },
     {
+        routeLink: 'presentar/anexos',
+        icon: 'fas fa-file-alt card-icon',
+        label: 'Anexos a Presentar',
+        role: 'Practicante'
+    },
+    {
         routeLink: '/encargado-practicas',
         icon: 'fa-solid fa-house',
         label: 'Dashboard',

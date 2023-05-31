@@ -21,4 +21,8 @@ export class EstudianteService {
     return this.httpClient.get<Estudiante[]>(`${this.baseURL}/listar`)
   }
 
+  buscartxTutorA(id: number){
+   return this.httpClient.get(`${baserUrl}/listarxtutoracademico/${id}`) 
+  }
+
 }
