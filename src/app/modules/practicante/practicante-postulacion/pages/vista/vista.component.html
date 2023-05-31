@@ -22,33 +22,42 @@
 		</table>
 	</div>
 
+	<div class="button-container">
+		<div *ngIf="!solicitudes || solicitudes.length === 0">
+			<button (click)="Guardarsoli()">
+				Postular</button>
+		</div>
+	</div>
+
 	<div class="button-container" *ngFor="let soli of solicitudes; let i = index;">
 		<div
-			*ngIf="!solicitudes || solicitudes.length === 0  || !soli.estudiante || soli.estado === 0 || soli.estado === 3">
+			*ngIf="!soli.estudiante && (soli.estado === 0 || soli.estado === 3) && soli.convocatoria.fechaFin < fechaI">
 			<button (click)="Guardarsoli()">
-				Postular</button></div>
-		<div *ngIf="soli.estudiante && !soli.url">
-			<button (click)="displayEU = true; solicitud = soli.estudiante"> Subir
+				Postular</button>
+		</div>
+		<div *ngIf="(soli.estudiante && !soli.url) || soli.convocatoria.fechaFin >= fechaI">
+			<button (click)="displayEU = true; solicitud = soli.estudiante; solicitud = soli.id"> Subir
 				PDF</button>
 		</div>
 		<div *ngIf="soli.estudiante && soli.url"><button (click)="descargarPDF(soli.id)"> Ver
 				PDF</button></div>
+
+		<p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}"
+			[baseZIndex]="10000" [draggable]="false" [resizable]="false">
+			<ng-template pTemplate="body">
+				<div class="p-grid p-fluid">
+					<div class="p-col-3 p-md-4">
+						<span class="p-float-label">
+							<input name="foto" id="float-input" (change)="onFileChange($event)" accept=".pdf"
+								type="file" class="form-control" required />
+							<label for="float-input"></label>
+						</span>
+					</div>
+					<button pButton pRipple type="button" label="Enviar PDF" icon="pi pi-check" iconPos="right"
+						class="p-button-rounded p-button-primary"
+						(click)="updatePDFSolicitud(soli.id); displayEU = false"></button>
+				</div>
+			</ng-template>
+		</p-dialog>
 	</div>
 </body>
-
-<p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}"
-	[baseZIndex]="10000" [draggable]="false" [resizable]="false">
-	<ng-template pTemplate="body">
-		<div class="p-grid p-fluid">
-			<div class="p-col-3 p-md-4">
-				<span class="p-float-label">
-					<input name="foto" id="float-input" (change)="onFileChange($event)" accept=".pdf" type="file"
-						class="form-control" required />
-					<label for="float-input"></label>
-				</span>
-			</div>
-			<button pButton pRipple type="button" label="Enviar PDF" icon="pi pi-check" iconPos="right"
-				class="p-button-rounded p-button-primary" (click)="updatePDFSolicitud(); displayEU = false"></button>
-		</div>
-	</ng-template>
-</p-dialog>

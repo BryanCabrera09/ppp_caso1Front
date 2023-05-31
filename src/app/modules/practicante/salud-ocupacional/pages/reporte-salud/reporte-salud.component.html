@@ -5,14 +5,17 @@
     <div *ngFor="let pregunta of preguntas" class="mb-3">
       <label class="fw-bold">{{ pregunta }}</label>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="respuesta-{{ pregunta }}" value="si" [(ngModel)]="respuestas[pregunta]">
+        <input class="form-check-input" type="radio" name="respuesta-{{ pregunta }}" value="si"
+          [(ngModel)]="respuestas[pregunta]">
         <label class="form-check-label">Si</label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="respuesta-{{ pregunta }}" value="no" [(ngModel)]="respuestas[pregunta]">
+        <input class="form-check-input" type="radio" name="respuesta-{{ pregunta }}" value="no"
+          [(ngModel)]="respuestas[pregunta]">
         <label class="form-check-label">No</label>
       </div>
-      <input type="text" class="form-control mt-2" placeholder="Observaciones" name="observaciones-{{ pregunta }}" [(ngModel)]="observaciones[pregunta]">
+      <input type="text" class="form-control mt-2" placeholder="Observaciones" name="observaciones-{{ pregunta }}"
+        [(ngModel)]="observaciones[pregunta]">
     </div>
 
     <button type="submit" class="btn btn-primary" [disabled]="guardado">Guardar</button>
@@ -41,6 +44,28 @@
     </tbody>
   </table>
 
-  <button (click)="generarPDF()" class="btn btn-primary">Generar PDF</button>
+  <button (click)="generarPDF()" id="btn-pdf" *ngIf="entrPrac && btnPdf" class="btn btn-primary">Generar PDF</button>
+
+  <button (click)="descargarPDF(anexo.id)" id="btn-pdf" *ngIf="practica && btnPdf" class="btn btn-primary">Ver
+    PDF</button>
+
+  <div *ngIf="!entrPrac" class="alert alert-warning">No cuenta con una practica.</div>
 
 </div>
+
+<p-dialog header="Subir Pdf" class="digog" [(visible)]="displayEU" [modal]="true" [style]="{width: '75vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="body">
+    <div class="p-grid p-fluid">
+      <div class="p-col-3 p-md-4">
+        <span class="p-float-label">
+          <input name="foto" id="float-input" (change)="onFileChange($event)" accept=".pdf" type="file"
+            class="form-control" required />
+          <label for="float-input"></label>
+        </span>
+      </div>
+      <button pButton pRipple type="button" label="Enviar PDF" icon="pi pi-check" iconPos="right"
+        class="p-button-rounded p-button-primary" (click)="updatePDF(); displayEU = false"></button>
+    </div>
+  </ng-template>
+</p-dialog>
