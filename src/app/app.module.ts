@@ -25,6 +25,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { RegisterUserService } from './core/services/register-user.service';
 import { BridgeInterceptor } from './core/providers/bridge.interceptor';
 import { AuthGuard } from './core/guards/auth.guard';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,8 @@ import { AuthGuard } from './core/guards/auth.guard';
     OverlayModule,
     CdkMenuModule,
     SharedModule,
+    FormsModule,
+    
     /* provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()), */
     AngularFireModule.initializeApp(environment.firebaseConfig),

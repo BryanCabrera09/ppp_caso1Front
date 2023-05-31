@@ -5,7 +5,7 @@
     <p class="stat-text">{{ practica.estudiante.usuario.nombre }} {{ practica.estudiante.usuario.apellido }}</p>
     <p class="stat-text">{{ practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre }}</p>
     <button class="btn btn-primary" [routerLink]="['../registro']" [queryParams]="{ practica: practica | json }">
-      Plan
+      Registrar Visita
     </button>
   </div>
 </div>

@@ -4,7 +4,7 @@ export class Visita {
 
     id: number;
     asunto: string;
-    semana: string;
+    semana: number;
     observacion: string;
 
     practica: Practica;

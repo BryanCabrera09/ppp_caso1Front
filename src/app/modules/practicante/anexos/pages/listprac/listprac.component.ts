@@ -10,7 +10,7 @@ import { EstudianteService } from 'src/app/core/services/estudiante.service';
 import { PracticasService } from 'src/app/core/services/practicas.service';
 import { SemanaActividadService } from 'src/app/core/services/semana-actividad.service';
 import { TutorAcademicoService } from 'src/app/core/services/tutor-academico.service';
-import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
+//import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';

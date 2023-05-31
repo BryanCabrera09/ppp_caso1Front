@@ -7,11 +7,11 @@ import { PlanVisitasComponent } from './pages/plan-visitas/plan-visitas.componen
 import { FormsModule } from '@angular/forms';
 
 
-
 @NgModule({
   declarations: [
     RegistroComponent,
     PlanVisitasComponent,
+   
   ],
   imports: [
     CommonModule,

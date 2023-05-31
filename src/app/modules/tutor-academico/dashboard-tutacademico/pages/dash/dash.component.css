@@ -1,13 +1,56 @@
-section {
+body {
+  font-family: "Times New Roman", Times, serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #537bffab;
+  color: #fff;
+  padding: 20px;
+  text-align: right;
+}
+
+.logo {
+  width: 100px;
+}
+
+main {
+  margin: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+.card-container {
   display: flex;
-  justify-self: center;
-  align-items: center;
-  min-height: 100vh;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  width: 600px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  flex: 0 0 calc(50% - 20px);
+  box-sizing: border-box;
+}
+
+
+.card-image {
   width: 100%;
-  background: linear-gradient(rgba(181, 162, 162, 0.4), transparent),
-    url(https://th.bing.com/th/id/OIG.JYUpvZfs.eviXMWtJqoZ?pcl=1b1a19&pid=ImgGn);
-  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
-  background-size: cover;
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
-  color: rgb(0, 17, 70);
+  height: auto;
+  border-radius: 5px;
+}
+
+.card-content {
+  margin-top: 10px;
+}
+
+h3, p {
+  color: #000000;
 }

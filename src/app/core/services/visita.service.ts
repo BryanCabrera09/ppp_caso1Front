@@ -15,7 +15,11 @@ export class VisitaService {
   constructor(private http: HttpClient,) { }
 
   createVisita(visita: Visita): Observable<Visita> {
-    return this.http.post<Visita>(this.searchUrl + '/crear', Visita, { headers: this.httpHeaders })
+    return this.http.post<Visita>(this.searchUrl + '/crear', visita, { headers: this.httpHeaders })
   }
 
+  
+  buscarVisita(id: number): Observable<Visita> {
+    return this.http.get<Visita>(`${this.searchUrl}/buscar/ultima/practica/${id}`);
+  }
 }

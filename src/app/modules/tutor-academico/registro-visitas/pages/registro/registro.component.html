@@ -18,63 +18,92 @@
       </div>
       <div class="form-group">
         <label for="semana">Semana:</label>
-        <input type="text" id="semaana" name="semana" [(ngModel)]="practica.estudiante.nsemanas">
+        <input type="text" id="semaana" name="semana" [(ngModel)]="semana" disabled="">
 
       </div>
       <div class="form-group">
         <label for="tutor-institucional">Tutor Institucional:</label>
-        <input type="text" id="tutor" name="tutor" [(ngModel)]="practica.tutorInstituto.usuario.nombre">
+        <input type="text" id="institucional" name="institucional" [(ngModel)]="practica.tutorInstituto.usuario.nombre"
+          disabled="">
 
       </div>
       <div class="form-group">
         <label for="tutor-especifico">Tutor Específico:</label>
-        <p>{{practica.tutorEmpresarial.usuario.nombre}}</p>
+        <input type="text" id="especifico" name="especifico" [(ngModel)]="practica.tutorEmpresarial.usuario.nombre"
+          disabled="">
+
       </div>
       <div class="form-group">
         <label for="estudiante">Estudiante:</label>
-        <p>{{practica.estudiante.usuario.nombre}}</p>
+        <input type="text" id="estudiante" name="estudiante" [(ngModel)]="practica.estudiante.usuario.nombre"
+          disabled="">
+
       </div>
       <div class="form-group">
         <label for="empresa">Empresa:</label>
-        <p>{{practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre}}</p>
+        <input type="text" id="empresa" name="empresa"
+          [(ngModel)]="practica.convocatoria.solicitudEmpresa.convenio.empresa.nombre" disabled="">
+
       </div>
       <div class="form-group">
         <label for="periodo-academico">Período Académico:</label>
-        <p>{{practica.estudiante.periodo}}</p>
+        <input type="text" id="periodo" name="periodo" [(ngModel)]="practica.estudiante.periodo" disabled="">
+
       </div>
     </form>
   </div>
 
-  <h2>2. Asunto:</h2>
-  <p>Visita de seguimiento y observación del proceso de prácticas pre profesionales.</p>
+
   <h2>3. Informe Actividad Seguimiento:</h2>
 
+  <form >
   <div class="form-container">
-    <form id="form2">
+   
+
       <div class="form-group">
         <label for="informe">Informe Actividad Seguimiento:</label>
-        <textarea id="informe" name="informe" rows="4"></textarea>
+        <textarea id="informe" name="informe" rows="4" [class.is-invalid]="isInvalid('actividad')"> </textarea>
+        <small *ngIf="isInvalid('actividad')" class="text-danger">Campo obligatorio!</small>
       </div>
       <div class="form-group">
         <label for="observaciones">Observaciones:</label>
-        <textarea id="observaciones" name="observaciones" rows="4"></textarea>
+        <textarea id="observaciones" name="observaciones" rows="4"
+          [class.is-invalid]="isInvalid('observacion')"></textarea>
       </div>
-    </form>
-  </div>
 
+  </div>
+  <button (click)="agregarvisitaactividad()">Guardar</button>
+  <p> </p>
+  <p> </p>
+  <!-- <table>
+    <tr>
+        <th>Actividad</th>
+        <th>Observacion</th>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+ 
+</table> -->
+  <p> </p>
+  <p> </p>
   <h2>Observaciones Generales:</h2>
 
   <div class="form-container">
-    <form id="form3">
-      <div class="form-group">
-        <label for="observaciones-generales">Observaciones Generales:</label>
-        <textarea id="observaciones-generales" name="observaciones-generales" rows="4"></textarea>
-      </div>
+
+    <div class="form-group">
+      <label for="observaciones-generales">Observaciones Generales:</label>
+      <textarea id="observaciones-generales" name="observaciones-generales" rows="4"
+        [class.is-invalid]="isInvalid('observaciong')"></textarea>
+    </div>
 
 
-    </form>
+   
 
   </div>
+</form>
+  <button (click)="guardarvisitaactividad()">Guardar</button>
   <button>Generar</button>
 </body>
 
