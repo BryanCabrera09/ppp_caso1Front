@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-header-home',
@@ -10,7 +11,7 @@ export class HeaderHomeComponent {
 
   activeLink = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private readonly keycloak: KeycloakService) { }
 
   ngOnInit(): void {
 
@@ -45,6 +46,10 @@ export class HeaderHomeComponent {
 
     this.activeLink = 'login';
     this.router.navigate(['/login'])
+  }
+
+  public login() {
+    this.keycloak.login();
   }
 
   goToConvocatoria(): void {

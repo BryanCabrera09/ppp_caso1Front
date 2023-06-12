@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -27,6 +27,23 @@ import { BridgeInterceptor } from './core/providers/bridge.interceptor';
 import { AuthGuard } from './core/guards/auth.guard';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8080/',
+        realm: 'LibraryDEV',
+        clientId: 'LibraryClient',
+      },
+      initOptions: {
+        pkceMethod: 'S256',
+        redirectUri: 'http://localhost:4200/',
+      },loadUserProfileAtStartUp: false
+    });
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,18 +64,19 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
     AngularFireAuthModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    KeycloakAngularModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',
     }),
   ],
-  providers: [RegisterUserService,
+  providers: [
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: BridgeInterceptor,
-      multi: true
-    },
-    AuthGuard
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    }
   ],
   bootstrap: [AppComponent]
 })
