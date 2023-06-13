@@ -50,7 +50,8 @@ export class ReportComponent implements OnInit {
   acronimo: string;
 
   ngOnInit() {
-    this.buscarEstudiante()
+    this.usuario = JSON.parse(sessionStorage.getItem('userdetails') || "");
+    //this.buscarEstudiante()
   }
 
   constructor(private estudianteService: EstudianteService, private practicaService: PracticasService, private router: Router,
