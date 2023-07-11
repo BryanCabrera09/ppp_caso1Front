@@ -27,6 +27,7 @@ export class RegObjetivosComponent implements OnInit {
   displayPopup: boolean = false;
   displayPopups: boolean = false;
 
+  
   selectedCarrera: string;
   selectedMateria: string;
 
